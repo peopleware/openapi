@@ -84,6 +84,10 @@ paths:
                   string:
                     type: object
                     properties:
+                      language:
+                        $ref: 'string/Language.yaml'
+                      telephoneNumber:
+                        $ref: 'string/TelephoneNumber.yaml'
                       trimmedString:
                         $ref: 'string/TrimmedString.yaml'
                   time:
