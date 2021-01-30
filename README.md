@@ -58,6 +58,7 @@ In your [OpenAPI 3] specification, refer to the common [OpenAPI 3] specs using t
 To change the version of these common [OpenAPI 3] specs you use
 
     > cd common/ppwcode
+    > git fetch
     > git checkout version/<MAJOR>/<MINOR>/<PATCH>
     > cd ../..
     > git add common/ppwcode
