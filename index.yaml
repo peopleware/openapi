@@ -47,6 +47,11 @@ paths:
               schema:
                 type: object
                 properties:
+                  human:
+                    type: object
+                    properties:
+                      gender:
+                        $ref: 'human/Gender.yaml'
                   id:
                     type: object
                     properties:
