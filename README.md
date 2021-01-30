@@ -15,6 +15,8 @@ the spec.
 Although [OpenAPI 3] is a standard, support for some features differs between tools. We use [ReDoc] as the main target
 for our [OpenAPI 3] spec. [ReDoc] formats and stylizes the specification in-browser.
 
+The [ReDoc] site of the `HEAD` of the `master` branch is hosted at https://peopleware.github.io/openapi.
+
 ## Usage
 
 There is no "deployed" version of these specs. Stable versions are tagged in this repository using [semantic
