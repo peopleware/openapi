@@ -1,6 +1,6 @@
 {
   "name": "openapi",
-  "version": "0.0.0-dev.0",
+  "version": "1.0.0",
   "description": "Collection of common OpenAPI 3 specs",
   "author": {
     "name": "Jan Dockx",
