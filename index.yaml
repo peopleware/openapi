@@ -47,16 +47,27 @@ paths:
               schema:
                 type: object
                 properties:
-                  uuid:
-                    $ref: 'id/UUID.yaml'
-                  dateTime:
-                    $ref: 'time/DateTime.yaml'
-                  changeDateTime:
-                    $ref: 'time/ChangeDateTime.yaml'
-                  dayDate:
-                    $ref: 'time/DayDate.yaml'
-                  dayDateInterval:
-                    $ref: 'time/DayDateInterval.yaml'
+                  id:
+                    type: object
+                    properties:
+                      uuid:
+                        $ref: 'id/UUID.yaml'
+                  string:
+                    type: object
+                    properties:
+                      trimmedString:
+                        $ref: 'string/TrimmedString.yaml'
+                  time:
+                    type: object
+                    properties:
+                      dateTime:
+                        $ref: 'time/DateTime.yaml'
+                      changeDateTime:
+                        $ref: 'time/ChangeDateTime.yaml'
+                      dayDate:
+                        $ref: 'time/DayDate.yaml'
+                      dayDateInterval:
+                        $ref: 'time/DayDateInterval.yaml'
         '401':
           $ref: 'oauth2/401.yaml'
         '403':

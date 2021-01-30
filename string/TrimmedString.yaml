@@ -1,0 +1,5 @@
+type: string
+format: trimmed
+pattern: ^\S$|^\S[\s\S]*\S$ # trimmed; this pattern avoids catastrophic backtracking
+minLength: 1
+example: Anna
