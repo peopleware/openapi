@@ -43,6 +43,8 @@ paths:
                 properties:
                   dateTime:
                     $ref: 'time/DateTime.yaml'
+                  changeDateTime:
+                    $ref: 'time/ChangeDateTime.yaml'
                   dayDate:
                     $ref: 'time/DayDate.yaml'
                   dayDateInterval:
