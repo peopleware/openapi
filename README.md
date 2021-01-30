@@ -108,6 +108,12 @@ _You cannot push commits, or create pull requests, from the submodule in your sp
 
 To make changes to this collection, clone this repository or a fork separately, and make your changes in that copy.
 
+The main repository is at https://bitbucket.org/ppwcode/openapi.git. This is the only place where developers should push
+commits, and the only place where [issues](https://bitbucket.org/ppwcode/openapi/issues) are tracked, and
+[pull requests](https://bitbucket.org/ppwcode/openapi/pull-requests/) are considered. All commits are automatically
+forwarded to https://github.com/peopleware/openapi.git as a backup and failover, but no activity should be directed
+there directly.
+
 ## License
 
 Copyright 2020 - 2021 PeopleWare n.v.
