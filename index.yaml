@@ -73,6 +73,8 @@ paths:
           $ref: 'oauth2/401.yaml'
         '403':
           $ref: 'oauth2/403.yaml'
+        '404':
+          $ref: 'resource/404.yaml'
 components:
   schemas:
     resource:
