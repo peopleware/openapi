@@ -50,6 +50,14 @@ paths:
                   id:
                     type: object
                     properties:
+                      naturalPerson:
+                        type: object
+                        properties:
+                          be:
+                            type: object
+                            properties:
+                              inss:
+                                $ref: 'id/naturalPerson/be/INSS.yaml'
                       uuid:
                         $ref: 'id/UUID.yaml'
                   location:
