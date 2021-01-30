@@ -52,6 +52,15 @@ paths:
                     properties:
                       uuid:
                         $ref: 'id/UUID.yaml'
+                  oauth2:
+                    type: object
+                    properties:
+                      bearerAccessToken:
+                        $ref: 'oauth2/BearerAccessToken.yaml'
+                      errorResponse:
+                        $ref: 'oauth2/ErrorResponse.yaml'
+                      wwwAuthenticate:
+                        $ref: 'oauth2/WWWAuthenticate.yaml'
                   string:
                     type: object
                     properties:
