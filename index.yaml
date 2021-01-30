@@ -41,6 +41,8 @@ paths:
               schema:
                 type: object
                 properties:
+                  uuid:
+                    $ref: 'id/UUID.yaml'
                   dateTime:
                     $ref: 'time/DateTime.yaml'
                   changeDateTime:
