@@ -37,71 +37,107 @@ paths:
       - $ref: 'oauth2/authorization.yaml'
       - $ref: 'parameters/at.yaml'
     get:
-      summary: Demonstration of common specs
-      operationId: demonstration
+      summary: Demonstration of common specs for `GET`
+      description: Every common spec is mentioned here.
+      operationId: demonstrationGet
       responses:
         '200':
-          description: Every common spec is mentioned here.
+          x-summary: The resource exists
+          description: Every common spec is mentioned here.  The `200` response shows `readOnly` properties.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  human:
-                    type: object
-                    properties:
-                      gender:
-                        $ref: 'human/Gender.yaml'
-                  id:
-                    type: object
-                    properties:
-                      naturalPerson:
-                        type: object
-                        properties:
-                          be:
-                            type: object
-                            properties:
-                              inss:
-                                $ref: 'id/naturalPerson/be/INSS.yaml'
-                      uuid:
-                        $ref: 'id/UUID.yaml'
-                  location:
-                    type: object
-                    properties:
-                      address:
-                        $ref: 'location/Address.yaml'
-                      country:
-                        $ref: 'location/Country.yaml'
-                  oauth2:
-                    type: object
-                    properties:
-                      bearerAccessToken:
-                        $ref: 'oauth2/BearerAccessToken.yaml'
-                      errorResponse:
-                        $ref: 'oauth2/ErrorResponse.yaml'
-                      wwwAuthenticate:
-                        $ref: 'oauth2/WWWAuthenticate.yaml'
-                  string:
-                    type: object
-                    properties:
-                      language:
-                        $ref: 'string/Language.yaml'
-                      telephoneNumber:
-                        $ref: 'string/TelephoneNumber.yaml'
-                      trimmedString:
-                        $ref: 'string/TrimmedString.yaml'
-                  time:
-                    type: object
-                    properties:
-                      dateTime:
-                        $ref: 'time/DateTime.yaml'
-                      changeDateTime:
-                        $ref: 'time/ChangeDateTime.yaml'
-                      dayDate:
-                        $ref: 'time/DayDate.yaml'
-                      dayDateInterval:
-                        $ref: 'time/DayDateInterval.yaml'
+                $ref: '#/components/schemas/resource'
         '401':
           $ref: 'oauth2/401.yaml'
         '403':
           $ref: 'oauth2/403.yaml'
+    put:
+      summary: Demonstration of common specs for `PUT`
+      description: Every common spec is mentioned here. The request body does not show `readOnly` properties.
+      operationId: demonstrationPut
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/resource'
+      responses:
+        '200':
+          x-summary: The resource was updated
+          description: Every common spec is mentioned here.  The `200` response shows `readOnly` properties.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resource'
+        '401':
+          $ref: 'oauth2/401.yaml'
+        '403':
+          $ref: 'oauth2/403.yaml'
+components:
+  schemas:
+    resource:
+      allOf:
+        - $ref: 'resource/Audited.yaml'
+        - type: object
+          properties:
+            human:
+              type: object
+              properties:
+                gender:
+                  $ref: 'human/Gender.yaml'
+            id:
+              type: object
+              properties:
+                naturalPerson:
+                  type: object
+                  properties:
+                    be:
+                      type: object
+                      properties:
+                        inss:
+                          $ref: 'id/naturalPerson/be/INSS.yaml'
+                uuid:
+                  $ref: 'id/UUID.yaml'
+            location:
+              type: object
+              properties:
+                address:
+                  $ref: 'location/Address.yaml'
+                country:
+                  $ref: 'location/Country.yaml'
+            oauth2:
+              type: object
+              properties:
+                bearerAccessToken:
+                  $ref: 'oauth2/BearerAccessToken.yaml'
+                errorResponse:
+                  $ref: 'oauth2/ErrorResponse.yaml'
+                wwwAuthenticate:
+                  $ref: 'oauth2/WWWAuthenticate.yaml'
+            resource:
+              type: object
+              properties:
+                audited:
+                  $ref: 'resource/Audited.yaml'
+                versioned:
+                  $ref: 'resource/Versioned.yaml'
+            string:
+              type: object
+              properties:
+                language:
+                  $ref: 'string/Language.yaml'
+                telephoneNumber:
+                  $ref: 'string/TelephoneNumber.yaml'
+                trimmedString:
+                  $ref: 'string/TrimmedString.yaml'
+            time:
+              type: object
+              properties:
+                dateTime:
+                  $ref: 'time/DateTime.yaml'
+                changeDateTime:
+                  $ref: 'time/ChangeDateTime.yaml'
+                dayDate:
+                  $ref: 'time/DayDate.yaml'
+                dayDateInterval:
+                  $ref: 'time/DayDateInterval.yaml'
