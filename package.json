@@ -40,7 +40,7 @@
   },
   "watch": {
     "OpenAPI:lint": {
-      "patterns": "src",
+      "patterns": ".",
       "extensions": "yaml",
       "ignore": ""
     }
