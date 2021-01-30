@@ -29,6 +29,46 @@ servers:
   - url: 'https://www.ppwcode.org/openapi/common'
     description: Dummy endpoint. There is nothing here.
 paths:
+  /health:
+    parameters:
+      - $ref: 'parameters/forceError.yaml'
+      - $ref: 'parameters/flowId.yaml'
+      - $ref: 'parameters/mode.yaml'
+      - $ref: 'oauth2/authorization.yaml'
+    get:
+      summary: Health of the API
+      description: >-
+        Returns `200` when a superficial check of the API, service, and its resources says it is healthy. A `470` means
+        the system is still reachable, but determines itself that it is not in good health. If the system is no longer
+        reachable, or fatally hampered, expect a `500` or any other error.
+      operationId: healthGet
+      responses:
+        '200':
+          description: >-
+            The service was reached, and it deemed itself healthy.
+          headers:
+            x-flow-id:
+              schema:
+                $ref: 'id/UUID.yaml'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/health'
+        '401':
+          $ref: 'oauth2/401.yaml'
+        '403':
+          $ref: 'oauth2/403.yaml'
+        '470':
+          description: >-
+            The service was reached, but some of its dependencies are not healthy. The service should not be used.
+          headers:
+            x-flow-id:
+              schema:
+                $ref: 'id/UUID.yaml'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/health'
   /demonstration:
     parameters:
       - $ref: 'parameters/forceError.yaml'
@@ -79,6 +119,15 @@ paths:
           $ref: 'resource/404.yaml'
 components:
   schemas:
+    health:
+      allOf:
+        - $ref: 'health/Health.yaml'
+        - type: object
+          required:
+            - dependency
+          properties:
+            dependency:
+              $ref: 'health/Status.yaml'
     resource:
       allOf:
         - $ref: 'resource/Audited.yaml'
