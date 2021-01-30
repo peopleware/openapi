@@ -30,6 +30,8 @@ servers:
     description: Dummy endpoint. There is nothing here.
 paths:
   /demonstration:
+    parameters:
+      - $ref: 'oauth2/authorization.yaml'
     get:
       summary: Demonstration of common specs
       operationId: demonstration
@@ -51,3 +53,7 @@ paths:
                     $ref: 'time/DayDate.yaml'
                   dayDateInterval:
                     $ref: 'time/DayDateInterval.yaml'
+        '401':
+          $ref: 'oauth2/401.yaml'
+        '403':
+          $ref: 'oauth2/403.yaml'
