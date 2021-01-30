@@ -1,0 +1,21 @@
+image: node:15
+
+definitions:
+  caches:
+    npm15: ~/.npm
+  branches:
+    - branch: &testAndTag
+      - step:
+          name: Test
+          caches:
+            - node
+            - npm15
+          script:
+            - git submodule update --init
+            - scripts/common/npm/testCi.sh
+            - scripts/common/git/tagBitbucket.sh
+pipelines:
+  branches:
+    master: *testAndTag
+    feature/**: *testAndTag
+    bugfix/**: *testAndTag
