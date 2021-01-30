@@ -1,0 +1,31 @@
+type: object
+required:
+  - line1
+  - postalCode
+  - municipality
+  - country
+properties:
+  line1:
+    allOf:
+      - $ref: '../string/TrimmedString.yaml'
+      - description: First address line. Used together with `line2`.
+  line2:
+    allOf:
+      - $ref: '../string/TrimmedString.yaml'
+      - description: First address line. Used together with `line1`.
+  postalCode:
+    type: string
+    description: For some well-known `country`s, a pattern is enforced. E.g., for `BE`, the pattern is `^[1-9]\d{3}&`.
+  municipality:
+    allOf:
+      - $ref: '../string/TrimmedString.yaml'
+      - description:
+          Name of the municipality of the address. Essentially free text (it is impossible in practice to validate
+          this).
+  country:
+    $ref: 'Country.yaml'
+example:
+  line1: Duwijckstraat 17
+  postalCode: 2500
+  municipality: Lier
+  country: BE

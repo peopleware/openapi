@@ -52,6 +52,13 @@ paths:
                     properties:
                       uuid:
                         $ref: 'id/UUID.yaml'
+                  location:
+                    type: object
+                    properties:
+                      address:
+                        $ref: 'location/Address.yaml'
+                      country:
+                        $ref: 'location/Country.yaml'
                   oauth2:
                     type: object
                     properties:
