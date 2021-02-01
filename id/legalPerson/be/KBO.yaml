@@ -15,6 +15,6 @@
 type: string
 pattern: \d{10}
 description: >-
-  The Belgian KBO (en: Company number / nl: Ondernemingsnummer / fr: Numéro d’entreprise / de: Firmennummer) of the company. There is no formatting
-  in this representation.
+  The Belgian KBO (en: Company number / nl: Ondernemingsnummer / fr: Numéro d’entreprise / de: Firmennummer) of the
+  company. There is no formatting in this representation.
 example: '0123456789'
