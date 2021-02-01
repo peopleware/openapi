@@ -13,10 +13,5 @@
 # limitations under the License.
 
 allOf:
-  - $ref: '../resource/AuditedVersioned.yaml'
-  - type: object
-    required:
-      - status
-    properties:
-      status:
-        $ref: 'Status.yaml'
+  - $ref: 'Audited.yaml'
+  - $ref: 'Versioned.yaml'
