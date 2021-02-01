@@ -13,5 +13,5 @@
 # limitations under the License.
 
 allOf:
-  - $ref: 'Audited.yaml'
   - $ref: 'Versioned.yaml'
+  - $ref: 'Audited.yaml'
