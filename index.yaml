@@ -157,6 +157,14 @@ components:
                       properties:
                         inss:
                           $ref: 'id/naturalPerson/be/INSS.yaml'
+                legalPerson:
+                  type: object
+                  properties:
+                    be:
+                      type: object
+                      properties:
+                        kbo:
+                          $ref: 'id/legalPerson/be/KBO.yaml'
                 uuid:
                   $ref: 'id/UUID.yaml'
             location:
