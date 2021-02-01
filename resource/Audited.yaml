@@ -19,11 +19,6 @@ allOf:
       - createdAt
       - createdBy
     properties:
-      structureVersion:
-        type: integer
-        minimum: 0
-        description: Version of the data structure of this resource type
-        example: 4
       createdAt:
         allOf:
           - readOnly: true
