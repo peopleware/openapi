@@ -125,6 +125,35 @@ paths:
           $ref: 'oauth2/403.yaml'
         '404':
           $ref: 'resource/404.yaml'
+  /demonstration/searchDocument:
+    parameters:
+      - $ref: 'parameters/forceError.yaml'
+      - $ref: 'parameters/flowId.yaml'
+      - $ref: 'parameters/mode.yaml'
+      - $ref: 'oauth2/authorization.yaml'
+      - $ref: 'parameters/at.yaml'
+    get:
+      summary: Demonstration of common specs for `GET` search document
+      description: Document to be indexed by search engine
+      operationId: demonstrationGetSearchDocument
+      responses:
+        '200':
+          x-summary: The resource exists
+          description: Versioned and timestamped, but no `createdAt`
+          headers:
+            x-flow-id:
+              schema:
+                $ref: 'id/UUID.yaml'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/timestampedVersioned'
+        '401':
+          $ref: 'oauth2/401.yaml'
+        '403':
+          $ref: 'oauth2/403.yaml'
+        '404':
+          $ref: 'resource/404.yaml'
 components:
   schemas:
     health:
@@ -210,3 +239,10 @@ components:
                   $ref: 'time/DayDate.yaml'
                 dayDateInterval:
                   $ref: 'time/DayDateInterval.yaml'
+    timestampedVersioned:
+      allOf:
+        - $ref: 'resource/TimestampedVersioned.yaml'
+        - type: object
+          properties:
+            example:
+              type: string
