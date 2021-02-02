@@ -53,10 +53,30 @@ paths:
             example: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
       requestBody:
         required: true
+        description: >-
+          - _authorization code_:
+            The authorization code grant type is used to obtain both access tokens and refresh tokens and is optimized
+            for confidential clients. Since this is a redirection-based flow, the client must be capable of interacting
+            with the resource owner's user-agent (typically a web browser) and capable of receiving incoming requests
+            (via redirection) from the authorization server. See [Section 4.1 of RFC
+            6749](https://tools.ietf.org/html/rfc6749#section-4.1).
+
+            _// **MUDO** with PKCE_
+
+          - _client credentials_:
+            The client can request an access token using only its client credentials […] when the client is requesting
+            access to the protected resources under its control, or those of another resource owner that have been
+            previously arranged with the authorization server […]. See [Section 4.4 of RFC
+            6749](https://tools.ietf.org/html/rfc6749#section-4.4).
+
+          - _refresh_:
+            If the authorization server issued a refresh token to the client, the client makes a refresh request to the
+            token endpoint. See [Section 6 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-6).
         content:
           application/x-www-form-urlencoded:
             schema:
               oneOf:
+                - $ref: '#/components/schemas/authorizationCode'
                 - $ref: '#/components/schemas/clientCredentials'
                 - $ref: '#/components/schemas/refresh'
       responses:
@@ -246,6 +266,31 @@ components:
             6749](https://tools.ietf.org/html/rfc6749#section-3.3). The requested scope **must not** include any scope
             not originally granted by the resource owner, and if omitted is treated as equal to the scope originally
             granted by the resource owner.
+    authorizationCode:
+      allOf:
+        - type: object
+          required:
+            - grant_type
+            - code
+            - redirect_uri
+            - client_id
+          properties:
+            grant_type:
+              type: string
+              enum:
+                - authorization_code
+            code:
+              type: string
+              minLength: 1
+              description: The authorization code received from the authorization server.
+            redirect_uri:
+              type: string
+              format: uri
+              description: Must be identical to the redirect uri with which the `code` was requested.
+            client_id:
+              type: string
+              minLength: 1
+        - $ref: '#/components/schemas/requestBodyBase'
     clientCredentials:
       allOf:
         - type: object
