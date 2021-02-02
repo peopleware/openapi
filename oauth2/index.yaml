@@ -37,7 +37,8 @@ paths:
         refresh token.  The token endpoint is used with every authorization grant except for the implicit grant type
         (since an access token is issued directly).
 
-        This spec only supports the _client credentials grant_, and refreshing an access token.
+        This spec only supports the _authorization code grant with PKCE_, _client credentials grant_, and refreshing an
+        access token.
       operationId: healthGet
       parameters:
         - name: authorization
@@ -54,7 +55,7 @@ paths:
       requestBody:
         required: true
         description: >-
-          - _authorization code_ with PKCE:
+          - _authorization code with PKCE_:
             The authorization code grant type is used to obtain both access tokens and refresh tokens and is optimized
             for confidential clients. Since this is a redirection-based flow, the client must be capable of interacting
             with the resource owner's user-agent (typically a web browser) and capable of receiving incoming requests
@@ -73,7 +74,7 @@ paths:
 
             See [Section 4.4 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-4.4).
 
-          - _refresh_:
+          - _refresh token_:
             If the authorization server issued a refresh token to the client, the client makes a refresh request to the
             token endpoint.
 
