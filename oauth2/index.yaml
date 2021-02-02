@@ -54,7 +54,7 @@ paths:
       requestBody:
         required: true
         description: >-
-          - _authorization code_:
+          - _authorization code_ with PKCE:
             The authorization code grant type is used to obtain both access tokens and refresh tokens and is optimized
             for confidential clients. Since this is a redirection-based flow, the client must be capable of interacting
             with the resource owner's user-agent (typically a web browser) and capable of receiving incoming requests
@@ -62,7 +62,9 @@ paths:
 
             See [Section 4.1 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-4.1).
 
-            _// **MUDO** with PKCE_
+            This spec only supports the authorization code grant with PKCE (Proof Key for Code Exchange).
+
+            See [RFC 7636](https://tools.ietf.org/html/rfc7636).
 
           - _client credentials_:
             The client can request an access token using only its client credentials […] (in the `authorization` header)
@@ -287,6 +289,7 @@ components:
             - code
             - redirect_uri
             - client_id
+            - code_verifier
           properties:
             code:
               type: string
@@ -299,6 +302,13 @@ components:
             client_id:
               type: string
               minLength: 1
+            code_verifier:
+              type: string
+              description: >-
+                A cryptographically random string that is used to correlate the authorization request to the token
+                request.
+
+                See [RFC 7636 Section 4.1](https://tools.ietf.org/html/rfc7636#section-4.1).
     client_credentials:
       allOf:
         - $ref: '#/components/schemas/requestBodyBase'
