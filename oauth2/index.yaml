@@ -36,22 +36,29 @@ paths:
         The token endpoint is used by the client to obtain an access token by presenting its authorization grant or
         refresh token.  The token endpoint is used with every authorization grant except for the implicit grant type
         (since an access token is issued directly).
+
+        This spec only supports the _client credentials grant_, and refreshing an access token.
       operationId: healthGet
+      parameters:
+        - name: authorization
+          in: header
+          required: false
+          description:
+            Only when working with the _client credentials grant_, and then required. See [RFC 6749 Section
+            4.4.2](https://tools.ietf.org/html/rfc6749#section-4.4.2) and [RFC 6749 Section
+            6](https://tools.ietf.org/html/rfc6749#section-6).
+          schema:
+            type: string
+            pattern: Basic .*
+            example: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
       requestBody:
         required: true
         content:
           application/x-www-form-urlencoded:
             schema:
-              type: object
-              properties:
-                grant_type:
-                  type: string
-                code:
-                  type: string
-                redirect_uri:
-                  type: string
-                client_id:
-                  type: string
+              oneOf:
+                - $ref: '#/components/schemas/clientCredentials'
+                - $ref: '#/components/schemas/refresh'
       responses:
         '200':
           description: >-
@@ -229,6 +236,43 @@ paths:
                   - $ref: '#/components/schemas/errorResponseBase'
 components:
   schemas:
+    requestBodyBase:
+      type: object
+      properties:
+        scope:
+          type: string
+          description: >-
+            The scope of the access request as described by [Section 3.3 of RFC
+            6749](https://tools.ietf.org/html/rfc6749#section-3.3). The requested scope **must not** include any scope
+            not originally granted by the resource owner, and if omitted is treated as equal to the scope originally
+            granted by the resource owner.
+    clientCredentials:
+      allOf:
+        - type: object
+          required:
+            - grant_type
+          properties:
+            grant_type:
+              type: string
+              enum:
+                - client_credentials
+        - $ref: '#/components/schemas/requestBodyBase'
+    refresh:
+      allOf:
+        - type: object
+          required:
+            - grant_type
+            - refresh_token
+          properties:
+            grant_type:
+              type: string
+              enum:
+                - refresh_token
+            refresh_token:
+              type: string
+              minLength: 1
+              description: The refresh token issued to the client
+        - $ref: '#/components/schemas/requestBodyBase'
     errorResponseBase:
       type: object
       required:
