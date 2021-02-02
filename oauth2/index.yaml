@@ -76,9 +76,11 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/authorizationCode'
-                - $ref: '#/components/schemas/clientCredentials'
-                - $ref: '#/components/schemas/refresh'
+                - $ref: '#/components/schemas/authorization_code'
+                - $ref: '#/components/schemas/client_credentials'
+                - $ref: '#/components/schemas/refresh_token'
+              discriminator:
+                propertyName: grant_type
       responses:
         '200':
           description: >-
@@ -258,7 +260,11 @@ components:
   schemas:
     requestBodyBase:
       type: object
+      required:
+        - grant_type
       properties:
+        grant_type:
+          type: string
         scope:
           type: string
           description: >-
@@ -266,19 +272,15 @@ components:
             6749](https://tools.ietf.org/html/rfc6749#section-3.3). The requested scope **must not** include any scope
             not originally granted by the resource owner, and if omitted is treated as equal to the scope originally
             granted by the resource owner.
-    authorizationCode:
+    authorization_code:
       allOf:
+        - $ref: '#/components/schemas/requestBodyBase'
         - type: object
           required:
-            - grant_type
             - code
             - redirect_uri
             - client_id
           properties:
-            grant_type:
-              type: string
-              enum:
-                - authorization_code
             code:
               type: string
               minLength: 1
@@ -290,34 +292,20 @@ components:
             client_id:
               type: string
               minLength: 1
-        - $ref: '#/components/schemas/requestBodyBase'
-    clientCredentials:
+    client_credentials:
       allOf:
+        - $ref: '#/components/schemas/requestBodyBase'
+    refresh_token:
+      allOf:
+        - $ref: '#/components/schemas/requestBodyBase'
         - type: object
           required:
-            - grant_type
-          properties:
-            grant_type:
-              type: string
-              enum:
-                - client_credentials
-        - $ref: '#/components/schemas/requestBodyBase'
-    refresh:
-      allOf:
-        - type: object
-          required:
-            - grant_type
             - refresh_token
           properties:
-            grant_type:
-              type: string
-              enum:
-                - refresh_token
             refresh_token:
               type: string
               minLength: 1
               description: The refresh token issued to the client
-        - $ref: '#/components/schemas/requestBodyBase'
     errorResponseBase:
       type: object
       required:
