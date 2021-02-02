@@ -58,20 +58,27 @@ paths:
             The authorization code grant type is used to obtain both access tokens and refresh tokens and is optimized
             for confidential clients. Since this is a redirection-based flow, the client must be capable of interacting
             with the resource owner's user-agent (typically a web browser) and capable of receiving incoming requests
-            (via redirection) from the authorization server. See [Section 4.1 of RFC
-            6749](https://tools.ietf.org/html/rfc6749#section-4.1).
+            (via redirection) from the authorization server.
+
+            See [Section 4.1 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-4.1).
 
             _// **MUDO** with PKCE_
 
           - _client credentials_:
-            The client can request an access token using only its client credentials […] when the client is requesting
-            access to the protected resources under its control, or those of another resource owner that have been
-            previously arranged with the authorization server […]. See [Section 4.4 of RFC
-            6749](https://tools.ietf.org/html/rfc6749#section-4.4).
+            The client can request an access token using only its client credentials […] (in the `authorization` header)
+            when the client is requesting access to the protected resources under its control, or those of another
+            resource owner that have been previously arranged with the authorization server […].
+
+            See [Section 4.4 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-4.4).
 
           - _refresh_:
             If the authorization server issued a refresh token to the client, the client makes a refresh request to the
-            token endpoint. See [Section 6 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-6).
+            token endpoint.
+
+            If the orignal refresh token was obtained using _client credentials_, the client credentials need to be
+            added in the `authorization header`.
+
+            See [Section 6 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-6).
         content:
           application/x-www-form-urlencoded:
             schema:
