@@ -14,5 +14,5 @@
 
 type: string
 example: >-
-  Bearer realm="https://app.contassur.com/api", charset="utf-8", error_description="invalid signature",
+  Bearer realm="https://app.example.com/api", charset="utf-8", error_description="invalid signature",
   verifyFailed="true", error="invalid_token"
