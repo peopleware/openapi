@@ -1,0 +1,251 @@
+# Copyright 2021 - 2021 PeopleWare n.v.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+openapi: 3.0.3
+info:
+  title: ppwcode STS
+  description: >-
+    Spec for an OAuth2 Secure Token Service (STS), according to [RFC 6749](https://tools.ietf.org/html/rfc6749).
+  version: 1.0.0
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  contact:
+    name: PeopleWare n.v.
+    email: info@peopleware.be
+    url: 'https://www.peopleware.be/'
+servers:
+  - url: 'https://www.ppwcode.org/openapi/common/sts'
+    description: Dummy endpoint. There is nothing here.
+paths:
+  /token:
+    post:
+      summary: Get access and refresh token
+      description: >-
+        The token endpoint is used by the client to obtain an access token by presenting its authorization grant or
+        refresh token.  The token endpoint is used with every authorization grant except for the implicit grant type
+        (since an access token is issued directly).
+      operationId: healthGet
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  type: string
+                code:
+                  type: string
+                redirect_uri:
+                  type: string
+                client_id:
+                  type: string
+      responses:
+        '200':
+          description: >-
+            The access token request is valid and authorized
+          headers:
+            cache-control:
+              schema:
+                type: string
+                enum:
+                  - no-store
+            pragma:
+              schema:
+                type: string
+                enum:
+                  - no-cache
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - access_token
+                  - token_type
+                  - expires_in
+                  - refresh_token
+                  - scope
+                properties:
+                  access_token:
+                    $ref: 'BearerAccessToken.yaml'
+                    description: The access token issued by the authorization server.
+                  token_type:
+                    type: string
+                    description: >-
+                      The access token type provides the client with the information required to successfully utilize
+                      the access token to make a protected resource request (along with type-specific attributes).  The
+                      client **must not** use an access token if it does not understand the token type.
+
+                      In this case, the value is always `Bearer`, as defined in [RFC
+                      6750](https://tools.ietf.org/html/rfc6750).
+                    enum:
+                      - Bearer
+                  expires_in:
+                    type: integer
+                    minimum: 1
+                    description: >-
+                      The lifetime in seconds of the access token.  For example, the value "3600" denotes that the
+                      access token will expire in one hour from the time the response was generated.
+
+                      Although optional in [RFC 6749](https://tools.ietf.org/html/rfc6749#section-5.1), it is required
+                      here.
+
+                      This value should not be < 60, to accomodate for clock drift on the STS, the client, and the
+                      resource server. Furthermore, the shorter the lifetime of access tokens, the more often clients
+                      will need to request new access tokens. A shorter lifetime thus results in more token requests on
+                      the STS, which has a cost.
+
+                      This value should not be too large, for security reasons. For performance reasons, the resource
+                      server will not check with the STS for toking validity. Issued tokes therefore cannot be
+                      retracted. When an account's mandates are retracted in the STS, the account will not be able to
+                      get new access tokens, but the tokens already issued remain valid throughout their lifetime. Worst
+                      case, the last valid token was issued just before the account's mandates where retracted. The
+                      account will be able to continue to use the service after it's mandates were retracted for at most
+                      the lifetime of that token.
+
+                      Since retracting the mandate of an account is a human endeavor, it is acceptable to use a human
+                      timescale for the lifetime of an access token. We suggest 5 minutes (`300`).
+                    example: 300
+                  refresh_token:
+                    type: string
+                    minLength: 1
+                    description: >-
+                      The refresh token, which can be used to obtain new access tokens using the same authorization
+                      grant as described in [Section 6 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-6).
+
+                      Although optional in [RFC 6749](https://tools.ietf.org/html/rfc6749#section-5.1), it is required
+                      here.
+                    example: tGzv3JOkF0XG5Qx2TlKWIA
+                  scope:
+                    type: string
+                    description: >-
+                      The scope of the access token as described by [Section 3.3 of RFC
+                      6749](https://tools.ietf.org/html/rfc6749#section-3.3).
+                    example: scope1 scope2 scope3
+        '400':
+          description: >-
+            Bad request, according to [Section 5.2 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-5.2) (For
+            `invalid_client`, see `401`)
+          headers:
+            cache-control:
+              schema:
+                type: string
+                enum:
+                  - no-store
+            pragma:
+              schema:
+                type: string
+                enum:
+                  - no-cache
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      error:
+                        type: string
+                        description: >-
+                          - `invalid_request`:
+                            The request is missing a required parameter, includes an
+                            unsupported parameter value (other than grant type),
+                            repeats a parameter, includes multiple credentials,
+                            utilizes more than one mechanism for authenticating the
+                            client, or is otherwise malformed.
+                          - `invalid_client`:
+                            Client authentication failed (e.g., unknown client, no
+                            client authentication included, or unsupported
+                            authentication method).  The authorization server MAY
+                            return an HTTP 401 (Unauthorized) status code to indicate
+                            which HTTP authentication schemes are supported.  If the
+                            client attempted to authenticate via the "Authorization"
+                            request header field, the authorization server MUST
+                            respond with an HTTP 401 (Unauthorized) status code and
+                            include the "WWW-Authenticate" response header field
+                            matching the authentication scheme used by the client.
+                          - `invalid_grant`
+                            The provided authorization grant (e.g., authorization
+                            code, resource owner credentials) or refresh token is
+                            invalid, expired, revoked, does not match the redirection
+                            URI used in the authorization request, or was issued to
+                            another client.
+                          - `unauthorized_client`
+                            The authenticated client is not authorized to use this
+                            authorization grant type.
+                          - `unsupported_grant_type`
+                            The authorization grant type is not supported by the
+                            authorization server.
+                          - `invalid_scope`
+                            The requested scope is invalid, unknown, malformed, or
+                            exceeds the scope granted by the resource owner.
+                        enum:
+                          - invalid_request
+                          - invalid_client
+                          - invalid_grant
+                          - unauthorized_client
+                          - unsupported_grant_type
+                          - invalid_scope
+                  - $ref: '#/components/schemas/errorResponseBase'
+        '401':
+          description: >-
+            Client authentication failed, according to [Section 5.2 of RFC
+            6749](https://tools.ietf.org/html/rfc6749#section-5.2)
+          headers:
+            x-www-authenticate:
+              schema:
+                $ref: 'WWWAuthenticate.yaml'
+            cache-control:
+              schema:
+                type: string
+                enum:
+                  - no-store
+            pragma:
+              schema:
+                type: string
+                enum:
+                  - no-cache
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      error:
+                        type: string
+                        enum:
+                          - invalid_client
+                  - $ref: '#/components/schemas/errorResponseBase'
+components:
+  schemas:
+    errorResponseBase:
+      type: object
+      required:
+        - error
+      properties:
+        error_description:
+          type: string
+          format: ascii
+          description: >-
+            Human-readable ASCII [USASCII] text providing additional information, used to assist the client developer in
+            understanding the error that occurred. Values for the `error_description` parameter **must not** include
+            characters outside the set `%x20-21` / `%x23-5B` / `%x5D-7E`.
+        error_uri:
+          type: string
+          format: uri
+          description: >-
+            A URI identifying a human-readable web page with information about the error, used to provide the client
+            developer with additional information about the error. Values for the `error_uri` parameter **must** conform
+            to the URI-reference syntax and thus **must not** include characters outside the set `%x21` / `%x23-5B` /
+            `%x5D-7E`.
