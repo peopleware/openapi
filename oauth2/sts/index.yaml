@@ -50,3 +50,5 @@ components:
       $ref: 'RefreshTokenTokenRequestBody.yaml'
     RSA:
       $ref: 'RSAJWK.yaml'
+    EC:
+      $ref: 'ECJWK.yaml'

@@ -15,6 +15,7 @@
 schema:
   oneOf:
     - $ref: '#/components/schemas/RSA'
+    - $ref: '#/components/schemas/EC'
   discriminator:
     propertyName: kty
 components:
@@ -23,3 +24,5 @@ components:
     # This has to be repeated in `index.yaml` as a workaround.
     RSA:
       $ref: 'RSAJWK.yaml'
+    EC:
+      $ref: 'ECJWK.yaml'
