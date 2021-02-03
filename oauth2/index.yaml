@@ -310,6 +310,7 @@ paths:
                   - nbf
                   - iat
                   - jti
+                  - http://www.ppwcode.org/raa/2
                 properties:
                   iss:
                     type: string
@@ -384,6 +385,14 @@ paths:
 
                       We suggest using a UUID.
                     example: 72bd9328-3e3e-46da-93da-bff6a66d275d
+                  'http://www.ppwcode.org/raa/2':
+                    type: object
+                    additionalProperties:
+                      type: string
+                      pattern: '^[\w-.~%!$&''()*+,;=/{]+$' # MUDO make sure {} are closed, and that we start with a /
+                    example:
+                      'https://www.ppwcode.org/openapi/common/I': '*:/a/path/*/to/{a,multiple}/resources/**'
+                      'https://www.ppwcode.org/openapi/other/IV': '{GET,PUT}:/another/path/43/without/choices'
 components:
   schemas:
     requestBodyBase:
