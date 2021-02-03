@@ -18,6 +18,9 @@ info:
   description: >-
     Spec for an OAuth2 Secure Token Service (STS), according to [RFC 6749](https://tools.ietf.org/html/rfc6749),
     extended with support for Resource Action Authorization (RAA) version 2.
+
+    To learn about OAuth2, we found ["OAuth 2.0 Simplified" by Aaron Parecki](https://www.oauth.com/) to be a very good
+    resource.
   version: 1.0.0
   license:
     name: Apache 2.0
