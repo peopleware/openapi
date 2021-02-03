@@ -275,6 +275,10 @@ properties:
       to the algorithm specified in the certificate.
 
 
+      In practice, if a thumbprint is given, it is either as SHA-1 in `x5t`, or as SHA-256 in `x5t#S256`, and then
+      usually also used as `kid`.
+
+
       See [RFC 7517 Section 4.8](https://tools.ietf.org/html/rfc7517#section-4.8).
     example: NjVBRjY5MDlCMUIwNzU4RTA2QzZFMDQ4QzQ2MDAyQjVDNjk1RTM2Qg
 discriminator:
