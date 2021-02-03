@@ -57,7 +57,7 @@ post:
     content:
       application/x-www-form-urlencoded:
         schema:
-          $ref: 'TokenRequestBody.yaml#/schema'
+          $ref: 'token/requestBody/TokenRequestBody.yaml#/schema'
   responses:
     '200':
       $ref: 'TokenRequest200.yaml'
