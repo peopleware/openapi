@@ -83,19 +83,7 @@ paths:
                 propertyName: grant_type
       responses:
         '200':
-          description: >-
-            The access token request is valid and authorized
-          headers:
-            cache-control:
-              schema:
-                $ref: 'sts/CacheControlResponseHeader.yaml'
-            pragma:
-              schema:
-                $ref: 'sts/PragmaResponseHeader.yaml'
-          content:
-            application/json:
-              schema:
-                $ref: 'sts/TokenRequestResponseBody.yaml'
+          $ref: 'sts/TokenRequest200.yaml'
         '400':
           $ref: 'sts/TokenRequest400.yaml'
         '401':
