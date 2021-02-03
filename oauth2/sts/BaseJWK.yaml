@@ -19,8 +19,8 @@ properties:
   kty:
     type: string
     description: >-
-      The `kty` (key type) parameter identifies the cryptographic algorithm family used with the key, such as "RSA" or
-      "EC".  `kty` values should either be registered in the IANA "JSON Web Key Types" registry established by
+      The `kty` (key type) parameter identifies the cryptographic algorithm family used with the key, such as `RSA` or
+      `EC`.  `kty` values should either be registered in the IANA "JSON Web Key Types" registry established by
       [JWA](https://tools.ietf.org/html/rfc7518) or be a value that contains a Collision- Resistant Name.  The `kty`
       value is a case-sensitive string.
 
