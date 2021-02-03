@@ -1,0 +1,51 @@
+# Copyright 2021 - 2021 PeopleWare n.v.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+get:
+  summary: Get JSON Web Key Set
+  description: >-
+    The `jwks` endpoint is used by resource services to obtain the public keys with which this STS signs access tokens
+    returned from ['/token'](#operation/tokenGet). The structure of the response is defined by [RFC
+    7517](https://tools.ietf.org/html/rfc7517).
+
+
+    The response **may** contain caching headers that allow to requester to cache responses for a rather long time, as
+    the returned public keys are probably valid for a long time.
+  operationId: jwksGet
+  responses:
+    '200':
+      x-summary: Returns the current JSON Web Key Set of this STS.
+      description: >-
+        A JWK Set is a JSON object that represents a set of JWKs. The JSON object MUST have a `keys` member, with its
+        value being an array of JWKs.
+
+
+        The member names within a JWK Set **must** be unique; JWK Set parsers **must** either reject JWK Sets with
+        duplicate member names or use a JSON parser that returns only the lexically last duplicate member name, as
+        specified in [Section 15.12](https://tools.ietf.org/html/rfc7517#section-15.12) ("The JSON Object") of
+        [ECMAScript 5.1](https://tools.ietf.org/html/rfc7517#ref-ECMAScript).
+
+
+        Additional members can be present in the JWK Set; if not understood by implementations encountering them, they
+        **must** be ignored. Parameters for representing additional properties of JWK Sets should either be registered
+        in the IANA "JSON Web Key Set Parameters" registry established by [Section 8.4 of RFC
+        7517](https://tools.ietf.org/html/rfc7517#section-8.4) or be a value that contains a Collision-Resistant Name.
+
+
+        Implementations **should** ignore JWKs within a JWK Set that use `kty` (key type) values that are not understood
+        by them, that are missing required members, or for which values are out of the supported ranges.
+      content:
+        application/json:
+          schema:
+            $ref: 'jwks.yaml'
