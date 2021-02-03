@@ -78,3 +78,5 @@ post:
       $ref: 'response/400.yaml'
     '401':
       $ref: 'response/401.yaml'
+    '429':
+      $ref: 'response/429.yaml'
