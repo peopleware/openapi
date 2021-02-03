@@ -194,5 +194,61 @@ properties:
       See [RFC 7517 Section 4.3](https://tools.ietf.org/html/rfc7517#section-4.3).
     example:
       - verify
+  x5u:
+    type: string
+    format: uri
+    description: >-
+      The `x5u` (X.509 URL) parameter is a [URI](https://tools.ietf.org/html/rfc3986) that refers to a resource for an
+      [X.509 public key certificate or certificate chain](https://tools.ietf.org/html/rfc5280). The identified resource
+      **must** provide a representation of the certificate or certificate chain that conforms to [RFC
+      5280](https://tools.ietf.org/html/rfc5280) in PEM-encoded form, with each certificate delimited as specified in
+      [Section 6.1 of RFC 4945](https://tools.ietf.org/html/rfc4945#section-6.1). The key in the first certificate
+      **must** match the public key represented by other members of the JWK. The protocol used to acquire the resource
+      **must** provide integrity protection; an HTTP GET request to retrieve the certificate **must** use TLS [RFC
+      5246](https://tools.ietf.org/html/rfc5246) [RFC 2818](https://tools.ietf.org/html/rfc2818); the identity of the
+      server **must** be validated, as per [Section 6 of RFC 6125](https://tools.ietf.org/html/rfc6125#section-6).
+
+
+      Use of this member is _optional_.
+
+
+      While there is no requirement that optional JWK members providing key usage, algorithm, or other information be
+      present when the `x5u` member is used, doing so may improve interoperability for applications that do not handle
+      PKIX certificates [RFC 5280](https://tools.ietf.org/html/rfc5280). If other members are present, the contents of
+      those members **must** be semantically consistent with the related fields in the first certificate. For instance,
+      if the `use` member is present, then it **must** correspond to the usage that is specified in the certificate,
+      when it includes this information. Similarly, if the `alg` member is present, it **must** correspond to the
+      algorithm specified in the certificate.
+
+
+      See [RFC 7517 Section 4.6](https://tools.ietf.org/html/rfc7517#section-4.6).
+  x5c:
+    type: array
+    items:
+      type: string
+      format: base64
+      minLength: 1
+    description: >-
+      The `x5c` (X.509 certificate chain) parameter contains a chain of one or more PKIX certificates [RFC
+      5280](https://tools.ietf.org/html/rfc5280). The certificate chain is represented as a JSON array of certificate
+      value strings. Each string in the array is a base64-encoded ([Section 4 of RFC
+      4648](https://tools.ietf.org/html/rfc4648#section-4) — not base64url-encoded) DER _ITU.X690.1994_ PKIX certificate
+      value. The PKIX certificate containing the key value **must** be the first certificate. This **may** be followed
+      by additional certificates, with each subsequent certificate being the one used to certify the previous one. The
+      key in the first certificate **must** match the public key represented by other members of the JWK.
+
+      Use of this member is _optional_.
+
+
+      While there is no requirement that optional JWK members providing key usage, algorithm, or other information be
+      present when the `x5c` member is used, doing so may improve interoperability for applications that do not handle
+      PKIX certificates [RFC 5280](https://tools.ietf.org/html/rfc5280). If other members are present, the contents of
+      those members **must** be semantically consistent with the related fields in the first certificate. For instance,
+      if the `use` member is present, then it **must** correspond to the usage that is specified in the certificate,
+      when it includes this information. Similarly, if the `alg` member is present, it **must** correspond to the
+      algorithm specified in the certificate.
+
+
+      See [RFC 7517 Section 4.7](https://tools.ietf.org/html/rfc7517#section-4.7).
 discriminator:
   propertyName: kty
