@@ -35,7 +35,7 @@ paths:
   /token:
     $ref: 'TokenResource.yaml'
   '/.well-known/jwks.json':
-    $ref: 'jwksResource.yaml'
+    $ref: 'JWKSResource.yaml'
   /jwt:
     $ref: 'RegisteredJWTClaimSetResource.yaml'
 components:

@@ -47,4 +47,4 @@ get:
       content:
         application/json:
           schema:
-            $ref: 'jwks.yaml'
+            $ref: 'JWKS.yaml'
