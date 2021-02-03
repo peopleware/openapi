@@ -39,7 +39,7 @@ paths:
 
         This spec only supports the _authorization code grant with PKCE_, _client credentials grant_, and refreshing an
         access token.
-      operationId: healthGet
+      operationId: tokenGet
       parameters:
         - $ref: 'sts/TokenRequestAuthorization.yaml'
       requestBody:
