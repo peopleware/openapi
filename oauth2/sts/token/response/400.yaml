@@ -18,10 +18,10 @@ description: >-
 headers:
   cache-control:
     schema:
-      $ref: 'CacheControlResponseHeader.yaml'
+      $ref: 'cacheControl.yaml'
   pragma:
     schema:
-      $ref: 'PragmaResponseHeader.yaml'
+      $ref: 'pragma.yaml'
 content:
   application/json:
     schema:
@@ -70,4 +70,4 @@ content:
                 - unauthorized_client
                 - unsupported_grant_type
                 - invalid_scope
-        - $ref: 'BaseTokenRequestErrorResponse.yaml'
+        - $ref: 'BaseErrorResponseBody.yaml'

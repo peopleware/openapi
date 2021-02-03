@@ -17,11 +17,11 @@ description: >-
 headers:
   cache-control:
     schema:
-      $ref: 'CacheControlResponseHeader.yaml'
+      $ref: 'cacheControl.yaml'
   pragma:
     schema:
-      $ref: 'PragmaResponseHeader.yaml'
+      $ref: 'pragma.yaml'
 content:
   application/json:
     schema:
-      $ref: 'TokenRequestResponseBody.yaml'
+      $ref: 'ResponseBody.yaml'

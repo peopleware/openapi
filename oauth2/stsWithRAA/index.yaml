@@ -34,7 +34,7 @@ servers:
     description: Dummy endpoint. There is nothing here.
 paths:
   /token:
-    $ref: '../sts/TokenResource.yaml'
+    $ref: '../sts/token/resource.yaml'
   '/.well-known/jwks.json':
     $ref: '../sts/JWKS/JWKSResource.yaml'
   /jwt:

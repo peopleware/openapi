@@ -23,7 +23,7 @@ post:
     access token.
   operationId: tokenGet
   parameters:
-    - $ref: 'TokenRequestAuthorization.yaml'
+    - $ref: 'authorization.yaml'
   requestBody:
     required: true
     description: >-
@@ -57,11 +57,11 @@ post:
     content:
       application/x-www-form-urlencoded:
         schema:
-          $ref: 'token/requestBody/TokenRequestBody.yaml#/schema'
+          $ref: 'requestBody/TokenRequestBody.yaml#/schema'
   responses:
     '200':
-      $ref: 'TokenRequest200.yaml'
+      $ref: 'response/200.yaml'
     '400':
-      $ref: 'TokenRequest400.yaml'
+      $ref: 'response/400.yaml'
     '401':
-      $ref: 'TokenRequest401.yaml'
+      $ref: 'response/401.yaml'

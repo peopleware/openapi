@@ -21,7 +21,7 @@ required:
   - scope
 properties:
   access_token:
-    $ref: '../BearerAccessToken.yaml'
+    $ref: '../../../BearerAccessToken.yaml'
     description: The access token issued by the authorization server. See [`/jwt`](#operation/jwtGet) for details.
   token_type:
     type: string

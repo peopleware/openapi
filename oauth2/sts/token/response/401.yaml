@@ -17,13 +17,13 @@ description: >-
 headers:
   x-www-authenticate:
     schema:
-      $ref: '../WWWAuthenticate.yaml'
+      $ref: '../../../WWWAuthenticate.yaml'
   cache-control:
     schema:
-      $ref: 'CacheControlResponseHeader.yaml'
+      $ref: 'cacheControl.yaml'
   pragma:
     schema:
-      $ref: 'PragmaResponseHeader.yaml'
+      $ref: 'pragma.yaml'
 content:
   application/json:
     schema:
@@ -34,4 +34,4 @@ content:
               type: string
               enum:
                 - invalid_client
-        - $ref: 'BaseTokenRequestErrorResponse.yaml'
+        - $ref: 'BaseErrorResponseBody.yaml'
