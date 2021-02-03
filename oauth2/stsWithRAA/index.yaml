@@ -35,6 +35,8 @@ servers:
 paths:
   /token:
     $ref: '../sts/TokenResource.yaml'
+  '/.well-known/jwks.json':
+    $ref: '../sts/JWKS/JWKSResource.yaml'
   /jwt:
     $ref: 'JWT/RAAJWTClaimSetResource.yaml'
 components:
@@ -47,3 +49,7 @@ components:
       $ref: '../sts/ClientCredentialsTokenRequestBody.yaml'
     refresh_token:
       $ref: '../sts/RefreshTokenTokenRequestBody.yaml'
+    RSA:
+      $ref: '../sts/JWKS/RSAJWK.yaml'
+    EC:
+      $ref: '../sts/JWKS/ECJWK.yaml'
