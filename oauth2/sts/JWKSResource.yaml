@@ -21,7 +21,8 @@ get:
 
 
     This spec only supports asymmetric key types (`kty` is `EC` or `RSA`; see [RFC 7518
-    Section-6](https://tools.ietf.org/html/rfc7518#section-6)).
+    Section-6](https://tools.ietf.org/html/rfc7518#section-6)). Note that most, if not all, Secure Token Services
+    currently only use keys of type `RSA` with the `RS256` `alg`.
 
 
     The response **may** contain caching headers that allow to requester to cache responses for a rather long time, as

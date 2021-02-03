@@ -33,6 +33,7 @@ properties:
       The key type definitions include specification of the members to be used for those key types.  Members used with
       specific `kty` values can be found in the IANA "JSON Web Key Parameters" registry established by [Section 8.1 of
       RFC 7517](https://tools.ietf.org/html/rfc7517#section-8.1).
+    example: RSA
   use:
     type: string
     enum:
@@ -61,17 +62,23 @@ properties:
       The `use` and `key_ops` JWK members **should not** be used together; however, if both are used, the information
       they convey **must** be consistent. Applications should specify which of these members they use, if either is to
       be used by the application.
+
+
+      For validation of Bearer Access Tokens, the value of `use` must be `sig`. Note that most, if not all, Secure Token
+      Services currently use the `use` key, with value `sig`.
   key_ops:
-    type: string
-    enum:
-      - sign
-      - verify
-      - encrypt
-      - decrypt
-      - wrapKey
-      - unwrapKey
-      - deriveKey
-      - deriveBits
+    type: array
+    items:
+      type: string
+      enum:
+        - sign
+        - verify
+        - encrypt
+        - decrypt
+        - wrapKey
+        - unwrapKey
+        - deriveKey
+        - deriveBits
     description: >-
       The `key_ops` (key operations) parameter identifies the operation(s) for which the key is intended to be used. The
       `key_ops` parameter is intended for use cases in which public, private, or symmetric keys may be present.
@@ -112,5 +119,9 @@ properties:
       The `use` and `key_ops` JWK members **should not** be used together; however, if both are used, the information
       they convey **must** be consistent. Applications should specify which of these members they use, if either is to
       be used by the application.
+
+      For validation of Bearer Access Tokens, the value of `key_ops` must contain `verify`.
+    example:
+      - verify
 discriminator:
   propertyName: kty

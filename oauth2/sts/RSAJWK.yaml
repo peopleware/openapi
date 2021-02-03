@@ -38,6 +38,7 @@ properties:
 
 
       See [RFC 7518 Section 6.3.1.1](https://tools.ietf.org/html/rfc7518#section-6.3.1.1).
+    example: 987654321
   e:
     type: string
     format: Base64urlUInt-encoded
@@ -51,3 +52,4 @@ properties:
 
 
       See [RFC 7518 Section 6.3.1.2](https://tools.ietf.org/html/rfc7518#section-6.3.1.2).
+    example: AQAB
