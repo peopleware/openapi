@@ -13,7 +13,7 @@
 # limitations under the License.
 
 allOf:
-  - $ref: '../sts/RegisteredJWTClaimSet.yaml'
+  - $ref: '../sts/JWT/RegisteredJWTClaimSet.yaml'
   - type: object
     required:
       - raa/2

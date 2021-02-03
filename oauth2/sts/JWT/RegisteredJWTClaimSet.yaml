@@ -30,7 +30,7 @@ properties:
       application specific. The `iss` value is a case-sensitive string containing a _StringOrURI_ value.
     example: https://www.ppwcode.org/openapi/common/sts
   sub:
-    $ref: '../../id/AccountId.yaml'
+    $ref: '../../../id/AccountId.yaml'
     description: >-
       The `sub` (subject) claim identifies the principal that is the subject of the JWT. The claims in a JWT are
       normally statements about the subject. The subject value **must** either be scoped to be locally unique in the
