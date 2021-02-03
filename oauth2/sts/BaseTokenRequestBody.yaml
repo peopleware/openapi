@@ -25,3 +25,5 @@ properties:
       6749](https://tools.ietf.org/html/rfc6749#section-3.3). The requested scope **must not** include any scope not
       originally granted by the resource owner, and if omitted is treated as equal to the scope originally granted by
       the resource owner.
+discriminator:
+  propertyName: grant_type
