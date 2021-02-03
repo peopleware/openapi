@@ -15,7 +15,35 @@
 type: object
 required:
   - kty
+  - alg
+  - kid
 properties:
+  kid:
+    type: string
+    minLength: 1
+    description: >-
+      The `kid` (key ID) parameter is used to match a specific key. This is used, for instance, to choose among a set of
+      keys within a JWK Set during key rollover.
+
+
+      The structure of the `kid` value is unspecified. The `kid` value is a case-sensitive string.
+
+
+      When `kid` values are used within a JWK Set, different keys within the JWK Set **should** use distinct `kid`
+      values. (One example in which different keys might use the same `kid` value is if they have different `kty` (key
+      type) values but are considered to be equivalent alternatives by the application using them.)
+
+
+      When used with JWS or JWE, the `kid` value is used to match a JWS or JWE `kid` Header Parameter value.
+
+
+      Although the property is optional in [RFC 7517 Section 4.5](https://tools.ietf.org/html/rfc7517#section-4.5), it
+      is required in this spec, because it is necessary to be able to verify the signature on Bearer Access Tokens
+      received from a Secure Token Service: the resource service needs to be able to identify which JWK in the set was
+      used to sign the Bearer Access Token.
+
+
+      See [RFC 7517 Section 4.5](https://tools.ietf.org/html/rfc7517#section-4.5).
   kty:
     type: string
     description: >-
@@ -37,6 +65,39 @@ properties:
 
       See [RFC 7517 Section 4.1](https://tools.ietf.org/html/rfc7517#section-4.1).
     example: RSA
+  alg:
+    type: string
+    enum:
+      - HS256
+      - HS384
+      - HS512
+      - RS256
+      - RS384
+      - RS512
+      - ES256
+      - ES384
+      - ES512
+      - PS256
+      - PS384
+      - PS512
+    description: >-
+      The `alg` (algorithm) parameter identifies the algorithm intended for use with the key.
+
+
+      The values used should either be registered in the IANA "JSON Web Signature and Encryption Algorithms" registry
+      established by [JWA](https://tools.ietf.org/html/rfc7518) or be a value that contains a Collision-Resistant Name.
+      The `alg` value is a case-sensitive ASCII string.
+
+
+      This specification only supports the values initially registered in [JWA Section
+      3.1](https://tools.ietf.org/html/rfc7518#section-3.1). Although the property is optional in [RFC 7517 Section
+      4.4](https://tools.ietf.org/html/rfc7517#section-4.4), it is required in this spec, because it is necessary to be
+      able to verify the signature on Bearer Access Tokens received from a Secure Token Service whose implementation is
+      unknown, and might change.
+
+
+      See [RFC 7517 Section 4.4](https://tools.ietf.org/html/rfc7517#section-4.4).
+    example: RS256
   use:
     type: string
     enum:
