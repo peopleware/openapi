@@ -286,6 +286,13 @@ paths:
         specification requires most Registered Claim Names defined in [RFC 7519 Section
         4.1](https://tools.ietf.org/html/rfc7519#section-4.1). All other claims that are not understood by
         implementations **must** be ignored.
+
+        In this specification, a _NumericDate_ is a JSON numeric value representing the number of seconds from
+        1970-01-01T00:00:00Z UTC until the specified UTC date/time, ignoring leap seconds. This is equivalent to the
+        [IEEE Std 1003.1, 2013 Edition](https://tools.ietf.org/html/rfc7519#ref-POSIX.1 definition "Seconds Since the
+        Epoch", in which each day is accounted for by exactly 86400 seconds, other than that non-integer values can be
+        represented.  See [RFC 3339](https://tools.ietf.org/html/rfc3339) for details regarding date/times in general
+        and UTC in particular.
       operationId: jwtGet
       responses:
         '200':
@@ -334,24 +341,15 @@ paths:
                       strings, each containing a _StringOrURI_ value.  In the special case when the JWT has one
                       audience, the `aud` value **may** be a single case-sensitive string containing a _StringOrURI_
                       value. The interpretation of audience values is generally application specific.
-#
-#  4.1.4.  "exp" (Expiration Time) Claim
-#
-#  The "exp" (expiration time) claim identifies the expiration time on
-#  or after which the JWT MUST NOT be accepted for processing.  The
-#  processing of the "exp" claim requires that the current date/time
-#  MUST be before the expiration date/time listed in the "exp" claim.
-#
-#
-#
-#  Jones, et al.                Standards Track                    [Page 9]
-#
-#  RFC 7519                  JSON Web Token (JWT)                  May 2015
-#
-#
-#  Implementers MAY provide for some small leeway, usually no more than
-#  a few minutes, to account for clock skew.  Its value MUST be a number
-#  containing a NumericDate value.  Use of this claim is OPTIONAL.
+                  exp:
+                    type: number
+                    minimum: 0
+                    description: >-
+                      The `exp` (expiration time) claim identifies the expiration time on or after which the JWT **must
+                      not** be accepted for processing.  The processing of the `exp` claim requires that the current
+                      date/time **must** be before the expiration date/time listed in the `exp` claim. Implementers
+                      **may** provide for some small leeway, usually no more than a few minutes, to account for clock
+                      skew.  Its value **must** be a number containing a _NumericDate_ value.
 #
 #  4.1.5.  "nbf" (Not Before) Claim
 #
