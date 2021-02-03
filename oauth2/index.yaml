@@ -41,17 +41,7 @@ paths:
         access token.
       operationId: healthGet
       parameters:
-        - name: authorization
-          in: header
-          required: false
-          description:
-            Only when working with the _client credentials grant_, and then required. See [RFC 6749 Section
-            4.4.2](https://tools.ietf.org/html/rfc6749#section-4.4.2) and [RFC 6749 Section
-            6](https://tools.ietf.org/html/rfc6749#section-6).
-          schema:
-            type: string
-            pattern: Basic .*
-            example: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+        - $ref: 'sts/TokenRequestAuthorization.yaml'
       requestBody:
         required: true
         description: >-
