@@ -1,3 +1,4 @@
 apiDefinitions:
   demonstration: index.yaml
   sts: oauth2/sts/index.yaml
+  stsWithRAA: oauth2/stsWithRAA/index.yaml
