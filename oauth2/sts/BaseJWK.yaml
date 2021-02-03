@@ -33,5 +33,84 @@ properties:
       The key type definitions include specification of the members to be used for those key types.  Members used with
       specific `kty` values can be found in the IANA "JSON Web Key Parameters" registry established by [Section 8.1 of
       RFC 7517](https://tools.ietf.org/html/rfc7517#section-8.1).
+  use:
+    type: string
+    enum:
+      - sig
+      - enc
+    description: >-
+      The `use` (public key use) parameter identifies the intended use of the public key. The `use` parameter is
+      employed to indicate whether a public key is used for encrypting data or verifying the signature on data.
+
+
+      Values defined by this specification are:
+
+      -  `sig` (signature)
+
+      -  `enc` (encryption)
+
+
+      Use of the `use` member is _optional_, unless the application requires its presence.
+
+
+      When a key is used to wrap another key and a public key use designation for the first key is desired, the `enc`
+      (encryption) key use value is used, since key wrapping is a kind of encryption. The `enc` value is also to be used
+      for public keys used for key agreement operations.
+
+
+      The `use` and `key_ops` JWK members **should not** be used together; however, if both are used, the information
+      they convey **must** be consistent. Applications should specify which of these members they use, if either is to
+      be used by the application.
+  key_ops:
+    type: string
+    enum:
+      - sign
+      - verify
+      - encrypt
+      - decrypt
+      - wrapKey
+      - unwrapKey
+      - deriveKey
+      - deriveBits
+    description: >-
+      The `key_ops` (key operations) parameter identifies the operation(s) for which the key is intended to be used. The
+      `key_ops` parameter is intended for use cases in which public, private, or symmetric keys may be present.
+
+      Its value is an array of key operation values. Values defined by this specification are:
+
+      -  `sign` (compute digital signature or MAC)
+
+      -  `verify` (verify digital signature or MAC)
+
+      -  `encrypt` (encrypt content)
+
+      -  `decrypt` (decrypt content and validate decryption, if applicable)
+
+      -  `wrapKey` (encrypt key)
+
+      -  `unwrapKey` (decrypt key and validate decryption, if applicable)
+
+      -  `deriveKey` (derive key)
+
+      -  `deriveBits` (derive bits not to be used as a key)
+
+
+      (Note that the `key_ops` values intentionally match the `KeyUsage` values defined in the [Web Cryptography
+      API](https://www.w3.org/TR/WebCryptoAPI/) specification.)
+
+
+      The key operation values are case-sensitive strings. Duplicate key operation values **must not** be present in the
+      array. Use of the `key_ops` member is _optional_, unless the application requires its presence.
+
+
+      Multiple unrelated key operations **should not** be specified for a key because of the potential vulnerabilities
+      associated with using the same key with multiple algorithms. Thus, the combinations `sign` with `verify`,
+      `encrypt` with `decrypt`, and `wrapKey` with `unwrapKey` are permitted, but other combinations **should not** be
+      used.
+
+
+      The `use` and `key_ops` JWK members **should not** be used together; however, if both are used, the information
+      they convey **must** be consistent. Applications should specify which of these members they use, if either is to
+      be used by the application.
 discriminator:
   propertyName: kty
