@@ -16,11 +16,15 @@ post:
   summary: Get access and refresh token
   description: >-
     The token endpoint is used by the client to obtain an access token by presenting its authorization grant or refresh
-    token.  The token endpoint is used with every authorization grant except for the implicit grant type (since an
-    access token is issued directly).
+    token. The token endpoint is used with every relevant authorization grant.
+
 
     This spec only supports the _authorization code grant with PKCE_, _client credentials grant_, and refreshing an
     access token.
+
+
+    The _implicit grant_ is deprecated. The _resource owner password credentials grant_ **must not** be used in
+    production, but is necessary for automated tests.
   operationId: tokenGet
   parameters:
     - $ref: 'request/authorization.yaml'
@@ -54,6 +58,12 @@ post:
         added in the `authorization header`.
 
         See [Section 6 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-6).
+
+      - _resource owner password credentials_:
+        The resource owner password credentials grant type is only mentioned in this spec to support automated tests.
+        This grant **must not** be used in production.
+
+        See [Section 4.3 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-4.3).
     content:
       application/x-www-form-urlencoded:
         schema:
