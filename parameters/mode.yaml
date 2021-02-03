@@ -17,7 +17,6 @@ in: header
 required: true
 description: >-
   Value that describes the mode of the call. For experiments, use `dev-experiment`. For automated test, use
-
   `automated-test-{testId}`, where `{testId}` is a UUID/v4. `production` is reserved for production use.
 schema:
   type: string

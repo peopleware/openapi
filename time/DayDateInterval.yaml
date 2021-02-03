@@ -25,9 +25,11 @@ description: >-
   interval stretches until the heath death of the universe. Usually this means that interval is believed to be still
   ongoing with the knowledge represented.
 
+
   Please use [Allen's Interval Algebra](https://en.wikipedia.org/wiki/Allen%27s_interval_algebra) ("[Maintaining
   Knowledge about Temporal Intervals](http://cse.unl.edu/~choueiry/Documents/Allen-CACM1983.pdf)") to reason about time
   intervals.
+
 
   This is a fuzzy description of a time interval, given timezones. This is stored, communicated, and visualized as-is,
   and interpreted locally.

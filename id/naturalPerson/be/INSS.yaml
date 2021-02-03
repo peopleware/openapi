@@ -20,7 +20,9 @@ description: >-
   affiliate since `createdAt`. This is either the national registration number or the BIS-number. There is no formatting
   in this representation.
 
+
   Due to Belgian labour law, every person who works in Belgium has an INSS.
+
 
   Note that the INSS of an affiliate can change over time, but only 1 value is applicable at any time. This is the INSS
   that we assume to be applicable for this affiliate since `createdAt`.

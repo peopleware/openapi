@@ -37,4 +37,5 @@ allOf:
         description: >-
           A cryptographically random string that is used to correlate the authorization request to the token request.
 
+
           See [RFC 7636 Section 4.1](https://tools.ietf.org/html/rfc7636#section-4.1).

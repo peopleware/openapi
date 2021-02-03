@@ -18,8 +18,10 @@ get:
     This endpoint does not exist. This specification demonstrates the structure of the JWT Claims Set in Bearer Access
     Tokens returned by `POST /token`.
 
+
     The `access_token` returned by `POST /token` always is a JWT, as defined by [RFC
     7519](https://tools.ietf.org/html/rfc7519). The JWT Claims Set is the JWS Payload.
+
 
     The JWT Claims Set represents a JSON object whose members are the claims conveyed by the JWT. The Claim Names within
     a JWT Claims Set **must** be unique; JWT parsers **must** either reject JWTs with duplicate Claim Names or use a
@@ -27,11 +29,13 @@ get:
     15.12](https://tools.ietf.org/html/rfc7519#section-15.12) ("The JSON Object") of [ECMAScript
     5.1](https://tools.ietf.org/html/rfc7519#ref-ECMAScript).
 
+
     Although the set of claims that a JWT must contain to be considered valid is not standardized, this specification
     requires all Registered Claim Names defined in [RFC 7519 Section
     4.1](https://tools.ietf.org/html/rfc7519#section-4.1). All other claims that are not understood by implementations
     **must** be ignored. Other registered claims can be found at the [IANA "JSON Web Token Claims"
     registry](https://www.iana.org/assignments/jwt/jwt.xhtml).
+
 
     In this specification, a _NumericDate_ is a JSON numeric value representing the number of seconds from
     1970-01-01T00:00:00Z UTC until the specified UTC date/time, ignoring leap seconds. This is equivalent to the [IEEE

@@ -88,5 +88,6 @@ properties:
       produced by different issuers as well. The `jti` claim can be used to prevent the JWT from being replayed. The
       `jti` value is a case- sensitive string.
 
+
       We suggest using a UUID.
     example: 72bd9328-3e3e-46da-93da-bff6a66d275d

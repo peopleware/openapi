@@ -25,6 +25,7 @@ allOf:
             description: >-
               Opaque id of the account that executed the resource action that `put`ed or `post`ed this item version.
 
+
               For manual interactions, the account refers to one specific natural person. The above implies that we have
               to be able to know from the value of this field as precise as possible to which organisation that natural
               person belongs. When we automatically proces data input files, we need to make sure that we use a
