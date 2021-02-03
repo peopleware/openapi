@@ -304,23 +304,9 @@ paths:
                 $ref: 'sts/RegisteredJWTClaimSet.yaml'
 components:
   schemas:
-    requestBodyBase:
-      type: object
-      required:
-        - grant_type
-      properties:
-        grant_type:
-          type: string
-        scope:
-          type: string
-          description: >-
-            The scope of the access request as described by [Section 3.3 of RFC
-            6749](https://tools.ietf.org/html/rfc6749#section-3.3). The requested scope **must not** include any scope
-            not originally granted by the resource owner, and if omitted is treated as equal to the scope originally
-            granted by the resource owner.
     authorization_code:
       allOf:
-        - $ref: '#/components/schemas/requestBodyBase'
+        - $ref: 'sts/TokenRequestBodyBase.yaml'
         - type: object
           required:
             - code
@@ -348,10 +334,10 @@ components:
                 See [RFC 7636 Section 4.1](https://tools.ietf.org/html/rfc7636#section-4.1).
     client_credentials:
       allOf:
-        - $ref: '#/components/schemas/requestBodyBase'
+        - $ref: 'sts/TokenRequestBodyBase.yaml'
     refresh_token:
       allOf:
-        - $ref: '#/components/schemas/requestBodyBase'
+        - $ref: 'sts/TokenRequestBodyBase.yaml'
         - type: object
           required:
             - refresh_token
