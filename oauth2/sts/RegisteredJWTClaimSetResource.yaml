@@ -1,0 +1,49 @@
+# Copyright 2021 - 2021 PeopleWare n.v.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+get:
+  summary: Contents of the Bearer Access Token
+  description: >-
+    This endpoint does not exist. This specification demonstrates the structure of the JWT Claims Set in Bearer Access
+    Tokens returned by `POST /token`.
+
+    The `access_token` returned by `POST /token` always is a JWT, as defined by [RFC
+    7519](https://tools.ietf.org/html/rfc7519). The JWT Claims Set is the JWS Payload.
+
+    The JWT Claims Set represents a JSON object whose members are the claims conveyed by the JWT. The Claim Names within
+    a JWT Claims Set **must** be unique; JWT parsers **must** either reject JWTs with duplicate Claim Names or use a
+    JSON parser that returns only the lexically last duplicate member name, as specified in [Section
+    15.12](https://tools.ietf.org/html/rfc7519#section-15.12) ("The JSON Object") of [ECMAScript
+    5.1](https://tools.ietf.org/html/rfc7519#ref-ECMAScript).
+
+    Although the set of claims that a JWT must contain to be considered valid is not standardized, this specification
+    requires most Registered Claim Names defined in [RFC 7519 Section
+    4.1](https://tools.ietf.org/html/rfc7519#section-4.1). All other claims that are not understood by implementations
+    **must** be ignored.
+
+    In this specification, a _NumericDate_ is a JSON numeric value representing the number of seconds from
+    1970-01-01T00:00:00Z UTC until the specified UTC date/time, ignoring leap seconds. This is equivalent to the [IEEE
+    Std 1003.1, 2013 Edition](https://tools.ietf.org/html/rfc7519#ref-POSIX.1) definition "Seconds Since the Epoch", in
+    which each day is accounted for by exactly 86400 seconds, other than that non-integer values can be
+    represented.  See [RFC 3339](https://tools.ietf.org/html/rfc3339) for details regarding date/times in general and
+    UTC in particular.
+  operationId: jwtGet
+  responses:
+    '200':
+      description: >-
+        The `access_token` returned by `POST /token`.
+      content:
+        application/json:
+          schema:
+            $ref: 'RegisteredJWTClaimSet.yaml'
