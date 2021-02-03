@@ -66,13 +66,3 @@ resource:
         $ref: 'TokenRequest400.yaml'
       '401':
         $ref: 'TokenRequest401.yaml'
-components:
-  schemas:
-    # Token requests bodies listed explicitly here as workaround for https://github.com/Redocly/redoc/issues/862#issuecomment-491631228
-    # This bug also keeps us from generalizing a TokenRequestBody in a separate file.
-    authorization_code:
-      $ref: 'AuthorizationCodeTokenRequestBody.yaml'
-    client_credentials:
-      $ref: 'ClientCredentialsTokenRequestBody.yaml'
-    refresh_token:
-      $ref: 'RefreshTokenTokenRequestBody.yaml'
