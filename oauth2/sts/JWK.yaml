@@ -12,46 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-type: object
-required:
-  - kty
-  - alg
-  - use
-  - x5c
-  - n
-  - e
-  - kid
-  - x5t
-properties:
-  kty:
-    type: string
-    description: >-
-      The `kty` (key type) parameter identifies the cryptographic algorithm family used with the key, such as "RSA" or
-      "EC".  `kty` values should either be registered in the IANA "JSON Web Key Types" registry established by
-      [JWA](https://tools.ietf.org/html/rfc7518) or be a value that contains a Collision- Resistant Name.  The `kty`
-      value is a case-sensitive string.
-
-
-      A list of defined `kty` values can be found in the IANA "JSON Web Key Types" registry established by
-      [JWA](https://tools.ietf.org/html/rfc7518); the initial contents of this registry are the values defined in
-      [Section 6.1 of JWA](https://tools.ietf.org/html/rfc7518#section-6.1).
-
-
-      The key type definitions include specification of the members to be used for those key types.  Members used with
-      specific `kty` values can be found in the IANA "JSON Web Key Parameters" registry established by [Section 8.1 of
-      RFC 7517](https://tools.ietf.org/html/rfc7517#section-8.1).
-  alg:
-    type: string
-
-  use:
-    type: string
-  x5c:
-    type: string
-  n:
-    type: string
-  e:
-    type: string
-  kid:
-    type: string
-  x5t:
-    type: string
+schema:
+  oneOf:
+    - $ref: '#/components/schemas/RSA'
+  discriminator:
+    propertyName: kty
+components:
+  schemas:
+    # Token requests bodies listed explicitly here as workaround for https://github.com/Redocly/redoc/issues/862#issuecomment-491631228
+    # This has to be repeated in `index.yaml` as a workaround.
+    RSA:
+      $ref: 'RSAJWK.yaml'
