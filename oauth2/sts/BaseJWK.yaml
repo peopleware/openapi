@@ -268,11 +268,11 @@ properties:
 
       While there is no requirement that optional JWK members providing key usage, algorithm, or other information be
       present when the `x5t` member is used, doing so may improve interoperability for applications that do not handle
-      PKIX certificates [RFC 5280](https://tools.ietf.org/html/rfc5280). If other members are present, the contents of
-      those members **must** be semantically consistent with the related fields in the first certificate. For instance,
-      if the `use` member is present, then it **must** correspond to the usage that is specified in the certificate,
-      when it includes this information. Similarly, if the `alg` member is present, it **must** correspond to the
-      algorithm specified in the certificate.
+      PKIX certificates (See [RFC 5280](https://tools.ietf.org/html/rfc5280)). If other members are present, the
+      contents of those members **must** be semantically consistent with the related fields in the first certificate.
+      For instance, if the `use` member is present, then it **must** correspond to the usage that is specified in the
+      certificate, when it includes this information. Similarly, if the `alg` member is present, it **must** correspond
+      to the algorithm specified in the certificate.
 
 
       See [RFC 7517 Section 4.8](https://tools.ietf.org/html/rfc7517#section-4.8).
