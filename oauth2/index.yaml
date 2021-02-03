@@ -236,7 +236,7 @@ paths:
                           - unauthorized_client
                           - unsupported_grant_type
                           - invalid_scope
-                  - $ref: '#/components/schemas/errorResponseBase'
+                  - $ref: 'sts/BaseTokenRequestErrorResponse.yaml'
         '401':
           description: >-
             Client authentication failed, according to [Section 5.2 of RFC
@@ -265,7 +265,7 @@ paths:
                         type: string
                         enum:
                           - invalid_client
-                  - $ref: '#/components/schemas/errorResponseBase'
+                  - $ref: 'sts/BaseTokenRequestErrorResponse.yaml'
   /jwt:
     get:
       summary: Contents of the Bearer Access Token
@@ -304,30 +304,11 @@ paths:
                 $ref: 'sts/RegisteredJWTClaimSet.yaml'
 components:
   schemas:
-    # token requests bodies listed explicitly here as workaround for https://github.com/Redocly/redoc/issues/862#issuecomment-491631228
+    # Token requests bodies listed explicitly here as workaround for https://github.com/Redocly/redoc/issues/862#issuecomment-491631228
+    # This bug also keeps us from generalizing a TokenRequestBody in a separate file.
     authorization_code:
       $ref: 'sts/AuthorizationCodeTokenRequestBody.yaml'
     client_credentials:
       $ref: 'sts/ClientCredentialsTokenRequestBody.yaml'
     refresh_token:
       $ref: 'sts/RefreshTokenTokenRequestBody.yaml'
-    errorResponseBase:
-      type: object
-      required:
-        - error
-      properties:
-        error_description:
-          type: string
-          format: ascii
-          description: >-
-            Human-readable ASCII [USASCII] text providing additional information, used to assist the client developer in
-            understanding the error that occurred. Values for the `error_description` parameter **must not** include
-            characters outside the set `%x20-21` / `%x23-5B` / `%x5D-7E`.
-        error_uri:
-          type: string
-          format: uri
-          description: >-
-            A URI identifying a human-readable web page with information about the error, used to provide the client
-            developer with additional information about the error. Values for the `error_uri` parameter **must** conform
-            to the URI-reference syntax and thus **must not** include characters outside the set `%x21` / `%x23-5B` /
-            `%x5D-7E`.
