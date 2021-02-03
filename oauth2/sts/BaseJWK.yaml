@@ -237,6 +237,7 @@ properties:
       by additional certificates, with each subsequent certificate being the one used to certify the previous one. The
       key in the first certificate **must** match the public key represented by other members of the JWK.
 
+
       Use of this member is _optional_.
 
 
