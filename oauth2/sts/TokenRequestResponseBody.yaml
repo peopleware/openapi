@@ -45,12 +45,12 @@ properties:
       Although optional in [RFC 6749](https://tools.ietf.org/html/rfc6749#section-5.1), it is required here.
 
 
-      This value should not be < 60, to accomodate for clock drift on the STS, the client, and the resource server.
+      This value should not be < 60, to accomodate for clock drift on the STS, the client, and the resource service.
       Furthermore, the shorter the lifetime of access tokens, the more often clients will need to request new access
       tokens. A shorter lifetime thus results in more token requests on the STS, which has a cost.
 
 
-      This value should not be too large, for security reasons. For performance reasons, the resource server will not
+      This value should not be too large, for security reasons. For performance reasons, the resource service will not
       check with the STS for toking validity. Issued tokes therefore cannot be retracted. When an account's mandates are
       retracted in the STS, the account will not be able to get new access tokens, but the tokens already issued remain
       valid throughout their lifetime. Worst case, the last valid token was issued just before the account's mandates
