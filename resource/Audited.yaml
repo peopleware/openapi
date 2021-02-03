@@ -19,19 +19,13 @@ allOf:
       - createdBy
     properties:
       createdBy:
-        type: string
-        format: urlsegment
-        pattern: '^[\w-.~%!$&''()*+,;=]+$'
-        readOnly: true
-        description: >-
-          Opaque id of the account that executed the resource action that `put`ed or `post`ed this item version.
+        allOf:
+          - $ref: '../id/AccountId.yaml'
+          - readOnly: true
+            description: >-
+              Opaque id of the account that executed the resource action that `put`ed or `post`ed this item version.
 
-          In a later version, we envisage access by, e.g., HR staff of employers to the system, and we then need to be
-          able to only show data provided by that employer. This might apply to other organisations to at a later stage.
-
-          For manual interactions, the account refers to one specific natural person. The above implies that we have to
-          be able to know from the value of this field as precise as possible to which organisation that natural person
-          belongs. When we automatically proces data input files received from employers, we need to make sure that we
-          use a different account per data source (i.e., per employer in the example), and not one general account
-          representing the overal import process.
-        example: y7_56b.953WP9
+              For manual interactions, the account refers to one specific natural person. The above implies that we have
+              to be able to know from the value of this field as precise as possible to which organisation that natural
+              person belongs. When we automatically proces data input files, we need to make sure that we use a
+              different account per data source, and not one general account representing the overal import process.
