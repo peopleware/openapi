@@ -24,8 +24,8 @@ components:
     # Token requests bodies listed explicitly here as workaround for https://github.com/Redocly/redoc/issues/862#issuecomment-491631228
     # This has to be repeated in `index.yaml` as a workaround.
     authorization_code:
-      $ref: 'AuthorizationCodeTokenRequestBody.yaml'
+      $ref: 'AuthorizationCodeRequestBody.yaml'
     client_credentials:
-      $ref: 'ClientCredentialsTokenRequestBody.yaml'
+      $ref: 'ClientCredentialsRequestBody.yaml'
     refresh_token:
-      $ref: 'RefreshTokenTokenRequestBody.yaml'
+      $ref: 'RefreshTokenRequestBody.yaml'

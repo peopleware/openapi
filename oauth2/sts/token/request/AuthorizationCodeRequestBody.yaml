@@ -13,7 +13,7 @@
 # limitations under the License.
 
 allOf:
-  - $ref: 'BaseTokenRequestBody.yaml'
+  - $ref: 'BaseRequestBody.yaml'
   - type: object
     required:
       - code
