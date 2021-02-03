@@ -63,6 +63,9 @@ post:
         The resource owner password credentials grant type is only mentioned in this spec to support automated tests.
         This grant **must not** be used in production.
 
+        Since this access token request utilizes the resource owner's password, the authorization server **must**
+        protect the endpoint against brute force attacks (e.g., using rate-limitation or generating alerts).
+
         See [Section 4.3 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-4.3).
     content:
       application/x-www-form-urlencoded:

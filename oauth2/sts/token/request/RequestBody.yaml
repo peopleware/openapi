@@ -17,6 +17,7 @@ schema:
     - $ref: '#/components/schemas/authorization_code'
     - $ref: '#/components/schemas/client_credentials'
     - $ref: '#/components/schemas/refresh_token'
+    - $ref: '#/components/schemas/password'
   discriminator:
     propertyName: grant_type
 components:
@@ -29,3 +30,5 @@ components:
       $ref: 'ClientCredentialsRequestBody.yaml'
     refresh_token:
       $ref: 'RefreshTokenRequestBody.yaml'
+    password:
+      $ref: 'ROPCRequestBody.yaml'

@@ -49,6 +49,8 @@ components:
       $ref: '../sts/token/request/ClientCredentialsRequestBody.yaml'
     refresh_token:
       $ref: '../sts/token/request/RefreshTokenRequestBody.yaml'
+    password:
+      $ref: '../sts/token/request/ROPCRequestBody.yaml'
     RSA:
       $ref: '../sts/JWKS/RSAJWK.yaml'
     EC:
