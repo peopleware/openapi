@@ -266,6 +266,58 @@ paths:
                         enum:
                           - invalid_client
                   - $ref: '#/components/schemas/errorResponseBase'
+  /jwt:
+    get:
+      summary: Contents of the Bearer Access Token
+      description: >-
+        This endpoint does not exist. This specification demonstrates the structure of the JWT Claims Set in Bearer
+        Access Tokens returned by `POST /token`.
+
+        The `access_token` returned by `POST /token` always is a JWT, as defined by [RFC
+        7519](https://tools.ietf.org/html/rfc7519). The JWT Claims Set is the JWS Payload.
+
+        The JWT Claims Set represents a JSON object whose members are the claims conveyed by the JWT. The Claim Names
+        within a JWT Claims Set **must** be unique; JWT parsers **must** either reject JWTs with duplicate Claim Names
+        or use a JSON parser that returns only the lexically last duplicate member name, as specified in [Section
+        15.12](https://tools.ietf.org/html/rfc7519#section-15.12) ("The JSON Object") of [ECMAScript
+        5.1](https://tools.ietf.org/html/rfc7519#ref-ECMAScript).
+
+        Although the set of claims that a JWT must contain to be considered valid is not standardized, this
+        specification requires most Registered Claim Names defined in [RFC 7519 Section
+        4.1](https://tools.ietf.org/html/rfc7519#section-4.1). All other claims that are not understood by
+        implementations **must** be ignored.
+      operationId: jwtGet
+      responses:
+        '200':
+          description: >-
+            The `access_token` returned by `POST /token`.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - iss
+                  - sub
+                  - aud
+                  - exp
+                  - nbf
+                  - iat
+                  - jti
+                properties:
+                  iss:
+                    type: string
+                    minLength: 1
+                    description: >-
+                      The `iss` (issuer) claim identifies the principal that issued the JWT. The processing of this
+                      claim is generally application specific. The `iss` value is a case-sensitive string containing a
+                      _StringOrURI_ value.
+                  sub:
+                    $ref: '../id/AccountId.yaml'
+                    description: >-
+                      The `sub` (subject) claim identifies the principal that is the subject of the JWT. The claims in a
+                      JWT are normally statements about the subject. The subject value **must** either be scoped to be
+                      locally unique in the context of the issuer or be globally unique. The processing of this claim is
+                      generally application specific.
 components:
   schemas:
     requestBodyBase:
