@@ -33,6 +33,9 @@ properties:
       The key type definitions include specification of the members to be used for those key types.  Members used with
       specific `kty` values can be found in the IANA "JSON Web Key Parameters" registry established by [Section 8.1 of
       RFC 7517](https://tools.ietf.org/html/rfc7517#section-8.1).
+
+
+      See [RFC 7517 Section 4.1](https://tools.ietf.org/html/rfc7517#section-4.1).
     example: RSA
   use:
     type: string
@@ -66,6 +69,9 @@ properties:
 
       For validation of Bearer Access Tokens, the value of `use` must be `sig`. Note that most, if not all, Secure Token
       Services currently use the `use` key, with value `sig`.
+
+
+      See [RFC 7517 Section 4.2](https://tools.ietf.org/html/rfc7517#section-4.2).
   key_ops:
     type: array
     items:
@@ -121,6 +127,9 @@ properties:
       be used by the application.
 
       For validation of Bearer Access Tokens, the value of `key_ops` must contain `verify`.
+
+
+      See [RFC 7517 Section 4.3](https://tools.ietf.org/html/rfc7517#section-4.3).
     example:
       - verify
 discriminator:
