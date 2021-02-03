@@ -35,7 +35,7 @@ paths:
   /token:
     $ref: 'TokenResource.yaml'
   '/.well-known/jwks.json':
-    $ref: 'JWKSResource.yaml'
+    $ref: 'JWKS/JWKSResource.yaml'
   /jwt:
     $ref: 'RegisteredJWTClaimSetResource.yaml'
 components:
@@ -49,6 +49,6 @@ components:
     refresh_token:
       $ref: 'RefreshTokenTokenRequestBody.yaml'
     RSA:
-      $ref: 'RSAJWK.yaml'
+      $ref: 'JWKS/RSAJWK.yaml'
     EC:
-      $ref: 'ECJWK.yaml'
+      $ref: 'JWKS/ECJWK.yaml'
