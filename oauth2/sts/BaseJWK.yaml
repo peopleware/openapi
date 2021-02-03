@@ -281,5 +281,33 @@ properties:
 
       See [RFC 7517 Section 4.8](https://tools.ietf.org/html/rfc7517#section-4.8).
     example: NjVBRjY5MDlCMUIwNzU4RTA2QzZFMDQ4QzQ2MDAyQjVDNjk1RTM2Qg
+  x5t#S256:
+    type: string
+    format: base64url
+    description: >-
+      The `x5t#S256` (X.509 certificate SHA-256 thumbprint) parameter is a base64url-encoded SHA-256 thumbprint (a.k.a.
+      digest) of the DER encoding of an X.509 certificate (See [RFC 5280](https://tools.ietf.org/html/rfc5280)). Note
+      that certificate thumbprints are also sometimes known as certificate fingerprints.The key in the certificate
+      **must** match the public key represented by other members of the JWK.
+
+
+      Use of this member is _optional_.
+
+
+      While there is no requirement that optional JWK members providing key usage, algorithm, or other information be
+      present when the `x5t#S256` member is used, doing so may improve interoperability for applications that do not
+      handle PKIX certificates (See [RFC 5280](https://tools.ietf.org/html/rfc5280)). If other members are present, the
+      contents of those members **must** be semantically consistent with the related fields in the first certificate.
+      For instance, if the `use` member is present, then it **must** correspond to the usage that is specified in the
+      certificate, when it includes this information. Similarly, if the `alg` member is present, it **must** correspond
+      to the algorithm specified in the certificate.
+
+
+      In practice, if a thumbprint is given, it is either as SHA-1 in `x5t`, or as SHA-256 in `x5t#S256`, and then
+      usually also used as `kid`.
+
+
+      See [RFC 7517 Section 4.9](https://tools.ietf.org/html/rfc7517#section-4.9).
+    example: 557ee867372bdcf7887b9b51d80872cc3957b3dfe47d9904c56fa1aaaa5db32c
 discriminator:
   propertyName: kty
