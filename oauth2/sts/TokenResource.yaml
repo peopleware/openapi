@@ -1,0 +1,83 @@
+# Copyright 2021 - 2021 PeopleWare n.v.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+resource:
+  post:
+    summary: Get access and refresh token
+    description: >-
+      The token endpoint is used by the client to obtain an access token by presenting its authorization grant or
+      refresh token.  The token endpoint is used with every authorization grant except for the implicit grant type
+      (since an access token is issued directly).
+
+      This spec only supports the _authorization code grant with PKCE_, _client credentials grant_, and refreshing an
+      access token.
+    operationId: tokenGet
+    parameters:
+      - $ref: 'TokenRequestAuthorization.yaml'
+    requestBody:
+      required: true
+      description: >-
+        - _authorization code with PKCE_:
+          The authorization code grant type is used to obtain both access tokens and refresh tokens and is optimized
+          for confidential clients. Since this is a redirection-based flow, the client must be capable of interacting
+          with the resource owner's user-agent (typically a web browser) and capable of receiving incoming requests
+          (via redirection) from the authorization server.
+
+          See [Section 4.1 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-4.1).
+
+          This spec only supports the authorization code grant with PKCE (Proof Key for Code Exchange).
+
+          See [RFC 7636](https://tools.ietf.org/html/rfc7636).
+
+        - _client credentials_:
+          The client can request an access token using only its client credentials […] (in the `authorization` header)
+          when the client is requesting access to the protected resources under its control, or those of another
+          resource owner that have been previously arranged with the authorization server […].
+
+          See [Section 4.4 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-4.4).
+
+        - _refresh token_:
+          If the authorization server issued a refresh token to the client, the client makes a refresh request to the
+          token endpoint.
+
+          If the orignal refresh token was obtained using _client credentials_, the client credentials need to be
+          added in the `authorization header`.
+
+          See [Section 6 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-6).
+      content:
+        application/x-www-form-urlencoded:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/authorization_code'
+              - $ref: '#/components/schemas/client_credentials'
+              - $ref: '#/components/schemas/refresh_token'
+            discriminator:
+              propertyName: grant_type
+    responses:
+      '200':
+        $ref: 'TokenRequest200.yaml'
+      '400':
+        $ref: 'TokenRequest400.yaml'
+      '401':
+        $ref: 'TokenRequest401.yaml'
+components:
+  schemas:
+    # Token requests bodies listed explicitly here as workaround for https://github.com/Redocly/redoc/issues/862#issuecomment-491631228
+    # This bug also keeps us from generalizing a TokenRequestBody in a separate file.
+    authorization_code:
+      $ref: 'AuthorizationCodeTokenRequestBody.yaml'
+    client_credentials:
+      $ref: 'ClientCredentialsTokenRequestBody.yaml'
+    refresh_token:
+      $ref: 'RefreshTokenTokenRequestBody.yaml'
