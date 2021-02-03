@@ -25,9 +25,8 @@ get:
 
     The JWT Claims Set represents a JSON object whose members are the claims conveyed by the JWT. The Claim Names within
     a JWT Claims Set **must** be unique; JWT parsers **must** either reject JWTs with duplicate Claim Names or use a
-    JSON parser that returns only the lexically last duplicate member name, as specified in [Section
-    15.12](https://tools.ietf.org/html/rfc7519#section-15.12) ("The JSON Object") of [ECMAScript
-    5.1](https://tools.ietf.org/html/rfc7519#ref-ECMAScript).
+    JSON parser that returns only the lexically last duplicate member name, as specified in [Section 15.12 of ECMAScript
+    5.1](https://262.ecma-international.org/5.1/#sec-15.12).
 
 
     Although the set of claims that a JWT must contain to be considered valid is not standardized, this specification

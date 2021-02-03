@@ -33,15 +33,14 @@ properties:
 
 
       In addition to the common parameters, each JWK will have members that are key type specific. These members
-      represent the parameters of the key.  [Section 6](https://tools.ietf.org/html/rfc7517#section-6) of the JSON Web
-      Algorithms ([JWA](https://tools.ietf.org/html/rfc7517#ref-JWA)) specification defines multiple kinds of
-      cryptographic keys and their associated members.
+      represent the parameters of the key.  [Section 6 of the JSON Web Algorithms
+      (JWA)](https://tools.ietf.org/html/rfc7518#section-6) specification defines multiple kinds of cryptographic keys
+      and their associated members.
 
 
       The member names within a JWK **must** be unique; JWK parsers **must** either reject JWKs with duplicate member
       names or use a JSON parser that returns only the lexically last duplicate member name, as specified in [Section
-      15.12](https://tools.ietf.org/html/rfc7517#section-15.12) ("The JSON Object") of [ECMAScript
-      5.1](https://tools.ietf.org/html/rfc7517#ref-ECMAScript).
+      15.12 of ECMAScript 5.1](https://262.ecma-international.org/5.1/#sec-15.12).
 
 
       Additional members can be present in the JWK; if not understood by implementations encountering them, they MUST be

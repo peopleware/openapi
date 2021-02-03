@@ -33,8 +33,7 @@ get:
 
         The member names within a JWK Set **must** be unique; JWK Set parsers **must** either reject JWK Sets with
         duplicate member names or use a JSON parser that returns only the lexically last duplicate member name, as
-        specified in [Section 15.12](https://tools.ietf.org/html/rfc7517#section-15.12) ("The JSON Object") of
-        [ECMAScript 5.1](https://tools.ietf.org/html/rfc7517#ref-ECMAScript).
+        specified in [Section 15.12 of ECMAScript 5.1](https://262.ecma-international.org/5.1/#sec-15.12).
 
 
         Additional members can be present in the JWK Set; if not understood by implementations encountering them, they
