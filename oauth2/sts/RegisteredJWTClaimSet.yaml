@@ -1,0 +1,87 @@
+type: object
+required:
+  - iss
+  - sub
+  - aud
+  - exp
+  - nbf
+  - iat
+  - jti
+  - http://www.ppwcode.org/raa/2
+properties:
+  iss:
+    type: string
+    minLength: 1
+    description: >-
+      The `iss` (issuer) claim identifies the principal that issued the JWT. The processing of this claim is generally
+      application specific. The `iss` value is a case-sensitive string containing a _StringOrURI_ value.
+    example: https://www.ppwcode.org/openapi/common/sts
+  sub:
+    $ref: '../../id/AccountId.yaml'
+    description: >-
+      The `sub` (subject) claim identifies the principal that is the subject of the JWT. The claims in a JWT are
+      normally statements about the subject. The subject value **must** either be scoped to be locally unique in the
+      context of the issuer or be globally unique. The processing of this claim is generally application specific.
+  aud:
+    oneOf:
+      - type: string
+        minLength: 1
+      - type: array
+        items:
+          type: string
+          minLength: 1
+    description: >-
+      The `aud` (audience) claim identifies the recipients that the JWT is intended for. Each principal intended to
+      process the JWT **must** identify itself with a value in the audience claim.  If the principal processing the
+      claim does not identify itself with a value in the `aud` claim, then the JWT **must** be rejected.  In the general
+      case, the `aud` value is an array of case- sensitive strings, each containing a _StringOrURI_ value.  In the
+      special case when the JWT has one audience, the `aud` value **may** be a single case-sensitive string containing a
+      _StringOrURI_ value. The interpretation of audience values is generally application specific.
+    example: https://www.ppwcode.org/openapi/common
+  exp:
+    type: number
+    minimum: 0
+    description: >-
+      The `exp` (expiration time) claim identifies the expiration time on or after which the JWT **must not** be
+      accepted for processing.  The processing of the `exp` claim requires that the current date/time **must** be before
+      the expiration date/time listed in the `exp` claim. Implementers **may** provide for some small leeway, usually no
+      more than a few minutes, to account for clock skew.  Its value **must** be a number containing a _NumericDate_
+      value.
+    example: 1612343692
+  nbf:
+    type: number
+    minimum: 0
+    description: >-
+      The `nbf` (not before) claim identifies the time before which the JWT **must not** be accepted for
+      processing.  The processing of the `nbf` claim requires that the current date/time **must** be after or equal to
+      the not-before date/time listed in the `nbf` claim.  Implementers **may** provide for some small leeway, usually
+      no more than a few minutes, to account for clock skew.  Its value **must** be a number containing a _NumericDate
+      value_.
+    example: 1612343392
+  iat:
+    type: number
+    minimum: 0
+    description: >-
+      The `iat` (issued at) claim identifies the time at which the JWT was issued.  This claim can be used to determine
+      the age of the JWT.  Its value **must** be a number containing a _NumericDate_ value.
+    example: 1612343392
+  jti:
+    type: string
+    minLength: 1
+    description: >-
+      The `jti` (JWT ID) claim provides a unique identifier for the JWT. The identifier value **must** be assigned in a
+      manner that ensures that there is a negligible probability that the same value will be accidentally assigned to a
+      different data object; if the application uses multiple issuers, collisions **must** be prevented among values
+      produced by different issuers as well. The `jti` claim can be used to prevent the JWT from being replayed. The
+      `jti` value is a case- sensitive string.
+
+      We suggest using a UUID.
+    example: 72bd9328-3e3e-46da-93da-bff6a66d275d
+  'http://www.ppwcode.org/raa/2':
+    type: object
+    additionalProperties:
+      type: string
+      pattern: '^[\w-.~%!$&''()*+,;=/{]+$' # MUDO make sure {} are closed, and that we start with a /
+    example:
+      'https://www.ppwcode.org/openapi/common/I': '*:/a/path/*/to/{a,multiple}/resources/**'
+      'https://www.ppwcode.org/openapi/other/IV': '{GET,PUT}:/another/path/43/without/choices'
