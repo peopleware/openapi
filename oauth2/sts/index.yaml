@@ -30,16 +30,16 @@ servers:
     description: Dummy endpoint. There is nothing here.
 paths:
   /token:
-    $ref: 'sts/TokenResource.yaml#/resource'
+    $ref: 'TokenResource.yaml#/resource'
   /jwt:
-    $ref: 'sts/RegisteredJWTClaimSetResource.yaml'
+    $ref: 'RegisteredJWTClaimSetResource.yaml'
 components:
   schemas:
     # Token requests bodies listed explicitly here as workaround for https://github.com/Redocly/redoc/issues/862#issuecomment-491631228
     # This bug also keeps us from generalizing a TokenRequestBody in a separate file.
     authorization_code:
-      $ref: 'sts/AuthorizationCodeTokenRequestBody.yaml'
+      $ref: 'AuthorizationCodeTokenRequestBody.yaml'
     client_credentials:
-      $ref: 'sts/ClientCredentialsTokenRequestBody.yaml'
+      $ref: 'ClientCredentialsTokenRequestBody.yaml'
     refresh_token:
-      $ref: 'sts/RefreshTokenTokenRequestBody.yaml'
+      $ref: 'RefreshTokenTokenRequestBody.yaml'
