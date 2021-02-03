@@ -304,48 +304,13 @@ paths:
                 $ref: 'sts/RegisteredJWTClaimSet.yaml'
 components:
   schemas:
+    # token requests bodies listed explicitly here as workaround for https://github.com/Redocly/redoc/issues/862#issuecomment-491631228
     authorization_code:
-      allOf:
-        - $ref: 'sts/TokenRequestBodyBase.yaml'
-        - type: object
-          required:
-            - code
-            - redirect_uri
-            - client_id
-            - code_verifier
-          properties:
-            code:
-              type: string
-              minLength: 1
-              description: The authorization code received from the authorization server.
-            redirect_uri:
-              type: string
-              format: uri
-              description: Must be identical to the redirect uri with which the `code` was requested.
-            client_id:
-              type: string
-              minLength: 1
-            code_verifier:
-              type: string
-              description: >-
-                A cryptographically random string that is used to correlate the authorization request to the token
-                request.
-
-                See [RFC 7636 Section 4.1](https://tools.ietf.org/html/rfc7636#section-4.1).
+      $ref: 'sts/AuthorizationCodeTokenRequestBody.yaml'
     client_credentials:
-      allOf:
-        - $ref: 'sts/TokenRequestBodyBase.yaml'
+      $ref: 'sts/ClientCredentialsTokenRequestBody.yaml'
     refresh_token:
-      allOf:
-        - $ref: 'sts/TokenRequestBodyBase.yaml'
-        - type: object
-          required:
-            - refresh_token
-          properties:
-            refresh_token:
-              type: string
-              minLength: 1
-              description: The refresh token issued to the client
+      $ref: 'sts/RefreshTokenTokenRequestBody.yaml'
     errorResponseBase:
       type: object
       required:
