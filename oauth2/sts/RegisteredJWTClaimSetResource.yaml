@@ -28,9 +28,10 @@ get:
     5.1](https://tools.ietf.org/html/rfc7519#ref-ECMAScript).
 
     Although the set of claims that a JWT must contain to be considered valid is not standardized, this specification
-    requires most Registered Claim Names defined in [RFC 7519 Section
+    requires all Registered Claim Names defined in [RFC 7519 Section
     4.1](https://tools.ietf.org/html/rfc7519#section-4.1). All other claims that are not understood by implementations
-    **must** be ignored.
+    **must** be ignored. Other registered claims can be found at the [IANA "JSON Web Token Claims"
+    registry](https://www.iana.org/assignments/jwt/jwt.xhtml).
 
     In this specification, a _NumericDate_ is a JSON numeric value representing the number of seconds from
     1970-01-01T00:00:00Z UTC until the specified UTC date/time, ignoring leap seconds. This is equivalent to the [IEEE
