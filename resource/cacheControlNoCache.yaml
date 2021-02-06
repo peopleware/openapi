@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-description: The resource never existed.
-headers:
-  x-flow-id:
-    schema:
-      $ref: '../id/UUID.yaml'
-  cache-control:
-    schema:
-      $ref: 'cacheControlShort.yaml'
+type: string
+enum:
+  - no-store
+description: >-
+  Never cache this response, not in the browser, nor in intermediate caches.
+
+
+  See [RFC 7234 Section 5.2.2.3](https://tools.ietf.org/html/rfc7234#section-5.2.2.3).

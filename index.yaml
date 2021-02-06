@@ -50,6 +50,9 @@ paths:
             x-flow-id:
               schema:
                 $ref: 'id/UUID.yaml'
+            cache-control:
+              schema:
+                $ref: 'resource/cacheControlNoCache.yaml'
           content:
             application/json:
               schema:
@@ -88,6 +91,9 @@ paths:
             x-flow-id:
               schema:
                 $ref: 'id/UUID.yaml'
+            cache-control:
+              schema:
+                $ref: 'resource/cacheControlShort.yaml'
           content:
             application/json:
               schema:
@@ -144,6 +150,9 @@ paths:
             x-flow-id:
               schema:
                 $ref: 'id/UUID.yaml'
+            cache-control:
+              schema:
+                $ref: 'resource/cacheControlNoCache.yaml'
           content:
             application/json:
               schema:
