@@ -28,6 +28,11 @@ info:
 servers:
   - url: 'https://www.ppwcode.org/openapi/common'
     description: Dummy endpoint. There is nothing here.
+tags:
+  - name: Caching
+    x-traitTag: true
+    description:
+      $ref: 'resource/caching.md'
 paths:
   /health:
     parameters:

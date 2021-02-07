@@ -1,8 +1,6 @@
-# Caching
-
 HTTP cache behavior is specified by [RFC 7234](https://tools.ietf.org/html/rfc7234).
 
-## Only add `cache-control` headers to `GET` `200` and `404` responses.
+## Only add Cache-Control headers to GET 200 and 404 responses
 
 In practice, only responses to [safe](https://tools.ietf.org/html/rfc7231#section-4.2.1) HTTP methods (`GET` — and
 `HEAD`) are cached (see [RFC 7231 Section 4.2.3](https://tools.ietf.org/html/rfc7231#section-4.2.3)).
