@@ -12,5 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-$ref: '404.yaml'
 description: The resource never existed, or did not exist yet at `at.
+headers:
+  x-flow-id:
+    schema:
+      $ref: '../id/UUID.yaml'
+  cache-control:
+    schema:
+      $ref: 'cacheControlPrivateDynamicAt.yaml'

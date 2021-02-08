@@ -98,7 +98,7 @@ paths:
                 $ref: 'id/UUID.yaml'
             cache-control:
               schema:
-                $ref: 'resource/cacheControlPrivateDynamic.yaml'
+                $ref: 'resource/cacheControlPrivateDynamicAt.yaml'
           content:
             application/json:
               schema:
