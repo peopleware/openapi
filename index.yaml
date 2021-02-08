@@ -145,7 +145,6 @@ paths:
       - $ref: 'parameters/flowId.yaml'
       - $ref: 'parameters/mode.yaml'
       - $ref: 'oauth2/authorization.yaml'
-      - $ref: 'parameters/at.yaml'
     get:
       summary: Demonstration of common specs for `GET` search document
       description: Document to be indexed by search engine
