@@ -178,7 +178,7 @@ paths:
         '403':
           $ref: 'oauth2/403.yaml'
         '404':
-          $ref: 'resource/404.yaml'
+          $ref: 'resource/404Put.yaml'
         '409':
           $ref: 'resource/409OptimisticLocking.yaml'
   /demonstration/searchDocument:

@@ -17,6 +17,3 @@ headers:
   x-flow-id:
     schema:
       $ref: '../id/UUID.yaml'
-  cache-control:
-    schema:
-      $ref: 'cacheControlPrivateDynamic.yaml'
