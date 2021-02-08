@@ -185,7 +185,8 @@ components:
               $ref: 'health/Status.yaml'
     resource:
       allOf:
-        - $ref: 'resource/AuditedVersioned.yaml'
+        - $ref: 'resource/StructureVersion2.yaml'
+        - $ref: 'resource/Audited.yaml'
         - type: object
           properties:
             human:
@@ -259,7 +260,8 @@ components:
                   $ref: 'time/DayDateInterval.yaml'
     timestampedVersioned:
       allOf:
-        - $ref: 'resource/TimestampedVersioned.yaml'
+        - $ref: 'resource/StructureVersion3.yaml'
+        - $ref: 'resource/Timestamped.yaml'
         - type: object
           properties:
             example:
