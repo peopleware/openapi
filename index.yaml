@@ -255,6 +255,11 @@ components:
                   $ref: 'time/DayDate.yaml'
                 dayDateInterval:
                   $ref: 'time/DayDateInterval.yaml'
+            readOnly:
+              type: string
+              readOnly: true
+              description: >-
+                `readOnly` properties only appear in responses, not in request bodies
     timestampedVersioned:
       allOf:
         - $ref: 'resource/StructureVersion3.yaml'
