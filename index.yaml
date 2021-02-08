@@ -77,6 +77,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/health'
+  /demonstration:
+    parameters:
+      - $ref: 'parameters/forceError.yaml'
+      - $ref: 'parameters/flowId.yaml'
+      - $ref: 'parameters/mode.yaml'
+      - $ref: 'oauth2/authorization.yaml'
+    post:
+      summary: Demonstration of common specs for `POST`
+      description: Every common spec is mentioned here.
+      operationId: demonstrationPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/resource'
+      responses:
+        '201':
+          x-summary: The resource was created with the given information
+          description: Every common spec is mentioned here.  The `201` response shows `readOnly` properties.
+          headers:
+            x-flow-id:
+              schema:
+                $ref: 'id/UUID.yaml'
+            location:
+              schema:
+                type: string
+                format: uri
+                description: a server relative URI for the newly created resource
+                example: /demonstration/56349
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/resource'
+        '401':
+          $ref: 'oauth2/401.yaml'
+        '403':
+          $ref: 'oauth2/403.yaml'
   /demonstration/{id}:
     parameters:
       - $ref: 'parameters/forceError.yaml'
