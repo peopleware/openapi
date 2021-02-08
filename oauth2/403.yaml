@@ -13,7 +13,7 @@
 # limitations under the License.
 
 description: >-
-  The request requires higher privileges than provided by the access token.
+  The request requires higher privileges than provided by the access token
 headers:
   x-www-authenticate:
     schema:
