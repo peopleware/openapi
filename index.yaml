@@ -173,6 +173,17 @@ components:
   schemas:
     health:
       allOf:
+        - type: object
+          required:
+            - structureVersion
+          properties:
+            structureVersion:
+              type: integer
+              minimum: 1
+              maximum: 1
+              # there is not yet a `const` construct in OpenAPI. See https://github.com/OAI/OpenAPI-Specification/issues/1313
+              description: Version of the data structure of this resource type
+              example: 1
         - $ref: 'health/Health.yaml'
         - type: object
           required:
