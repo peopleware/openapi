@@ -19,4 +19,4 @@ headers:
       $ref: '../id/UUID.yaml'
   cache-control:
     schema:
-      $ref: 'cacheControlShort.yaml'
+      $ref: 'cacheControlPrivateDynamic.yaml'
