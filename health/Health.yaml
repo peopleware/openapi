@@ -13,7 +13,7 @@
 # limitations under the License.
 
 allOf:
-  - $ref: '../resource/AuditedVersioned.yaml'
+  - $ref: '../resource/TimeStampedVersioned.yaml'
   - type: object
     required:
       - status
