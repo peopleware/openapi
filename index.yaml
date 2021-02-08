@@ -234,8 +234,6 @@ components:
             resource:
               type: object
               properties:
-                versioned:
-                  $ref: 'resource/Versioned.yaml'
             string:
               type: object
               properties:
