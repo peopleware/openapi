@@ -14,10 +14,15 @@
 
 type: string
 enum:
-  - no-store
-# we explicitly use no-store instead of no-cache
+  - 'public, max-age=31536000, immutable'
 description: >-
-  Never cache this response, not in the browser, nor in intermediate caches.
+  Infinitely cache immutable data in the end-user's browser and intermediate shared caches.
 
 
-  See [RFC 7234 Section 5.2.2.3](https://tools.ietf.org/html/rfc7234#section-5.2.2.3).
+  See [RFC 7234 Section 5.2.2](https://tools.ietf.org/html/rfc7234#section-5.2.2).
+
+
+  The `max-age` (1 year) directive when the resource is immutable is a fall-back for clients that do not understand the
+  `immutable` directive (see [RFC 8246](https://tools.ietf.org/html/rfc8246), ["Bits Up!", "Cache-Control:
+  immutable"](https://bitsup.blogspot.com/2016/05/cache-control-immutable.html)). With most modern browsers, this is
+  superfluous.
