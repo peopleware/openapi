@@ -1,4 +1,4 @@
-# Copyright 2020 - 2021 PeopleWare n.v.
+# Copyright 2021 - 2021 PeopleWare n.v.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# users should add a fixed structureVersion
-
-allOf:
-  - $ref: '../resource/TimestampedRequestSoT.yaml'
-  - type: object
-    required:
-      - status
-    properties:
-      status:
-        $ref: 'Status.yaml'
+type: object
+required:
+  - createdAt
+properties:
+  createdAt:
+    allOf:
+      - description: >-
+          SoT of the resource action that triggered the calculation of this response.
+      - $ref: '../time/DateTime.yaml'
