@@ -181,12 +181,17 @@ paths:
           $ref: 'resource/404Put.yaml'
         '409':
           $ref: 'resource/409OptimisticLocking.yaml'
-  /demonstration/searchDocument:
+  /demonstration/{id}/searchDocument:
     parameters:
       - $ref: 'parameters/forceError.yaml'
       - $ref: 'parameters/flowId.yaml'
       - $ref: 'parameters/mode.yaml'
       - $ref: 'oauth2/authorization.yaml'
+      - name: id
+        in: path
+        description: id of the resource
+        schema:
+          $ref: 'id/UUID.yaml'
     get:
       summary: Demonstration of common specs for `GET` search document
       description: Document to be indexed by search engine
