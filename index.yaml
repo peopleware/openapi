@@ -83,11 +83,12 @@ paths:
       - $ref: 'parameters/flowId.yaml'
       - $ref: 'parameters/mode.yaml'
       - $ref: 'oauth2/authorization.yaml'
-      - $ref: 'parameters/at.yaml'
     get:
       summary: Demonstration of common specs for `GET`
       description: Every common spec is mentioned here.
       operationId: demonstrationGet
+      parameters:
+        - $ref: 'parameters/at.yaml'
       responses:
         '200':
           x-summary: The resource exists
