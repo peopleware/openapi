@@ -230,9 +230,6 @@ components:
                   $ref: 'oauth2/ErrorResponse.yaml'
                 wwwAuthenticate:
                   $ref: 'oauth2/WWWAuthenticate.yaml'
-            resource:
-              type: object
-              properties:
             string:
               type: object
               properties:
