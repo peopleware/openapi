@@ -137,6 +137,8 @@ paths:
           $ref: 'oauth2/403.yaml'
         '404':
           $ref: 'resource/404.yaml'
+        '409':
+          $ref: 'resource/409OptimisticLocking.yaml'
   /demonstration/searchDocument:
     parameters:
       - $ref: 'parameters/forceError.yaml'
@@ -173,17 +175,7 @@ components:
   schemas:
     health:
       allOf:
-        - type: object
-          required:
-            - structureVersion
-          properties:
-            structureVersion:
-              type: integer
-              minimum: 1
-              maximum: 1
-              # there is not yet a `const` construct in OpenAPI. See https://github.com/OAI/OpenAPI-Specification/issues/1313
-              description: Version of the data structure of this resource type
-              example: 1
+        - $ref: 'resource/StructureVersion1.yaml'
         - $ref: 'health/Health.yaml'
         - type: object
           required:
