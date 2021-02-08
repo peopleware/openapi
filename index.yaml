@@ -77,12 +77,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/health'
-  /demonstration:
+  /demonstration/{id}:
     parameters:
       - $ref: 'parameters/forceError.yaml'
       - $ref: 'parameters/flowId.yaml'
       - $ref: 'parameters/mode.yaml'
       - $ref: 'oauth2/authorization.yaml'
+      - name: id
+        in: path
+        description: id of the resource
+        schema:
+          $ref: 'id/UUID.yaml'
     get:
       summary: Demonstration of common specs for `GET`
       description: Every common spec is mentioned here.
