@@ -28,6 +28,7 @@ properties:
           `409` status code.
 
 
-          _**This value is not required on creation of a resource** (`PUT` or `POST`), although it as annotated as such
-          (the difference cannot be easily expressed in OpenAPI)._
+          _**This value is not required on creation of a resource**, although it as annotated as such (the difference
+          cannot be easily expressed in OpenAPI). **The property should be omitted in the request body when creating a
+          resource.**_
       - $ref: '../time/DateTime.yaml'
