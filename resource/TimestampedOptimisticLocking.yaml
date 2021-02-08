@@ -19,15 +19,15 @@ properties:
   createdAt:
     allOf:
       - description: >-
-          SoT of the resource action that `put`ed or `post`ed this item version, as ISO-8601 expressed in UTC ('Z'), to
-          ms precision.
+          In responses, SoT of the resource action that `put`ed or `post`ed this item version, as ISO-8601 expressed in
+          UTC ('Z'), to ms precision.
 
 
-          In `PUT` requests, `createdAt` is used in the service for optimistic locking. If the value provided by the
-          client does not equal the most recent value in persistent storage, the `PUT` is refused with a `409` status
-          code.
+          In `PUT` update request bodies, `createdAt` is used in the service for optimistic locking. If the value
+          provided by the client does not equal the most recent value in persistent storage, the `PUT` is refused with a
+          `409` status code.
 
 
-          _**This value is not required on creation of a resource**, although it as annotated as such (the difference
-          cannot be easily expressed in OpenAPI)._
+          _**This value is not required on creation of a resource** (`PUT` or `POST`), although it as annotated as such
+          (the difference cannot be easily expressed in OpenAPI)._
       - $ref: '../time/DateTime.yaml'
