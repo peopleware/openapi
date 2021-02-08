@@ -256,7 +256,7 @@ components:
     timestampedVersioned:
       allOf:
         - $ref: 'resource/StructureVersion3.yaml'
-        - $ref: 'resource/Timestamped.yaml'
+        - $ref: 'resource/TimestampedCalculated.yaml'
         - type: object
           properties:
             example:
