@@ -12,8 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-description: The `createdAt` provided in the request body was not the most recent for the resource (optimistic locking)
+x-summary: Optimistic locking failed
+description: >-
+  The date-time provided in the request header `if-unmodified-since` was not the most recent for the resource.
+
+
+  The body contains the most recent version of the resource, on which the client can base a retry.
 headers:
   x-flow-id:
     schema:
       $ref: '../id/UUID.yaml'
+content:
+  application/json:
+    schema:
+      # NOTE: replace with the correct schema
+      $ref: 'Audited.yaml'

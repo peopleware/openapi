@@ -154,8 +154,11 @@ paths:
           $ref: 'resource/404at.yaml'
     put:
       summary: Demonstration of common specs for `PUT`
-      description: Every common spec is mentioned here. The request body does not show `readOnly` properties.
+      description: >-
+        Every common spec is mentioned here. The request body does not show `readOnly` properties.
       operationId: demonstrationPut
+      parameters:
+        - $ref: 'parameters/optimisticLocking.yaml'
       requestBody:
         content:
           application/json:
@@ -179,8 +182,22 @@ paths:
           $ref: 'oauth2/403.yaml'
         '404':
           $ref: 'resource/404Put.yaml'
-        '409':
-          $ref: 'resource/409OptimisticLocking.yaml'
+        '412':
+          x-summary: Optimistic locking failed
+          description: >-
+            The date-time provided in the request header `if-unmodified-since` was not the most recent for the resource.
+
+
+            The body contains the most recent version of the resource, on which the client can base a retry.
+          headers:
+            x-flow-id:
+              schema:
+                $ref: 'id/UUID.yaml'
+          content:
+            application/json:
+              schema:
+                # NOTE: replace with the correct schema
+                $ref: '#/components/schemas/resource'
   /demonstration/{id}/searchDocument:
     parameters:
       - $ref: 'parameters/forceError.yaml'
