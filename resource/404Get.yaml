@@ -19,7 +19,7 @@ headers:
       $ref: '../id/UUID.yaml'
   x-date:
     schema:
-      $ref: 'resource/date.yaml'
+      $ref: 'date.yaml'
   cache-control:
     schema:
       $ref: 'cacheControlPrivateDynamicAt.yaml'
