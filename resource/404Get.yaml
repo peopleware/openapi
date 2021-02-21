@@ -17,6 +17,9 @@ headers:
   x-flow-id:
     schema:
       $ref: '../id/UUID.yaml'
+  x-mode:
+    schema:
+      $ref: '../id/mode.yaml'
   x-date:
     schema:
       $ref: 'date.yaml'
