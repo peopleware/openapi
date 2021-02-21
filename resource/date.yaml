@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-type: object
-required:
-  - createdAt
-properties:
-  createdAt:
-    allOf:
-      - description: >-
-          Latest SoT of the resource actions that created the underlying data on which this version of the resource is
-          based, as ISO-8601 expressed in UTC ('Z'), to ms precision.
-      - $ref: '../time/DateTime.yaml'
+# x-date
+allOf:
+  - description: >-
+      SoT of the resource action that triggered the calculation of this response.
+
+
+      See [RFC 7231 Section 7.1.1.2](https://tools.ietf.org/html/rfc7231#section-7.1.1.2). We do not use a _HTTP Date_
+      however, but represent a moment in time as ISO-8601 expressed in UTC ('Z'), to ms precision, and reference the
+      _start_ of transaction, not the end.
+  - $ref: '../time/DateTime.yaml'

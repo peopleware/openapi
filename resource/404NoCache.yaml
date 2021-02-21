@@ -17,6 +17,9 @@ headers:
   x-flow-id:
     schema:
       $ref: '../id/UUID.yaml'
+  x-date:
+    schema:
+      $ref: 'date.yaml'
   cache-control:
     schema:
       $ref: 'cacheControlNoCache.yaml'

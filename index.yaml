@@ -58,6 +58,9 @@ paths:
             cache-control:
               schema:
                 $ref: 'resource/cacheControlNoCache.yaml'
+            x-date:
+              schema:
+                $ref: 'resource/date.yaml'
           content:
             application/json:
               schema:
@@ -73,6 +76,9 @@ paths:
             x-flow-id:
               schema:
                 $ref: 'id/UUID.yaml'
+            x-date:
+              schema:
+                $ref: 'resource/date.yaml'
           content:
             application/json:
               schema:
@@ -100,6 +106,9 @@ paths:
             x-flow-id:
               schema:
                 $ref: 'id/UUID.yaml'
+            x-date:
+              schema:
+                $ref: 'resource/date.yaml'
             location:
               schema:
                 type: string
@@ -139,6 +148,9 @@ paths:
             x-flow-id:
               schema:
                 $ref: 'id/UUID.yaml'
+            x-date:
+              schema:
+                $ref: 'resource/date.yaml'
             cache-control:
               schema:
                 $ref: 'resource/cacheControlPrivateDynamicAt.yaml'
@@ -172,6 +184,9 @@ paths:
             x-flow-id:
               schema:
                 $ref: 'id/UUID.yaml'
+            x-date:
+              schema:
+                $ref: 'resource/date.yaml'
           content:
             application/json:
               schema:
@@ -193,6 +208,9 @@ paths:
             x-flow-id:
               schema:
                 $ref: 'id/UUID.yaml'
+            x-date:
+              schema:
+                $ref: 'resource/date.yaml'
           content:
             application/json:
               schema:
@@ -221,6 +239,9 @@ paths:
             x-flow-id:
               schema:
                 $ref: 'id/UUID.yaml'
+            x-date:
+              schema:
+                $ref: 'resource/date.yaml'
             cache-control:
               schema:
                 $ref: 'resource/cacheControlNoCache.yaml'
@@ -322,7 +343,6 @@ components:
     timestampedVersioned:
       allOf:
         - $ref: 'resource/StructureVersion3.yaml'
-        - $ref: 'resource/TimestampedCalculated.yaml'
         - type: object
           properties:
             example:

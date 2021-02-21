@@ -14,11 +14,9 @@
 
 # users should add a fixed structureVersion
 
-allOf:
-  - $ref: '../resource/TimestampedRequestSoT.yaml'
-  - type: object
-    required:
-      - status
-    properties:
-      status:
-        $ref: 'Status.yaml'
+type: object
+required:
+  - status
+properties:
+  status:
+    $ref: 'Status.yaml'
