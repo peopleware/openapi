@@ -1,5 +1,5 @@
 in: header
-name: if-unmodified-since
+name: x-if-unmodified-since
 description: >-
   Clients can choose to apply optimistic locking by sending the `if-not-modified-since` header, with the `createdAt` of
   the version of the resource edits are based on as value. If the value provided by the client does not equal the most
