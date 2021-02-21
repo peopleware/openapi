@@ -122,8 +122,8 @@ paths:
               schema:
                 type: string
                 format: uri
-                description: a server relative URI for the newly created resource
-                example: /demonstration/56349
+                description: relative URI for the newly created resource
+                example: demonstration/56349
           content:
             application/json:
               schema:
