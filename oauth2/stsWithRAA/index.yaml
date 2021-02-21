@@ -55,3 +55,5 @@ components:
       $ref: '../sts/JWKS/RSAJWK.yaml'
     EC:
       $ref: '../sts/JWKS/ECJWK.yaml'
+# MUDO add mode to request parameters, either in the token request body, or as header
+# TODO can we add flowId too? as header?
