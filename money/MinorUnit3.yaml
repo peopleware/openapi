@@ -19,13 +19,13 @@ allOf:
       currencyCode:
         type: string
         enum:
-          - BHD
-          - IQD
-          - JOD
-          - KWD
-          - LYD
-          - OMR
-          - TND
+      BHD: '#/components/schemas/baseMinorUnit3'
+      IQD: '#/components/schemas/baseMinorUnit3'
+      JOD: '#/components/schemas/baseMinorUnit3'
+      KWD: '#/components/schemas/baseMinorUnit3'
+      LYD: '#/components/schemas/baseMinorUnit3'
+      OMR: '#/components/schemas/baseMinorUnit3'
+      TND: '#/components/schemas/baseMinorUnit3'
       amount:
         type: number
         format: float

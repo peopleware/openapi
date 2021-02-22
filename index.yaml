@@ -330,10 +330,8 @@ components:
             money:
               type: object
               properties:
-                currency:
-                  $ref: 'money/Currency.yaml'
-                any:
-                  $ref: 'money/MoneyAmount.yaml#/schema'
+                lala:
+                  $ref: 'money/lala.yaml#/schema'
             oauth2:
               type: object
               properties:
@@ -377,11 +375,11 @@ components:
               type: string
     # Token requests bodies listed explicitly here as workaround for https://github.com/Redocly/redoc/issues/862#issuecomment-491631228
     # This is actually used in `money/MoneyAmount.yaml`.
-    money_amount_minor_unit_0:
-      $ref: 'money/MinorUnit0.yaml'
-    money_amount_minor_unit_2:
-      $ref: 'money/MinorUnit2.yaml'
-    money_amount_minor_unit_3:
-      $ref: 'money/MinorUnit3.yaml'
-    money_amount_minor_unit_4:
-      $ref: 'money/MinorUnit4.yaml'
+    baseMinorUnit0:
+      $ref: 'money/lala.yaml#/components/schemas/baseMinorUnit0'
+    baseMinorUnit2:
+      $ref: 'money/lala.yaml#/components/schemas/baseMinorUnit2'
+    baseMinorUnit3:
+      $ref: 'money/lala.yaml#/components/schemas/baseMinorUnit3'
+    baseMinorUnit4:
+      $ref: 'money/lala.yaml#/components/schemas/baseMinorUnit4'

@@ -1,0 +1,247 @@
+# Copyright 2021 - 2021 PeopleWare n.v.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+schema:
+  oneOf:
+    - $ref: '#/components/schemas/baseMinorUnit0'
+    - $ref: '#/components/schemas/baseMinorUnit2'
+    - $ref: '#/components/schemas/baseMinorUnit3'
+    - $ref: '#/components/schemas/baseMinorUnit4'
+  discriminator:
+    propertyName: currencyCode
+    mapping:
+      AED: '#/components/schemas/baseMinorUnit2'
+      AFN: '#/components/schemas/baseMinorUnit2'
+      ALL: '#/components/schemas/baseMinorUnit2'
+      AMD: '#/components/schemas/baseMinorUnit2'
+      ANG: '#/components/schemas/baseMinorUnit2'
+      AOA: '#/components/schemas/baseMinorUnit2'
+      ARS: '#/components/schemas/baseMinorUnit2'
+      AUD: '#/components/schemas/baseMinorUnit2'
+      AWG: '#/components/schemas/baseMinorUnit2'
+      AZN: '#/components/schemas/baseMinorUnit2'
+      BAM: '#/components/schemas/baseMinorUnit2'
+      BBD: '#/components/schemas/baseMinorUnit2'
+      BDT: '#/components/schemas/baseMinorUnit2'
+      BGN: '#/components/schemas/baseMinorUnit2'
+      BHD: '#/components/schemas/baseMinorUnit3'
+      BIF: '#/components/schemas/baseMinorUnit0'
+      BMD: '#/components/schemas/baseMinorUnit2'
+      BND: '#/components/schemas/baseMinorUnit2'
+      BOB: '#/components/schemas/baseMinorUnit2'
+      BOV: '#/components/schemas/baseMinorUnit2'
+      BRL: '#/components/schemas/baseMinorUnit2'
+      BSD: '#/components/schemas/baseMinorUnit2'
+      BTN: '#/components/schemas/baseMinorUnit2'
+      BWP: '#/components/schemas/baseMinorUnit2'
+      BYN: '#/components/schemas/baseMinorUnit2'
+      BZD: '#/components/schemas/baseMinorUnit2'
+      CAD: '#/components/schemas/baseMinorUnit2'
+      CDF: '#/components/schemas/baseMinorUnit2'
+      CHE: '#/components/schemas/baseMinorUnit2'
+      CHF: '#/components/schemas/baseMinorUnit2'
+      CHW: '#/components/schemas/baseMinorUnit2'
+      CLF: '#/components/schemas/baseMinorUnit4'
+      CLP: '#/components/schemas/baseMinorUnit0'
+      CNY: '#/components/schemas/baseMinorUnit2'
+      COP: '#/components/schemas/baseMinorUnit2'
+      COU: '#/components/schemas/baseMinorUnit2'
+      CRC: '#/components/schemas/baseMinorUnit2'
+      CUC: '#/components/schemas/baseMinorUnit2'
+      CUP: '#/components/schemas/baseMinorUnit2'
+      CVE: '#/components/schemas/baseMinorUnit2'
+      CZK: '#/components/schemas/baseMinorUnit2'
+      DJF: '#/components/schemas/baseMinorUnit0'
+      DKK: '#/components/schemas/baseMinorUnit2'
+      DOP: '#/components/schemas/baseMinorUnit2'
+      DZD: '#/components/schemas/baseMinorUnit2'
+      EGP: '#/components/schemas/baseMinorUnit2'
+      ERN: '#/components/schemas/baseMinorUnit2'
+      ETB: '#/components/schemas/baseMinorUnit2'
+      EUR: '#/components/schemas/baseMinorUnit2'
+      FJD: '#/components/schemas/baseMinorUnit2'
+      FKP: '#/components/schemas/baseMinorUnit2'
+      GBP: '#/components/schemas/baseMinorUnit2'
+      GEL: '#/components/schemas/baseMinorUnit2'
+      GHS: '#/components/schemas/baseMinorUnit2'
+      GIP: '#/components/schemas/baseMinorUnit2'
+      GMD: '#/components/schemas/baseMinorUnit2'
+      GNF: '#/components/schemas/baseMinorUnit0'
+      GTQ: '#/components/schemas/baseMinorUnit2'
+      GYD: '#/components/schemas/baseMinorUnit2'
+      HKD: '#/components/schemas/baseMinorUnit2'
+      HNL: '#/components/schemas/baseMinorUnit2'
+      HRK: '#/components/schemas/baseMinorUnit2'
+      HTG: '#/components/schemas/baseMinorUnit2'
+      HUF: '#/components/schemas/baseMinorUnit2'
+      IDR: '#/components/schemas/baseMinorUnit2'
+      ILS: '#/components/schemas/baseMinorUnit2'
+      INR: '#/components/schemas/baseMinorUnit2'
+      IQD: '#/components/schemas/baseMinorUnit3'
+      IRR: '#/components/schemas/baseMinorUnit2'
+      ISK: '#/components/schemas/baseMinorUnit0'
+      JMD: '#/components/schemas/baseMinorUnit2'
+      JOD: '#/components/schemas/baseMinorUnit3'
+      JPY: '#/components/schemas/baseMinorUnit0'
+      KES: '#/components/schemas/baseMinorUnit2'
+      KGS: '#/components/schemas/baseMinorUnit2'
+      KHR: '#/components/schemas/baseMinorUnit2'
+      KMF: '#/components/schemas/baseMinorUnit0'
+      KPW: '#/components/schemas/baseMinorUnit2'
+      KRW: '#/components/schemas/baseMinorUnit0'
+      KWD: '#/components/schemas/baseMinorUnit3'
+      KYD: '#/components/schemas/baseMinorUnit2'
+      KZT: '#/components/schemas/baseMinorUnit2'
+      LAK: '#/components/schemas/baseMinorUnit2'
+      LBP: '#/components/schemas/baseMinorUnit2'
+      LKR: '#/components/schemas/baseMinorUnit2'
+      LRD: '#/components/schemas/baseMinorUnit2'
+      LSL: '#/components/schemas/baseMinorUnit2'
+      LYD: '#/components/schemas/baseMinorUnit3'
+      MAD: '#/components/schemas/baseMinorUnit2'
+      MDL: '#/components/schemas/baseMinorUnit2'
+      MGA: '#/components/schemas/baseMinorUnit2'
+      MKD: '#/components/schemas/baseMinorUnit2'
+      MMK: '#/components/schemas/baseMinorUnit2'
+      MNT: '#/components/schemas/baseMinorUnit2'
+      MOP: '#/components/schemas/baseMinorUnit2'
+      MRU: '#/components/schemas/baseMinorUnit2'
+      MUR: '#/components/schemas/baseMinorUnit2'
+      MVR: '#/components/schemas/baseMinorUnit2'
+      MWK: '#/components/schemas/baseMinorUnit2'
+      MXN: '#/components/schemas/baseMinorUnit2'
+      MXV: '#/components/schemas/baseMinorUnit2'
+      MYR: '#/components/schemas/baseMinorUnit2'
+      MZN: '#/components/schemas/baseMinorUnit2'
+      NAD: '#/components/schemas/baseMinorUnit2'
+      NGN: '#/components/schemas/baseMinorUnit2'
+      NIO: '#/components/schemas/baseMinorUnit2'
+      NOK: '#/components/schemas/baseMinorUnit2'
+      NPR: '#/components/schemas/baseMinorUnit2'
+      NZD: '#/components/schemas/baseMinorUnit2'
+      OMR: '#/components/schemas/baseMinorUnit3'
+      PAB: '#/components/schemas/baseMinorUnit2'
+      PEN: '#/components/schemas/baseMinorUnit2'
+      PGK: '#/components/schemas/baseMinorUnit2'
+      PHP: '#/components/schemas/baseMinorUnit2'
+      PKR: '#/components/schemas/baseMinorUnit2'
+      PLN: '#/components/schemas/baseMinorUnit2'
+      PYG: '#/components/schemas/baseMinorUnit0'
+      QAR: '#/components/schemas/baseMinorUnit2'
+      RON: '#/components/schemas/baseMinorUnit2'
+      RSD: '#/components/schemas/baseMinorUnit2'
+      RUB: '#/components/schemas/baseMinorUnit2'
+      RWF: '#/components/schemas/baseMinorUnit0'
+      SAR: '#/components/schemas/baseMinorUnit2'
+      SBD: '#/components/schemas/baseMinorUnit2'
+      SCR: '#/components/schemas/baseMinorUnit2'
+      SDG: '#/components/schemas/baseMinorUnit2'
+      SEK: '#/components/schemas/baseMinorUnit2'
+      SGD: '#/components/schemas/baseMinorUnit2'
+      SHP: '#/components/schemas/baseMinorUnit2'
+      SLL: '#/components/schemas/baseMinorUnit2'
+      SOS: '#/components/schemas/baseMinorUnit2'
+      SRD: '#/components/schemas/baseMinorUnit2'
+      SSP: '#/components/schemas/baseMinorUnit2'
+      STN: '#/components/schemas/baseMinorUnit2'
+      SVC: '#/components/schemas/baseMinorUnit2'
+      SYP: '#/components/schemas/baseMinorUnit2'
+      SZL: '#/components/schemas/baseMinorUnit2'
+      THB: '#/components/schemas/baseMinorUnit2'
+      TJS: '#/components/schemas/baseMinorUnit2'
+      TMT: '#/components/schemas/baseMinorUnit2'
+      TND: '#/components/schemas/baseMinorUnit3'
+      TOP: '#/components/schemas/baseMinorUnit2'
+      TRY: '#/components/schemas/baseMinorUnit2'
+      TTD: '#/components/schemas/baseMinorUnit2'
+      TWD: '#/components/schemas/baseMinorUnit2'
+      TZS: '#/components/schemas/baseMinorUnit2'
+      UAH: '#/components/schemas/baseMinorUnit2'
+      UGX: '#/components/schemas/baseMinorUnit0'
+      USD: '#/components/schemas/baseMinorUnit2'
+      USN: '#/components/schemas/baseMinorUnit2'
+      UYI: '#/components/schemas/baseMinorUnit0'
+      UYU: '#/components/schemas/baseMinorUnit2'
+      UYW: '#/components/schemas/baseMinorUnit4'
+      UZS: '#/components/schemas/baseMinorUnit2'
+      VES: '#/components/schemas/baseMinorUnit2'
+      VND: '#/components/schemas/baseMinorUnit0'
+      VUV: '#/components/schemas/baseMinorUnit0'
+      WST: '#/components/schemas/baseMinorUnit2'
+      XAF: '#/components/schemas/baseMinorUnit0'
+      XCD: '#/components/schemas/baseMinorUnit2'
+      XOF: '#/components/schemas/baseMinorUnit0'
+      XPF: '#/components/schemas/baseMinorUnit0'
+      YER: '#/components/schemas/baseMinorUnit2'
+      ZAR: '#/components/schemas/baseMinorUnit2'
+      ZMW: '#/components/schemas/baseMinorUnit2'
+      ZWL: '#/components/schemas/baseMinorUnit2'
+components:
+  schemas:
+    base:
+      type: object
+      required:
+        - currencyCode
+        - amount
+      properties:
+        currencyCode:
+          type: string
+          example: EUR
+        amount:
+          type: number
+          example: 5342.53
+    # Token requests bodies listed explicitly here as workaround for https://github.com/Redocly/redoc/issues/862#issuecomment-491631228
+    # This has to be repeated in `index.yaml` as a workaround.
+    baseMinorUnit0:
+      allOf:
+        - $ref: '#/components/schemas/base'
+        - type: object
+          properties:
+            amount:
+              type: integer
+              description: The money amount, no decimals
+              example: 523
+    baseMinorUnit2:
+      allOf:
+        - $ref: '#/components/schemas/base'
+        - type: object
+          properties:
+            amount:
+              type: number
+              format: float
+              multipleOf: 0.01
+              description: The money amount. Maximum 2 decimals.
+              example: 523.43
+    baseMinorUnit3:
+      allOf:
+        - $ref: '#/components/schemas/base'
+        - type: object
+          properties:
+            amount:
+              type: number
+              format: float
+              multipleOf: 0.001
+              description: The money amount. Maximum 3 decimals.
+              example: 523.433
+    baseMinorUnit4:
+      allOf:
+        - $ref: '#/components/schemas/base'
+        - type: object
+          properties:
+            amount:
+              type: number
+              format: float
+              multipleOf: 0.0001
+              description: The money amount. Maximum 4 decimals.
+              example: 523.4393

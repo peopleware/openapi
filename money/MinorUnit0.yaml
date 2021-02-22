@@ -19,37 +19,23 @@ allOf:
       currencyCode:
         type: string
         enum:
-          - XOF
-          - XOF
-          - BIF
-          - XAF
-          - XAF
-          - XAF
-          - CLP
-          - KMF
-          - XAF
-          - XOF
-          - DJF
-          - XAF
-          - XPF
-          - XAF
-          - GNF
-          - XOF
-          - ISK
-          - JPY
-          - KRW
-          - XOF
-          - XPF
-          - XOF
-          - PYG
-          - RWF
-          - XOF
-          - XOF
-          - UGX
-          - UYI
-          - VUV
-          - VND
-          - XPF
+      BIF: '#/components/schemas/baseMinorUnit0'
+      CLP: '#/components/schemas/baseMinorUnit0'
+      DJF: '#/components/schemas/baseMinorUnit0'
+      GNF: '#/components/schemas/baseMinorUnit0'
+      ISK: '#/components/schemas/baseMinorUnit0'
+      JPY: '#/components/schemas/baseMinorUnit0'
+      KMF: '#/components/schemas/baseMinorUnit0'
+      KRW: '#/components/schemas/baseMinorUnit0'
+      PYG: '#/components/schemas/baseMinorUnit0'
+      RWF: '#/components/schemas/baseMinorUnit0'
+      UGX: '#/components/schemas/baseMinorUnit0'
+      UYI: '#/components/schemas/baseMinorUnit0'
+      VND: '#/components/schemas/baseMinorUnit0'
+      VUV: '#/components/schemas/baseMinorUnit0'
+      XAF: '#/components/schemas/baseMinorUnit0'
+      XOF: '#/components/schemas/baseMinorUnit0'
+      XPF: '#/components/schemas/baseMinorUnit0'
       amount:
         type: integer
         description: The money amount, with the given precision

@@ -19,8 +19,8 @@ allOf:
       currencyCode:
         type: string
         enum:
-          - CLF
-          - UYW
+      CLF: '#/components/schemas/baseMinorUnit4'
+      UYW: '#/components/schemas/baseMinorUnit4'
       amount:
         type: number
         format: float
