@@ -16,13 +16,17 @@ name: at
 in: query
 schema:
   allOf:
-    - description:
-        Get the information we believed to be true at `at`. The semantic maximum, and default, is `now` (we cannot
-        predict knowledge the system will have in the future), which returns the most recent knowledge. This is not
-        enforced in the service however. Otherwise, we might generate unnecessary problems with clock differences
-        between client and service computers. A value `> now` will be interpreted as `now`. As far as we know, the
-        knowledge in the future will be the knowledge we have `now`. The returned resource will have a `createdAt <= at`
-        always. If `at` is before the creation of the resource, `404` is returned.
+    - description: Get the information we believed to be true at `at`.
+
+
+        The semantic maximum, and default, is `now` (we cannot predict knowledge the system will have in the future),
+        which returns the most recent knowledge. This is not enforced in the service however. Otherwise, we might
+        generate unnecessary problems with clock differences between client and service computers. A value `> now` will
+        be interpreted as `now`. As far as we know, the knowledge in the future will be the knowledge we have `now`.
+
+
+        The returned resource will have a `createdAt <= at` always. If `at` is before the creation of the resource,
+        `404` is returned.
       default: >-
         `now`
     - $ref: '../time/DateTime.yaml'
