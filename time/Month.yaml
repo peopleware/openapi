@@ -14,7 +14,7 @@
 
 type: string
 format: date
-pattern: ^\d{4}-(0[1-9]|1[0-2])-([0[1-9]|[1-2]\d|30|31)$
+pattern: \d{4}-(0[1-9]|1[0-2])-([0[1-9]|[1-2][0-9]|30|31)
 description: >-
   A day in the history of the world.
 
