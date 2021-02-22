@@ -42,7 +42,8 @@ properties:
       - type: array
         items:
           type: string
-          minLength: 1
+          minItems: 1
+          uniqueItems: true
     description: >-
       The `aud` (audience) claim identifies the recipients that the JWT is intended for. Each principal intended to
       process the JWT **must** identify itself with a value in the audience claim.  If the principal processing the

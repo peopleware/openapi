@@ -18,7 +18,8 @@ required:
 properties:
   keys:
     type: array
-    minLength: 1
+    minItems: 1
+    uniqueItems: true
     items:
       $ref: 'JWK.yaml#/schema'
     description: >-

@@ -147,6 +147,8 @@ properties:
         - unwrapKey
         - deriveKey
         - deriveBits
+      minItems: 1
+      uniqueItems: true
     description: >-
       The `key_ops` (key operations) parameter identifies the operation(s) for which the key is intended to be used. The
       `key_ops` parameter is intended for use cases in which public, private, or symmetric keys may be present.
@@ -227,7 +229,8 @@ properties:
     items:
       type: string
       format: base64
-      minLength: 1
+      minItems: 1
+      uniqueItems: true
     description: >-
       The `x5c` (X.509 certificate chain) parameter contains a chain of one or more PKIX certificates [RFC
       5280](https://tools.ietf.org/html/rfc5280). The certificate chain is represented as a JSON array of certificate
