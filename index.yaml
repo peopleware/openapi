@@ -316,8 +316,8 @@ components:
                     be:
                       type: object
                       properties:
-                        kbo:
-                          $ref: 'id/legalPerson/be/KBO.yaml'
+                        crn:
+                          $ref: 'id/legalPerson/be/CRN.yaml'
                 uuid:
                   $ref: 'id/UUID.yaml'
             location:

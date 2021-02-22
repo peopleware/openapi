@@ -12,9 +12,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-type: string
-pattern: \d{10}
-description: >-
-  The Belgian KBO (en: Company number / nl: Ondernemingsnummer / fr: Numéro d’entreprise / de: Firmennummer) of the
-  company. There is no formatting in this representation.
-example: '0123456789'
+# The `KBO.yaml` file is deprecated. Please use the same schema via the correct name, `CRN.yaml`.
+$ref: CRN.yaml
