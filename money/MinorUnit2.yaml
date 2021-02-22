@@ -19,227 +19,146 @@ allOf:
       currencyCode:
         type: string
         enum:
+          - AED
           - AFN
-          - EUR
           - ALL
-          - DZD
-          - USD
-          - EUR
-          - AOA
-          - XCD
-          - XCD
-          - ARS
           - AMD
-          - AWG
+          - ANG
+          - AOA
+          - ARS
           - AUD
-          - EUR
+          - AWG
           - AZN
-          - BSD
-          - BDT
+          - BAM
           - BBD
-          - BYN
-          - EUR
-          - BZD
+          - BDT
+          - BGN
           - BMD
-          - INR
-          - BTN
+          - BND
           - BOB
           - BOV
-          - USD
-          - BAM
-          - BWP
-          - NOK
           - BRL
-          - USD
-          - BND
-          - BGN
-          - CVE
-          - KHR
+          - BSD
+          - BTN
+          - BWP
+          - BYN
+          - BZD
           - CAD
-          - KYD
+          - CDF
+          - CHE
+          - CHF
+          - CHW
           - CNY
-          - AUD
-          - AUD
           - COP
           - COU
-          - CDF
-          - NZD
           - CRC
-          - HRK
-          - CUP
           - CUC
-          - ANG
-          - EUR
+          - CUP
+          - CVE
           - CZK
           - DKK
-          - XCD
           - DOP
-          - USD
+          - DZD
           - EGP
-          - SVC
-          - USD
           - ERN
-          - EUR
-          - SZL
           - ETB
           - EUR
-          - FKP
-          - DKK
           - FJD
-          - EUR
-          - EUR
-          - EUR
-          - EUR
-          - GMD
+          - FKP
+          - GBP
           - GEL
-          - EUR
           - GHS
           - GIP
-          - EUR
-          - DKK
-          - XCD
-          - EUR
-          - USD
+          - GMD
           - GTQ
-          - GBP
           - GYD
-          - HTG
-          - USD
-          - AUD
-          - EUR
-          - HNL
           - HKD
+          - HNL
+          - HRK
+          - HTG
           - HUF
-          - INR
           - IDR
-          - IRR
-          - EUR
-          - GBP
           - ILS
-          - EUR
+          - INR
+          - IRR
           - JMD
-          - GBP
-          - KZT
           - KES
-          - AUD
-          - KPW
           - KGS
+          - KHR
+          - KPW
+          - KYD
+          - KZT
           - LAK
-          - EUR
           - LBP
-          - LSL
-          - ZAR
+          - LKR
           - LRD
-          - CHF
-          - EUR
-          - EUR
-          - MOP
-          - MKD
+          - LSL
+          - MAD
+          - MDL
           - MGA
-          - MWK
-          - MYR
-          - MVR
-          - EUR
-          - USD
-          - EUR
+          - MKD
+          - MMK
+          - MNT
+          - MOP
           - MRU
           - MUR
-          - EUR
+          - MVR
+          - MWK
           - MXN
           - MXV
-          - USD
-          - MDL
-          - EUR
-          - MNT
-          - EUR
-          - XCD
-          - MAD
+          - MYR
           - MZN
-          - MMK
           - NAD
-          - ZAR
-          - AUD
-          - NPR
-          - EUR
-          - NZD
-          - NIO
           - NGN
-          - NZD
-          - AUD
-          - USD
+          - NIO
           - NOK
-          - PKR
-          - USD
+          - NPR
+          - NZD
           - PAB
-          - USD
-          - PGK
           - PEN
+          - PGK
           - PHP
-          - NZD
+          - PKR
           - PLN
-          - EUR
-          - USD
           - QAR
-          - EUR
           - RON
-          - RUB
-          - EUR
-          - SHP
-          - XCD
-          - XCD
-          - EUR
-          - EUR
-          - XCD
-          - WST
-          - EUR
-          - STN
-          - SAR
           - RSD
-          - SCR
-          - SLL
-          - SGD
-          - ANG
-          - EUR
-          - EUR
+          - RUB
+          - SAR
           - SBD
-          - SOS
-          - ZAR
-          - SSP
-          - EUR
-          - LKR
+          - SCR
           - SDG
-          - SRD
-          - NOK
           - SEK
-          - CHF
-          - CHE
-          - CHW
+          - SGD
+          - SHP
+          - SLL
+          - SOS
+          - SRD
+          - SSP
+          - STN
+          - SVC
           - SYP
-          - TWD
-          - TJS
-          - TZS
+          - SZL
           - THB
-          - USD
-          - NZD
-          - TOP
-          - TTD
-          - TRY
+          - TJS
           - TMT
-          - USD
-          - AUD
+          - TOP
+          - TRY
+          - TTD
+          - TWD
+          - TZS
           - UAH
-          - AED
-          - GBP
-          - USD
           - USD
           - USN
           - UYU
           - UZS
           - VES
-          - USD
-          - USD
-          - MAD
+          - WST
+          - XCD
           - YER
+          - ZAR
+          - ZAR
+          - ZAR
           - ZMW
           - ZWL
       amount:
