@@ -190,17 +190,7 @@ schema:
 components:
   schemas:
     base:
-      type: object
-      required:
-        - currencyCode
-        - amount
-      properties:
-        currencyCode:
-          type: string
-          example: EUR
-        amount:
-          type: number
-          example: 5342.53
+      $ref: 'BaseMoneyAmount.yaml'
     # Token requests bodies listed explicitly here as workaround for https://github.com/Redocly/redoc/issues/862#issuecomment-491631228
     # This has to be repeated in `index.yaml` as a workaround.
     baseMinorUnit0:
