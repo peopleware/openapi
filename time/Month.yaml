@@ -1,4 +1,4 @@
-# Copyright 2020 - 2021 PeopleWare n.v.
+# Copyright 2021 - 2021 PeopleWare n.v.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,9 +14,9 @@
 
 type: string
 format: date
-pattern: \d{4}-(0[1-9]|1[0-2])-([0[1-9]|[1-2][0-9]|30|31)
+pattern: ^\d{4}-(0[1-9]|1[0-2])$
 description: >-
-  A day in the history of the world.
+  A month in the history of the universe.
 
 
   This is a fuzzy description of a time interval, given timezones. This is stored, communicated, and visualized as-is,
@@ -24,4 +24,4 @@ description: >-
 
 
   Uses the ISO-8601 representation.
-example: '2020-01-23'
+example: '2021-02'
