@@ -327,9 +327,11 @@ components:
                   $ref: 'location/Address.yaml'
                 country:
                   $ref: 'location/Country.yaml'
-            moneyAmount:
+            money:
               type: object
               properties:
+                currency:
+                  $ref: 'money/Currency.yaml'
                 any:
                   $ref: 'money/MoneyAmount.yaml#/schema'
             oauth2:
