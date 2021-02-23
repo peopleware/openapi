@@ -38,8 +38,10 @@ those, the requirements differ significantly depending on the framework and libr
 
 The page size is controlled by the common `per_page` query parameter, which is a positive integer. The resource should
 impose an upper limit, and document it. The server returns the requested number of references in the response, except
-for the last page. In that case there can be fewer reference in the response. The `per_page` query parameter is
-optional, but has a defined and documented default value, smaller or equal to the defined upper limit.
+for the first and last page. The first page can be empty, or have fewer elements that the page size. The last page can
+have fewer reference in the response than the page size, but cannot be empty. Other pages have exactly the page size as
+number of elements. The `per_page` query parameter is optional, but has a defined and documented default value, smaller
+or equal to the defined upper limit.
 
 If the `page` or `per_page` query parameters are not a positive integer, or the `per_page` value is larger than the
 imposed and documented upper limit, this is a violation of the contract, which results in a generic `400` (Bad Request)

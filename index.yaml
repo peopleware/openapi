@@ -99,6 +99,79 @@ paths:
       - $ref: 'parameters/flowId.yaml'
       - $ref: 'parameters/mode.yaml'
       - $ref: 'oauth2/authorization.yaml'
+    get:
+      summary: Demonstration of a list
+      description: use of page control query parameters
+      operationId: demonstrationList
+      parameters:
+        - $ref: 'parameters/at.yaml'
+        - $ref: 'parameters/page.yaml'
+        - $ref: 'parameters/perPage.yaml'
+      responses:
+        '200':
+          x-summary: The page was found
+          description: We get a list of references
+          headers:
+            x-flow-id:
+              schema:
+                $ref: 'id/UUID.yaml'
+            x-mode:
+              schema:
+                $ref: 'id/mode.yaml'
+            x-date:
+              schema:
+                $ref: 'resource/date.yaml'
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - hrefs
+                  - href
+                properties:
+                  hrefs:
+                    type: array
+                    items:
+                      type: string
+                      format: uri
+                      example: ../a/reference?at=2021-01-19T17:14:18.482Z
+                  href:
+                    type: object
+                    readOnly: true
+                    required:
+                      - first
+                      - last
+                    properties:
+                      first:
+                        type: string
+                        format: uri
+                        minLength: 1
+                        description:
+                          relative URI of the first page known at `createdAt` (includes a query parameter `at`)
+                        example: ../demonstration?at=2021-01-19T17:14:18.482Z&per_page=20&page=1
+                      previous:
+                        type: string
+                        format: uri
+                        minLength: 1
+                        description:
+                          relative URI of the previous page known at `createdAt` (includes a query parameter `at`); not
+                          present when we are at the first page
+                        example: ../demonstration?at=2021-01-19T17:14:18.482Z&per_page=20&page=4
+                      next:
+                        type: string
+                        format: uri
+                        minLength: 1
+                        description:
+                          relative URI of the next page known at `createdAt` (includes a query parameter `at`); not
+                          present when we are at the last page
+                        example: ../demonstration?at=2021-01-19T17:14:18.482Z&per_page=20&page=6
+                      last:
+                        type: string
+                        format: uri
+                        minLength: 1
+                        description:
+                          relative URI of the last page known at `createdAt` (includes a query parameter `at`)
+                        example: ../demonstration?at=2021-01-19T17:14:18.482Z&per_page=20&page=12
     post:
       summary: Demonstration of common specs for `POST`
       description: Every common spec is mentioned here.
