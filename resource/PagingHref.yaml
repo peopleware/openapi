@@ -1,0 +1,48 @@
+# Copyright 2021 - 2021 PeopleWare n.v.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type: object
+readOnly: true
+required:
+  - first
+  - last
+properties:
+  first:
+    type: string
+    format: uri
+    minLength: 1
+    description: relative URI of the first page known at `createdAt` (includes a query parameter `at`)
+    example: ./?at=2021-01-19T17:14:18.482Z&per_page=20&page=1
+  previous:
+    type: string
+    format: uri
+    minLength: 1
+    description:
+      relative URI of the previous page known at `createdAt` (includes a query parameter `at`); not present when we are
+      at the first page
+    example: ./?at=2021-01-19T17:14:18.482Z&per_page=20&page=4
+  next:
+    type: string
+    format: uri
+    minLength: 1
+    description:
+      relative URI of the next page known at `createdAt` (includes a query parameter `at`); not present when we are at
+      the last page
+    example: ./?at=2021-01-19T17:14:18.482Z&per_page=20&page=6
+  last:
+    type: string
+    format: uri
+    minLength: 1
+    description: relative URI of the last page known at `createdAt` (includes a query parameter `at`)
+    example: ./?at=2021-01-19T17:14:18.482Z&per_page=20&page=12
