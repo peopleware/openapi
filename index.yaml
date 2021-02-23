@@ -33,6 +33,10 @@ tags:
     x-traitTag: true
     description:
       $ref: 'resource/caching.md'
+  - name: Lists
+    x-traitTag: true
+    description:
+      $ref: 'resource/paging.md'
 paths:
   /health:
     parameters:
