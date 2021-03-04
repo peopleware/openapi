@@ -26,7 +26,7 @@ properties:
   line2:
     allOf:
       - $ref: '../string/TrimmedString.yaml'
-      - description: First address line. Used together with `line1`.
+      - description: Second address line. Used together with `line1`.
   postalCode:
     type: string
     description: For some well-known `country`s, a pattern is enforced. E.g., for `BE`, the pattern is `^[1-9]\d{3}&`.
