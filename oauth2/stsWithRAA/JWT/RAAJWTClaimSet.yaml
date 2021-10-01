@@ -38,7 +38,7 @@ allOf:
 
 
           - Form the _Resource Action_ (_RA_) by concatenating the _request action_ in upper case with the remaining
-            part of the _server relative version_ of the request URI after the _selected prefix_, separate by a colon
+            part of the _server relative version_ of the request URI after the _selected prefix_, separated by a colon
             (`':'`).
 
 
