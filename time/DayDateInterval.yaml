@@ -34,7 +34,7 @@ description: >-
   This is a fuzzy description of a time interval, given timezones. This is stored, communicated, and visualized as-is,
   and interpreted locally.
 example:
-  # TODO multiple examples do not pass linting for some reason
+  # NOTE multiple examples do not pass linting for some reason - this seems to be a subject of OpenAPI 3.1
   #  openEnded:
   #    from: '2012-09-13'
   #  closed:
