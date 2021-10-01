@@ -13,7 +13,7 @@
 # limitations under the License.
 
 type: string
-pattern: \d{10}
+pattern: ^\d{10}$
 description: >-
   Company Registration Number: Belgian identification of organizations.
 
