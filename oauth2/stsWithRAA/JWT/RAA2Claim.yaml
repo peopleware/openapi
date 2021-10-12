@@ -2,8 +2,10 @@ type: object
 description:
   $ref: 'RAA2Claim.md'
 additionalProperties:
+  x-additionalPropertiesName: prefix
   type: string
   pattern: '^[[A-Z]*,{}]+:[\w-.~%!$&''()*+,;=/{}]*$'
+  description: the RAX for the `prefix` this is a value of
 example:
   '/openapi/common/I': '*:/a/path/*/to/{a,multiple}/resources/**'
   '/openapi/other/IV': '{GET,PUT}:/another/path/43/without/choices'
