@@ -17,8 +17,8 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
-const { DateTime } = require('../../../schemata/time/DateTime')
-const { dayDateExamples } = require('../../../schemata/time/DayDate')
+const { DateTime } = require('../../time/DateTime')
+const { dayDateExamples } = require('../../time/DayDate')
 const { stuff } = require('../../_util/_stuff')
 const should = require('should')
 

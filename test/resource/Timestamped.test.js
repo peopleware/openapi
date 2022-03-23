@@ -17,7 +17,7 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousCRUSchema = require('../../_util/_shouldBeSeriousCRUSchema')
-const { Timestamped } = require('../../../schemata/resource/Timestamped')
+const { Timestamped } = require('../../resource/Timestamped')
 const { stuff } = require('../../_util/_stuff')
 
 describe(testName(module), function () {

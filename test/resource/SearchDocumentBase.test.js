@@ -17,8 +17,8 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
-const { SearchDocumentBase } = require('../../../schemata/resource/SearchDocumentBase')
 const { stuff } = require('../../_util/_stuff')
+const { SearchDocumentBase } = require('../../resource/SearchDocumentBase')
 
 describe(testName(module), function () {
   shouldBeSeriousSchema(SearchDocumentBase, stuff)

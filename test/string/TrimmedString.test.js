@@ -17,7 +17,7 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
-const { TrimmedString } = require('../../../schemata/string/TrimmedString')
+const { TrimmedString } = require('../../string/TrimmedString')
 const { stuff } = require('../../_util/_stuff')
 
 describe(testName(module), function () {

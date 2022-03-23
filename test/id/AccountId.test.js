@@ -17,8 +17,8 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
-const { AccountId } = require('../../../schemata/id/AccountId')
 const { stuff } = require('../../_util/_stuff')
+const { AccountId } = require('../../id/AccountId')
 
 describe(testName(module), function () {
   shouldBeSeriousSchema(AccountId, stuff)

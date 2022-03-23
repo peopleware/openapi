@@ -17,7 +17,7 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
-const { Gender } = require('../../../schemata/human/Gender')
+const { Gender } = require('../../human/Gender')
 const { stuff } = require('../../_util/_stuff')
 
 describe(testName(module), function () {

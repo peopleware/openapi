@@ -17,8 +17,8 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
-const { StructureVersion } = require('../../../schemata/resource/StructureVersion')
 const { stuff } = require('../../_util/_stuff')
+const { StructureVersion } = require('../../resource/StructureVersion')
 
 describe(testName(module), function () {
   shouldBeSeriousSchema(

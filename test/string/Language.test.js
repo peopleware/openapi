@@ -17,7 +17,7 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
-const { Language } = require('../../../schemata/string/Language')
+const { Language } = require('../../string/Language')
 const { stuff } = require('../../_util/_stuff')
 
 describe(testName(module), function () {

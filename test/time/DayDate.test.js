@@ -17,9 +17,9 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
-const { DayDate } = require('../../../schemata/time/DayDate')
+const { DayDate } = require('../../time/DayDate')
 const { stuff } = require('../../_util/_stuff')
-const { dateTimeExamples } = require('../../../schemata/time/DateTime')
+const { dateTimeExamples } = require('../../time/DateTime')
 
 describe(testName(module), function () {
   shouldBeSeriousSchema(DayDate, stuff.concat(dateTimeExamples))

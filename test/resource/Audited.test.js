@@ -17,8 +17,8 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousCRUSchema = require('../../_util/_shouldBeSeriousCRUSchema')
-const { Audited } = require('../../../schemata/resource/Audited')
 const { stuff } = require('../../_util/_stuff')
+const { Audited } = require('../../resource/Audited')
 
 describe(testName(module), function () {
   shouldBeSeriousCRUSchema(

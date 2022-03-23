@@ -17,8 +17,8 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
-const { Address, addressExamples } = require('../../../schemata/location/Address')
 const { stuff } = require('../../_util/_stuff')
+const { addressExamples, Address } = require('../../location/Address')
 
 const mandatoryProperties = ['line1', 'postalCode', 'municipality', 'country']
 const trimmedStrings = ['line1', 'line2', 'postalCode', 'municipality']

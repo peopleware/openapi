@@ -18,7 +18,7 @@
 const Joi = require('joi')
 const { Country } = require('./Country')
 const addExamples = require('../_util/addExamples')
-const { TrimmedString } = require('../test/string/TrimmedString')
+const { TrimmedString } = require('../string/TrimmedString')
 
 const Address = Joi.object({
   line1: TrimmedString.required().description('First address line. Used together with `line2`.'),

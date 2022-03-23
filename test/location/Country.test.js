@@ -17,8 +17,8 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
-const { Country } = require('../../../schemata/location/Country')
 const { stuff } = require('../../_util/_stuff')
+const { Country } = require('../../location/Country')
 
 describe(testName(module), function () {
   shouldBeSeriousSchema(Country, stuff)
