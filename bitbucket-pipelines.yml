@@ -1,15 +1,15 @@
-image: node:15
+image: node:16
 
 definitions:
   caches:
-    npm15: ~/.npm
+    npm16: ~/.npm
   branches:
     - branch: &testAndTag
       - step:
           name: Test
           caches:
             - node
-            - npm15
+            - npm16
           script:
             - git submodule update --init
             - scripts/common/npm/testCi.sh
