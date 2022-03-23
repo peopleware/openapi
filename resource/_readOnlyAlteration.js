@@ -16,9 +16,9 @@
  */
 
 const _readOnlyAlteration = {
-    read: (schema) => schema.required(),
-    create: (schema) => schema.optional(),
-    update: (schema) => schema.optional()
-};
+  read: schema => schema.required(),
+  create: schema => schema.optional(),
+  update: schema => schema.optional()
+}
 
-module.exports = { readOnlyAlteration: _readOnlyAlteration };
+module.exports = { readOnlyAlteration: _readOnlyAlteration }

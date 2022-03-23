@@ -15,19 +15,19 @@
  *
  */
 
-const Joi = require('joi');
-const addExamples = require('../_util/addExamples');
+const Joi = require('joi')
+const addExamples = require('../_util/addExamples')
 
 const DayDate = Joi.string().pattern(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|30|31)$/)
-    .description(`A day in the history of the world.
+  .description(`A day in the history of the world.
 
 
 This is a fuzzy description of a time interval, given timezones. This is stored, communicated, and visualized as-is,
 and interpreted locally.
 
 
-Uses the ISO-8601 representation.`);
+Uses the ISO-8601 representation.`)
 
-const examples = ['2020-01-23', '1999-01-01'];
+const examples = ['2020-01-23', '1999-01-01']
 
-module.exports = { dayDateExamples: examples, DayDate: addExamples(DayDate, examples) };
+module.exports = { dayDateExamples: examples, DayDate: addExamples(DayDate, examples) }
