@@ -14,6 +14,7 @@
   "bugs": {
     "url": "https://bitbucket.org/ppwcode/openapi/issues"
   },
+  "license": "Apache-2.0",
   "engines": {
     "node": ">=15.5.1"
   },
