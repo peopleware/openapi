@@ -1,7 +1,7 @@
 {
-  "name": "openapi",
+  "name": "@ppwcode/openapi",
   "version": "1.0.0",
-  "description": "Collection of common OpenAPI 3 specs",
+  "description": "Collection of common OpenAPI 3 specs and Joi schemata",
   "author": {
     "name": "Jan Dockx",
     "email": "Jan_Dockx@peopleware.be"
@@ -18,8 +18,8 @@
     "node": ">=15.5.1"
   },
   "devDependencies": {
-    "@redocly/openapi-cli": "^1.0.0-beta.29",
-    "npm-watch": "^0.7.0",
+    "@redocly/openapi-cli": "^1.0.0-beta.89",
+    "npm-watch": "^0.11.0",
     "prettier-standard": "^16.4.1"
   },
   "prettier": {

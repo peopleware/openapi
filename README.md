@@ -1,6 +1,6 @@
 # openapi
 
-Collection of common [OpenAPI 3] specs.
+Collection of common [OpenAPI 3] specs and matching [Joi] schemata.
 
 These common specifications are shared between projects.
 
@@ -144,3 +144,4 @@ language governing permissions and limitations under the License.
 [redoc]: https://github.com/Redocly/redoc
 [redocly openapi-cli]: https://github.com/Redocly/openapi-cli
 [apachev2]: LICENSE
+[joi]: https://joi.dev/
