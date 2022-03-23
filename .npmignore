@@ -1,0 +1,12 @@
+.nyc_output
+coverage
+scripts
+*.test.js
+*.tgz
+bitbucket-pipelines.yml
+.nvmrc
+.idea
+.redocly.yaml
+.editorconfig
+.gitmodules
+.gitignore
