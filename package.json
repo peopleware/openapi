@@ -36,10 +36,34 @@
       "/scripts/common/"
     ]
   },
+  "mocha": {
+    "check-leaks": true,
+    "forbid-only": true,
+    "forbid-pending": true,
+    "recursive": true,
+    "extension": "test.js",
+    "require": [
+      "should",
+      "./_util/_envMocha"
+    ]
+  },
+  "nyc": {
+    "check-coverage": true,
+    "per-file": true,
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100,
+    "reporter": [
+      "html",
+      "text"
+    ]
+  },
   "scripts": {
     "OpenAPI:lint": "openapi lint",
     "OpenAPI:watch": "npm-watch OpenAPI:lint",
-    "test": "npm run OpenAPI:lint"
+    "schematatests": "nyc mocha \"test/{*,**/*}.test.js\"",
+    "test": "npm run OpenAPI:lint && npm run schematatests"
   },
   "watch": {
     "OpenAPI:lint": {
