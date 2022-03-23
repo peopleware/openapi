@@ -57,6 +57,9 @@
     "reporter": [
       "html",
       "text"
+    ],
+    "exclude": [
+      "_util/_*.js"
     ]
   },
   "scripts": {
