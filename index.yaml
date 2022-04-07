@@ -217,7 +217,7 @@ paths:
         '403':
           $ref: 'oauth2/403.yaml'
         '404':
-          $ref: 'resource/404at.yaml'
+          $ref: 'resource/404At.yaml'
     put:
       summary: Demonstration of common specs for `PUT`
       description: >-

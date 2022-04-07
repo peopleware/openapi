@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-description: The resource never existed, or did not exist yet at `at
+description: The resource never existed, or did not exist yet at `at`
 headers:
   x-flow-id:
     schema:
