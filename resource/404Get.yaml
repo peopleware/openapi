@@ -25,4 +25,4 @@ headers:
       $ref: 'date.yaml'
   cache-control:
     schema:
-      $ref: 'cacheControlPrivateDynamicAt.yaml'
+      $ref: 'cacheControlPrivateDynamic.yaml'
