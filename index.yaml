@@ -286,7 +286,7 @@ paths:
               schema:
                 # NOTE: replace with the correct schema
                 $ref: '#/components/schemas/resource'
-  /demonstration/{id}/searchDocument:
+  /demonstration/{id}/search-document:
     parameters:
       - $ref: 'parameters/forceError.yaml'
       - $ref: 'parameters/flowId.yaml'
