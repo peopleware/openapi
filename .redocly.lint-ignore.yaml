@@ -3,6 +3,12 @@
 oauth2/sts/JWKS/JWKSResource.yaml:
   operation-4xx-response:
     - '#/get/responses'
+oauth2/sts/JWKS/JWKS.yaml:
+  no-invalid-schema-examples:
+    - '#/properties/keys/example/0'
+    - '#/properties/keys/example/1'
+    - '#/properties/keys/example/2'
+    - '#/properties/keys/example/3'
 oauth2/sts/JWT/RegisteredJWTClaimSetResource.yaml:
   operation-4xx-response:
     - '#/get/responses'
