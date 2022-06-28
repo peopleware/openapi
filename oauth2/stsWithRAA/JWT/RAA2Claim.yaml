@@ -4,7 +4,7 @@ description:
 additionalProperties:
   x-additionalPropertiesName: prefix
   type: string
-  pattern: '^[[A-Z]*,{}]+:[\w-.~%!$&''()*+,;=/{}]*$'
+  pattern: "^[A-Z*,{}]+:[-_A-Za-z0-9.~%!$&'()*+,;=/{}]*$"
   description: the RAX for the `prefix` this is a value of
 example:
   '/openapi/common/I': '*:/a/path/*/to/{a,multiple}/resources/**'
