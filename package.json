@@ -64,7 +64,7 @@
     ]
   },
   "scripts": {
-    "OpenAPI:lint": "openapi lint",
+    "OpenAPI:lint": "redocly lint",
     "OpenAPI:watch": "npm-watch OpenAPI:lint",
     "schematatests": "nyc mocha \"test/{*,**/*}.test.js\"",
     "test": "npm run OpenAPI:lint && npm run schematatests"
