@@ -7,14 +7,12 @@ apis:
     root: oauth2/stsWithRAA/index.yaml
 lint:
   extends:
-    - recommended
-#    - all
-#  rules:
-#    path-segment-plural: off
-#    paths-kebab-case: off
-#    request-mime-type:
-#      severity: error
-#      allowedValues:
-#        - application/json
-#        - text/html
-#        - application/pdf
+    - all
+  rules:
+    path-segment-plural: off
+    request-mime-type:
+      severity: error
+      allowedValues:
+        - application/json
+        - text/html
+        - application/pdf
