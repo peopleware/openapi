@@ -24,6 +24,7 @@ properties:
     type: string
     enum:
       - EC
+    example: EC
   crv:
     type: string
     enum:
@@ -43,6 +44,7 @@ properties:
 
 
       See [RFC 7518 Section 6.2.1.1](https://tools.ietf.org/html/rfc7518#section-6.2.1.1).
+    example: P-521
   x:
     type: string
     format: base64url
@@ -52,6 +54,7 @@ properties:
       SEC1]((http://www.secg.org/sec1-v2.pdf)). The length of this octet string **must** be the full size of a
       coordinate for the curve specified in the `crv` parameter. For example, if the value of `crv` is `P-521`, the
       octet string must be 66 octets long.
+    example: jkHNKLOyhoavp89p8hhj08hj008hoh8oho8uyc5h9g7nyvn0vy0==
   y:
     type: string
     format: base64url
@@ -61,3 +64,4 @@ properties:
       SEC1]((http://www.secg.org/sec1-v2.pdf)). The length of this octet string **must** be the full size of a
       coordinate for the curve specified in the `crv` parameter. For example, if the value of `crv` is `P-521`, the
       octet string must be 66 octets long.
+    example: Kp9VWpmPvjvamKLHTIL990898953nMIKKF=

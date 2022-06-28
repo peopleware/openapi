@@ -134,6 +134,7 @@ properties:
 
 
       See [RFC 7517 Section 4.2](https://tools.ietf.org/html/rfc7517#section-4.2).
+    example: sig
   key_ops:
     type: array
     items:
@@ -194,8 +195,7 @@ properties:
 
 
       See [RFC 7517 Section 4.3](https://tools.ietf.org/html/rfc7517#section-4.3).
-    example:
-      - verify
+    example: verify
   x5u:
     type: string
     format: uri

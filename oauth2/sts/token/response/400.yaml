@@ -70,4 +70,5 @@ content:
                 - unauthorized_client
                 - unsupported_grant_type
                 - invalid_scope
+              example: invalid_scope
         - $ref: 'BaseErrorResponseBody.yaml'

@@ -23,6 +23,7 @@ properties:
     type: string
     enum:
       - RSA
+    example: RSA
   n:
     type: string
     format: Base64urlUInt-encoded
