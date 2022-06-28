@@ -16,6 +16,7 @@ lint:
         - application/json
         - text/html
         - application/pdf
+        - application/x-www-form-urlencoded
     # `parameter-description` is currently too strict. A perfectly good description inherited from the schema, and shown
     # in the HTML, is not counted as a description.
     parameter-description: off
