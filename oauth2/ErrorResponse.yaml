@@ -23,6 +23,7 @@ properties:
     type: integer
     minimum: 403
     maximum: 407
+    example: 403
   error:
     type: string
     description: >-
@@ -31,6 +32,7 @@ properties:
   message:
     type: string
     description: Description of the exceptional condition
+    example: This scope was not allowed for this client by the resource owner
   attributes:
     type: object
     description: >-

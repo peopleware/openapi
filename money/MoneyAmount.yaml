@@ -212,7 +212,7 @@ components:
               format: float
               multipleOf: 0.01
               description: The money amount. Maximum 2 decimals.
-              example: 523.43
+              example: 523.02
     baseMinorUnit3:
       allOf:
         - $ref: '#/components/schemas/base'

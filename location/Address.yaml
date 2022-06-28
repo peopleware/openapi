@@ -30,6 +30,7 @@ properties:
   postalCode:
     type: string
     description: For some well-known `country`s, a pattern is enforced. E.g., for `BE`, the pattern is `^[1-9]\d{3}&`.
+    example: '2500'
   municipality:
     allOf:
       - $ref: '../string/TrimmedString.yaml'
@@ -40,6 +41,6 @@ properties:
     $ref: 'Country.yaml'
 example:
   line1: Duwijckstraat 17
-  postalCode: 2500
+  postalCode: '2500'
   municipality: Lier
   country: BE
