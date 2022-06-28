@@ -22,3 +22,4 @@ allOf:
         type: string
         minLength: 1
         description: The refresh token issued to the client
+        example: aq9[uy0-n76=q6b909muvm7t90t790qv0-muyqv

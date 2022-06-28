@@ -25,13 +25,16 @@ allOf:
         type: string
         minLength: 1
         description: The authorization code received from the authorization server.
+        example: MP9TVQ-8-QBV-8-BQM=VN8VQ__=8
       redirect_uri:
         type: string
         format: uri
         description: Must be identical to the redirect uri with which the `code` was requested.
+        example: https://example.org/ui/logged-in
       client_id:
         type: string
         minLength: 1
+        example: bq2890n72
       code_verifier:
         type: string
         description: >-
@@ -39,3 +42,4 @@ allOf:
 
 
           See [RFC 7636 Section 4.1](https://tools.ietf.org/html/rfc7636#section-4.1).
+        example: u2m90mum-0qIL::HL:I(BH%
