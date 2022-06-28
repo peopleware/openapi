@@ -1,4 +1,20 @@
-apiDefinitions:
-  demonstration: index.yaml
-  sts: oauth2/sts/index.yaml
-  stsWithRAA: oauth2/stsWithRAA/index.yaml
+apis:
+  demonstration:
+    root: index.yaml
+  sts:
+    root: oauth2/sts/index.yaml
+  stsWithRAA:
+    root: oauth2/stsWithRAA/index.yaml
+lint:
+  extends:
+    - recommended
+#    - all
+#  rules:
+#    path-segment-plural: off
+#    paths-kebab-case: off
+#    request-mime-type:
+#      severity: error
+#      allowedValues:
+#        - application/json
+#        - text/html
+#        - application/pdf

@@ -1,0 +1,11 @@
+# This file instructs Redocly's linter to ignore the rules contained for specific parts of your API.
+# See https://redoc.ly/docs/cli/ for more information.
+oauth2/sts/JWKS/JWKSResource.yaml:
+  operation-4xx-response:
+    - '#/get/responses'
+oauth2/sts/JWT/RegisteredJWTClaimSetResource.yaml:
+  operation-4xx-response:
+    - '#/get/responses'
+oauth2/stsWithRAA/JWT/RAAJWTClaimSetResource.yaml:
+  operation-4xx-response:
+    - '#/get/responses'

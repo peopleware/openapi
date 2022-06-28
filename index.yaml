@@ -137,6 +137,16 @@ paths:
                       example: ../a/reference?at=2021-01-19T17:14:18.482Z
                   href:
                     $ref: 'resource/PagingHref.yaml'
+        '401':
+          $ref: 'oauth2/401.yaml'
+        '403':
+          $ref: 'oauth2/403.yaml'
+        '404':
+          x-summary: The requested page does not exist
+          description: >-
+            Probably, the page that was requested was past the last page, i.e., the number of items in the list is less
+            than or equal to `per_page * (page - 1)`. E.g., with 113 entries, the last page with `per_page = 20`, is
+            page 6. A request for page 7 results in a `404`.
     post:
       summary: Demonstration of common specs for `POST`
       description: Every common spec is mentioned here.
