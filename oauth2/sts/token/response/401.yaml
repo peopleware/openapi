@@ -34,4 +34,5 @@ content:
               type: string
               enum:
                 - invalid_client
+              example: invalid_client
         - $ref: 'BaseErrorResponseBody.yaml'
