@@ -23,25 +23,15 @@ The [ReDoc] site of the `HEAD` of the `master` branch is hosted at
 
 ## Usage
 
-There is no "deployed" version of these specs. Stable versions are tagged in this repository using [semantic
-versioning], in the format `version/<MAJOR>/<MINOR>/<PATCH>`.
+Your project should have a `package.json` file, for use by `npm`.
 
-To use the common specs, add this repository as a _git submodule_ to the repository containing your [OpenAPI 3]
-specification:
+Include the common [OpenAPI 3] specs in your project with
 
-    > git submodule add https://bitbucket.org/ppwcode/openapi.git common/ppwcode
+```shell
+npm install -D @ppwcode/openapi
+```
 
-Go to the checked out submodule, and choose the required version:
-
-    > cd common/ppwcode
-    > git checkout version/<MAJOR>/<MINOR>/<PATCH>
-    > cd ../..
-
-Commit the submodule definition
-
-    > git add .gitmodules
-    > git add common/ppwcode
-    > git commit […]
+Commit the generated `package-lock.json`.
 
 In your [OpenAPI 3] specification, refer to the common [OpenAPI 3] specs using the `$ref` syntax supported by [OpenAPI
 3], e.g.,
@@ -54,21 +44,12 @@ In your [OpenAPI 3] specification, refer to the common [OpenAPI 3] specs using t
     […]
     interval:
       allOf:
-        - $ref: '../..[…]/common/ppwcode/time/DayDateInterval.yaml'
+        - $ref: '../..[…]/node_modules/ppwcode/time/DayDateInterval.yaml'
         - description: Override the description of the common spec
     […]
   […]
 […]
 ```
-
-To change the version of these common [OpenAPI 3] specs you use
-
-    > cd common/ppwcode
-    > git fetch
-    > git checkout version/<MAJOR>/<MINOR>/<PATCH>
-    > cd ../..
-    > git add common/ppwcode
-    > git commit […]
 
 ## Development
 
