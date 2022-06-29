@@ -2,6 +2,12 @@
 
 # 1
 
+## 1.3
+
+### 1.3.0
+
+- add Joi schemata for Mode, UUID, CacheControlNoCache
+
 ## 1.2
 
 ### 1.2.0
