@@ -2,6 +2,12 @@
 
 # 1
 
+## 1.2
+
+### 1.2.0
+
+- add Joi schemata for health
+
 ## 1.1
 
 ### 1.1.1
