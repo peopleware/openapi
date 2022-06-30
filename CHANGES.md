@@ -2,6 +2,14 @@
 
 # 1
 
+## 1.4
+
+### 1.4.0
+
+- Add `400` response for reuse, and demonstrate in all resources explicitly. Previously this was considered implicit.
+- Specify behavior when required `x-flow-id` or `x-mode` headers are missing or malformed, especially in the case if
+  authNZ issues (authNZ takes precedence)
+
 ## 1.3
 
 ### 1.3.0
