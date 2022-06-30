@@ -72,6 +72,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/health'
+        '400':
+          $ref: 'resource/400.yaml'
         '401':
           $ref: 'oauth2/401.yaml'
         '403':
@@ -137,6 +139,8 @@ paths:
                       example: ../a/reference?at=2021-01-19T17:14:18.482Z
                   href:
                     $ref: 'resource/PagingHref.yaml'
+        '400':
+          $ref: 'resource/400.yaml'
         '401':
           $ref: 'oauth2/401.yaml'
         '403':
@@ -180,6 +184,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/resource'
+        '400':
+          $ref: 'resource/400.yaml'
         '401':
           $ref: 'oauth2/401.yaml'
         '403':
@@ -222,6 +228,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/resource'
+        '400':
+          $ref: 'resource/400.yaml'
         '401':
           $ref: 'oauth2/401.yaml'
         '403':
@@ -258,6 +266,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/resource'
+        '400':
+          $ref: 'resource/400.yaml'
         '401':
           $ref: 'oauth2/401.yaml'
         '403':
@@ -322,6 +332,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/timestampedVersioned'
+        '400':
+          $ref: 'resource/400.yaml'
         '401':
           $ref: 'oauth2/401.yaml'
         '403':
