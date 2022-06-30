@@ -2,6 +2,12 @@
 
 # 1
 
+## 1.5
+
+### 1.5.0
+
+- add schema for common response headers
+
 ## 1.4
 
 ### 1.4.0
