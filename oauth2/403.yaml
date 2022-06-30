@@ -12,8 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-description: >-
+x-summary: >-
   The request requires higher privileges than provided by the access token
+description: >-
+  The returned `x-flow-id` and `x-mode` header values are the same as in the request, if they are available. If there is
+  no `x-flow-id` in the request, or if it is malformed, the service generates a random UUID itself, and returns that.
+
+
+  A missing `x-flow-id` or `x-mode` header in the request would normally result in a `400` response, but authNZ takes
+  precedence.
 headers:
   x-www-authenticate:
     schema:
@@ -21,6 +28,12 @@ headers:
   x-flow-id:
     schema:
       $ref: '../id/UUID.yaml'
+  x-mode:
+    schema:
+      $ref: '../id/mode.yaml'
+  x-date:
+    schema:
+      $ref: '../time/DateTime.yaml'
 content:
   application/json:
     schema:
