@@ -16,30 +16,40 @@
  */
 
 const Joi = require('joi')
-const addExamples = require('../_util/addExamples')
 const { UUID, uuidExamples } = require('../id/UUID')
 const { CacheControlNoCache, cacheControlNoCacheExamples } = require('../resource/CacheControlNoCache')
 const { DateTime, dateTimeExamples } = require('../time/DateTime')
 const { Mode, modeExamples } = require('../id/Mode')
 
+const commonResponseHeadersAllowMissingModeExample = {
+  'x-flow-id': uuidExamples[0],
+  'x-date': dateTimeExamples[0],
+  'cache-control': cacheControlNoCacheExamples[0]
+}
+const commonResponseHeadersExample = {
+  ...commonResponseHeadersAllowMissingModeExample,
+  'x-mode': modeExamples[0]
+}
+
+/**
+ * This schema has 1 tailoring: `allowMissingMode`. In that tailoring, the `x-mode` is optional. It is to be used in `401`,
+ * `403`, or `400` responses, when the request did not carry the required `x-mode` (and there is nothing we can return).
+ */
 const CommonResponseHeaders = Joi.object({
   'x-flow-id': UUID.description('the flowId with which the request to which this is the response was made').required(),
-  'x-mode': Mode.description('the mode with which the request to which this is the response was made').required(),
+  'x-mode': Mode.description('the mode with which the request to which this is the response was made')
+    .required()
+    .alter({ allowMissingMode: schema => schema.optional() }),
   'x-date': DateTime.required(),
   'cache-control': CacheControlNoCache.required()
-}).unknown(true)
-
-const aDate = new Date(2022, 5, 29, 13, 3, 34, 233)
-const commonResponseHeadersExamples = [
-  {
-    'x-flow-id': uuidExamples[0],
-    'x-mode': modeExamples[0],
-    'x-date': dateTimeExamples[0],
-    'cache-control': cacheControlNoCacheExamples[0]
-  }
-]
+})
+  .unknown(true)
+  .example(commonResponseHeadersExample)
+  .alter({ allowMissingMode: schema => schema.example(commonResponseHeadersAllowMissingModeExample) })
 
 module.exports = {
-  commonResponseHeadersExamples,
-  CommonResponseHeaders: addExamples(CommonResponseHeaders, commonResponseHeadersExamples)
+  commonResponseHeadersExample,
+  commonResponseHeadersAllowMissingModeExample,
+  commonResponseHeadersExamples: [commonResponseHeadersExample],
+  CommonResponseHeaders: CommonResponseHeaders
 }

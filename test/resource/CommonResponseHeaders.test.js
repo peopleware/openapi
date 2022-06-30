@@ -21,22 +21,45 @@ const { stuff, stuffWithUndefined } = require('../../_util/_stuff')
 const { CommonResponseHeaders, commonResponseHeadersExamples } = require('../../resource/CommonResponseHeaders')
 
 describe(testName(module), function () {
-  shouldBeSeriousSchema(
-    CommonResponseHeaders,
-    stuff
-      .concat(stuffWithUndefined.map(flowId => ({ ...commonResponseHeadersExamples[0], 'x-flow-id': flowId })))
-      .concat(stuffWithUndefined.map(mode => ({ ...commonResponseHeadersExamples[0], 'x-mode': mode })))
-      .concat(
-        stuffWithUndefined.map(date => ({
-          ...commonResponseHeadersExamples[0],
-          'x-date': date
-        }))
-      )
-      .concat(
-        stuffWithUndefined.map(cc => ({
-          ...commonResponseHeadersExamples[0],
-          'cache-control': cc
-        }))
-      )
-  )
+  describe('nominal', function () {
+    shouldBeSeriousSchema(
+      CommonResponseHeaders,
+      stuff
+        .concat(stuffWithUndefined.map(flowId => ({ ...commonResponseHeadersExamples[0], 'x-flow-id': flowId })))
+        .concat(stuffWithUndefined.map(mode => ({ ...commonResponseHeadersExamples[0], 'x-mode': mode })))
+        .concat(
+          stuffWithUndefined.map(date => ({
+            ...commonResponseHeadersExamples[0],
+            'x-date': date
+          }))
+        )
+        .concat(
+          stuffWithUndefined.map(cc => ({
+            ...commonResponseHeadersExamples[0],
+            'cache-control': cc
+          }))
+        )
+    )
+  })
+  describe('allowMissingMode', function () {
+    const AllowMissingModeCommonResponseHeaders = CommonResponseHeaders.tailor('allowMissingMode')
+    shouldBeSeriousSchema(
+      AllowMissingModeCommonResponseHeaders,
+      stuff
+        .concat(stuffWithUndefined.map(flowId => ({ ...commonResponseHeadersExamples[0], 'x-flow-id': flowId })))
+        .concat(stuff.map(mode => ({ ...commonResponseHeadersExamples[0], 'x-mode': mode })))
+        .concat(
+          stuffWithUndefined.map(date => ({
+            ...commonResponseHeadersExamples[0],
+            'x-date': date
+          }))
+        )
+        .concat(
+          stuffWithUndefined.map(cc => ({
+            ...commonResponseHeadersExamples[0],
+            'cache-control': cc
+          }))
+        )
+    )
+  })
 })
