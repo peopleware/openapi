@@ -65,6 +65,7 @@
   },
   "scripts": {
     "OpenAPI:lint": "redocly lint",
+    "OpenAPI:serve": "redocly preview-docs index.yaml",
     "OpenAPI:watch": "npm-watch OpenAPI:lint",
     "schematatests": "nyc mocha \"test/{*,**/*}.test.js\"",
     "test": "npm run OpenAPI:lint && npm run schematatests"
