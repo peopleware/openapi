@@ -55,7 +55,7 @@ function shouldBeSeriousSchema (schema, failures, unknownNotAllowed = false, con
     } else {
       it('does not allow unknown keys', function () {
         schema._flags.should.be.an.Object()
-        should(schema._flags.unknown).be.false()
+        should(schema._flags.unknown).not.be.ok()
       })
     }
     if (schema.describe().keys) {
