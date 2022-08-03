@@ -30,6 +30,3 @@ headers:
   x-date:
     schema:
       $ref: 'date.yaml'
-  cache-control:
-    schema:
-      $ref: 'cacheControlPrivateDynamic.yaml'

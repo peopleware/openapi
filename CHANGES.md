@@ -4,6 +4,10 @@
 
 ## 1.6
 
+### 1.6.1
+
+- removed cache control header requirement from 400 response (this does not make sense)
+
 ### 1.6.0
 
 - fix an issue in `shouldBeSeriousSchema`
