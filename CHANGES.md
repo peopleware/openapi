@@ -2,6 +2,16 @@
 
 # 1
 
+## 1.6
+
+### 1.6.0
+
+- fix an issue in `shouldBeSeriousSchema`
+- correct typo's and misleading examples
+- add Joi schemata for `Prefix`, `RAX`, and `RAA2`
+
+The validation in the `RAX` schema is limited at this time, but may become stricter in future versions.
+
 ## 1.5
 
 ### 1.5.0
