@@ -13,8 +13,11 @@
 # limitations under the License.
 
 x-summary: >-
-  Missing required headers or query parameters, or malformed header values or query parameter values.
+  Missing required headers, query parameters, or body, or malformed header values, query parameter values or body.
 description: >-
+  Details about what exactly is wrong are provided in the body of the response.
+
+
   The returned `x-flow-id` and `x-mode` header values are the same as in the request, if they are available. If there is
   no `x-flow-id` in the request, or if it is malformed, the service generates a random UUID itself, and returns that.
 
