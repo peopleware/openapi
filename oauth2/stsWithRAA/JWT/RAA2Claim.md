@@ -26,7 +26,7 @@ matching on the rest. `prefix`es **must** start with a `'/'`, and **must not** e
 `prefix`es cannot be expressed in OpenAPI 3). `prefix`es can be used to provide different RAXes for different services
 or partial APIs in a larger API.
 
-_Request actions_ are the actions (a.k.a. methods, verbs) in HTTP. Examples of _resource actions_ are `GET`, `PUT`,
+_Request actions_ are the actions (a.k.a. methods, verbs) in HTTP. Examples of _request actions_ are `GET`, `PUT`,
 `POST`, and `DELETE`.
 
 The colon (`':'`) is chosen as separator between the action and the URI-part in a _Resource Action_, because it is one
