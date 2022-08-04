@@ -4,6 +4,11 @@
 
 ## 1.6
 
+### 1.6.2
+
+- add missing `vary` in mode-dependent responses
+- fix and tweak some descriptions
+
 ### 1.6.1
 
 - removed cache control header requirement from 400 response (this does not make sense)

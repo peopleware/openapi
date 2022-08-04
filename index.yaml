@@ -65,6 +65,7 @@ paths:
             cache-control:
               schema:
                 $ref: 'resource/cacheControlNoCache.yaml'
+            # no vary necessary, because no-cache
             x-date:
               schema:
                 $ref: 'resource/date.yaml'
@@ -224,6 +225,9 @@ paths:
             cache-control:
               schema:
                 $ref: 'resource/cacheControlPrivateDynamicAt.yaml'
+            vary:
+              schema:
+                $ref: 'resource/varyMode.yaml'
           content:
             application/json:
               schema:
@@ -328,6 +332,7 @@ paths:
             cache-control:
               schema:
                 $ref: 'resource/cacheControlNoCache.yaml'
+            # no vary necessary, because no-cache
           content:
             application/json:
               schema:
