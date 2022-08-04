@@ -89,6 +89,10 @@ paths:
             x-mode:
               schema:
                 $ref: 'id/mode.yaml'
+            cache-control:
+              schema:
+                $ref: 'resource/cacheControlNoCache.yaml'
+            # no vary necessary, because no-cache
             x-date:
               schema:
                 $ref: 'resource/date.yaml'
@@ -121,6 +125,12 @@ paths:
             x-mode:
               schema:
                 $ref: 'id/mode.yaml'
+            cache-control:
+              schema:
+                $ref: 'resource/cacheControlPrivateDynamicAt.yaml'
+            vary:
+              schema:
+                $ref: 'resource/varyMode.yaml'
             x-date:
               schema:
                 $ref: 'resource/date.yaml'
