@@ -8,6 +8,7 @@
 
 - add missing `vary` in mode-dependent responses
 - fix and tweak some descriptions
+- add 2 missing cache-controls in demonstration
 
 ### 1.6.1
 
