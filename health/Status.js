@@ -17,7 +17,7 @@
 const addExamples = require('../_util/addExamples')
 const Joi = require('joi')
 
-const statusValues = ['OK', 'WARNING', 'ERROR', ' UNREACHABLE']
+const statusValues = ['OK', 'WARNING', 'ERROR', 'UNREACHABLE']
 
 const Status = addExamples(Joi.valid(...statusValues), statusValues).description(`
 - OK: 200 - the service is running within specifications;
