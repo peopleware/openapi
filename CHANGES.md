@@ -4,6 +4,10 @@
 
 ## 1.6
 
+### 1.6.3
+
+- add missing `x-date` to 412 response
+
 ### 1.6.2
 
 - add missing `vary` in mode-dependent responses
