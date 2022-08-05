@@ -4,6 +4,10 @@
 
 ## 1.6
 
+### 1.6.4
+
+- fix typo in `health/Status.js` allowed statuses
+
 ### 1.6.3
 
 - add missing `x-date` to 412 response
