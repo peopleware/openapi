@@ -25,6 +25,9 @@ headers:
   x-mode:
     schema:
       $ref: '../id/mode.yaml'
+  x-date:
+    schema:
+      $ref: 'date.yaml'
 content:
   application/json:
     schema:
