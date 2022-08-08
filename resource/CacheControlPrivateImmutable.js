@@ -32,9 +32,11 @@ immutable"](https://bitsup.blogspot.com/2016/05/cache-control-immutable.html)). 
 superfluous.`
 )
 
-const cacheControlPrivateImmutableExamples = ['private, max-age=31536000, immutable']
+const cacheControlPrivateImmutable = 'private, max-age=31536000, immutable'
+const cacheControlPrivateImmutableExamples = [cacheControlPrivateImmutable]
 
 module.exports = {
-  cacheControlNoCacheExamples: cacheControlPrivateImmutableExamples,
+  cacheControlPrivateImmutable,
+  cacheControlPrivateImmutableExamples,
   CacheControlPrivateImmutable: addExamples(CacheControlPrivateImmutable, cacheControlPrivateImmutableExamples)
 }

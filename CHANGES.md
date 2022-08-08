@@ -2,6 +2,12 @@
 
 # 1
 
+## 1.9
+
+### 1.9.0
+
+- add `CacheControlPrivateImmutable` response header schema
+
 ## 1.8
 
 ### 1.8.0
