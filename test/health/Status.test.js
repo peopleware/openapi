@@ -17,8 +17,95 @@
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
 const { stuff } = require('../../_util/_stuff')
-const { Status } = require('../../health/Status')
+const {
+  Status,
+  OK,
+  WARNING,
+  ERROR,
+  UNREACHABLE,
+  statusValues,
+  statusCode,
+  consolidate
+} = require('../../health/Status')
+const should = require('should')
+const x = require('cartesian')
 
 describe(testName(module), function () {
-  shouldBeSeriousSchema(Status, stuff)
+  describe('schema', function () {
+    shouldBeSeriousSchema(Status, stuff)
+  })
+  describe('constants', function () {
+    function isAValidConstant (name, sv) {
+      it(`${name} is a valid Status`, function () {
+        should(Status.validate(sv).error).not.be.ok()
+        statusValues.should.containEql(name)
+        sv.should.equal(name)
+      })
+    }
+
+    isAValidConstant('OK', OK)
+    isAValidConstant('WARNING', WARNING)
+    isAValidConstant('ERROR', ERROR)
+    isAValidConstant('UNREACHABLE', UNREACHABLE)
+  })
+  describe('#statusValues', function () {
+    it('is an array of values', function () {
+      statusValues.should.be.an.Array()
+    })
+    statusValues.forEach(v => {
+      it(`"${v}" is valid`, function () {
+        should(Status.validate(v).error).not.be.ok()
+      })
+    })
+  })
+  describe('#statusCode', function () {
+    it('is an object with numbers', function () {
+      function shouldBeIntegerWithin (candidate, min, max) {
+        candidate.should.be.a.Number()
+        Number.isInteger(candidate).should.be.a.true()
+        candidate.should.be.within(min, max)
+      }
+
+      statusCode.should.be.an.Object()
+      shouldBeIntegerWithin(statusCode.OK, 200, 299)
+      shouldBeIntegerWithin(statusCode.WARNING, 200, 299)
+      shouldBeIntegerWithin(statusCode.ERROR, 400, 499)
+    })
+  })
+  describe('#consolidate', function () {
+    beforeEach(function () {
+      consolidate.contract.verifyPostconditions = true
+    })
+    afterEach(function () {
+      consolidate.contract.verifyPostconditions = false
+    })
+
+    const cases = x({
+      acc: statusValues.filter(v => v !== UNREACHABLE),
+      status: statusValues,
+      required: [true, false]
+    })
+
+    cases.forEach(c => {
+      /* prettier-ignore */
+      const expected =
+              c.status === OK
+              ? c.acc
+              : c.status === WARNING
+                ? c.acc === OK
+                  ? WARNING
+                  : c.acc
+                : c.status === ERROR || c.status === UNREACHABLE
+                  ? c.acc === ERROR
+                    ? ERROR
+                    : c.required
+                      ? ERROR
+                      : WARNING
+                  : undefined
+      it(`${c.acc} <- ${c.status}, required ${c.required}, returns ${expected}`, function () {
+        const result = consolidate(c.acc, c.status, c.required)
+        result.should.equal(expected)
+      })
+    })
+  })
 })
