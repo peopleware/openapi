@@ -8,6 +8,7 @@
 
 - add `CacheControlPrivateImmutable` response header schema
 - add constants for cache control `no-store` and private immutable
+- add OpenAPI and Joi schemata for `location` response header
 
 ## 1.8
 

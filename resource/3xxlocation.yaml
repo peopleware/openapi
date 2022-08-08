@@ -1,0 +1,4 @@
+type: string
+format: uri
+description: relative URI where the requested resource can be found
+example: demonstration/56349

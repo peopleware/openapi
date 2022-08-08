@@ -187,10 +187,7 @@ paths:
                 $ref: 'resource/date.yaml'
             location:
               schema:
-                type: string
-                format: uri
-                description: relative URI for the newly created resource
-                example: demonstration/56349
+                $ref: 'resource/201location.yaml'
           content:
             application/json:
               schema:

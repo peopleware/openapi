@@ -1,0 +1,4 @@
+type: string
+format: uri
+description: relative URI for the newly created resource
+example: demonstration/56349
