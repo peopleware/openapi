@@ -62,7 +62,8 @@
       "text"
     ],
     "exclude": [
-      "_util/_*.js"
+      "_util/_*.js",
+      "test/**"
     ]
   },
   "scripts": {
