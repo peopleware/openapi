@@ -2,6 +2,13 @@
 
 # 1
 
+## 1.7
+
+### 1.7.0
+
+- add constants and `consolidate` functionality to `health/Status`
+- add validateSchema to `util`
+
 ## 1.6
 
 ### 1.6.4
