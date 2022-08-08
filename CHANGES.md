@@ -2,6 +2,13 @@
 
 # 1
 
+## 1.8
+
+### 1.8.0
+
+- add accept header schema
+- fix test coverage
+
 ## 1.7
 
 ### 1.7.0
