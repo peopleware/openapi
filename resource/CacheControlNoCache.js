@@ -22,9 +22,12 @@ const CacheControlNoCache = Joi.valid('no-store').description(
   'Never cache this response, not in the browser, nor in intermediate caches.'
 )
 
-const cacheControlNoCacheExamples = ['no-store']
+const cacheControlNoCache = 'no-store'
+
+const cacheControlNoCacheExamples = [cacheControlNoCache]
 
 module.exports = {
+  cacheControlNoCache,
   cacheControlNoCacheExamples,
   CacheControlNoCache: addExamples(CacheControlNoCache, cacheControlNoCacheExamples)
 }

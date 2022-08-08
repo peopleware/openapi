@@ -7,6 +7,7 @@
 ### 1.9.0
 
 - add `CacheControlPrivateImmutable` response header schema
+- add constants for cache control `no-store` and private immutable
 
 ## 1.8
 
