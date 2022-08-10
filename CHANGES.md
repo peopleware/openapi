@@ -4,6 +4,15 @@
 
 ## 1.9
 
+## 1.9.2
+
+- fine-tune `400`, `401`, and `403` response descriptions in the context of a missing or invalid `x-mode`
+- tweak `CommonResponseHeaders` schema
+
+The change to `CommonResponseHeaders` is backward compatible but users should be aware that we are no longer checking
+for `cache-control` in the schema. `cache-control` requirements might be too diverse to handle with alterations (this
+might be added back later).
+
 ### 1.9.1
 
 - Made clear in documentation that we will never return a faulty value. This is of particular importance for `x-mode`,
