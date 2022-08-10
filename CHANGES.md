@@ -4,6 +4,13 @@
 
 ## 1.9
 
+### 1.9.1
+
+- Made clear in documentation that we will never return a faulty value. This is of particular importance for `x-mode`,
+  which might be invalid in a `400`, `401`, or `403` response. In those cases, no `x-mode` header will be returned.
+- add missing _required_ annotation to all response headers, except for `x-mode` for the reason described above
+- add missing response headers to list example
+
 ### 1.9.0
 
 - add `CacheControlPrivateImmutable` response header schema
