@@ -170,11 +170,28 @@ paths:
         '403':
           $ref: 'oauth2/403.yaml'
         '404':
-          x-summary: The requested page does not exist
+          x-summary: The requested page never existed, or did not exist yet at `at`
           description: >-
             Probably, the page that was requested was past the last page, i.e., the number of items in the list is less
             than or equal to `per_page * (page - 1)`. E.g., with 113 entries, the last page with `per_page = 20`, is
             page 6. A request for page 7 results in a `404`.
+          headers:
+            x-flow-id:
+              required: true
+              schema:
+                $ref: 'id/UUID.yaml'
+            x-mode:
+              required: true
+              schema:
+                $ref: 'id/mode.yaml'
+            x-date:
+              required: true
+              schema:
+                $ref: 'resource/date.yaml'
+            cache-control:
+              required: true
+              schema:
+                $ref: 'resource/cacheControlPrivateDynamicAt.yaml'
     post:
       summary: Demonstration of common specs for `POST`
       description: Every common spec is mentioned here.
