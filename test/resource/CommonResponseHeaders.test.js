@@ -16,50 +16,37 @@
  */
 
 const testName = require('../../_util/_testName')
+const { commonResponseHeadersExamples, CommonResponseHeaders } = require('../../resource/CommonResponseHeaders')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
+const { modeExamples } = require('../../id/Mode')
 const { stuff, stuffWithUndefined } = require('../../_util/_stuff')
-const { CommonResponseHeaders, commonResponseHeadersExamples } = require('../../resource/CommonResponseHeaders')
+
+const failingFlowIdDate = stuffWithUndefined
+  .map(flowId => ({ ...commonResponseHeadersExamples[0], 'x-flow-id': flowId }))
+  .concat(
+    stuffWithUndefined.map(date => ({
+      ...commonResponseHeadersExamples[0],
+      'x-date': date
+    }))
+  )
+
+const failingFlowIdDateMode = failingFlowIdDate.concat(
+  stuff.map(mode => ({ ...commonResponseHeadersExamples[0], 'x-mode': mode }))
+)
 
 describe(testName(module), function () {
   describe('nominal', function () {
-    shouldBeSeriousSchema(
-      CommonResponseHeaders,
-      stuff
-        .concat(stuffWithUndefined.map(flowId => ({ ...commonResponseHeadersExamples[0], 'x-flow-id': flowId })))
-        .concat(stuffWithUndefined.map(mode => ({ ...commonResponseHeadersExamples[0], 'x-mode': mode })))
-        .concat(
-          stuffWithUndefined.map(date => ({
-            ...commonResponseHeadersExamples[0],
-            'x-date': date
-          }))
-        )
-        .concat(
-          stuffWithUndefined.map(cc => ({
-            ...commonResponseHeadersExamples[0],
-            'cache-control': cc
-          }))
-        )
-    )
+    shouldBeSeriousSchema(CommonResponseHeaders, failingFlowIdDateMode)
   })
   describe('allowMissingMode', function () {
-    const AllowMissingModeCommonResponseHeaders = CommonResponseHeaders.tailor('allowMissingMode')
+    shouldBeSeriousSchema(CommonResponseHeaders.tailor('allowMissingMode'), failingFlowIdDateMode)
+  })
+  describe('noMode', function () {
     shouldBeSeriousSchema(
-      AllowMissingModeCommonResponseHeaders,
-      stuff
-        .concat(stuffWithUndefined.map(flowId => ({ ...commonResponseHeadersExamples[0], 'x-flow-id': flowId })))
-        .concat(stuff.map(mode => ({ ...commonResponseHeadersExamples[0], 'x-mode': mode })))
-        .concat(
-          stuffWithUndefined.map(date => ({
-            ...commonResponseHeadersExamples[0],
-            'x-date': date
-          }))
-        )
-        .concat(
-          stuffWithUndefined.map(cc => ({
-            ...commonResponseHeadersExamples[0],
-            'cache-control': cc
-          }))
-        )
+      CommonResponseHeaders.tailor('noMode'),
+      failingFlowIdDate.concat(
+        stuff.map(mode => ({ ...commonResponseHeadersExamples[0], 'x-mode': mode })).concat([modeExamples[4]])
+      )
     )
   })
 })

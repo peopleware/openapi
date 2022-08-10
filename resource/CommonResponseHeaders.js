@@ -16,40 +16,50 @@
  */
 
 const Joi = require('joi')
-const { UUID, uuidExamples } = require('../id/UUID')
-const { CacheControlNoCache, cacheControlNoCacheExamples } = require('../resource/CacheControlNoCache')
+const { uuidExamples, UUID } = require('../id/UUID')
 const { DateTime, dateTimeExamples } = require('../time/DateTime')
-const { Mode, modeExamples } = require('../id/Mode')
+const { Mode } = require('../id/Mode')
 
-const commonResponseHeadersAllowMissingModeExample = {
+const commonResponseHeadersNoModeExample = {
   'x-flow-id': uuidExamples[0],
-  'x-date': dateTimeExamples[0],
-  'cache-control': cacheControlNoCacheExamples[0]
+  'x-date': dateTimeExamples[0]
 }
+
 const commonResponseHeadersExample = {
-  ...commonResponseHeadersAllowMissingModeExample,
-  'x-mode': modeExamples[0]
+  ...commonResponseHeadersNoModeExample,
+  'x-mode': 'automated-test-80bc89de-10df-4aa4-ae91-4105b5e1f012',
+  'x-service-build': '01234'
 }
 
 /**
- * This schema has 1 tailoring: `allowMissingMode`. In that tailoring, the `x-mode` is optional. It is to be used in `401`,
- * `403`, or `400` responses, when the request did not carry the required `x-mode` (and there is nothing we can return).
+ * We require an `x-flow-id`, and `x-date` header in all responses.
+ *
+ * An `x-mode` response header is required in all responses, except the `x-mode` in the request is missing or invalid,
+ * and the service cannot return a valid `x-mode` (which can be reported in a `400`, `401`, or `403`).
+ *
+ * - in the nominal schema, an `x-mode` header is required
+ * - with the `allowMissingMode` alteration, the `x-mode` header is optional, but has to have a valid value if there is
+ *   one
+ * - with the `noMode` alteration, the `x-mode` header is explicitly forbidden
+ *
+ * @type {Joi.ObjectSchema<any>}
  */
 const CommonResponseHeaders = Joi.object({
   'x-flow-id': UUID.description('the flowId with which the request to which this is the response was made').required(),
   'x-mode': Mode.description('the mode with which the request to which this is the response was made')
     .required()
-    .alter({ allowMissingMode: schema => schema.optional() }),
-  'x-date': DateTime.required(),
-  'cache-control': CacheControlNoCache.required()
+    .alter({ allowMissingMode: schema => schema.optional(), noMode: schema => schema.forbidden() }),
+  'x-date': DateTime.required()
 })
   .unknown(true)
   .example(commonResponseHeadersExample)
-  .alter({ allowMissingMode: schema => schema.example(commonResponseHeadersAllowMissingModeExample) })
+  .alter({
+    allowMissingMode: schema => schema.example(commonResponseHeadersNoModeExample),
+    noMode: schema => schema.example(commonResponseHeadersNoModeExample, { override: true })
+  })
 
 module.exports = {
-  commonResponseHeadersExample,
-  commonResponseHeadersAllowMissingModeExample,
   commonResponseHeadersExamples: [commonResponseHeadersExample],
-  CommonResponseHeaders: CommonResponseHeaders
+  commonResponseHeadersNoModeExamples: [commonResponseHeadersNoModeExample],
+  CommonResponseHeaders
 }
