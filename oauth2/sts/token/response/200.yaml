@@ -16,6 +16,7 @@ description: >-
   The access token request is valid and authorized
 headers:
   cache-control:
+    required: true
     schema:
       $ref: 'cacheControl.yaml'
   pragma:

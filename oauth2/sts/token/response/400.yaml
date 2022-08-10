@@ -17,6 +17,7 @@ description: >-
   `invalid_client`, see `401`)
 headers:
   cache-control:
+    required: true
     schema:
       $ref: 'cacheControl.yaml'
   pragma:

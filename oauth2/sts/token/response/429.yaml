@@ -17,6 +17,7 @@ description: >-
   Password Credentials Grant).
 headers:
   cache-control:
+    required: true
     schema:
       $ref: 'cacheControl.yaml'
   pragma:

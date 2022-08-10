@@ -15,14 +15,18 @@
 description: The resource never existed, or did not exist yet at `at`
 headers:
   x-flow-id:
+    required: true
     schema:
       $ref: '../id/UUID.yaml'
   x-mode:
+    required: true
     schema:
       $ref: '../id/mode.yaml'
   x-date:
+    required: true
     schema:
       $ref: 'date.yaml'
   cache-control:
+    required: true
     schema:
       $ref: 'cacheControlPrivateDynamicAt.yaml'

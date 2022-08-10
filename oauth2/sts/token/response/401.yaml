@@ -16,9 +16,11 @@ description: >-
   Client authentication failed, according to [Section 5.2 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-5.2)
 headers:
   x-www-authenticate:
+    required: true
     schema:
       $ref: '../../../WWWAuthenticate.yaml'
   cache-control:
+    required: true
     schema:
       $ref: 'cacheControl.yaml'
   pragma:

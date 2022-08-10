@@ -20,12 +20,15 @@ description: >-
   The body contains the most recent version of the resource, on which the client can base a retry.
 headers:
   x-flow-id:
+    required: true
     schema:
       $ref: '../id/UUID.yaml'
   x-mode:
+    required: true
     schema:
       $ref: '../id/mode.yaml'
   x-date:
+    required: true
     schema:
       $ref: 'date.yaml'
 content:

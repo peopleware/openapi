@@ -16,22 +16,26 @@ x-summary: >-
   The access token provided is expired, revoked, malformed, or invalid for other reasons
 description: >-
   The returned `x-flow-id` and `x-mode` header values are the same as in the request, if they are available. If there is
-  no `x-flow-id` in the request, or if it is malformed, the service generates a random UUID itself, and returns that.
+  no `x-flow-id` in the request, or if it is malformed, the service generates a random UUID itself, and returns that. If
+  there is no `x-mode` in the request, or if it is malformed, no `x-mode` header is returned.
 
 
   A missing `x-flow-id` or `x-mode` header in the request would normally result in a `400` response, but authNZ takes
   precedence.
 headers:
   x-www-authenticate:
+    required: true
     schema:
       $ref: 'WWWAuthenticate.yaml'
   x-flow-id:
+    required: true
     schema:
       $ref: '../id/UUID.yaml'
   x-mode:
     schema:
       $ref: '../id/mode.yaml'
   x-date:
+    required: true
     schema:
       $ref: '../time/DateTime.yaml'
 content:

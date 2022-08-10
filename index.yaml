@@ -57,16 +57,20 @@ paths:
             The service was reached, and it deemed itself healthy.
           headers:
             x-flow-id:
+              required: true
               schema:
                 $ref: 'id/UUID.yaml'
             x-mode:
+              required: true
               schema:
                 $ref: 'id/mode.yaml'
             cache-control:
+              required: true
               schema:
                 $ref: 'resource/cacheControlNoCache.yaml'
             # no vary necessary, because no-cache
             x-date:
+              required: true
               schema:
                 $ref: 'resource/date.yaml'
           content:
@@ -84,16 +88,20 @@ paths:
             The service was reached, but some of its dependencies are not healthy. The service should not be used.
           headers:
             x-flow-id:
+              required: true
               schema:
                 $ref: 'id/UUID.yaml'
             x-mode:
+              required: true
               schema:
                 $ref: 'id/mode.yaml'
             cache-control:
+              required: true
               schema:
                 $ref: 'resource/cacheControlNoCache.yaml'
             # no vary necessary, because no-cache
             x-date:
+              required: true
               schema:
                 $ref: 'resource/date.yaml'
           content:
@@ -120,18 +128,23 @@ paths:
           description: We get a list of references
           headers:
             x-flow-id:
+              required: true
               schema:
                 $ref: 'id/UUID.yaml'
             x-mode:
+              required: true
               schema:
                 $ref: 'id/mode.yaml'
             cache-control:
+              required: true
               schema:
                 $ref: 'resource/cacheControlPrivateDynamicAt.yaml'
             vary:
+              required: true
               schema:
                 $ref: 'resource/varyMode.yaml'
             x-date:
+              required: true
               schema:
                 $ref: 'resource/date.yaml'
           content:
@@ -177,15 +190,19 @@ paths:
           description: Every common spec is mentioned here.  The `201` response shows `readOnly` properties.
           headers:
             x-flow-id:
+              required: true
               schema:
                 $ref: 'id/UUID.yaml'
             x-mode:
+              required: true
               schema:
                 $ref: 'id/mode.yaml'
             x-date:
+              required: true
               schema:
                 $ref: 'resource/date.yaml'
             location:
+              required: true
               schema:
                 $ref: 'resource/201location.yaml'
           content:
@@ -221,18 +238,23 @@ paths:
           description: Every common spec is mentioned here.  The `200` response shows `readOnly` properties.
           headers:
             x-flow-id:
+              required: true
               schema:
                 $ref: 'id/UUID.yaml'
             x-mode:
+              required: true
               schema:
                 $ref: 'id/mode.yaml'
             x-date:
+              required: true
               schema:
                 $ref: 'resource/date.yaml'
             cache-control:
+              required: true
               schema:
                 $ref: 'resource/cacheControlPrivateDynamicAt.yaml'
             vary:
+              required: true
               schema:
                 $ref: 'resource/varyMode.yaml'
           content:
@@ -265,12 +287,15 @@ paths:
           description: Every common spec is mentioned here.  The `200` response shows `readOnly` properties.
           headers:
             x-flow-id:
+              required: true
               schema:
                 $ref: 'id/UUID.yaml'
             x-mode:
+              required: true
               schema:
                 $ref: 'id/mode.yaml'
             x-date:
+              required: true
               schema:
                 $ref: 'resource/date.yaml'
           content:
@@ -294,12 +319,15 @@ paths:
             The body contains the most recent version of the resource, on which the client can base a retry.
           headers:
             x-flow-id:
+              required: true
               schema:
                 $ref: 'id/UUID.yaml'
             x-mode:
+              required: true
               schema:
                 $ref: 'id/mode.yaml'
             x-date:
+              required: true
               schema:
                 $ref: 'resource/date.yaml'
           content:
@@ -328,15 +356,19 @@ paths:
           description: Versioned and timestamped, but no `createdBy`
           headers:
             x-flow-id:
+              required: true
               schema:
                 $ref: 'id/UUID.yaml'
             x-mode:
+              required: true
               schema:
                 $ref: 'id/mode.yaml'
             x-date:
+              required: true
               schema:
                 $ref: 'resource/date.yaml'
             cache-control:
+              required: true
               schema:
                 $ref: 'resource/cacheControlNoCache.yaml'
             # no vary necessary, because no-cache
