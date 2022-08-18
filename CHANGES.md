@@ -6,10 +6,14 @@
 
 ### 1.10.0
 
-- add schema for `CRN`
-- add reusable definition of `CRN` as path parameter
+- CRN
+  - add schema for `CRN`
+  - add reusable definition of `CRN` as path parameter
 - `time/DateTime` now allows a higher-then-ms precision
 - stuff now also contains untrimmed strings, and a string with only spaces
+- resource history:
+  - validate in schema that history versions in a history must be sorted
+  - add common OpenAPI YAML for history schemata, and add demonstration of use
 
 ## 1.9
 
