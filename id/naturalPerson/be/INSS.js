@@ -18,7 +18,7 @@
 const Joi = require('joi')
 const addExamples = require('../../../_util/addExamples')
 
-const INSS = Joi.string().pattern(/\d{11}/)
+const INSS = Joi.string().pattern(/^\d{11}$/)
   .description(`The Belgian INSS (en: Identification Number Social Security / nl: INSZ — Identificatienummer Sociale Zekerheid / fr:
 NISS — Numéro d'Identification Sécurité Sociale / de: ENSS — Erkennungsnummer der Sozialen Sicherheit) of the person
 since \`createdAt\`. This is either the national registration number or the BIS-number. There is no formatting in this

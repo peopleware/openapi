@@ -4,6 +4,10 @@
 
 ## 1.9
 
+## 1.9.3
+
+- update the regex pattern for INSS number: should be _exactly_ 11 digits
+
 ## 1.9.2
 
 - fine-tune `400`, `401`, and `403` response descriptions in the context of a missing or invalid `x-mode`
