@@ -1,0 +1,5 @@
+name: crn
+in: path
+required: true
+schema:
+  $ref: '../id/legalPerson/be/CRN.yaml'
