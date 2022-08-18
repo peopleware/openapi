@@ -1,0 +1,15 @@
+allOf:
+  - $ref: 'StructureVersion1.yaml'
+  - type: object
+    required:
+      - versions
+    properties:
+      versions:
+        # a dictionary would be better, but in OpenAPI we cannot specify constraints on the key, so we use a list
+        # to avoid confusion
+        type: array
+        description: this list can never be empty
+        minItems: 1
+        uniqueItems: true
+        items:
+          $ref: 'HistoryVersion.yaml'

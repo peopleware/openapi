@@ -354,6 +354,60 @@ paths:
               schema:
                 # NOTE: replace with the correct schema
                 $ref: '#/components/schemas/resource'
+  /demonstration/{crn}/{id}/history:
+    parameters:
+      - $ref: 'parameters/forceError.yaml'
+      - $ref: 'parameters/flowId.yaml'
+      - $ref: 'parameters/mode.yaml'
+      - $ref: 'parameters/crn.yaml'
+      - $ref: 'oauth2/authorization.yaml'
+      - name: id
+        in: path
+        description: id of the resource
+        schema:
+          $ref: 'id/UUID.yaml'
+    get:
+      summary: Demonstration of common specs for `GET` resource history
+      description: A list of the different times at which the resource's information was changed.
+      operationId: demonstrationGetHistory
+      responses:
+        '200':
+          x-summary: The resource exists
+          description: >-
+            A list of the different times at which the resource's information was changed, ordered from most to least
+            recent, with links to retrieve that version of the information. Changes `< x-date` are included.
+
+
+            This call does not use paging, because we expect less than 50 changes to the information of the resource.
+          headers:
+            x-flow-id:
+              required: true
+              schema:
+                $ref: 'id/UUID.yaml'
+            x-mode:
+              required: true
+              schema:
+                $ref: 'id/mode.yaml'
+            x-date:
+              required: true
+              schema:
+                $ref: 'resource/date.yaml'
+            cache-control:
+              required: true
+              schema:
+                $ref: 'resource/cacheControlPrivateDynamic.yaml'
+          content:
+            application/json:
+              schema:
+                $ref: 'resource/History.yaml'
+        '400':
+          $ref: 'resource/400.yaml'
+        '401':
+          $ref: 'oauth2/401.yaml'
+        '403':
+          $ref: 'oauth2/403.yaml'
+        '404':
+          $ref: 'resource/404Get.yaml'
   /demonstration/{crn}/{id}/search-document:
     parameters:
       - $ref: 'parameters/forceError.yaml'
