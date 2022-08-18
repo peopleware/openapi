@@ -17,14 +17,25 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
-const { stuff } = require('../../_util/_stuff')
-const { History, HistoryVersion } = require('../../resource/History')
+const { stuff, stuffWithUndefined } = require('../../_util/_stuff')
+const { History, HistoryVersion, historyVersionExamples, historyExamples } = require('../../resource/History')
 
 describe(testName(module), function () {
   describe('HistoryVersion', function () {
-    shouldBeSeriousSchema(HistoryVersion, stuff)
+    shouldBeSeriousSchema(
+      HistoryVersion,
+      stuff.concat(stuffWithUndefined.map(href => ({ ...historyVersionExamples[0], href })))
+    )
   })
   describe('History', function () {
-    shouldBeSeriousSchema(History, stuff)
+    shouldBeSeriousSchema(
+      History,
+      stuff.concat(stuffWithUndefined.map(versions => ({ ...historyExamples[0], versions }))).concat([
+        [
+          { createdAt: '2020-01-23T15:22:39.212Z', href: '..?at=2020-01-23T15:22:39.212Z' },
+          { createdAt: '2022-08-04T18:48:44.003Z', href: '..?at=2022-08-04T18:48:44.003Z' }
+        ]
+      ])
+    )
   })
 })
