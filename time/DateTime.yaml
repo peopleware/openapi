@@ -14,7 +14,7 @@
 
 type: string
 format: date-time
-pattern: ^\d{4}-(0[1-9]|1[0-2])-([0[1-9]|[1-2]\d|30|31)T([0-1]\d|2[0-3])(:([0-5]\d)){2}.\d{3}Z$
+pattern: ^\d{4}-(0[1-9]|1[0-2])-([0[1-9]|[1-2]\d|30|31)T([0-1]\d|2[0-3])(:([0-5]\d)){2}.\d{3,}Z$
 description: >-
-  Moment in time, as ISO-8601 expressed in UTC ('Z'), to ms precision.
+  Moment in time, as ISO-8601 expressed in UTC ('Z'), to ms precision or more precise.
 example: '2020-01-23T15:22:39.212Z'

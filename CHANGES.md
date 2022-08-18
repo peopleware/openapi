@@ -7,6 +7,7 @@
 ### 1.10.0
 
 - add schema for `CRN`
+- `time/DateTime` now allows a higher-then-ms precision
 
 ## 1.9
 
