@@ -15,7 +15,24 @@
  *
  */
 
-const stuff = [true, false, 0, 1, Math.PI, -7, '', 'a string', Symbol('stuff symbol'), {}, new Date(), [], null]
+const stuff = [
+  true,
+  false,
+  0,
+  1,
+  Math.PI,
+  -7,
+  '',
+  'a string',
+  ' < not a trimmed string',
+  'not a trimmed string >   ',
+  '   ',
+  Symbol('stuff symbol'),
+  {},
+  new Date(),
+  [],
+  null
+]
 const stuffWithUndefined = stuff.concat([undefined])
 
 module.exports = { stuff, stuffWithUndefined }

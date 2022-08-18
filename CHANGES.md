@@ -8,6 +8,7 @@
 
 - add schema for `CRN`
 - `time/DateTime` now allows a higher-then-ms precision
+- stuff now also contains untrimmed strings, and a string with only spaces
 
 ## 1.9
 
