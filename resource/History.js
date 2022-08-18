@@ -54,7 +54,7 @@ const historyVersionExamples = [{ createdAt: dateTimeExamples[0], href: '..?at=2
 const History = StructureVersioned.append({
   versions: Joi.array()
     .items(HistoryVersion.required())
-    .min(1)
+    .sort({ order: 'descending', by: 'createdAt' })
     .required()
     .description(`list of history versions, ordered from most recent to oldest`)
 }).unknown(true)
