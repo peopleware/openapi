@@ -18,7 +18,10 @@ headers:
   x-www-authenticate:
     required: true
     schema:
-      $ref: '../../../WWWAuthenticate.yaml'
+      type: string
+      example: >-
+        Bearer realm="https://app.example.com/api", charset="utf-8", error_description="invalid signature",
+        verifyFailed="true", error="invalid_token"
   cache-control:
     required: true
     schema:

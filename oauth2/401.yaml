@@ -27,7 +27,7 @@ description: >-
   return invalid values. (In this case, when there was a valid `authorization` token, a `403` would be returned
   instead.)
 headers:
-  x-www-authenticate:
+  www-authenticate:
     required: true
     schema:
       $ref: 'WWWAuthenticate.yaml'
@@ -43,7 +43,3 @@ headers:
     required: true
     schema:
       $ref: '../time/DateTime.yaml'
-content:
-  application/json:
-    schema:
-      $ref: 'ErrorResponse.yaml'

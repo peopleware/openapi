@@ -13,6 +13,28 @@
 # limitations under the License.
 
 type: string
+description: >-
+  Value according to [RFC 6750, chapter 3](https://tools.ietf.org/html/rfc6750#section-3).
+
+
+  We consider the `realm` field mandatory, because of more general standards. We consider the `error` and
+  `error_description` fields mandatory, to help out client developers and administrators. We consider the `scope` field
+  optional. We consider the `error_uri` field bad practice. Giving the end user internationalized and good feedback is
+  an issue for the clients, not the resource server. If there was no `authorization` header in the request, the reponse
+  is `401` with the `realm` field, and no other fields, for security reasons ([RFC 6750, chapter
+  3.1](https://tools.ietf.org/html/rfc6750#section-3.1)).
+
+
+  We suggest using the OAuth2 `audience` as value for the `realm`.
+
+
+  `error` is `invalid_token` in a `401` response if there was an `authorization` header, and `insufficient_scope` in a
+  403 response ([RFC 6750, chapter 3.1](https://tools.ietf.org/html/rfc6750#section-3.1)). Note that `invalid_request`
+  is never used.
+
+
+  `error_description` should describe for a technical audience what kept the resource server from authenticating (`401`)
+  or authorizing (`403`) the caller.
 example: >-
-  Bearer realm="https://app.example.com/api", charset="utf-8", error_description="invalid signature",
-  verifyFailed="true", error="invalid_token"
+  Bearer realm="https://app.example.com/api", charset="utf-8", error="invalid_token", error_description="invalid
+  signature"

@@ -4,6 +4,14 @@
 
 ## 1.10
 
+### 1.10.1
+
+- fix plain wrongness of OAuth2 `401` and `403` reponse decriptions
+  - the body we decribed was a representation of an old accidental realization, not something important
+  - the `www-authenticate` header was replaced by `x-www-authenticate`, because of support issue with AWS API Gateway;
+    this is reverted
+  - the description of the `www-authenticate` header now clearly describes our intentions, and reasons
+
 ### 1.10.0
 
 - CRN

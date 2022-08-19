@@ -29,7 +29,7 @@ description: >-
   request, but the resource action is not authorized for other reasons, the response `x-mode` header contains the
   `x-mode` value from the request.
 headers:
-  x-www-authenticate:
+  www-authenticate:
     required: true
     schema:
       $ref: 'WWWAuthenticate.yaml'
@@ -45,7 +45,3 @@ headers:
     required: true
     schema:
       $ref: '../time/DateTime.yaml'
-content:
-  application/json:
-    schema:
-      $ref: 'ErrorResponse.yaml'
