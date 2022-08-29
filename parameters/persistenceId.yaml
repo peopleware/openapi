@@ -1,0 +1,8 @@
+name: persistenceId
+in: path
+required: true
+description: Opaque positive integer. A surrogate key.
+schema:
+  type: integer
+  minimum: 1
+example: 123

@@ -108,12 +108,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/health'
-  /demonstration/{crn}:
+  /demonstration/{crn}/{persistenceId}:
     parameters:
       - $ref: 'parameters/forceError.yaml'
       - $ref: 'parameters/flowId.yaml'
       - $ref: 'parameters/mode.yaml'
       - $ref: 'parameters/crn.yaml'
+      - $ref: 'parameters/persistenceId.yaml'
       - $ref: 'oauth2/authorization.yaml'
     get:
       summary: Demonstration of a list
@@ -233,12 +234,13 @@ paths:
           $ref: 'oauth2/401.yaml'
         '403':
           $ref: 'oauth2/403.yaml'
-  /demonstration/{crn}/{id}:
+  /demonstration/{crn}/{persistenceId}/{id}:
     parameters:
       - $ref: 'parameters/forceError.yaml'
       - $ref: 'parameters/flowId.yaml'
       - $ref: 'parameters/mode.yaml'
       - $ref: 'parameters/crn.yaml'
+      - $ref: 'parameters/persistenceId.yaml'
       - $ref: 'oauth2/authorization.yaml'
       - name: id
         in: path
@@ -354,12 +356,13 @@ paths:
               schema:
                 # NOTE: replace with the correct schema
                 $ref: '#/components/schemas/resource'
-  /demonstration/{crn}/{id}/history:
+  /demonstration/{crn}/{persistenceId}/{id}/history:
     parameters:
       - $ref: 'parameters/forceError.yaml'
       - $ref: 'parameters/flowId.yaml'
       - $ref: 'parameters/mode.yaml'
       - $ref: 'parameters/crn.yaml'
+      - $ref: 'parameters/persistenceId.yaml'
       - $ref: 'oauth2/authorization.yaml'
       - name: id
         in: path
@@ -408,12 +411,13 @@ paths:
           $ref: 'oauth2/403.yaml'
         '404':
           $ref: 'resource/404Get.yaml'
-  /demonstration/{crn}/{id}/search-document:
+  /demonstration/{crn}/{persistenceId}/{id}/search-document:
     parameters:
       - $ref: 'parameters/forceError.yaml'
       - $ref: 'parameters/flowId.yaml'
       - $ref: 'parameters/mode.yaml'
       - $ref: 'parameters/crn.yaml'
+      - $ref: 'parameters/persistenceId.yaml'
       - $ref: 'oauth2/authorization.yaml'
       - name: id
         in: path
