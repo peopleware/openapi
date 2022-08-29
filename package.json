@@ -71,6 +71,7 @@
     "OpenAPI:serve": "redocly preview-docs index.yaml",
     "OpenAPI:watch": "npm-watch OpenAPI:lint",
     "schematatests": "nyc mocha \"test/{*,**/*}.test.js\"",
+    "pretest": "npm-check -i \"\"; npm outdated || exit 0",
     "test": "npm run OpenAPI:lint && npm run schematatests"
   },
   "watch": {
