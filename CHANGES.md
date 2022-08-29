@@ -2,6 +2,12 @@
 
 # 1
 
+## 1.12
+
+### 1.12.0
+
+- add `persistenceId` path parameter spec
+
 ## 1.11
 
 ### 1.11.0
