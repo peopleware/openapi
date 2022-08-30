@@ -21,6 +21,7 @@ const { DateTime } = require('../../time/DateTime')
 const { dayDateExamples } = require('../../time/DayDate')
 const { stuff } = require('../../_util/_stuff')
 const should = require('should')
+const Joi = require('joi')
 
 describe(testName(module), function () {
   const validIsoDateTimes = []
@@ -73,4 +74,12 @@ describe(testName(module), function () {
         '2020-01-23T15:22:89.212Z'
       ])
   )
+
+  describe('weird issues', function () {
+    it('does not eat precision', function () {
+      const highPrecisionString = '2022-08-30T14:17:07.630162Z'
+      const result = Joi.attempt(highPrecisionString, DateTime)
+      result.should.equal(highPrecisionString)
+    })
+  })
 })
