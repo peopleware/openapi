@@ -1,0 +1,5 @@
+name: label
+in: path
+required: true
+schema:
+  $ref: '../string/TrimmedString.yaml'

@@ -1,0 +1,49 @@
+put: &put
+  x-flow-id:
+    required: true
+    schema:
+      $ref: '../id/UUID.yaml'
+  x-mode:
+    required: true
+    schema:
+      $ref: '../id/mode.yaml'
+  x-date:
+    required: true
+    schema:
+      $ref: 'date.yaml'
+  # https://www.rfc-editor.org/rfc/rfc7231.html#section-4.3.4
+  # > Responses to the PUT method are not cacheable.  If a successful PUT
+  # > request passes through a cache that has one or more stored responses
+  # > for the effective request URI, those stored responses will be
+  # > invalidated […].
+post201:
+  <<: *put
+  location:
+    required: true
+    schema:
+      $ref: '201location.yaml'
+getNoCache:
+  <<: *put
+  cache-control:
+    required: true
+    schema:
+      $ref: 'cacheControlNoCache.yaml'
+  # no vary necessary, because no-cache
+getCached: &getCached
+  <<: *put
+  vary:
+    required: true
+    schema:
+      $ref: 'varyMode.yaml'
+getPrivateDynamic:
+  <<: *getCached
+  cache-control:
+    required: true
+    schema:
+      $ref: 'cacheControlPrivateDynamic.yaml'
+getPrivateDynamicAt:
+  <<: *getCached
+  cache-control:
+    required: true
+    schema:
+      $ref: 'cacheControlPrivateDynamicAt.yaml'

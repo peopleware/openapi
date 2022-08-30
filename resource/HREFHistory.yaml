@@ -1,0 +1,14 @@
+type: object
+readOnly: true
+required:
+  - history
+description: HATEOAS links. These are relative URIs.
+properties:
+  history:
+    type: string
+    format: uri
+    minLength: 1
+    description:
+      relative URI at which the list of times at which a change in the resourece's information was recorded can be
+      retrieved
+    example: 1567889875/history

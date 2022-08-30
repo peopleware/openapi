@@ -1,0 +1,6 @@
+allOf:
+  - $ref: 'RelativeURI.yaml'
+  - description: >-
+      relative URI at which the associated resource can be retrieved, with `at` equal to the `createdAt` of this
+      resource
+    example: ../../../associated/4324?at=2021-01-19T17:14:18.482Z

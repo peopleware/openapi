@@ -1,0 +1,13 @@
+allOf:
+  - $ref: 'HREFHistory.yaml'
+  - type: object
+    readOnly: true
+    required:
+      - searchDocument
+    properties:
+      searchDocument:
+        type: string
+        format: uri
+        minLength: 1
+        description: relative URI at which the resource's search document can be retrieved
+        example: 1567889875/search-document

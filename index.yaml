@@ -87,33 +87,18 @@ paths:
           description: >-
             The service was reached, but some of its dependencies are not healthy. The service should not be used.
           headers:
-            x-flow-id:
-              required: true
-              schema:
-                $ref: 'id/UUID.yaml'
-            x-mode:
-              required: true
-              schema:
-                $ref: 'id/mode.yaml'
-            cache-control:
-              required: true
-              schema:
-                $ref: 'resource/cacheControlNoCache.yaml'
-            # no vary necessary, because no-cache
-            x-date:
-              required: true
-              schema:
-                $ref: 'resource/date.yaml'
+            $ref: 'resource/CommonResponseHeaders.yaml#/getNoCache'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/health'
-  /demonstration/{crn}/{persistenceId}:
+  /demonstration/{crn}/{label}/{persistenceId}:
     parameters:
       - $ref: 'parameters/forceError.yaml'
       - $ref: 'parameters/flowId.yaml'
       - $ref: 'parameters/mode.yaml'
       - $ref: 'parameters/crn.yaml'
+      - $ref: 'parameters/label.yaml'
       - $ref: 'parameters/persistenceId.yaml'
       - $ref: 'oauth2/authorization.yaml'
     get:
@@ -129,26 +114,7 @@ paths:
           x-summary: The page was found
           description: We get a list of references
           headers:
-            x-flow-id:
-              required: true
-              schema:
-                $ref: 'id/UUID.yaml'
-            x-mode:
-              required: true
-              schema:
-                $ref: 'id/mode.yaml'
-            cache-control:
-              required: true
-              schema:
-                $ref: 'resource/cacheControlPrivateDynamicAt.yaml'
-            vary:
-              required: true
-              schema:
-                $ref: 'resource/varyMode.yaml'
-            x-date:
-              required: true
-              schema:
-                $ref: 'resource/date.yaml'
+            $ref: 'resource/CommonResponseHeaders.yaml#/getPrivateDynamicAt'
           content:
             application/json:
               schema:
@@ -178,22 +144,7 @@ paths:
             than or equal to `per_page * (page - 1)`. E.g., with 113 entries, the last page with `per_page = 20`, is
             page 6. A request for page 7 results in a `404`.
           headers:
-            x-flow-id:
-              required: true
-              schema:
-                $ref: 'id/UUID.yaml'
-            x-mode:
-              required: true
-              schema:
-                $ref: 'id/mode.yaml'
-            x-date:
-              required: true
-              schema:
-                $ref: 'resource/date.yaml'
-            cache-control:
-              required: true
-              schema:
-                $ref: 'resource/cacheControlPrivateDynamicAt.yaml'
+            $ref: 'resource/CommonResponseHeaders.yaml#/getPrivateDynamicAt'
     post:
       summary: Demonstration of common specs for `POST`
       description: Every common spec is mentioned here.
@@ -208,22 +159,7 @@ paths:
           x-summary: The resource was created with the given information
           description: Every common spec is mentioned here.  The `201` response shows `readOnly` properties.
           headers:
-            x-flow-id:
-              required: true
-              schema:
-                $ref: 'id/UUID.yaml'
-            x-mode:
-              required: true
-              schema:
-                $ref: 'id/mode.yaml'
-            x-date:
-              required: true
-              schema:
-                $ref: 'resource/date.yaml'
-            location:
-              required: true
-              schema:
-                $ref: 'resource/201location.yaml'
+            $ref: 'resource/CommonResponseHeaders.yaml#/post201'
           content:
             application/json:
               schema:
@@ -234,12 +170,13 @@ paths:
           $ref: 'oauth2/401.yaml'
         '403':
           $ref: 'oauth2/403.yaml'
-  /demonstration/{crn}/{persistenceId}/{id}:
+  /demonstration/{crn}/{label}/{persistenceId}/{id}:
     parameters:
       - $ref: 'parameters/forceError.yaml'
       - $ref: 'parameters/flowId.yaml'
       - $ref: 'parameters/mode.yaml'
       - $ref: 'parameters/crn.yaml'
+      - $ref: 'parameters/label.yaml'
       - $ref: 'parameters/persistenceId.yaml'
       - $ref: 'oauth2/authorization.yaml'
       - name: id
@@ -258,26 +195,7 @@ paths:
           x-summary: The resource exists
           description: Every common spec is mentioned here.  The `200` response shows `readOnly` properties.
           headers:
-            x-flow-id:
-              required: true
-              schema:
-                $ref: 'id/UUID.yaml'
-            x-mode:
-              required: true
-              schema:
-                $ref: 'id/mode.yaml'
-            x-date:
-              required: true
-              schema:
-                $ref: 'resource/date.yaml'
-            cache-control:
-              required: true
-              schema:
-                $ref: 'resource/cacheControlPrivateDynamicAt.yaml'
-            vary:
-              required: true
-              schema:
-                $ref: 'resource/varyMode.yaml'
+            $ref: 'resource/CommonResponseHeaders.yaml#/getPrivateDynamicAt'
           content:
             application/json:
               schema:
@@ -307,18 +225,7 @@ paths:
           x-summary: The resource was updated
           description: Every common spec is mentioned here.  The `200` response shows `readOnly` properties.
           headers:
-            x-flow-id:
-              required: true
-              schema:
-                $ref: 'id/UUID.yaml'
-            x-mode:
-              required: true
-              schema:
-                $ref: 'id/mode.yaml'
-            x-date:
-              required: true
-              schema:
-                $ref: 'resource/date.yaml'
+            $ref: 'resource/CommonResponseHeaders.yaml#/put'
           content:
             application/json:
               schema:
@@ -339,29 +246,19 @@ paths:
 
             The body contains the most recent version of the resource, on which the client can base a retry.
           headers:
-            x-flow-id:
-              required: true
-              schema:
-                $ref: 'id/UUID.yaml'
-            x-mode:
-              required: true
-              schema:
-                $ref: 'id/mode.yaml'
-            x-date:
-              required: true
-              schema:
-                $ref: 'resource/date.yaml'
+            $ref: 'resource/CommonResponseHeaders.yaml#/put'
           content:
             application/json:
               schema:
                 # NOTE: replace with the correct schema
                 $ref: '#/components/schemas/resource'
-  /demonstration/{crn}/{persistenceId}/{id}/history:
+  /demonstration/{crn}/{label}/{persistenceId}/{id}/history:
     parameters:
       - $ref: 'parameters/forceError.yaml'
       - $ref: 'parameters/flowId.yaml'
       - $ref: 'parameters/mode.yaml'
       - $ref: 'parameters/crn.yaml'
+      - $ref: 'parameters/label.yaml'
       - $ref: 'parameters/persistenceId.yaml'
       - $ref: 'oauth2/authorization.yaml'
       - name: id
@@ -383,22 +280,7 @@ paths:
 
             This call does not use paging, because we expect less than 50 changes to the information of the resource.
           headers:
-            x-flow-id:
-              required: true
-              schema:
-                $ref: 'id/UUID.yaml'
-            x-mode:
-              required: true
-              schema:
-                $ref: 'id/mode.yaml'
-            x-date:
-              required: true
-              schema:
-                $ref: 'resource/date.yaml'
-            cache-control:
-              required: true
-              schema:
-                $ref: 'resource/cacheControlPrivateDynamic.yaml'
+            $ref: 'resource/CommonResponseHeaders.yaml#/getPrivateDynamic'
           content:
             application/json:
               schema:
@@ -411,12 +293,13 @@ paths:
           $ref: 'oauth2/403.yaml'
         '404':
           $ref: 'resource/404Get.yaml'
-  /demonstration/{crn}/{persistenceId}/{id}/search-document:
+  /demonstration/{crn}/{label}/{persistenceId}/{id}/search-document:
     parameters:
       - $ref: 'parameters/forceError.yaml'
       - $ref: 'parameters/flowId.yaml'
       - $ref: 'parameters/mode.yaml'
       - $ref: 'parameters/crn.yaml'
+      - $ref: 'parameters/label.yaml'
       - $ref: 'parameters/persistenceId.yaml'
       - $ref: 'oauth2/authorization.yaml'
       - name: id
@@ -433,23 +316,7 @@ paths:
           x-summary: The resource exists
           description: Versioned and timestamped, but no `createdBy`
           headers:
-            x-flow-id:
-              required: true
-              schema:
-                $ref: 'id/UUID.yaml'
-            x-mode:
-              required: true
-              schema:
-                $ref: 'id/mode.yaml'
-            x-date:
-              required: true
-              schema:
-                $ref: 'resource/date.yaml'
-            cache-control:
-              required: true
-              schema:
-                $ref: 'resource/cacheControlNoCache.yaml'
-            # no vary necessary, because no-cache
+            $ref: 'resource/CommonResponseHeaders.yaml#/getNoCache'
           content:
             application/json:
               schema:
@@ -479,6 +346,9 @@ components:
         - $ref: 'resource/StructureVersion2.yaml'
         - $ref: 'resource/Audited.yaml'
         - type: object
+          required:
+            - location
+            - href
           properties:
             human:
               type: object
@@ -553,6 +423,12 @@ components:
               description: >-
                 `readOnly` properties only appear in responses, not in request bodies
               example: I am a read-only property
+            href:
+              allOf:
+                - $ref: 'resource/HREFHistorySearchable.yaml'
+                - example:
+                    history: 123/history
+                    searchDocument: 123/search-document
     timestampedVersioned:
       allOf:
         - $ref: 'resource/StructureVersion3.yaml'
