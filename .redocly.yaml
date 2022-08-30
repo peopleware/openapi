@@ -5,7 +5,7 @@ apis:
     root: oauth2/sts/index.yaml
   stsWithRAA:
     root: oauth2/stsWithRAA/index.yaml
-lint:
+styleguide:
   extends:
     - all
   rules:
