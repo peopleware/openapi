@@ -4,6 +4,10 @@
 
 ## 1.12
 
+### 1.12.2
+
+- fix DateTime schema (it truncated precision, and it should not do that)
+
 ### 1.12.1
 
 - add description and alteration to `HREFHistory`
