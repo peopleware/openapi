@@ -7,6 +7,11 @@
 ### 1.12.0
 
 - add `persistenceId` path parameter spec
+- add `label` path parameter spec
+- add `CommonResponseHeaders` spec, with specializations for `PUT`, `POST 201`, and `GET` with several cache variations
+- add reusable model for a `href` property with a reference to a `/history`, and, optionally, a `/searchDocument`
+- add reusable definition of a relative URI data type, and a version with a description of a χ (spec and schemata)
+  to-one reference
 
 ## 1.11
 
