@@ -4,6 +4,10 @@
 
 ## 1.12
 
+### 1.12.1
+
+- add description and alteration to `HREFHistory`
+
 ### 1.12.0
 
 - add `persistenceId` path parameter spec
