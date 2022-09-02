@@ -1,5 +1,5 @@
 allOf:
-  - $ref: 'RelativeURI.yaml'
+  - $ref: '../string/RelativeURI.yaml'
   - description: >-
       relative URI at which the associated resource can be retrieved, with `at` equal to the `createdAt` of this
       resource
