@@ -2,6 +2,13 @@
 
 # 1
 
+## 1.13
+
+### 1.13.0
+
+- tweak `SearchDocumentBase` schema
+- add `SearchDocumentBase` model
+
 ## 1.12
 
 ### 1.12.3

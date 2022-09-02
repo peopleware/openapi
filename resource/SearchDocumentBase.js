@@ -18,21 +18,22 @@
 const Joi = require('joi')
 const { StructureVersioned, structureVersionedExamples } = require('./StructureVersioned')
 const addExamples = require('../_util/addExamples')
+const { RelativeURI } = require('../string/RelativeURI')
 
 const SearchDocumentBase = StructureVersioned.append({
-  href: Joi.string()
-    .uri({ relativeOnly: true })
-    .min(1)
-    .required()
-    .description(
-      `Relative URI where the found resource's information is located. The \`at\` parameter _must_ be the
-same as the resource's \`createdAt\`.`
-    )
+  href: RelativeURI.description(
+    `Relative URI where the found affiliate's information is located. The \`at\` parameter _must_ be the
+same as the value of the \`x-date\` response header.
+
+Users need to be directed to the version returned by the search index, and not an earlier or more recent
+version. The search engine updates, eventually, after a few seconds. If a more recent version is available in
+the meantime, the user interface makes it possible for the user to navigate to that version.`
+  ).required()
 })
 
 const searchDocumentBaseExamples = structureVersionedExamples.map(svd => ({
   ...svd,
-  href: '..?at=2021-01-19T17:14:18.482Z'
+  href: '?at=2021-01-19T17:14:18.482Z'
 }))
 
 module.exports = {

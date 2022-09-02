@@ -17,9 +17,12 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
-const { stuff } = require('../../_util/_stuff')
-const { SearchDocumentBase } = require('../../resource/SearchDocumentBase')
+const { stuff, stuffWithUndefined } = require('../../_util/_stuff')
+const { SearchDocumentBase, searchDocumentBaseExamples } = require('../../resource/SearchDocumentBase')
 
 describe(testName(module), function () {
-  shouldBeSeriousSchema(SearchDocumentBase, stuff)
+  shouldBeSeriousSchema(
+    SearchDocumentBase,
+    stuff.concat(stuffWithUndefined.map(href => ({ ...searchDocumentBaseExamples[0], href })))
+  )
 })

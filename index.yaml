@@ -17,7 +17,7 @@ info:
   title: ppwcode openapi demonstration
   description: >-
     Collection of common OpenAPI 3 specs
-  version: 1.12.3
+  version: 1.13.0
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
@@ -314,13 +314,13 @@ paths:
       responses:
         '200':
           x-summary: The resource exists
-          description: Versioned and timestamped, but no `createdBy`
+          description: Versioned. Has a `href`.
           headers:
             $ref: 'resource/CommonResponseHeaders.yaml#/getNoCache'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/timestampedVersioned'
+                $ref: '#/components/schemas/searchDocument'
         '400':
           $ref: 'resource/400.yaml'
         '401':
@@ -429,9 +429,9 @@ components:
                 - example:
                     history: 123/history
                     searchDocument: 123/search-document
-    timestampedVersioned:
+    searchDocument:
       allOf:
-        - $ref: 'resource/StructureVersion3.yaml'
+        - $ref: 'resource/SearchDocumentBase.yaml'
         - type: object
           properties:
             example:
