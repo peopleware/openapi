@@ -50,8 +50,8 @@ query parameter \`at\`, which is the same as this object's \`createdAt\`)`
 }).unknown(true)
 
 const historyVersionExamples = [
-  { createdAt: '2022-08-04T18:48:44.003Z', href: '..?at=2022-08-04T18:48:44.003Z' },
-  { createdAt: '2020-01-23T15:22:39.212Z', href: '..?at=2020-01-23T15:22:39.212Z' }
+  { createdAt: '2022-08-04T18:48:44.003Z', href: '?at=2022-08-04T18:48:44.003Z' },
+  { createdAt: '2020-01-23T15:22:39.212Z', href: '?at=2020-01-23T15:22:39.212Z' }
 ]
 
 const History = StructureVersioned.append({
