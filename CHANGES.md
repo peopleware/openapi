@@ -2,6 +2,15 @@
 
 # 1
 
+## 1.14
+
+### 1.14.0
+
+- add required `type` to `SearchDocumentBase`s
+
+This will result in a non-compatible change in the projects that use this. (For this package however, the change is
+compatible).
+
 ## 1.13
 
 ### 1.13.1
