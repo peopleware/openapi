@@ -2,6 +2,12 @@
 
 # 1
 
+## 1.15
+
+### 1.15.0
+
+Is the same as 1.14, and was published in error.
+
 ## 1.14
 
 ### 1.14.0
