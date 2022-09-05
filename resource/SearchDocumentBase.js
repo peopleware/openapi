@@ -28,12 +28,25 @@ same as the value of the \`x-date\` response header.
 Users need to be directed to the version returned by the search index, and not an earlier or more recent
 version. The search engine updates, eventually, after a few seconds. If a more recent version is available in
 the meantime, the user interface makes it possible for the user to navigate to that version.`
-  ).required()
+  ).required(),
+  type: Joi.string()
+    .trim()
+    .lowercase()
+    .min(1)
+    .pattern(/^([-a-z0-9]+)\/([-a-z0-9\/]+)$/)
+    .description(
+      `Type of the indexed resource.
+
+This enables users to search only on particular resource type. The type is qualified with the service name, to avoid
+name clashes (slash-separated).`
+    )
+    .required()
 })
 
 const searchDocumentBaseExamples = structureVersionedExamples.map(svd => ({
   ...svd,
-  href: '?at=2021-01-19T17:14:18.482Z'
+  href: '?at=2021-01-19T17:14:18.482Z',
+  type: 'service-name/type-name'
 }))
 
 module.exports = {

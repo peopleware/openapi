@@ -17,6 +17,7 @@ allOf:
   - type: object
     required:
       - href
+      - type
     properties:
       href:
         allOf:
@@ -30,3 +31,8 @@ allOf:
               version. The search engine updates, eventually, after a few seconds. If a more recent version is available
               in the meantime, the user interface makes it possible for the user to navigate to that version.
             example: ?at=2021-01-19T17:14:18.482Z
+      type:
+        type: string
+        minLength: 1
+        pattern: '^([-a-z0-9]+)\/([-a-z0-9\/]+)$'
+        example: 'service-name/type-name'

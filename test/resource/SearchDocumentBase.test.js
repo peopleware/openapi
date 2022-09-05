@@ -23,6 +23,8 @@ const { SearchDocumentBase, searchDocumentBaseExamples } = require('../../resour
 describe(testName(module), function () {
   shouldBeSeriousSchema(
     SearchDocumentBase,
-    stuff.concat(stuffWithUndefined.map(href => ({ ...searchDocumentBaseExamples[0], href })))
+    stuff
+      .concat(stuffWithUndefined.map(href => ({ ...searchDocumentBaseExamples[0], href })))
+      .concat(stuffWithUndefined.map(type => ({ ...searchDocumentBaseExamples[0], type })))
   )
 })

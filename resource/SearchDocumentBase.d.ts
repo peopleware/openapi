@@ -20,6 +20,7 @@ import { StructureVersioned } from './StructureVersioned';
 
 export declare interface SearchDocumentBase extends StructureVersioned {
     href: string;
+    type: string;
 }
 
 export declare const SearchDocumentBase: Joi.ObjectSchema<SearchDocumentBase>;
