@@ -73,7 +73,6 @@ const ISODateToSecondExamples = [
   '2012-12-31T19:01:59Z'
 ]
 
-const uuidPattern = /[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/
 const automatedTestPattern = new RegExp(`automated-test-${uuidPattern.source}`)
 const qaPattern = /qa-\d+/
 const acceptancePattern = /acceptance-\d+/
@@ -81,17 +80,17 @@ const migrationPattern = new RegExp(`migration-${ISODateToSecondPattern.source}`
 
 const composeRegexes = (...regexes) => new RegExp(`^${regexes.map(regex => regex.source).join('|')}$`)
 
-const Mode = Joi.string().pattern(
-  composeRegexes(
-    /production/,
-    automatedTestPattern,
-    qaPattern,
-    acceptancePattern,
-    migrationPattern,
-    /demo/,
-    /dev-experiment/
-  )
+const modePattern = composeRegexes(
+  /production/,
+  automatedTestPattern,
+  qaPattern,
+  acceptancePattern,
+  migrationPattern,
+  /demo/,
+  /dev-experiment/
 )
+
+const Mode = Joi.string().pattern(modePattern)
 
 const modeExamples = [
   'production',
@@ -107,6 +106,10 @@ const modeExamples = [
 
 module.exports = {
   ISODateToSecondPattern,
+  automatedTestPattern,
+  qaPattern,
+  acceptancePattern,
+  migrationPattern,
   ISODateToSecondExamples,
   ISODateToSecond: addExamples(ISODateToSecond, ISODateToSecondExamples),
   Mode: addExamples(Mode, modeExamples)
