@@ -21,7 +21,12 @@ const addExamples = require('../../../_util/addExamples')
 const methodGlobPattern = /^[A-Z*{},]+$/
 const pathGlobPattern = /^[\w-.~%!$&'()+;=*{},/]+$/ // URI segment characters, plus '*', '{', ',', '}', and the '/' separator
 
-const raxExamples = ['*:/a/path/*/to/{a,multiple}/resources/**', '{GET,PUT}:/another/path/43/without/choices', 'POST:']
+const raxExamples = [
+  '*:/a/path/*/to/{a,multiple}/resources/**',
+  '{GET,PUT}:/another/path/43/without/choices',
+  'POST:',
+  '{GET:/v1/health,POST:/v1/res,PUT:/v1/affiliate/,GET:/v1/res/*}'
+]
 
 const RAX = Joi.string()
   .trim()
