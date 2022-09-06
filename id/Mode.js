@@ -16,6 +16,7 @@
  */
 const Joi = require('joi')
 const addExamples = require('../_util/addExamples')
+const { uuidPattern } = require('./UUID')
 
 const ISODateToSecondPattern = /\d{4}-((0[13578]|10|12)-(0[1-9]|[1-2]\d|30|31)|02-(0[1-9]|1\d|2[0-9])|(0[469]|11)-(0[1-9]|[1-2]\d|30))T([01]\d|2[0-3])(:[0-5]\d){2}Z/
 
@@ -112,5 +113,6 @@ module.exports = {
   migrationPattern,
   ISODateToSecondExamples,
   ISODateToSecond: addExamples(ISODateToSecond, ISODateToSecondExamples),
+  modeExamples,
   Mode: addExamples(Mode, modeExamples)
 }
