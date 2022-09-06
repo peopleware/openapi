@@ -2,6 +2,13 @@
 
 # 1
 
+## 1.17
+
+### 1.17.0
+
+- fix: 1.16 did not export modeExamples by mistake
+- now also several mode regexp patterns are exported
+
 ## 1.16
 
 ### 1.16.0
