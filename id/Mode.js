@@ -17,6 +17,62 @@
 const Joi = require('joi')
 const addExamples = require('../_util/addExamples')
 
+const ISODateToSecondPattern = /^\d{4}-((0[13578]|10|12)-(0[1-9]|[1-2]\d|30|31)|02-(0[1-9]|1\d|2[0-9])|(0[469]|11)-(0[1-9]|[1-2]\d|30))T([01]\d|2[0-3])(:[0-5]\d){2}Z$/
+
+const ISODateToSecond = Joi.string()
+  .trim()
+  .pattern(ISODateToSecondPattern)
+
+const ISODateToSecondExamples = [
+  '2012-01-01T18:21:06Z',
+  '2012-01-10T18:21:06Z',
+  '2012-01-12T18:21:06Z',
+  '2012-01-20T18:21:06Z',
+  '2012-01-29T18:21:06Z',
+  '2012-01-30T18:21:06Z',
+  '2012-01-31T18:21:06Z',
+  '2012-02-01T18:21:06Z',
+  '2012-02-28T18:21:06Z',
+  '2012-02-29T18:21:06Z',
+  '2012-03-31T18:21:06Z',
+  '2012-04-01T18:21:06Z',
+  '2012-04-10T18:21:06Z',
+  '2012-04-19T18:21:06Z',
+  '2012-04-20T18:21:06Z',
+  '2012-04-29T18:21:06Z',
+  '2012-04-30T18:21:06Z',
+  '2012-05-31T18:21:06Z',
+  '2012-06-30T18:21:06Z',
+  '2012-07-31T18:21:06Z',
+  '2012-08-31T18:21:06Z',
+  '2012-09-30T18:21:06Z',
+  '2012-10-31T18:21:06Z',
+  '2012-11-30T18:21:06Z',
+  '2012-12-31T18:21:06Z',
+  '2012-12-31T00:00:00Z',
+  '2012-12-31T04:21:06Z',
+  '2012-12-31T10:21:06Z',
+  '2012-12-31T14:21:06Z',
+  '2012-12-31T19:21:06Z',
+  '2012-12-31T20:21:06Z',
+  '2012-12-31T23:21:06Z',
+  '2012-12-31T19:00:06Z',
+  '2012-12-31T19:01:06Z',
+  '2012-12-31T19:09:06Z',
+  '2012-12-31T19:20:06Z',
+  '2012-12-31T19:33:06Z',
+  '2012-12-31T19:49:06Z',
+  '2012-12-31T19:59:06Z',
+  '2012-12-31T19:01:00Z',
+  '2012-12-31T19:01:01Z',
+  '2012-12-31T19:01:09Z',
+  '2012-12-31T19:01:10Z',
+  '2012-12-31T19:01:23Z',
+  '2012-12-31T19:01:39Z',
+  '2012-12-31T19:01:51Z',
+  '2012-12-31T19:01:59Z'
+]
+
 const Mode = Joi.string().pattern(
   /^production|automated-test-[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}|qa-\d+|acceptance-\d+|demo|dev-experiment$/
 )
@@ -32,4 +88,9 @@ const modeExamples = [
   'dev-experiment'
 ]
 
-module.exports = { modeExamples, Mode: addExamples(Mode, modeExamples) }
+module.exports = {
+  ISODateToSecondPattern,
+  ISODateToSecondExamples,
+  ISODateToSecond: addExamples(ISODateToSecond, ISODateToSecondExamples),
+  Mode: addExamples(Mode, modeExamples)
+}
