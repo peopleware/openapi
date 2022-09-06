@@ -2,6 +2,12 @@
 
 # 1
 
+## 1.16
+
+### 1.16.0
+
+- `migration-YYYY-MM-DDTHH:MM:SS` is now also allowed as mode
+
 ## 1.15
 
 ### 1.15.0
