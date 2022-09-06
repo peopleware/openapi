@@ -17,10 +17,12 @@
 const Joi = require('joi')
 const addExamples = require('../_util/addExamples')
 
+const uuidPattern = /[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/
+
 const UUID = Joi.string().uuid({
   version: ['uuidv4']
 })
 
 const uuidExamples = ['611e148e-734d-4fe6-ae9b-b3b61d66cd27']
 
-module.exports = { uuidExamples, UUID: addExamples(UUID, uuidExamples) }
+module.exports = { uuidPattern, uuidExamples, UUID: addExamples(UUID, uuidExamples) }
