@@ -18,10 +18,13 @@
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
 const { stuff } = require('../../_util/_stuff')
-const { Mode, ISODateToSecond } = require('../../id/Mode')
+const { Mode, ISODateToSecond, ISODateToSecondPattern } = require('../../id/Mode')
 
 describe(testName(module), function () {
   describe('ISODateToSecond', function () {
+    it('can build a pattern', function () {
+      console.log(ISODateToSecondPattern.source)
+    })
     shouldBeSeriousSchema(
       ISODateToSecond,
       stuff.concat([

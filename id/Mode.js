@@ -17,11 +17,11 @@
 const Joi = require('joi')
 const addExamples = require('../_util/addExamples')
 
-const ISODateToSecondPattern = /^\d{4}-((0[13578]|10|12)-(0[1-9]|[1-2]\d|30|31)|02-(0[1-9]|1\d|2[0-9])|(0[469]|11)-(0[1-9]|[1-2]\d|30))T([01]\d|2[0-3])(:[0-5]\d){2}Z$/
+const ISODateToSecondPattern = /\d{4}-((0[13578]|10|12)-(0[1-9]|[1-2]\d|30|31)|02-(0[1-9]|1\d|2[0-9])|(0[469]|11)-(0[1-9]|[1-2]\d|30))T([01]\d|2[0-3])(:[0-5]\d){2}Z/
 
 const ISODateToSecond = Joi.string()
   .trim()
-  .pattern(ISODateToSecondPattern)
+  .pattern(new RegExp(`^${ISODateToSecondPattern.source}$`))
 
 const ISODateToSecondExamples = [
   '2012-01-01T18:21:06Z',
@@ -73,8 +73,24 @@ const ISODateToSecondExamples = [
   '2012-12-31T19:01:59Z'
 ]
 
+const uuidPattern = /[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}/
+const automatedTestPattern = new RegExp(`automated-test-${uuidPattern.source}`)
+const qaPattern = /qa-\d+/
+const acceptancePattern = /acceptance-\d+/
+const migrationPattern = new RegExp(`migration-${ISODateToSecondPattern.source}`)
+
+const composeRegexes = (...regexes) => new RegExp(`^${regexes.map(regex => regex.source).join('|')}$`)
+
 const Mode = Joi.string().pattern(
-  /^production|automated-test-[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}|qa-\d+|acceptance-\d+|demo|dev-experiment$/
+  composeRegexes(
+    /production/,
+    automatedTestPattern,
+    qaPattern,
+    acceptancePattern,
+    migrationPattern,
+    /demo/,
+    /dev-experiment/
+  )
 )
 
 const modeExamples = [
@@ -84,6 +100,7 @@ const modeExamples = [
   'qa-00004',
   'acceptance-6',
   'acceptance-00643',
+  'migration-2012-02-29T18:21:06Z',
   'demo',
   'dev-experiment'
 ]
