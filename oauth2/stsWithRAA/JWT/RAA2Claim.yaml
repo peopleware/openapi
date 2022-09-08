@@ -5,7 +5,7 @@ additionalProperties:
   x-additionalPropertiesName: prefix
   type: string
   # MUDO this pattern is not correct: too limiting
-  pattern: "^[A-Z*,{}]+:[-\\w.~%!$&'()*+,;=/{}]*$"
+  pattern: ^[A-Z*,{}]+:[-\w.~%!$&'()*+,;=/{}]*$
   description: the RAX for the `prefix` this is a value of
 example:
   '/openapi/common/v1': '*:/a/path/*/to/{a,multiple}/resources/**'

@@ -1,6 +1,6 @@
 type: string
 format: urlsegment
-pattern: "^[-\\w.~%!$&'()*+,;=]+$"
+pattern: ^[-\w.~%!$&'()*+,;=]+$
 readOnly: true
 description: >-
   Opaque id of an account.
