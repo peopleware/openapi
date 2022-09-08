@@ -19,7 +19,7 @@ const Joi = require('joi')
 const addExamples = require('../../../_util/addExamples')
 
 const methodGlobPattern = /^[A-Z*{},]+$/
-const pathGlobPattern = /^[\w-.~%!$&'()+;=*{},/]+$/ // URI segment characters, plus '*', '{', ',', '}', and the '/' separator
+const pathGlobPattern = /^[-\w.~%!$&'()+;=*{},/]+$/ // URI segment characters, plus '*', '{', ',', '}', and the '/' separator
 
 const raxExamples = [
   '*:/a/path/*/to/{a,multiple}/resources/**',
