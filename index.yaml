@@ -376,6 +376,10 @@ components:
                           $ref: 'id/legalPerson/be/CRN.yaml'
                 uuid:
                   $ref: 'id/UUID.yaml'
+                mode:
+                  $ref: 'id/mode.yaml'
+                accountId-readOnly:
+                  $ref: 'id/AccountId.yaml'
             location:
               type: object
               properties:
