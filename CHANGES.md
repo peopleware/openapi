@@ -4,6 +4,10 @@
 
 ## 1.17
 
+### 1.17.1
+
+- fix broken patterns in YAMLs and Joi schema for `AccountId` and `RAX`
+
 ### 1.17.0
 
 - fix: 1.16 did not export modeExamples by mistake
