@@ -4,6 +4,7 @@ description:
 additionalProperties:
   x-additionalPropertiesName: prefix
   type: string
+  # MUDO this pattern is not correct: too limiting
   pattern: "^[A-Z*,{}]+:[-\\w.~%!$&'()*+,;=/{}]*$"
   description: the RAX for the `prefix` this is a value of
 example:

@@ -28,6 +28,8 @@ const raxExamples = [
   '{GET:/v1/health,POST:/v1/res,PUT:/v1/affiliate/,GET:/v1/res/*}'
 ]
 
+// MUDO this pattern and custom validation are not correct: too limiting
+
 const RAX = Joi.string()
   .trim()
   .custom((value, { error }) => {
