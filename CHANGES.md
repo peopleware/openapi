@@ -2,6 +2,15 @@
 
 # 1
 
+## 1.18
+
+# 1.18.0
+
+- add `.meta({readOnly: true})` to `readOnlyAlteration`
+
+This is aimed at use with [joi-to-json](https://www.npmjs.com/package/joi-to-json). Properties annotated as such turn up
+as `readOnly` in the OpenAPI spec.
+
 ## 1.17
 
 ### 1.17.1
