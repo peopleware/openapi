@@ -9,6 +9,7 @@ const HREFHistory = Joi.object({
   ).required()
 })
   .description('HATEOAS links. These are relative URIs.')
+  .meta({ readOnly: true })
   .alter(readOnlyAlteration)
   .unknown(true)
 

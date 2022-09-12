@@ -29,7 +29,9 @@ For manual interactions, the account refers to one specific natural person. The 
 to be able to know from the value of this field as precise as possible to which organisation that natural
 person belongs. When we automatically proces data input files, we need to make sure that we use a
 different account per data source, and not one general account representing the overal import process.`
-  ).alter(readOnlyAlteration)
+  )
+    .meta({ readOnly: true })
+    .alter(readOnlyAlteration)
 })
 
 const examples = timestampedExamples.reduce(

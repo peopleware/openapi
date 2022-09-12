@@ -4,7 +4,11 @@
 
 ## 1.18
 
-# 1.18.0
+### 1.18.1
+
+- add `.meta({ readOnly: true })` to readOnly properties directly, not only in alterations
+
+### 1.18.0
 
 - add `.meta({readOnly: true})` to `readOnlyAlteration`
 

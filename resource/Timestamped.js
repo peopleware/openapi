@@ -28,6 +28,7 @@ const Timestamped = Joi.object({
 
 Sent by the server in read. Ignored in create and update.`
     )
+    .meta({ readOnly: true })
     .alter(readOnlyAlteration)
 }).unknown(true)
 
