@@ -374,6 +374,15 @@ components:
                       properties:
                         crn:
                           $ref: 'id/legalPerson/be/CRN.yaml'
+                sigedis:
+                  type: object
+                  properties:
+                    sigedisId:
+                      $ref: 'id/sigedis/SigedisId.yaml'
+                    sigedisRegistrantId:
+                      $ref: 'id/sigedis/SigedisRegistrantId.yaml'
+                    sigedisRegulationIdentification:
+                      $ref: 'id/sigedis/SigedisRegulationIdentification.yaml'
                 uuid:
                   $ref: 'id/UUID.yaml'
                 mode:

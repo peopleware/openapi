@@ -1,0 +1,78 @@
+required:
+  - registrant
+  - registrantId
+description: >-
+  Unchangeable internal identification of a _regulation_ for communication with Sigedis.
+
+
+  This consists of the CRN of the OFP that governs the contract as `registrant`, and the `registrantId`, which is an
+  identification of the contract unqiue within the OFP.
+
+
+  _Regulation_ is a deliberately vague term. A sector retirement contract is a _regulation_. For a MIPS retirement
+  contract, the _participations in the contract of each separate employer_ are considered separate _regulations_.
+  Retirement contracts for a single employer each are separate _regulations_.
+
+
+  Sigedis regulation identifications have to be unique, and cannot change over the life of a regulation.
+
+
+  Regulations are attributed a _Sigedis id_ by Sigedis, but this attribution is done after creation of a regulation, and
+  its declaration with Sigedis. The Sigedis id therefor cannot be used as a business key. This value can, since the
+  organization that manages the regulation can define it freely when the regulation is created. Once the Sigedis id is
+  attributed, it can be used as identification in communication with Sigedis, but this value will continue to function
+  in that role as well.
+type: object
+properties:
+  registrant:
+    pattern: ^\d{10}$
+    description: >-
+      CRN of the OFP that is responsible for this contract.
+
+
+      Company Registration Number: Belgian identification of organizations.
+
+
+      The [_company registration
+      number_](https://economie.fgov.be/en/themes/enterprises/crossroads-bank-enterprises/registration-crossroads-bank)
+      (nl:
+      [_ondernemingsnummer_](https://economie.fgov.be/nl/themas/ondernemingen/kruispuntbank-van/inschrijving-de-kruispuntbank),
+      fr: [_numéro
+      d’entreprise_](https://economie.fgov.be/fr/themes/entreprises/banque-carrefour-des/inscription-la-banque), de:
+      [_Unternehmensnummer_](https://economie.fgov.be/de/themen/unternehmen/zentrale-datenbank-der/eintragung-die-zdu))
+      of an organization is handed out by the Belgian government, and uniquely identifies an organization. It is
+      impossible, e.g., to legally do business in Belgium, or employ people, if the organization does not have a company
+      registration number. The company registration number is also used as Belgian VAT identifier ("VAT Number").
+
+
+      The company registration number of an organization never changes. If you encounter an organization with a
+      different company registration number, it legally is a different organization. If you encounter an organization
+      with the same company registration number, it legally is the same organization, although its name, address,
+      etcetera, might have changed.
+
+
+      Because this identifier is in practice handed out by the Belgian [_Crossroads Bank for
+      Enterprises_](https://economie.fgov.be/en/themes/enterprises/crossroads-bank-enterprises) (CBE) (nl:
+      [_Kruispuntbank van Ondernemingen_](https://economie.fgov.be/nl/themas/ondernemingen/kruispuntbank-van) (KBO), fr:
+      [_Banque-Carrefour des Entreprises_](https://economie.fgov.be/fr/themes/entreprises/banque-carrefour-des) (BCE),
+      de: [Zentrale Datenbank der Unternehmen](https://economie.fgov.be/de/themen/unternehmen/zentrale-datenbank-der)
+      (ZDU)), it is often referred to as "CBE number" / "KBO nummer" / "numéro BCE" / "ZDU nummer".
+
+
+      There is no formatting in this representation.
+    type: string
+    example: '0453834195'
+  registrantId:
+    maxLength: 60
+    minLength: 1
+    pattern: ^[-A-Za-z0-9./]{1,60}$
+    description: |-
+      Unchangeable identification of a retirement regulation for communication with Sigedis, unique for an OFP.
+
+      See `db2p_v3.11.8/Declaration/db2pBaseComponents_v3.xsd#FreeIdentificator`.
+    type: string
+    example: cunning-plan/interestedin2things
+additionalProperties: true
+example:
+  registrant: '1234509876'
+  registrantId: cunning-plan/interestedin2things

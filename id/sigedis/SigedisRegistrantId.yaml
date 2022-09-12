@@ -1,0 +1,9 @@
+maxLength: 60
+minLength: 1
+pattern: ^[-A-Za-z0-9./]{1,60}$
+description: |-
+  Unchangeable identification of a retirement regulation for communication with Sigedis, unique for an OFP.
+
+  See `db2p_v3.11.8/Declaration/db2pBaseComponents_v3.xsd#FreeIdentificator`.
+type: string
+example: cunning-plan/interestedin2things
