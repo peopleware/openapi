@@ -10,7 +10,7 @@ const sigedisRegulationIdentificationExamples = [
 const SigedisRegulationIdentification = addExamples(
   Joi.object({
     registrant: CRN.description(
-      `CRN of the OFP or insurance institution that is responsible for this contract.
+      `CRN of the OFP that is responsible for this contract.
 
 ${CRN.describe().flags.description}`
     ).required(),

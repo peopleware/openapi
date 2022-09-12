@@ -12,8 +12,7 @@ const SigedisRegistrantId = addExamples(
     .description(`Unchangeable identification of a retirement regulation for communication with Sigedis, unique
 for an OFP.
 
-This consists of the plan label, and the contract label, separated with a \`/\`, and is limited to 60 characters (see
-\`db2p_v3.11.8/Declaration/db2pBaseComponents_v3.xsd#FreeIdentificator\`).`),
+See \`db2p_v3.11.8/Declaration/db2pBaseComponents_v3.xsd#FreeIdentificator\`.`),
   sigedisRegistrantIdExamples
 )
 
