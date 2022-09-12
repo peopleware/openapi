@@ -2,6 +2,12 @@
 
 # 1
 
+## 1.19
+
+### 1.19.0
+
+- add Sigedis identification schemata
+
 ## 1.18
 
 ### 1.18.1
