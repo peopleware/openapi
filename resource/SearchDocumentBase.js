@@ -38,7 +38,14 @@ const SearchDocumentBase = StructureVersioned.append({
     .required(),
   flowId: UUID.description('The flowId with which the request was made').required(),
   mode: Mode.description('Value that describes the mode of the search document.').required(),
-  href: RelativeURI.description(`Relative URI where the found resource's information is located.`).required(),
+  href: RelativeURI.description(
+    `Relative URI where the found affiliate's information is located. The \`at\` parameter _must_ be the
+same as the value of the \`x-date\` response header.
+
+Users need to be directed to the version returned by the search index, and not an earlier or more recent
+version. The search engine updates, eventually, after a few seconds. If a more recent version is available in
+the meantime, the user interface makes it possible for the user to navigate to that version.`
+  ).required(),
   discriminator: Joi.string()
     .trim()
     .lowercase()
@@ -59,7 +66,7 @@ const searchDocumentBaseExamples = structureVersionedExamples.map(svd => ({
   discriminator: 'service-name/type-name',
   flowId: uuidExamples[0],
   mode: modeExamples[0],
-  href: '/service-name/service_version/type-name/type_unique_identifier'
+  href: '/service-name/service_version/type-name/type_unique_identifier?at=2021-01-19T17:14:18.482Z'
 }))
 
 module.exports = {

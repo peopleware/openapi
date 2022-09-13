@@ -46,7 +46,7 @@ allOf:
           - $ref: '../string/RelativeURI.yaml'
           - description: >-
               Relative URI where the found resource's information is located.
-            example: ?at=2021-01-19T17:14:18.482Z
+            example: /service-name/service_version/type-name/type_unique_identifier?at=2021-01-19T17:14:18.482Z
       discriminator:
         type: string
         minLength: 1
