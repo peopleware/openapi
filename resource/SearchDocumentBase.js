@@ -19,17 +19,27 @@ const Joi = require('joi')
 const { StructureVersioned, structureVersionedExamples } = require('./StructureVersioned')
 const addExamples = require('../_util/addExamples')
 const { RelativeURI } = require('../string/RelativeURI')
+const { Mode, modeExamples } = require('../id/Mode')
+const { UUID, uuidExamples } = require('../id/UUID')
 
 const SearchDocumentBase = StructureVersioned.append({
-  href: RelativeURI.description(
-    `Relative URI where the found affiliate's information is located. The \`at\` parameter _must_ be the
-same as the value of the \`x-date\` response header.
+  id: Joi.string()
+    .trim()
+    .lowercase()
+    .min(1)
+    .pattern(/^([a-z0-9])([-=_a-z0-9]+)$/)
+    .description(
+      `Unique identifier of the search result. Can only contain alphanumeric chars and dashes (-), underscores (_) and equals signs (=).
+       Can also not start with dash, underscore or equals sign.
 
-Users need to be directed to the version returned by the search index, and not an earlier or more recent
-version. The search engine updates, eventually, after a few seconds. If a more recent version is available in
-the meantime, the user interface makes it possible for the user to navigate to that version.`
-  ).required(),
-  type: Joi.string()
+       By convention this is the href value, without any parameters, converted to lowercase, with all invalid characters replaced with underscore (_),
+       and the first character stripped if it was a dash, underscore or equals sign.`
+    )
+    .required(),
+  flowId: UUID.description('The flowId with which the request was made').required(),
+  mode: Mode.description('Value that describes the mode of the search document.').required(),
+  href: RelativeURI.description(`Relative URI where the found resource's information is located.`).required(),
+  discriminator: Joi.string()
     .trim()
     .lowercase()
     .min(1)
@@ -45,8 +55,11 @@ name clashes (slash-separated).`
 
 const searchDocumentBaseExamples = structureVersionedExamples.map(svd => ({
   ...svd,
-  href: '?at=2021-01-19T17:14:18.482Z',
-  type: 'service-name/type-name'
+  id: 'service_name_service_version_type_name_type_unique_identifier',
+  discriminator: 'service-name/type-name',
+  flowId: uuidExamples[0],
+  mode: modeExamples[0],
+  href: '/service-name/service_version/type-name/type_unique_identifier'
 }))
 
 module.exports = {

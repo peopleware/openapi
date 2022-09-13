@@ -24,7 +24,10 @@ describe(testName(module), function () {
   shouldBeSeriousSchema(
     SearchDocumentBase,
     stuff
+      .concat(stuffWithUndefined.map(id => ({ ...searchDocumentBaseExamples[0], id })))
+      .concat(stuffWithUndefined.map(mode => ({ ...searchDocumentBaseExamples[0], mode })))
+      .concat(stuffWithUndefined.map(flowId => ({ ...searchDocumentBaseExamples[0], flowId })))
       .concat(stuffWithUndefined.map(href => ({ ...searchDocumentBaseExamples[0], href })))
-      .concat(stuffWithUndefined.map(type => ({ ...searchDocumentBaseExamples[0], type })))
+      .concat(stuffWithUndefined.map(discriminator => ({ ...searchDocumentBaseExamples[0], discriminator })))
   )
 })
