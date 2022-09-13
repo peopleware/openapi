@@ -2,6 +2,13 @@
 
 # 1
 
+## 1.20
+
+## 1.20.0
+
+- add `flowId`, `mode`, `id` properties to searchDocumentBase
+- rename searchDocumentBase `type` property to `discriminator`
+
 ## 1.19
 
 ### 1.19.0
