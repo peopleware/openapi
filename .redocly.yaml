@@ -5,18 +5,19 @@ apis:
     root: oauth2/sts/index.yaml
   stsWithRAA:
     root: oauth2/stsWithRAA/index.yaml
-styleguide:
-  extends:
-    - all
-  rules:
-    path-segment-plural: off
-    request-mime-type:
-      severity: error
-      allowedValues:
-        - application/json
-        - text/html
-        - application/pdf
-        - application/x-www-form-urlencoded
-    # `parameter-description` is currently too strict. A perfectly good description inherited from the schema, and shown
-    # in the HTML, is not counted as a description.
-    parameter-description: off
+extends:
+  - all
+rules:
+  path-segment-plural: off
+  request-mime-type:
+    severity: error
+    allowedValues:
+      - application/json
+      - text/html
+      - application/pdf
+      - application/x-www-form-urlencoded
+  # `parameter-description` is currently too strict. A perfectly good description inherited from the schema, and shown
+  # in the HTML, is not counted as a description.
+  parameter-description: off
+  # TODO off for now, but should be enabled; needs fixes here
+  operation-4xx-problem-details-rfc7807: off
