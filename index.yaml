@@ -37,6 +37,9 @@ tags:
     x-traitTag: true
     description:
       $ref: 'resource/paging.md'
+security:
+  - OAuth2:
+      - use
 paths:
   /health:
     parameters:
@@ -330,6 +333,20 @@ paths:
         '404':
           $ref: 'resource/404NoCache.yaml'
 components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      description: Some OAuth2 authNZ
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.example.com/oauth2/authorize
+          tokenUrl: https://api.example.com/oauth2/token
+          scopes:
+            use: use the api
+        clientCredentials:
+          tokenUrl: https://api.example.com/oauth2/token
+          scopes:
+            use: use the api
   schemas:
     health:
       allOf:
