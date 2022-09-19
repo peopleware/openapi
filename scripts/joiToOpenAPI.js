@@ -10,6 +10,22 @@ const { clean } = require('./clean')
 
 const basePath = join(__dirname, '..', 'id', 'sigedis')
 
+const license = `# Copyright 2021 - 2022 PeopleWare n.v.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+`
+
 async function transformSchemataIn (path) {
   const module = require(path)
   const dirPath = join(path, '..')
@@ -19,7 +35,8 @@ async function transformSchemataIn (path) {
         const result = parse(module[name], 'open-api')
         const cleaned = clean(result)
         const yaml = dump(cleaned, { lineWidth: 120, noCompatMode: true })
-        acc.push(writeFile(join(dirPath, `${name}.yaml`), yaml))
+        const yamlWithLicense = license + yaml
+        acc.push(writeFile(join(dirPath, `${name}.yaml`), yamlWithLicense))
       }
       return acc
     }, [])
