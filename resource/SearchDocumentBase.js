@@ -22,7 +22,7 @@ const { RelativeURI } = require('../string/RelativeURI')
 
 const SearchDocumentBase = StructureVersioned.append({
   href: RelativeURI.description(
-    `Relative URI where the found affiliate's information is located. The \`at\` parameter _must_ be the
+    `Relative URI where the found resource's information is located. The \`at\` parameter _must_ be the
 same as the value of the \`x-date\` response header.
 
 Users need to be directed to the version returned by the search index, and not an earlier or more recent
