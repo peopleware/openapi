@@ -35,10 +35,15 @@ const statusCode = {
   // we can never answer UNREACHABLE, since we are reachable to answer
 }
 
-const Status = addExamples(Joi.valid(...statusValues), statusValues).description(`
-- OK: 200 — the service is running within specifications;
-- WARNING: 270 — the service is running, but some requirements are not fulfilled;
-- ERROR: 470 — the service is running, but some crucial specifications are not fulfilled, and operation is not guaranteed;
+const Status = addExamples(
+  Joi.string()
+    .trim()
+    .valid(...statusValues),
+  statusValues
+).description(`
+- OK: 200 — the service is running within specifications
+- WARNING: 270 — the service is running, but some requirements are not fulfilled
+- ERROR: 470 — the service is running, but some crucial specifications are not fulfilled, and operation is not guaranteed
 - UNREACHABLE: 500 — the service is not running or not available`)
 
 const RequiredStatus = Status.required()
