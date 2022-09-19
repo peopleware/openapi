@@ -4,7 +4,11 @@
 
 ## 1.20
 
-## 1.20.0
+### 1.20.1
+
+- specify that health `Status` values are strings
+
+### 1.20.0
 
 - add `flowId`, `mode`, `id` properties to searchDocumentBase
 - rename searchDocumentBase `type` property to `discriminator`
