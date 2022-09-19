@@ -7,6 +7,7 @@
 ### 1.20.1
 
 - specify that health `Status` values are strings
+- add security to examples and demonstration
 
 ### 1.20.0
 
