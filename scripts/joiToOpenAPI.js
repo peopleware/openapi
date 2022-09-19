@@ -10,21 +10,25 @@ const { clean } = require('./clean')
 
 const basePath = join(__dirname, '..', 'id', 'sigedis')
 
+async function transformSchemataIn (path) {
+  const module = require(path)
+  const dirPath = join(path, '..')
+  return Promise.all(
+    Object.keys(module).reduce((acc, name) => {
+      if (isSchema(module[name])) {
+        const result = parse(module[name], 'open-api')
+        const cleaned = clean(result)
+        const yaml = dump(cleaned, { lineWidth: 120, noCompatMode: true })
+        acc.push(writeFile(join(dirPath, `${name}.yaml`), yaml))
+      }
+      return acc
+    }, [])
+  )
+}
+
 async function transformNodeRecursively (node) {
   if (!node.children) {
-    const module = require(node.path)
-    const dirPath = join(node.path, '..')
-    return Promise.all(
-      Object.keys(module).reduce((acc, name) => {
-        if (isSchema(module[name])) {
-          const result = parse(module[name], 'open-api')
-          const cleaned = clean(result)
-          const yaml = dump(cleaned, { lineWidth: 120, noCompatMode: true })
-          acc.push(writeFile(join(dirPath, `${name}.yaml`), yaml))
-        }
-        return acc
-      }, [])
-    )
+    return transformSchemataIn(node.path)
   }
 
   return Promise.all(node.children.map(transformNodeRecursively))
@@ -32,7 +36,10 @@ async function transformNodeRecursively (node) {
 
 async function exec () {
   const tree = dirTree(basePath, { extensions: /\.js/ })
-  await transformNodeRecursively(tree)
+  return Promise.all([
+    transformNodeRecursively(tree),
+    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocumentBase'))
+  ])
 }
 
 exec()
