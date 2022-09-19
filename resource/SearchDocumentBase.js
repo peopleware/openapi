@@ -19,28 +19,8 @@ const Joi = require('joi')
 const { StructureVersioned, structureVersionedExamples } = require('./StructureVersioned')
 const addExamples = require('../_util/addExamples')
 const { RelativeURI } = require('../string/RelativeURI')
-const { Mode, modeExamples } = require('../id/Mode')
-const { UUID, uuidExamples } = require('../id/UUID')
 
 const SearchDocumentBase = StructureVersioned.append({
-  id: Joi.string()
-    .trim()
-    .lowercase()
-    .min(1)
-    .pattern(/^([a-z0-9])([-=_a-z0-9]+)$/)
-    .description(
-      `Unique identifier of the search result.
-
-Can only contain alphanumeric chars and dashes (\`'-'\`), underscores (\`'_'\`) and equals signs (\`'='\`). Can also not
-start with dash, underscore or equals sign.
-
-By convention this is the \`href\` value, without any parameters, converted to lowercase, with all invalid characters
-replaced with underscore (\`'_'\`), and the first character stripped if it was a dash, underscore or equals sign.`
-    )
-    .example('service_name_service_version_type_name_type_unique_identifier')
-    .required(),
-  flowId: UUID.description('The flowId with which the request was made').required(),
-  mode: Mode.description('Value that describes the mode of the search document.').required(),
   href: RelativeURI.description(
     `Relative URI where the found affiliate's information is located. The \`at\` parameter _must_ be the
 same as the value of the \`x-date\` response header.
@@ -62,14 +42,13 @@ name clashes (slash-separated).`
     )
     .example('service-name/type-name')
     .required()
-})
+}).description(
+  `The resource's search document with the most up-to-date information, i.e., up-to-date up until, but not including, \`x-date\`.`
+)
 
 const searchDocumentBaseExamples = structureVersionedExamples.map(svd => ({
   ...svd,
-  id: 'service_name_service_version_type_name_type_unique_identifier',
   discriminator: 'service-name/type-name',
-  flowId: uuidExamples[0],
-  mode: modeExamples[0],
   href: '/service-name/service_version/type-name/type_unique_identifier?at=2021-01-19T17:14:18.482Z'
 }))
 

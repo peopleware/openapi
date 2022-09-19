@@ -19,9 +19,6 @@ import * as Joi from 'joi';
 import { StructureVersioned } from './StructureVersioned';
 
 export declare interface SearchDocumentBase extends StructureVersioned {
-    id: string;
-    flowId: string;
-    mode: string;
     href: string;
     discriminator: string;
 }

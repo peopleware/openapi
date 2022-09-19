@@ -16,31 +16,9 @@ allOf:
   - $ref: 'StructureVersion1.yaml'
   - type: object
     required:
-      - id
-      - flowId
-      - mode
       - href
       - discriminator
     properties:
-      id:
-        type: string
-        minLength: 1
-        pattern: ^([a-z0-9])([-=_a-z0-9]+)$
-        example: 'service_name_service_version_type_name_type_unique_identifier'
-        description: >-
-          Unique identifier of the search result. Can only contain alphanumeric chars and dashes (-), underscores (_)
-          and equals signs (=).
-                 Can also not start with dash, underscore or equals sign.
-
-                 By convention this is the href value, without any parameters, converted to lowercase, with all invalid
-          characters replaced with underscore (_),
-                 and the first character stripped if it was a dash, underscore or equals sign.
-      flowId:
-        allOf:
-          - $ref: '../id/UUID.yaml'
-      mode:
-        allOf:
-          - $ref: '../id/Mode.yaml'
       href:
         allOf:
           - $ref: '../string/RelativeURI.yaml'

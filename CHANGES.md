@@ -4,6 +4,12 @@
 
 ## 1.20
 
+### 1.20.3
+
+- fix: `flowId`, `mode`, `id` properties should not have been added to `SearchDocumentBase`
+
+`mode` and `flowId` appear in the request and response headers. `id` can be derived (with the algorithm described).
+
 ### 1.20.2
 
 - add examples to SearchDocumentBase properties, to make Redoc happy
