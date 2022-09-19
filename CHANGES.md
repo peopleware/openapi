@@ -4,6 +4,10 @@
 
 ## 1.20
 
+### 1.20.2
+
+- add examples to SearchDocumentBase properties, to make Redoc happy
+
 ### 1.20.1
 
 - specify that health `Status` values are strings

@@ -29,12 +29,15 @@ const SearchDocumentBase = StructureVersioned.append({
     .min(1)
     .pattern(/^([a-z0-9])([-=_a-z0-9]+)$/)
     .description(
-      `Unique identifier of the search result. Can only contain alphanumeric chars and dashes (-), underscores (_) and equals signs (=).
-       Can also not start with dash, underscore or equals sign.
+      `Unique identifier of the search result.
 
-       By convention this is the href value, without any parameters, converted to lowercase, with all invalid characters replaced with underscore (_),
-       and the first character stripped if it was a dash, underscore or equals sign.`
+Can only contain alphanumeric chars and dashes (\`'-'\`), underscores (\`'_'\`) and equals signs (\`'='\`). Can also not
+start with dash, underscore or equals sign.
+
+By convention this is the \`href\` value, without any parameters, converted to lowercase, with all invalid characters
+replaced with underscore (\`'_'\`), and the first character stripped if it was a dash, underscore or equals sign.`
     )
+    .example('service_name_service_version_type_name_type_unique_identifier')
     .required(),
   flowId: UUID.description('The flowId with which the request was made').required(),
   mode: Mode.description('Value that describes the mode of the search document.').required(),
@@ -57,6 +60,7 @@ the meantime, the user interface makes it possible for the user to navigate to t
 This enables users to search only on particular resource type. The type is qualified with the service name, to avoid
 name clashes (slash-separated).`
     )
+    .example('service-name/type-name')
     .required()
 })
 
