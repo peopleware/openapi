@@ -1,6 +1,24 @@
 # Changes
 
+# 2
+
 # 1
+
+## 1.21
+
+### 1.21.0
+
+- `SearchDocument` is deprecated. It is replaced by:
+
+  - `SearchDefinitionBase`, which
+
+    - contains array properties for `fuzzy` and `exact` match at the top level, and
+    - data to be sent to the ui for visualization and navigation in the nested property `content`, of type
+
+  - `SearchResultBase`, which always contains a `href` and `discriminator`, and is extended per type with all data that
+    can be used for visualization.
+
+  `SearchResultBase` is the old `SearchDocumentBase`, under a new name. It is now wrapped in `SearchDocument`.
 
 ## 1.20
 
