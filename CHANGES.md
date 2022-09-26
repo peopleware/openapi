@@ -8,9 +8,9 @@
 
 ### 1.21.0
 
-- `SearchDocument` is deprecated. It is replaced by:
+- `SearchDocumentBase` is deprecated. It is replaced by:
 
-  - `SearchDefinitionBase`, which
+  - `SearchDocument`, which
 
     - contains array properties for `fuzzy` and `exact` match at the top level, and
     - data to be sent to the ui for visualization and navigation in the nested property `content`, of type
