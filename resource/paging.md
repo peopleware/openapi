@@ -1,5 +1,6 @@
 Lists should always contain `href` references to the list resources, and not the resource content themselves. It is wise
-to add `link rel=preload` headers for the list elements, or use HTTP/2 push.
+to add `link rel=preload` headers for the list elements
+([RFC 5988, Web Linking](https://www.rfc-editor.org/rfc/rfc5988)), or use HTTP/2 push.
 
 ## Paging
 

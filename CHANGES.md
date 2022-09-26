@@ -6,7 +6,7 @@
 
 ### 1.21.1
 
-- add to description of paging HateOAS links
+- add to description of paging HateOAS and other preload or prefetch links
 
 ### 1.21.0
 
