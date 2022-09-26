@@ -365,7 +365,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/searchDocument'
+                $ref: 'resource/SearchResults.yaml'
         '400':
           $ref: 'resource/400.yaml'
         '401':

@@ -1,0 +1,183 @@
+# Copyright 2021 - 2022 PeopleWare n.v.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+required:
+  - structureVersion
+  - results
+  - href
+type: object
+properties:
+  structureVersion:
+    minimum: 1
+    description: Version of the data structure of this resource type
+    type: integer
+    example: 1
+  results:
+    maxItems: 100
+    uniqueItems: true
+    description: >-
+      List of items that match the search, ordered by relevance. The list has `per_page` or fewer items.
+
+
+      Items identify the type of resource they represent (`discriminator`), a link to the indexed version of the found
+      resource (`href`), and information for humans to recognize the found resource.
+
+
+      The list has the requested number of items, except for the first and last page. The `href.first` page can be
+      empty, or have fewer elements than `per_page`. The `href.last` page can have fewer reference in the response than
+      `per_page`, but cannot be empty. Other pages have exactly the `per_page` as number of items.
+    type: array
+    items:
+      required:
+        - structureVersion
+        - href
+        - discriminator
+      description: >-
+        The resource's search document with the most up-to-date information, i.e., up-to-date up until, but not
+        including, `x-date`.
+      type: object
+      properties:
+        structureVersion:
+          minimum: 1
+          description: Version of the data structure of this resource type
+          type: integer
+          example: 1
+        href:
+          minLength: 1
+          description: >-
+            Relative URI where the found resource's information is located. The `at` parameter _must_ be the same as the
+            value of the `x-date` response header.
+
+
+            Users need to be directed to the version returned by the search index, and not an earlier or more recent
+            version. The search engine updates, eventually, after a few seconds. If a more recent version is available
+            in the meantime, the user interface makes it possible for the user to navigate to that version.
+          format: uri
+          type: string
+          example: ../some/path
+        discriminator:
+          minLength: 1
+          pattern: ^([-a-z0-9]+)\/([-a-z0-9\/]+)$
+          description: >-
+            Type of the indexed resource.
+
+
+            This enables users to search only on particular resource type. The type is qualified with the service name,
+            to avoid name clashes (slash-separated).
+          type: string
+          example: service-name/type-name
+      additionalProperties: true
+      example:
+        structureVersion: 1
+        discriminator: service-name/type-name
+        href: /service-name/service_version/type-name/type_unique_identifier?at=2021-01-19T17:14:18.482Z
+    example:
+      - structureVersion: 1
+        discriminator: companies/company
+        href: /companies/v1/company/5646897945?at=2021-01-19T17:14:18.482Z
+        crn: '5646897945'
+        name:
+          nl: Het Bedrijf
+          fr: La Compagnie
+      - structureVersion: 1
+        discriminator: persons/person
+        href: /persons/v1/person/6908390?at=2021-01-19T17:14:18.482Z
+        inss: '96110505648'
+        firstName: Anna
+        lastName: Van Deuren
+  href:
+    required:
+      - first
+      - last
+    description: Links to other pages of the search result.
+    type: object
+    properties:
+      first:
+        minLength: 1
+        description: >-
+          Relative uri of the first page, with the same `per_page`, of the search this is a result of.
+
+
+          This page can be empty. It might contain fewer items than requested by `per_page`, but then this value is
+          equal to `last`.
+        format: uri
+        type: string
+        example: search?searchTerm=find%20me&page=1&per_page=27
+      previous:
+        minLength: 1
+        description: >-
+          Relative uri of the previous page, with the same `per_page`, of the search this is a result of, if this is not
+          the `first` page.
+
+
+          If this is the `first` page, this property does not appear.
+
+
+          This page can never be empty. It might contain fewer items than requested by `per_page`, but then this value
+          is equal to `first`.
+        format: uri
+        type: string
+        example: search?searchTerm=find%20me&page=3&per_page=27
+      next:
+        minLength: 1
+        description: >-
+          Relative uri of the next page, with the same `per_page`, of the search this is a result of, if there is a next
+          page.
+
+
+          If this is the `last` page, this property does not appear.
+
+
+          This page can never be empty. It might contain fewer items than requested by `per_page`, but then this value
+          is equal to `last`.
+        format: uri
+        type: string
+        example: search?searchTerm=find%20me&page=5&per_page=27
+      last:
+        minLength: 1
+        description: |-
+          Relative uri of the last page, with the same `per_page`, of the search this is a result of.
+
+          The page can never be empty, but it might contain fewer items than requested by `per_page`.
+        format: uri
+        type: string
+        example: search?searchTerm=find%20me&page=22&per_page=27
+    additionalProperties: false
+    example:
+      first: search?searchTerm=find%20me&page=1&per_page=27
+      previous: search?searchTerm=find%20me&page=3&per_page=27
+      next: search?searchTerm=find%20me&page=5&per_page=27
+      last: search?searchTerm=find%20me&page=22&per_page=27
+additionalProperties: true
+example:
+  structureVersion: 1
+  results:
+    - structureVersion: 1
+      discriminator: companies/company
+      href: /companies/v1/company/5646897945?at=2021-01-19T17:14:18.482Z
+      crn: '5646897945'
+      name:
+        nl: Het Bedrijf
+        fr: La Compagnie
+    - structureVersion: 1
+      discriminator: persons/person
+      href: /persons/v1/person/6908390?at=2021-01-19T17:14:18.482Z
+      inss: '96110505648'
+      firstName: Anna
+      lastName: Van Deuren
+  href:
+    first: search?searchTerm=find%20me&page=1&per_page=27
+    previous: search?searchTerm=find%20me&page=3&per_page=27
+    next: search?searchTerm=find%20me&page=5&per_page=27
+    last: search?searchTerm=find%20me&page=22&per_page=27

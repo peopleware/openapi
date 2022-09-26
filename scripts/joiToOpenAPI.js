@@ -56,7 +56,8 @@ async function exec () {
   return Promise.all([
     transformNodeRecursively(tree),
     transformSchemataIn(join(__dirname, '..', 'resource', 'SearchResultBase')),
-    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocument'))
+    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocument')),
+    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchResults'))
   ])
 }
 
