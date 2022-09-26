@@ -67,7 +67,9 @@ The page can never be empty, but it might contain fewer items than requested by 
     )
       .example('search?searchTerm=find%20me&page=22&per_page=27', { override: true })
       .required()
-  }).description(`Links to other pages of the search result.`),
+  })
+    .unknown(true)
+    .description(`Links to other pages of the search result.`),
   hrefExamples
 )
 
