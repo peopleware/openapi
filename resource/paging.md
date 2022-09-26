@@ -15,6 +15,9 @@ parameter, to ensure that all the pages represent the same knowledge time.
 Some sources advocate to use the `link` response header for these references. We do not support that, because it is too
 difficult to express in OpenAPI.
 
+Do not include these references `link rel=preload` headers. The browser would then load the entire list, page by page
+(and possibly get in an infinite loop going back and forth).
+
 ### Paging control request parameters
 
 When requesting the resource, the client needs to add the page (subset of the list) that is requested. Some sources

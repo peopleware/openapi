@@ -4,6 +4,10 @@
 
 ## 1.21
 
+### 1.21.1
+
+- add to description of paging HateOAS links
+
 ### 1.21.0
 
 - `SearchDocumentBase` is deprecated. It is replaced by:
