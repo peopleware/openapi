@@ -332,6 +332,48 @@ paths:
           $ref: 'oauth2/403.yaml'
         '404':
           $ref: 'resource/404NoCache.yaml'
+  /demonstration/search:
+    parameters:
+      - $ref: 'parameters/forceError.yaml'
+      - $ref: 'parameters/flowId.yaml'
+      - $ref: 'parameters/mode.yaml'
+      - $ref: 'oauth2/authorization.yaml'
+      - in: query
+        name: searchTerm
+        required: true
+        description: >-
+          Text to search for with a fuzzy search in all indexed fields. Trimmed.
+        schema:
+          type: string
+          minLength: 1
+        example: find%20me
+      - $ref: 'parameters/page.yaml'
+      - $ref: 'parameters/perPage.yaml'
+    get:
+      summary: Demonstration of fuzzy search
+      description: >-
+        Return links to resource that have something to do with `searchTerm`, and information for humans to recognize
+        the found items.
+      operationId: demonstrationGetSearchResults
+      responses:
+        '200':
+          x-summary: The request page exists
+          description: >-
+            The found resources are returned with paging.
+          headers:
+            $ref: 'resource/CommonResponseHeaders.yaml#/getNoCache'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/searchDocument'
+        '400':
+          $ref: 'resource/400.yaml'
+        '401':
+          $ref: 'oauth2/401.yaml'
+        '403':
+          $ref: 'oauth2/403.yaml'
+        '404':
+          $ref: 'resource/404NoCache.yaml'
 components:
   securitySchemes:
     OAuth2:
