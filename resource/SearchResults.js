@@ -20,11 +20,22 @@ const addExamples = require('../_util/addExamples')
 const { resultsExamples, Results } = require('./searchResults/Results')
 const { hrefExamples, HREF } = require('./searchResults/HREF')
 
-const searchResultsExamples = structureVersionedExamples.map(svd => ({
-  ...svd,
-  results: resultsExamples[0],
-  href: hrefExamples[0]
-}))
+const searchResultsExamples = structureVersionedExamples
+  .map(svd => ({
+    ...svd,
+    results: resultsExamples[0],
+    href: hrefExamples[0]
+  }))
+  .concat([
+    {
+      ...structureVersionedExamples[0],
+      results: [],
+      href: {
+        first: 'search?searchTerm=find%20me&page=1&per_page=27',
+        last: 'search?searchTerm=find%20me&page=1&per_page=27'
+      }
+    }
+  ])
 
 const SearchResults = addExamples(
   StructureVersioned.append({
