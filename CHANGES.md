@@ -20,6 +20,8 @@
 
   `SearchResultBase` is the old `SearchDocumentBase`, under a new name. It is now wrapped in `SearchDocument`.
 
+- Change the default value of `per_page` query parameter to 50
+
 ## 1.20
 
 ### 1.20.3

@@ -14,9 +14,15 @@
 
 name: page
 in: query
+required: false
+description: >-
+  Requested page of the search results, 1-based.
+
+
+  The request for a page that does not exist results in `404`.
 schema:
   type: integer
   minimum: 1
   default: 1
   description: The 1-based count of the page requested.
-  example: 5
+  example: 4
