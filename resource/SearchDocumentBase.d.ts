@@ -15,14 +15,5 @@
  *
  */
 
-import * as Joi from 'joi';
-import { StructureVersioned } from './StructureVersioned';
-
-export declare interface SearchDocumentBase extends StructureVersioned {
-    href: string;
-    discriminator: string;
-}
-
-export declare const SearchDocumentBase: Joi.ObjectSchema<SearchDocumentBase>;
-
-export declare const searchDocumentBaseExamples: Array<SearchDocumentBase>;
+export {SearchResultBase as SearchDocumentBase }from './SearchResultBase'
+export {searchResultBaseExamples as searchDocumentBaseExamples }from './SearchResultBase'
