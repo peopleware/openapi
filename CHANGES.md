@@ -2,12 +2,14 @@
 
 # 1
 
-## 1.21
+### 1.22
 
-### 1.21.1
+### 1.22.0
 
 - add to description of paging HateOAS and other preload or prefetch links
 - add `SearchResults` schema and OpenAPI model, and `/search` demonstration
+
+## 1.21
 
 ### 1.21.0
 
