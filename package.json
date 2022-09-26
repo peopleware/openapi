@@ -22,7 +22,7 @@
     "@redocly/cli": "^1.0.0-beta.109",
     "cartesian": "^1.0.1",
     "directory-tree": "^3.3.1",
-    "joi-to-json": "^2.6.0",
+    "joi-to-json": "^2.6.1",
     "js-yaml": "^4.1.0",
     "mocha": "^10.0.0",
     "npm-check": "^6.0.1",
@@ -86,6 +86,6 @@
   },
   "dependencies": {
     "@toryt/contracts-v": "^5.0.0",
-    "joi": "^17.6.0"
+    "joi": "^17.6.1"
   }
 }
