@@ -461,12 +461,20 @@ components:
                     searchDocument: 123/search-document
     searchDocument:
       allOf:
-        - $ref: 'resource/SearchDocumentBase.yaml'
+        - $ref: 'resource/SearchDocument.yaml'
         - type: object
           properties:
-            example:
-              type: string
-              example: This is an example
+            content:
+              allOf:
+                - $ref: 'resource/SearchResultBase.yaml'
+                - type: object
+                  required:
+                    - interestingInfo
+                  properties:
+                    interestingInfo:
+                      type: string
+                      minLength: 1
+                      example: 'look what I‘ve found'
     # Token requests bodies listed explicitly here as workaround for https://github.com/Redocly/redoc/issues/862#issuecomment-491631228
     # This is actually used in `money/MoneyAmount.yaml`.
     baseMinorUnit0:
