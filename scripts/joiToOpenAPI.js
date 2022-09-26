@@ -55,8 +55,8 @@ async function exec () {
   const tree = dirTree(basePath, { extensions: /\.js/ })
   return Promise.all([
     transformNodeRecursively(tree),
-    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocumentBase')),
-    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchResultBase'))
+    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchResultBase')),
+    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocument'))
   ])
 }
 
