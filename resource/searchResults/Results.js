@@ -39,7 +39,8 @@ const resultsExamples = [
       firstName: 'Anna',
       lastName: 'Van Deuren'
     }
-  ]
+  ],
+  []
 ]
 
 const Results = addExamples(
@@ -59,27 +60,7 @@ The list has the requested number of items, except for the first and last page. 
 page can be empty, or have fewer elements than \`per_page\`. The \`href.last\` page can have fewer
 reference in the response than \`per_page\`, but cannot be empty. Other pages have exactly the
 \`per_page\` as number of items.`
-    )
-    .example([
-      {
-        structureVersion: 1,
-        discriminator: 'companies/company',
-        href: '/companies/v1/company/5646897945?at=2021-01-19T17:14:18.482Z',
-        crn: '5646897945',
-        name: {
-          nl: 'Het Bedrijf',
-          fr: 'La Compagnie'
-        }
-      },
-      {
-        structureVersion: 1,
-        discriminator: 'persons/person',
-        href: '/persons/v1/person/6908390?at=2021-01-19T17:14:18.482Z',
-        inss: '96110505648',
-        firstName: 'Anna',
-        lastName: 'Van Deuren'
-      }
-    ]),
+    ),
   resultsExamples
 )
 
