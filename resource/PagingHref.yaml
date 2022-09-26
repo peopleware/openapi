@@ -22,27 +22,55 @@ properties:
     type: string
     format: uri
     minLength: 1
-    description: relative URI of the first page known at `createdAt` (includes a query parameter `at`)
+    description: >-
+      Relative URI of the first page known at `createdAt` (includes a query parameter `at`).
+
+
+      Has the same `per_page` as the request this is a response for.
+
+
+      This page can be empty. It might contain fewer items than requested by `per_page`, but then this value is equal to
+      `last`.
     example: ./?at=2021-01-19T17:14:18.482Z&per_page=20&page=1
   previous:
     type: string
     format: uri
     minLength: 1
-    description:
-      relative URI of the previous page known at `createdAt` (includes a query parameter `at`); not present when we are
-      at the first page
+    description: >-
+      Relative URI of the previous page known at `createdAt` (includes a query parameter `at`); not present when we are
+      at the first page.
+
+
+      Has the same `per_page` as the request this is a response for, if this is not the `first` page.
+
+
+      This page can never be empty. It might contain fewer items than requested by `per_page`, but then this value is
+      equal to `first`.
     example: ./?at=2021-01-19T17:14:18.482Z&per_page=20&page=4
   next:
     type: string
     format: uri
     minLength: 1
-    description:
-      relative URI of the next page known at `createdAt` (includes a query parameter `at`); not present when we are at
-      the last page
+    description: Relative URI of the next page known at `createdAt` (includes a query parameter `at`); not present when
+      we are at the last page.
+
+
+      Has the same `per_page` as the request this is a response for, if there is a next page.
+
+
+      This page can never be empty. It might contain fewer items than requested by `per_page`, but then this value is
+      equal to `last`.
     example: ./?at=2021-01-19T17:14:18.482Z&per_page=20&page=6
   last:
     type: string
     format: uri
     minLength: 1
-    description: relative URI of the last page known at `createdAt` (includes a query parameter `at`)
+    description: >-
+      Relative URI of the last page known at `createdAt` (includes a query parameter `at`).
+
+
+      Has the same `per_page` as the request this is a response for.
+
+
+      The page can never be empty, but it might contain fewer items than requested by `per_page`.
     example: ./?at=2021-01-19T17:14:18.482Z&per_page=20&page=12
