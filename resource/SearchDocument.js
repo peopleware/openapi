@@ -32,7 +32,7 @@ const SearchDocument = StructureVersioned.append({
     .description(
       `List of strings on which the resource can be found with exact or fuzzy match.
 
-The order is irrelevant. May be empty.`
+The order is irrelevant. May be empty if \`fuzzy\` is not empty.`
     )
     .example(['0123456789', '9876543210'])
     .required(),
@@ -43,7 +43,7 @@ The order is irrelevant. May be empty.`
     .description(
       `List of strings on which the resource can be found with fuzzy match (together with the list of strings for exact match).
 
-The order is irrelevant. May be empty.`
+The order is irrelevant. May be empty if \`exact\` is not empty.`
     )
     .example(['find me', 'if you can'])
     .required(),
