@@ -39,6 +39,7 @@ The order is irrelevant. May be empty.`
   fuzzy: Joi.array()
     .items(SearchTerm.example('find me'))
     .unique()
+    .when('exact', { not: Joi.array().min(1), then: Joi.array().min(1) })
     .description(
       `List of strings on which the resource can be found with fuzzy match (together with the list of strings for exact match).
 
