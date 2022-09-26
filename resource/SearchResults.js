@@ -15,127 +15,10 @@
  *
  */
 
-const Joi = require('joi')
 const { StructureVersioned, structureVersionedExamples } = require('./StructureVersioned')
 const addExamples = require('../_util/addExamples')
-const { RelativeURI } = require('../string/RelativeURI')
-const { SearchResultBase } = require('./SearchResultBase')
-
-const resultsExamples = [
-  [
-    {
-      structureVersion: 1,
-      discriminator: 'companies/company',
-      href: '/companies/v1/company/5646897945?at=2021-01-19T17:14:18.482Z',
-      crn: '5646897945',
-      name: {
-        nl: 'Het Bedrijf',
-        fr: 'La Compagnie'
-      }
-    },
-    {
-      structureVersion: 1,
-      discriminator: 'persons/person',
-      href: '/persons/v1/person/6908390?at=2021-01-19T17:14:18.482Z',
-      inss: '96110505648',
-      firstName: 'Anna',
-      lastName: 'Van Deuren'
-    }
-  ]
-]
-
-const Results = addExamples(
-  Joi.array()
-    .items(SearchResultBase)
-    .max(100)
-    .unique('href')
-    .description(
-      `List of items that match the search, ordered by relevance. The list has \`per_page\` or fewer
-items.
-
-Items identify the type of resource they represent (\`discriminator\`), a link to the indexed
-version of the found resource (\`href\`), and information for humans to recognize the found
-resource.
-
-The list has the requested number of items, except for the first and last page. The \`href.first\`
-page can be empty, or have fewer elements than \`per_page\`. The \`href.last\` page can have fewer
-reference in the response than \`per_page\`, but cannot be empty. Other pages have exactly the
-\`per_page\` as number of items.`
-    )
-    .example([
-      {
-        structureVersion: 1,
-        discriminator: 'companies/company',
-        href: '/companies/v1/company/5646897945?at=2021-01-19T17:14:18.482Z',
-        crn: '5646897945',
-        name: {
-          nl: 'Het Bedrijf',
-          fr: 'La Compagnie'
-        }
-      },
-      {
-        structureVersion: 1,
-        discriminator: 'persons/person',
-        href: '/persons/v1/person/6908390?at=2021-01-19T17:14:18.482Z',
-        inss: '96110505648',
-        firstName: 'Anna',
-        lastName: 'Van Deuren'
-      }
-    ]),
-  resultsExamples
-)
-
-const hrefExamples = [
-  {
-    first: 'search?searchTerm=find%20me&page=1&per_page=27',
-    previous: 'search?searchTerm=find%20me&page=3&per_page=27',
-    next: 'search?searchTerm=find%20me&page=5&per_page=27',
-    last: 'search?searchTerm=find%20me&page=22&per_page=27'
-  }
-]
-
-const HREF = addExamples(
-  Joi.object({
-    first: RelativeURI.description(
-      `Relative uri of the first page, with the same \`per_page\`, of the search this is a result of.
-
-This page can be empty. It might contain fewer items than requested by \`per_page\`, but then
-this value is equal to \`last\`.`
-    )
-      .example('search?searchTerm=find%20me&page=1&per_page=27', { override: true })
-      .required(),
-    previous: RelativeURI.description(
-      `Relative uri of the previous page, with the same \`per_page\`, of the search this is a result of,
-if this is not the \`first\` page.
-
-If this is the \`first\` page, this property does not appear.
-
-This page can never be empty. It might contain fewer items than requested by \`per_page\`, but
-then this value is equal to \`first\`.`
-    )
-      .example('search?searchTerm=find%20me&page=3&per_page=27', { override: true })
-      .optional(),
-    next: RelativeURI.description(
-      `Relative uri of the next page, with the same \`per_page\`, of the search this is a result of,
-if there is a next page.
-
-If this is the \`last\` page, this property does not appear.
-
-This page can never be empty. It might contain fewer items than requested by \`per_page\`, but
-then this value is equal to \`last\`.`
-    )
-      .example('search?searchTerm=find%20me&page=5&per_page=27', { override: true })
-      .optional(),
-    last: RelativeURI.description(
-      `Relative uri of the last page, with the same \`per_page\`, of the search this is a result of.
-
-The page can never be empty, but it might contain fewer items than requested by \`per_page\`.`
-    )
-      .example('search?searchTerm=find%20me&page=22&per_page=27', { override: true })
-      .required()
-  }).description(`Links to other pages of the search result.`),
-  hrefExamples
-)
+const { resultsExamples, Results } = require('./searchResults/Results')
+const { hrefExamples, HREF } = require('./searchResults/HREF')
 
 const searchResultsExamples = structureVersionedExamples.map(svd => ({
   ...svd,
@@ -152,10 +35,6 @@ const SearchResults = addExamples(
 )
 
 module.exports = {
-  resultsExamples,
-  Results,
-  hrefExamples,
-  HREF,
   searchResultsExamples,
   SearchResults
 }
