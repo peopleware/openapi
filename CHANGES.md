@@ -4,6 +4,10 @@
 
 ### 1.22
 
+### 1.22.1
+
+- correct `SearchDocument`: fuzzy search only searches in values given in `fuzzy`
+
 ### 1.22.0
 
 - add to description of paging HateOAS and other preload or prefetch links

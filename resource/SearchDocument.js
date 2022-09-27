@@ -30,7 +30,7 @@ const SearchDocument = StructureVersioned.append({
     .items(SearchTerm.example('0123456789'))
     .unique()
     .description(
-      `List of strings on which the resource can be found with exact or fuzzy match.
+      `List of strings on which the resource can be found with exact match.
 
 The order is irrelevant. May be empty if \`fuzzy\` is not empty.`
     )
@@ -41,7 +41,7 @@ The order is irrelevant. May be empty if \`fuzzy\` is not empty.`
     .unique()
     .when('exact', { not: Joi.array().min(1), then: Joi.array().min(1) })
     .description(
-      `List of strings on which the resource can be found with fuzzy match (together with the list of strings for exact match).
+      `List of strings on which the resource can be found with fuzzy match.
 
 The order is irrelevant. May be empty if \`exact\` is not empty.`
     )
@@ -53,7 +53,7 @@ information for a search index.
 
 It contains strings for which the resource this is a search document for can be found by, and the \`content\` that is to
 be sent to the client. The resource this is a search document for can be found with an exact match on the strings in
-\`exact\`, and by a fuzzy search on the strings in \`fuzzy\` and \`exact\`.
+\`exact\`, and by a fuzzy search on the strings in \`fuzzy\`. Some strings might appear in both.
 
 \`fuzzy\` or \`exact\` may be empty, but not both.
 
@@ -63,7 +63,7 @@ can be retrieved in the indexed version at \`content.href\`.`)
 const searchDocumentExamples = structureVersionedExamples.map(svd => ({
   ...svd,
   exact: ['0123456789', '9876543210'],
-  fuzzy: ['find me', 'if you can'],
+  fuzzy: ['find me', 'if you can', '9876543210'],
   content: searchResultBaseExamples[0]
 }))
 

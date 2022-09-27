@@ -153,7 +153,7 @@ properties:
         format: uri
         type: string
         example: search?searchTerm=find%20me&page=22&per_page=27
-    additionalProperties: false
+    additionalProperties: true
     example:
       first: search?searchTerm=find%20me&page=1&per_page=27
       previous: search?searchTerm=find%20me&page=3&per_page=27
