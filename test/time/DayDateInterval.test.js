@@ -7,9 +7,9 @@ describe(testName(module), function () {
   shouldBeSeriousSchema(
     DayDateInterval,
     stuff
-      .concat(stuffWithUndefined.map(from => ({ ...dayDateIntervalExamples[0], from })))
-      .concat(stuffWithUndefined.map(from => ({ ...dayDateIntervalExamples[1], from })))
-      .concat(stuff.map(until => ({ ...dayDateIntervalExamples[0], until }))),
+      .concat(stuffWithUndefined.map(start => ({ ...dayDateIntervalExamples[0], start })))
+      .concat(stuffWithUndefined.map(start => ({ ...dayDateIntervalExamples[1], start })))
+      .concat(stuff.map(end => ({ ...dayDateIntervalExamples[0], end }))),
     true
   )
 })

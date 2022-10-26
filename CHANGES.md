@@ -1,5 +1,14 @@
 # Changes
 
+# 2
+
+### 2.0
+
+### 2.0.0
+
+- change the property names of DayDateInterval from `from` and `until` to `start` and `end`, to be more compatible and
+  avoid friction with existing libraries in different languages
+
 # 1
 
 ### 1.22

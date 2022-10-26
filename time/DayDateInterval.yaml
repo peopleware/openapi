@@ -14,14 +14,14 @@
 
 type: object
 required:
-  - from
+  - start
 properties:
-  from:
+  start:
     $ref: 'DayDate.yaml'
-  until:
+  end:
     $ref: 'DayDate.yaml'
 description: >-
-  Half-right-open time interval `[from, until[` of day dates. `from ≤ until`. If there is no `until`, this means the
+  Half-right-open time interval `[start, end[` of day dates. `start ≤ end`. If there is no `end`, this means the
   interval stretches until the heath death of the universe. Usually this means that interval is believed to be still
   ongoing with the knowledge represented.
 
@@ -36,7 +36,7 @@ description: >-
 example:
   # NOTE multiple examples do not pass linting for some reason - this seems to be a subject of OpenAPI 3.1
   #  openEnded:
-  #    from: '2012-09-13'
+  #    start: '2012-09-13'
   #  closed:
-  from: '1996-12-21'
-  until: '2011-08-23'
+  start: '1996-12-21'
+  end: '2011-08-23'
