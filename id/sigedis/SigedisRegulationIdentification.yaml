@@ -56,7 +56,7 @@ properties:
       [_Unternehmensnummer_](https://economie.fgov.be/de/themen/unternehmen/zentrale-datenbank-der/eintragung-die-zdu))
       of an organization is handed out by the Belgian government, and uniquely identifies an organization. It is
       impossible, e.g., to legally do business in Belgium, or employ people, if the organization does not have a company
-      registration number. The company registration number is also used as Belgian VAT identifier ("VAT Number").
+      registration number. The company registration number is also used as Belgian VAT identifier (“VAT Number”).
 
 
       The company registration number of an organization never changes. If you encounter an organization with a
@@ -70,16 +70,16 @@ properties:
       [_Kruispuntbank van Ondernemingen_](https://economie.fgov.be/nl/themas/ondernemingen/kruispuntbank-van) (KBO), fr:
       [_Banque-Carrefour des Entreprises_](https://economie.fgov.be/fr/themes/entreprises/banque-carrefour-des) (BCE),
       de: [Zentrale Datenbank der Unternehmen](https://economie.fgov.be/de/themen/unternehmen/zentrale-datenbank-der)
-      (ZDU)), it is often referred to as "CBE number" / "KBO nummer" / "numéro BCE" / "ZDU nummer".
+      (ZDU)), it is often referred to as “CBE number” / “KBO nummer” / “numéro BCE” / “ZDU nummer”.
 
 
       There is no formatting in this representation.
 
 
-      A company registration number starts with \`0\` or \`1\` and consists of 8 numbers, followed by a modulo 97
-      checksum (10 numbers in total).`)
+      A company registration number starts with `0` or `1` and consists of 8 numbers, followed by a modulo 97 checksum
+      (10 numbers in total).
     type: string
-    example: '1453834119'
+    example: '0453834195'
   registrantId:
     maxLength: 60
     minLength: 1
