@@ -314,5 +314,3 @@ properties:
 
       See [RFC 7517 Section 4.9](https://tools.ietf.org/html/rfc7517#section-4.9).
     example: 557ee867372bdcf7887b9b51d80872cc3957b3dfe47d9904c56fa1aaaa5db32c
-discriminator:
-  propertyName: kty
