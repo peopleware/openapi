@@ -18,39 +18,39 @@ allOf:
     required:
       - n
       - e
-properties:
-  kty:
-    type: string
-    enum:
-      - RSA
-    example: RSA
-  n:
-    type: string
-    format: Base64urlUInt-encoded
-    description: >-
-      The `n` (modulus) parameter contains the modulus value for the RSA public key. It is represented as a
-      _Base64urlUInt-encoded_ value.
+    properties:
+      kty:
+        type: string
+        enum:
+          - RSA
+        example: RSA
+      n:
+        type: string
+        format: Base64urlUInt-encoded
+        description: >-
+          The `n` (modulus) parameter contains the modulus value for the RSA public key. It is represented as a
+          _Base64urlUInt-encoded_ value.
 
 
-      Note that implementers have found that some cryptographic libraries prefix an extra zero-valued octet to the
-      modulus representations they return, for instance, returning 257 octets for a 2048-bit key, rather than 256.
-      Implementations using such libraries will need to take care to omit the extra octet from the base64url-encoded
-      representation.
+          Note that implementers have found that some cryptographic libraries prefix an extra zero-valued octet to the
+          modulus representations they return, for instance, returning 257 octets for a 2048-bit key, rather than 256.
+          Implementations using such libraries will need to take care to omit the extra octet from the base64url-encoded
+          representation.
 
 
-      See [RFC 7518 Section 6.3.1.1](https://tools.ietf.org/html/rfc7518#section-6.3.1.1).
-    example: 'luZFdW1ynitztkWLC6xKegbRWxky-5P0p4ShYEOkHs30QI2VCuR6Qo4Bz5rTgLBrky03W1GAVrZxuvKRGj9V9-PmjdGtau4CTXu9pLLcqnruaczoSdvBYA3lS9a7zgFU0-s6kMl2EhB-rk7gXluEep7lIOenzfl2f6IoTKa2fVgVd3YKiSGsyL4tztS70vmmX121qm0sTJdKWP4HxXyqK9neolXI9fYyHOYILVNZ69z_73OOVhkh_mvTmWZLM7GM6sApmyLX6OXUp8z0pkY-vT_9-zRxxQs7GurC4_C1nK3rI_0ySUgGEafO1atNjYmlFN-M3tZX6nEcA6g94IavyQ'
-  e:
-    type: string
-    format: Base64urlUInt-encoded
-    description: >-
-      The `e` (exponent) parameter contains the exponent value for the RSA public key.  It is represented as a
-      _Base64urlUInt-encoded_ value.
+          See [RFC 7518 Section 6.3.1.1](https://tools.ietf.org/html/rfc7518#section-6.3.1.1).
+        example: 'luZFdW1ynitztkWLC6xKegbRWxky-5P0p4ShYEOkHs30QI2VCuR6Qo4Bz5rTgLBrky03W1GAVrZxuvKRGj9V9-PmjdGtau4CTXu9pLLcqnruaczoSdvBYA3lS9a7zgFU0-s6kMl2EhB-rk7gXluEep7lIOenzfl2f6IoTKa2fVgVd3YKiSGsyL4tztS70vmmX121qm0sTJdKWP4HxXyqK9neolXI9fYyHOYILVNZ69z_73OOVhkh_mvTmWZLM7GM6sApmyLX6OXUp8z0pkY-vT_9-zRxxQs7GurC4_C1nK3rI_0ySUgGEafO1atNjYmlFN-M3tZX6nEcA6g94IavyQ'
+      e:
+        type: string
+        format: Base64urlUInt-encoded
+        description: >-
+          The `e` (exponent) parameter contains the exponent value for the RSA public key.  It is represented as a
+          _Base64urlUInt-encoded_ value.
 
 
-      For instance, when representing the value 65537, the octet sequence to be base64url-encoded MUST consist of the
-      three octets `[1, 0, 1]`; the resulting representation for this value is `'AQAB'`.
+          For instance, when representing the value 65537, the octet sequence to be base64url-encoded MUST consist of
+          the three octets `[1, 0, 1]`; the resulting representation for this value is `'AQAB'`.
 
 
-      See [RFC 7518 Section 6.3.1.2](https://tools.ietf.org/html/rfc7518#section-6.3.1.2).
-    example: AQAB
+          See [RFC 7518 Section 6.3.1.2](https://tools.ietf.org/html/rfc7518#section-6.3.1.2).
+        example: AQAB

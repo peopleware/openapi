@@ -19,49 +19,49 @@ allOf:
       - crv
       - x
       - y
-properties:
-  kty:
-    type: string
-    enum:
-      - EC
-    example: EC
-  crv:
-    type: string
-    enum:
-      - P-256
-      - P-384
-      - P-521
-    description: >-
-      The `crv` (curve) parameter identifies the cryptographic curve used with the key. The curve values are defined in
-      [DSS](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf).
+    properties:
+      kty:
+        type: string
+        enum:
+          - EC
+        example: EC
+      crv:
+        type: string
+        enum:
+          - P-256
+          - P-384
+          - P-521
+        description: >-
+          The `crv` (curve) parameter identifies the cryptographic curve used with the key. The curve values are defined
+          in [DSS](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf).
 
 
-      These values are registered in the IANA "JSON Web Key Elliptic Curve" registry defined in [Section 7.6 of RFC
-      7518](https://tools.ietf.org/html/rfc7518#section-7.6). The `crv` value is a case-sensitive string.
+          These values are registered in the IANA "JSON Web Key Elliptic Curve" registry defined in [Section 7.6 of RFC
+          7518](https://tools.ietf.org/html/rfc7518#section-7.6). The `crv` value is a case-sensitive string.
 
 
-      [SEC1](http://www.secg.org/sec1-v2.pdf) point compression is not supported for any of these three curves.
+          [SEC1](http://www.secg.org/sec1-v2.pdf) point compression is not supported for any of these three curves.
 
 
-      See [RFC 7518 Section 6.2.1.1](https://tools.ietf.org/html/rfc7518#section-6.2.1.1).
-    example: P-521
-  x:
-    type: string
-    format: base64url
-    description: >-
-      The `x` (x coordinate) parameter contains the x coordinate for the Elliptic Curve point. It is represented as the
-      _base64url_ encoding of the octet string representation of the coordinate, as defined in [Section 2.3.5 of
-      SEC1]((http://www.secg.org/sec1-v2.pdf)). The length of this octet string **must** be the full size of a
-      coordinate for the curve specified in the `crv` parameter. For example, if the value of `crv` is `P-521`, the
-      octet string must be 66 octets long.
-    example: jkHNKLOyhoavp89p8hhj08hj008hoh8oho8uyc5h9g7nyvn0vy0==
-  y:
-    type: string
-    format: base64url
-    description: >-
-      The `y` (y coordinate) parameter contains the y coordinate for the Elliptic Curve point. It is represented as the
-      _base64url_ encoding of the octet string representation of the coordinate, as defined in [Section 2.3.5 of
-      SEC1]((http://www.secg.org/sec1-v2.pdf)). The length of this octet string **must** be the full size of a
-      coordinate for the curve specified in the `crv` parameter. For example, if the value of `crv` is `P-521`, the
-      octet string must be 66 octets long.
-    example: Kp9VWpmPvjvamKLHTIL990898953nMIKKF=
+          See [RFC 7518 Section 6.2.1.1](https://tools.ietf.org/html/rfc7518#section-6.2.1.1).
+        example: P-521
+      x:
+        type: string
+        format: base64url
+        description: >-
+          The `x` (x coordinate) parameter contains the x coordinate for the Elliptic Curve point. It is represented as
+          the _base64url_ encoding of the octet string representation of the coordinate, as defined in [Section 2.3.5 of
+          SEC1]((http://www.secg.org/sec1-v2.pdf)). The length of this octet string **must** be the full size of a
+          coordinate for the curve specified in the `crv` parameter. For example, if the value of `crv` is `P-521`, the
+          octet string must be 66 octets long.
+        example: jkHNKLOyhoavp89p8hhj08hj008hoh8oho8uyc5h9g7nyvn0vy0==
+      y:
+        type: string
+        format: base64url
+        description: >-
+          The `y` (y coordinate) parameter contains the y coordinate for the Elliptic Curve point. It is represented as
+          the _base64url_ encoding of the octet string representation of the coordinate, as defined in [Section 2.3.5 of
+          SEC1]((http://www.secg.org/sec1-v2.pdf)). The length of this octet string **must** be the full size of a
+          coordinate for the curve specified in the `crv` parameter. For example, if the value of `crv` is `P-521`, the
+          octet string must be 66 octets long.
+        example: Kp9VWpmPvjvamKLHTIL990898953nMIKKF=
