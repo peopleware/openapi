@@ -7,6 +7,8 @@
 ### 3.0.0
 
 - CRN validation is now more restrictive
+- update dependencies
+- fix JWKS definition
 
 # 2
 
