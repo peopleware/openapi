@@ -20,5 +20,8 @@ const { stuff } = require('../../../../_util/_stuff')
 const { CRN } = require('../../../../id/legalPerson/be/CRN')
 
 describe(testName(module), function () {
-  shouldBeSeriousSchema(CRN, stuff.concat(['012345678', '01234567890', 1234567890, '01234A6789']))
+  shouldBeSeriousSchema(
+    CRN,
+    stuff.concat(['012345678', '01234567890', 1234567890, '01234A6789', '2123456789', '0453834196', '1453834196'])
+  )
 })

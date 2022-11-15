@@ -13,7 +13,7 @@
 # limitations under the License.
 
 type: string
-pattern: ^\d{10}$
+pattern: ^[01]\d{9}$
 description: >-
   Company Registration Number: Belgian identification of organizations.
 
@@ -44,4 +44,8 @@ description: >-
 
 
   There is no formatting in this representation.
-example: '0123456789'
+
+
+  A company registration number starts with \`0\` or \`1\` and consists of 8 numbers, followed by a modulo 97 checksum
+  (10 numbers in total).`)
+example: '1453834119'

@@ -20,7 +20,17 @@ const addExamples = require('../../../_util/addExamples')
 
 const CRN = Joi.string()
   .trim()
-  .pattern(/^\d{10}$/).description(`Company Registration Number: Belgian identification of organizations.
+  .pattern(/^[01]\d{9}$/)
+  .custom((value, { error }) => {
+    const first8 = value.slice(0, -2)
+    const asInt = Number.parseInt(first8)
+    const rest = 97 - (asInt % 97)
+    if (value !== first8 + rest.toString(10)) {
+      return error('any.invalid')
+    }
+
+    return value
+  }).description(`Company Registration Number: Belgian identification of organizations.
 
 The [_company registration
 number_](https://economie.fgov.be/en/themes/enterprises/crossroads-bank-enterprises/registration-crossroads-bank) (nl:
@@ -30,7 +40,7 @@ d’entreprise_](https://economie.fgov.be/fr/themes/entreprises/banque-carrefour
 [_Unternehmensnummer_](https://economie.fgov.be/de/themen/unternehmen/zentrale-datenbank-der/eintragung-die-zdu)) of
 an organization is handed out by the Belgian government, and uniquely identifies an organization. It is impossible,
 e.g., to legally do business in Belgium, or employ people, if the organization does not have a company registration
-number. The company registration number is also used as Belgian VAT identifier ("VAT Number").
+number. The company registration number is also used as Belgian VAT identifier (“VAT Number”).
 
 The company registration number of an organization never changes. If you encounter an organization with a different
 company registration number, it legally is a different organization. If you encounter an organization with the same
@@ -42,11 +52,13 @@ Enterprises_](https://economie.fgov.be/en/themes/enterprises/crossroads-bank-ent
 van Ondernemingen_](https://economie.fgov.be/nl/themas/ondernemingen/kruispuntbank-van) (KBO), fr: [_Banque-Carrefour
 des Entreprises_](https://economie.fgov.be/fr/themes/entreprises/banque-carrefour-des) (BCE),
  de: [Zentrale Datenbank der Unternehmen](https://economie.fgov.be/de/themen/unternehmen/zentrale-datenbank-der)
-(ZDU)), it is often referred to as "CBE number" / "KBO nummer" / "numéro BCE" / "ZDU nummer".
+(ZDU)), it is often referred to as “CBE number” / “KBO nummer” / “numéro BCE” / “ZDU nummer”.
 
 There is no formatting in this representation.
-`)
 
-const crnExamples = ['0453834195']
+A company registration number starts with \`0\` or \`1\` and consists of 8 numbers, followed by a modulo 97 checksum
+(10 numbers in total).`)
+
+const crnExamples = ['0453834195', '1453834119']
 
 module.exports = { crnExamples, CRN: addExamples(CRN, crnExamples) }

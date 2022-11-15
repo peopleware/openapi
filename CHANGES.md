@@ -1,5 +1,13 @@
 # Changes
 
+# 3
+
+### 3.0
+
+### 3.0.0
+
+- CRN validation is now more restrictive
+
 # 2
 
 ### 2.0

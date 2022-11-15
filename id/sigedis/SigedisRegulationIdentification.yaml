@@ -39,7 +39,7 @@ description: >-
 type: object
 properties:
   registrant:
-    pattern: ^\d{10}$
+    pattern: ^[01]\d{9}$
     description: >-
       CRN of the OFP that is responsible for this contract.
 
@@ -74,8 +74,12 @@ properties:
 
 
       There is no formatting in this representation.
+
+
+      A company registration number starts with \`0\` or \`1\` and consists of 8 numbers, followed by a modulo 97
+      checksum (10 numbers in total).`)
     type: string
-    example: '0453834195'
+    example: '1453834119'
   registrantId:
     maxLength: 60
     minLength: 1
@@ -88,5 +92,5 @@ properties:
     example: cunning-plan/interestedin2things
 additionalProperties: true
 example:
-  registrant: '1234509876'
+  registrant: '1453834119'
   registrantId: cunning-plan/interestedin2things
