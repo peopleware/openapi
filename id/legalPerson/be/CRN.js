@@ -25,7 +25,7 @@ const CRN = Joi.string()
     const first8 = value.slice(0, -2)
     const asInt = Number.parseInt(first8)
     const rest = 97 - (asInt % 97)
-    if (value !== first8 + rest.toString(10)) {
+    if (value !== first8 + rest.toString(10).padStart(2, '0')) {
       return error('any.invalid')
     }
 
@@ -59,6 +59,6 @@ There is no formatting in this representation.
 A company registration number starts with \`0\` or \`1\` and consists of 8 numbers, followed by a modulo 97 checksum
 (10 numbers in total).`)
 
-const crnExamples = ['0453834195', '1453834119']
+const crnExamples = ['0453834195', '1453834119', '1234567401']
 
 module.exports = { crnExamples, CRN: addExamples(CRN, crnExamples) }
