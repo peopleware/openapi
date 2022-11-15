@@ -22,21 +22,23 @@ properties:
   line1:
     allOf:
       - $ref: '../string/TrimmedString.yaml'
-      - description: First address line. Used together with `line2`.
+      - description: First address line. Used together with `line2`. Not empty. Trimmed.
   line2:
     allOf:
       - $ref: '../string/TrimmedString.yaml'
-      - description: Second address line. Used together with `line1`.
+      - description: Second address line. Used together with `line1`. Not empty. Trimmed.
   postalCode:
     type: string
-    description: For some well-known `country`s, a pattern is enforced. E.g., for `BE`, the pattern is `^[1-9]\d{3}&`.
+    description: >-
+      For some well-known `country`s, a pattern is enforced. E.g., for `BE`, the pattern is `^[1-9]\d{3}&`. Not empty.
+      Trimmed.
     example: '2500'
   municipality:
     allOf:
       - $ref: '../string/TrimmedString.yaml'
-      - description:
+      - description: >-
           Name of the municipality of the address. Essentially free text (it is impossible in practice to validate
-          this).
+          this). Not empty. Trimmed.
   country:
     $ref: 'Country.yaml'
 example:

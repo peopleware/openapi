@@ -21,13 +21,13 @@ const addExamples = require('../_util/addExamples')
 const { TrimmedString } = require('../string/TrimmedString')
 
 const Address = Joi.object({
-  line1: TrimmedString.required().description('First address line. Used together with `line2`.'),
-  line2: TrimmedString.optional().description('Second address line. Used together with `line1`.'),
+  line1: TrimmedString.required().description('First address line. Used together with `line2`. Not empty. Trimmed.'),
+  line2: TrimmedString.optional().description('Second address line. Used together with `line1`. Not empty. Trimmed.'),
   postalCode: TrimmedString.required().description(
-    'For some well-known `country`s, a pattern is enforced. E.g., for `BE`, the pattern is `^[1-9]\\d{3}&`.'
+    'For some well-known `country`s, a pattern is enforced. E.g., for `BE`, the pattern is `^[1-9]\\d{3}&`. Not empty. Trimmed.'
   ),
   municipality: TrimmedString.required().description(
-    'Name of the municipality of the address. Essentially free text (it is impossible in practice to validate this).'
+    'Name of the municipality of the address. Essentially free text (it is impossible in practice to validate this). Not empty. Trimmed.'
   ),
   country: Country.required()
 }).unknown(true)

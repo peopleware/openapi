@@ -4,6 +4,10 @@
 
 ### 3.0
 
+#### 3.0.1
+
+- make it implicit in documentation that strings must be trimmed, and are not empty
+
 #### 3.0.0
 
 - CRN validation is now more restrictive
