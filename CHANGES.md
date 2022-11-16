@@ -4,6 +4,10 @@
 
 ### 3.0
 
+#### 3.0.3
+
+- switch base development version to Node 18 (LTS)
+
 #### 3.0.2
 
 - fix CRN validation
