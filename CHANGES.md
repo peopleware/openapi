@@ -4,6 +4,12 @@
 
 ### 3.0
 
+#### 3.0.4
+
+- add `'.'` before `'?at=…'` in `HistoryVersion.href` examples
+
+This makes sure it is a correct relative URI.
+
 #### 3.0.3
 
 - switch base development version to Node 18 (LTS)

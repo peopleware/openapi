@@ -11,4 +11,4 @@ allOf:
         description:
           relative URI at which this version of the resource can be retrieved (includes a query parameter `at`, which is
           the same as this object's `createdAt`)
-        example: ?at=2020-01-23T15:22:39.212Z
+        example: '.?at=2020-01-23T15:22:39.212Z'
