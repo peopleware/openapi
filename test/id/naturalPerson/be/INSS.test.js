@@ -21,5 +21,8 @@ const { stuff } = require('../../../../_util/_stuff')
 const { INSS } = require('../../../../id/naturalPerson/be/INSS')
 
 describe(testName(module), function () {
-  shouldBeSeriousSchema(INSS, stuff)
+  shouldBeSeriousSchema(
+    INSS,
+    stuff.concat(['012345678', '01234567890', 12345678900, '01234A67890', '86021203314', '04031800247'])
+  )
 })

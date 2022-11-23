@@ -2,6 +2,12 @@
 
 ## 3
 
+### 3.1
+
+#### 3.1.0
+
+- add custom validation to `INSS` that verifies the last 2 check digits in the INSS
+
 ### 3.0
 
 #### 3.0.4
