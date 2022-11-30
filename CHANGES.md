@@ -4,6 +4,10 @@
 
 ### 4.0
 
+#### 4.0.1
+
+- tweak SigedisRegulationIdentification description
+
 #### 4.0.0
 
 `3.1.0` introduced a stronger validation for `INSS`. This was a breaking change, which was labeled _minor_ in error.

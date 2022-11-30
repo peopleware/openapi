@@ -22,9 +22,9 @@ ${CRN.describe().flags.description}`
 This consists of the CRN of the OFP that governs the contract as \`registrant\`, and the \`registrantId\`,
 which is an identification of the contract unqiue within the OFP.
 
-_Regulation_ is a deliberately vague term. A sector retirement contract is a _regulation_. For a MIPS retirement
-contract, the _participations in the contract of each separate employer_ are considered separate _regulations_.
-Retirement contracts for a single employer each are separate _regulations_.
+_Regulation_ is a deliberately vague term. A sector contract is a _regulation_. For a MIPS contract, the _participations
+in the contract of each separate employer_ are considered separate _regulations_. Retirement contracts for a single
+employer each are separate _regulations_.
 
 Sigedis regulation identifications have to be unique, and cannot change over the life of a regulation.
 
