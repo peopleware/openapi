@@ -29,11 +29,9 @@ const license = `# Copyright 2021 - 2022 PeopleWare n.v.
 async function writeFileIfDifferent (path, data) {
   const existingData = await readFile(path, { encoding: 'utf-8' })
   if (existingData === data) {
-    console.info(`${path} was not changed`)
     return
   }
 
-  console.info(`${path} was changed; writing …`)
   return writeFile(path, data)
 }
 
