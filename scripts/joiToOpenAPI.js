@@ -5,7 +5,7 @@ const dirTree = require('directory-tree')
 const { isSchema } = require('joi')
 const parse = require('joi-to-json')
 const { dump } = require('js-yaml')
-const { writeFile } = require('fs/promises')
+const { writeFile, readFile } = require('fs/promises')
 const { clean } = require('./clean')
 
 const basePath = join(__dirname, '..', 'id', 'sigedis')
@@ -26,6 +26,17 @@ const license = `# Copyright 2021 - 2022 PeopleWare n.v.
 
 `
 
+async function writeFileIfDifferent (path, data) {
+  const existingData = await readFile(path, { encoding: 'utf-8' })
+  if (existingData === data) {
+    console.info(`${path} was not changed`)
+    return
+  }
+
+  console.info(`${path} was changed; writing …`)
+  return writeFile(path, data)
+}
+
 async function transformSchemataIn (path) {
   const module = require(path)
   const dirPath = join(path, '..')
@@ -36,7 +47,7 @@ async function transformSchemataIn (path) {
         const cleaned = clean(result)
         const yaml = dump(cleaned, { lineWidth: 120, noCompatMode: true })
         const yamlWithLicense = license + yaml
-        acc.push(writeFile(join(dirPath, `${name}.yaml`), yamlWithLicense))
+        acc.push(writeFileIfDifferent(join(dirPath, `${name}.yaml`), yamlWithLicense))
       }
       return acc
     }, [])
