@@ -1,10 +1,22 @@
 # Changes
 
+## 4
+
+### 4.0
+
+#### 4.0.0
+
+`3.1.0` introduced a stronger validation for `INSS`. This was a breaking change, which was labeled _minor_ in error.
+This release labels `3.1.0` as `4.0.0`.
+
 ## 3
 
 ### 3.1
 
 #### 3.1.0
+
+**This was a breaking change, which was labeled _minor_ in error. Do not use this version.** Use `3.0.4` or `4.0.0`
+instead.
 
 - add custom validation to `INSS` that verifies the last 2 check digits in the INSS
 
