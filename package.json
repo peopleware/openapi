@@ -70,10 +70,10 @@
     ]
   },
   "scripts": {
-    "OpenAPI:lint": "npm run generateResources && redocly lint",
-    "OpenAPI:serve": "redocly preview-docs index.yaml",
-    "OpenAPI:watch": "npm-watch OpenAPI:lint",
     "generateResources": "node scripts/joiToOpenAPI.js",
+    "OpenAPI:lint": "npm run generateResources && redocly lint",
+    "OpenAPI:watch": "npm-watch OpenAPI:lint",
+    "OpenAPI:serve": "redocly preview-docs index.yaml",
     "schematatests": "nyc mocha \"test/{*,**/*}.test.js\"",
     "pretest": "npm-check -i \"\"; npm outdated || exit 0",
     "test": "npm run OpenAPI:lint && npm run schematatests",
@@ -83,8 +83,14 @@
   "watch": {
     "OpenAPI:lint": {
       "patterns": ".",
-      "extensions": "yaml",
-      "ignore": ""
+      "extensions": "yaml,js",
+      "ignore": [
+        ".nyc_output",
+        "_util",
+        "coverage",
+        "scripts",
+        "test"
+      ]
     }
   },
   "dependencies": {
