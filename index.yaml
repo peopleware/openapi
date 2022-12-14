@@ -17,7 +17,7 @@ info:
   title: ppwcode openapi demonstration
   description: >-
     Collection of common OpenAPI 3 specs
-  version: 1.22.1
+  version: 4.1.0
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
