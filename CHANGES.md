@@ -4,6 +4,10 @@
 
 ### 4.0
 
+#### 4.1.1
+
+- stricter regex on cleaned string
+
 #### 4.1.0
 
 - add cleaned string concept
