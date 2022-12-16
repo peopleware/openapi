@@ -36,7 +36,7 @@ const addExamples = require('../_util/addExamples')
 
 const CleanedString = Joi.string()
   .min(1)
-  .regex(/^\S+$/)
+  .regex(/^(?![0-9])[a-zA-Z0-9$_]+$/)
   .description('Not empty and no whitespaces')
 
 const examples = ['Anna']

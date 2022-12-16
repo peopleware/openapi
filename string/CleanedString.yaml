@@ -14,7 +14,7 @@
 
 type: string
 format: Cleaned
-pattern: /^\S+$/ # Cleaned; this pattern avoids catastrophic backtracking
+pattern: /^(?![0-9])[a-zA-Z0-9$_]+$/ # Cleaned; this pattern avoids catastrophic backtracking
 minLength: 1
 description: Not empty and no whitespaces.
 example: Anna
