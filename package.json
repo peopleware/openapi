@@ -1,6 +1,6 @@
 {
   "name": "@ppwcode/openapi",
-  "version": "4.1.1",
+  "version": "4.2.0",
   "description": "Collection of common OpenAPI 3 specs and Joi schemata",
   "author": {
     "name": "Jan Dockx",
