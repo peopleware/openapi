@@ -21,3 +21,4 @@ rules:
   parameter-description: off
   # TODO off for now, but should be enabled; needs fixes here
   operation-4xx-problem-details-rfc7807: off
+  tags-alphabetical: off
