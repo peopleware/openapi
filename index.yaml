@@ -29,6 +29,10 @@ servers:
   - url: 'https://www.ppwcode.org/openapi/common'
     description: Dummy endpoint. There is nothing here.
 tags:
+  - name: Immutable data
+    x-traitTag: true
+    description:
+      $ref: 'resource/immutable.md'
   - name: Caching
     x-traitTag: true
     description:
