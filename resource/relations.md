@@ -3,7 +3,7 @@ Notes regarding the use of a search index for storing and searching relations.
 ## Search index for entities
 
 As described elsewhere, a search index is used for searching entities. A general approach is used for storing entities
-in the index, as documented in the specifications for the search-document and the search api.
+in the index, as documented in the specifications for the `search-document` and the search api.
 
 ### Core points
 
@@ -30,7 +30,7 @@ The main points are the following:
 When performing a search for an entity, the following criteria can be used:
 
 - `discriminator`: filter on specific types of entities
-- `exact`: filter exact, the given term must match exactly one in the `exact` field, used for business keys,
+- `exact`: filter exact, the given term must match exactly one in the `exact` fields, used for business keys,
   identifiers, custom references, ...
 - `fuzzy`: a contains search, the given term must appear as part of a member of the `fuzzy` field, used for names,
   descriptions, ...
@@ -45,8 +45,8 @@ The client often needs to show a limited amount of data as part of the search re
 `content` field saves a call to the backend for _each_ record in the search results. This makes the search for entities
 faster for the client and additionally reduces load on the backend services.
 
-Do note that what is stored inside the `content` field is specific for each entity type. What is stored will depend on
-the needs of the UI when displaying an entity of that type.
+Do note that what is stored inside the `content` field is specific for each entity type. Exactly what must be stored,
+depends on the needs of the client or UI for that specific entity type.
 
 ### When to update the search index?
 
@@ -67,8 +67,8 @@ because it would be a lot of (possibly brittle) work for little benefit.
 
 ## Search index for relations
 
-Relations can be seen as a separate type of entity and can be stored in the search index in the same way as other types
-of entities. Some conventions are used to make this usable.
+Relations can be seen as a separate type of entity that can be stored in the search index in the same way as other types
+of entities. Some conventions are needed to make this usable.
 
 ### Core requirements
 
@@ -93,9 +93,9 @@ At the bare minimum, the following criteria must be supported:
 
 These criteria only support searching on the relation itself.
 
-To support searching within relations, the search terms from one or both participating entities need to be added. For
-consistency reasons, all supported search terms for the type of the participating entity should be supported within the
-relation too.
+To go one step further and support searching within relations using terms that refer to the participating entities in
+the relation, the search terms from one or both of the participating entities need to be added. For consistency reasons,
+it is recommended to support all search terms that are available when search on the entity itself.
 
 As an example, take relation of type `R` with participating entities of type `X` and `Y`. To find the instances of `R`
 given a `href` of an instance of `X`, the following is needed:
@@ -103,19 +103,25 @@ given a `href` of an instance of `X`, the following is needed:
 - `discriminator`: filter on type `R`
 - `exact`: must contain the `hrefs` of both `X` and `Y`
 
-To support searching with the relation `R` on properties of `X`, the search terms of `X` must be added in the search
+To support searching within the relation `R` on properties of `X`, the search terms of `X` must be added in the search
 record. The following is needed:
 
 - `discriminator`: filter on type `R`
-- `exact`: contains the `href`s of both `X` and `Y`, contains _exact_ search terms of `X`
+- `exact`: contains the `href`s of both `X` and `Y`, contains the _exact_ search terms of `X`
 - `fuzzy`: contains _fuzzy_ search terms of `X`
 
 When search terms for one of the participating entities must be added in the search record, the system needs to retrieve
 the `search-document` of that participating entity. In this case, the `search-document` for `X` is needed to obtain the
 search terms of `X`.
 
-Note that whether search terms for `X` or `Y` must be supported, depends on context and for each type of relation `R`,
-it needs to be determined whether search terms for either `X` or `Y`, or both or none of them, must be supported.
+Using this it is possible to search on relation `R` using search terms that refer to `X`. Note that this would typically
+be used in combination with a `discriminator` filter on `R` and an `exact` filter on the `href` of a specific entity
+`Y`. This is useful in a relation where you commonly have hundreds of relations `R` for a given entity `Y`: the amount
+of relations found can be further restricted by adding search terms that apply to `X`.
+
+Note that whether it is useful to add search terms of the participating entities depends on context and for each type of
+relation `R` it needs to be determined whether search terms for either `X` or `Y`, or both or none of them, must be
+added.
 
 ### Display information through `content`
 
@@ -130,14 +136,16 @@ itself. In many cases however, the `content` field of a relation `R` will also c
 Note that it is possible that `X` or `Y` are also relations, and that in that case, data is also needed from the
 participating entities of that relation, such as `Ya` and `Yb`. This is possible and must be evaluated on a case-by-case
 basis. If data is needed from `Ya` and `Yb`, it is recommended to also add the `href` of these entities to the `exact`
-field, to make the relations searchable where these entities are used.
+field (or, see further, a `dependencies` field), to make the relations where entities are used, discoverable through the
+search index.
 
-(REMARK: Relations as currently described works as long as a relation is not directional between entities of the same
-type. Suppose that we have the relation `is-parent-of` on the entity `person`. With the current model, it is not
-possible to handle this. The concrete case where `a` is parent of `b` and `b` is parent of `c`, would be stored in the
-search index in exactly the same way as the case where `b` is parent of both `a` and `c`, and also in exactly the same
-way as the case were `a` and `c` are both parents of `b`. The reason is that the relation is directional and between
-entities of the same type.)
+(REMARK: Relations in the search index as currently described do not work for directional relations between entities of
+the same type. Suppose that we have the relation `is-parent-of` on the entity `person`. With the current model, it is
+not possible to handle this because the direction of the relation is not stored in the index and the direction cannot be
+derived from the types of the participating entities. The concrete case where `a` is parent of `b` and `b` is parent of
+`c`, would be stored in the search index in exactly the same way as the case where `b` is parent of both `a` and `c`,
+and also in exactly the same way as the case were `a` and `c` are both parents of `b`. The reason is that the relation
+is directional and between entities of the same type.)
 
 ### When to update the search index?
 
@@ -167,7 +175,7 @@ be updated.
 With dependent updates, we refer to the fact that the update of an entity (or relation) triggers not only an update of
 the search record for that entity (or relation), but also for all search records that use information of that entity (or
 relation) either in the search fields `exact` and `fuzzy`, or in the `content` field. In this section, we describe how
-these updates can be triggered.
+these updates can be processed.
 
 #### Trigger dependents in the backend services
 
@@ -180,7 +188,7 @@ instance of `Y` is a participating entity and create search update events for ea
 
 This is not a good solution:
 
-- finding the needed updates is done synchronously during the update
+- finding the needed updates is done synchronously during the update of `Y`
 - `Y` would need to know everything that depends on it, which is not always possible because of dependency direction (if
   `Y` is part of system `A` and system `B` depends on system `A` and contains relations that reference `Y`, these
   relations cannot be found starting from `Y`)
@@ -194,16 +202,18 @@ record.
 
 Subsequently, the search handler must find all dependent relations. This can be done by searching the index with exact
 match on the `exact` field with the value of the `href` of the updated entity. For each record in the search results, a
-new search update event needs to be created with a reference to the search-document of that entity (or relation).
+new search update event needs to be created with a reference to the `search-document` of that entity (or relation).
 
 (REMARK: It might be better to introduce a new exact match field in the search record structure. This field could be
 called `dependencies` and should be a list of the `href` of all entities that are needed for the data in the search
 record. This would make it very easy to find all search records that need to be updated.)
 
-This approach is preferable because it keeps the backend code simple for an update (only one search update event),
+This approach is preferable because it keeps the backend code simple for an update (only one search update event for the
+updated entity itself).
 
-(REMARK: The search record probably should contain the `href` to the search document that was used to generate the
-search record in the first place.)
+(REMARK: The search record probably should contain the `href` of the `search-document` that was used to generate the
+search record in the first place. This would avoid the need of calculating the `search-document` using the `href` of the
+entity.)
 
 #### Retrieving `content` in the context of relations
 
@@ -222,5 +232,6 @@ relation `R` with participating entities `X` and `Y`, the `search-document` for 
 `search-document` for `X` and `Y` for the content for `X` and `Y`.
 
 It is also possible to envision a combination of both approaches. It would make sense that the backend service adds all
-content that is available within the backend service and only adds references for content that must be fetched from
-another service.
+content that is readily available within that backend service (participating entities that are available in the same
+service) and only adds references for content that must be fetched from another service. A data structure could be
+created to handle this in a transparent way.
