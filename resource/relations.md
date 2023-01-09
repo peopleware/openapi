@@ -170,7 +170,7 @@ entities. When `Yb` is updated, all search records of `Y` that have that `Yb` as
 updated. For each of those `Y` relations, all search records of `R` that have that `Y` as participating entity, need to
 be updated.
 
-### How approach _dependent_ updates
+### How to approach _dependent_ updates
 
 With dependent updates, we refer to the fact that the update of an entity (or relation) triggers not only an update of
 the search record for that entity (or relation), but also for all search records that use information of that entity (or
@@ -193,6 +193,8 @@ This is not a good solution:
   `Y` is part of system `A` and system `B` depends on system `A` and contains relations that reference `Y`, these
   relations cannot be found starting from `Y`)
 
+We will not follow this approach.
+
 #### Trigger dependents inside the search event handler
 
 In this approach, the backend service triggers only one search update event, specifically for the entity that was
@@ -204,16 +206,16 @@ Subsequently, the search handler must find all dependent relations. This can be 
 match on the `exact` field with the value of the `href` of the updated entity. For each record in the search results, a
 new search update event needs to be created with a reference to the `search-document` of that entity (or relation).
 
-(REMARK: It might be better to introduce a new exact match field in the search record structure. This field could be
-called `dependencies` and should be a list of the `href` of all entities that are needed for the data in the search
-record. This would make it very easy to find all search records that need to be updated.)
+Since the reference to the `search-document` is needed, this reference must be stored in the search record in the index.
+The property `source` is added for this: it contains the (versioned) `href` to the `search-document` that was used to
+create the search record.
+
+It makes sense to apply an extra filter on the relations that must be searched in the index. The `search-document` of an
+entity will be extended with a property `dependents`. This property contains an array of discriminators that must be
+added as extra filter when searching the `href` on the `exact` field.
 
 This approach is preferable because it keeps the backend code simple for an update (only one search update event for the
 updated entity itself).
-
-(REMARK: The search record probably should contain the `href` of the `search-document` that was used to generate the
-search record in the first place. This would avoid the need of calculating the `search-document` using the `href` of the
-entity.)
 
 #### Retrieving `content` in the context of relations
 
@@ -235,3 +237,15 @@ It is also possible to envision a combination of both approaches. It would make 
 content that is readily available within that backend service (participating entities that are available in the same
 service) and only adds references for content that must be fetched from another service. A data structure could be
 created to handle this in a transparent way.
+
+This is the approach that we will follow. The `search-document` is extended with the field `referencedContent`. This
+field contains an object. The value of each property of this object is a (versioned) `href` to a `search-document`. The
+`content` object that is retrieved from the original `search-document` must be enriched with properties matching the
+properties of `referencedContent`. The value of these properties must be the value of the `content` of the referenced
+`search-document`. Aside from that, for each `search-document` in `referencedContent`, both the `exact` and `fuzzy`
+fields must be taken and added to the `exact` and `fuzzy` fields of the original `search-document`.
+
+To summarize, the `referencedContent` must be merged in the original `search-document` that can then be used as the base
+for the new search record in the index. The `exact` and `fuzzy` terms in the referenced `search-document`s must be added
+in the original `exact` and `fuzzy` terms, and the `content` from the original must be enriched with the `content` of
+the referenced `search-document`s.
