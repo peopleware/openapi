@@ -359,11 +359,8 @@ search({
 ```
 
 Since the reference to the `search-document` is needed, this reference must be stored in the search record in the index.
-The property `source` is added for this: it contains the (versioned) `href` to the `search-document` that was used to
-create the search record.
-
-<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Unclear. Search documents
-are not versioned, are they?</div>
+The property `source` is added for this: it contains the `href` of the `search-document` , _including the version of the
+service_, from which the search index record was created.
 
 <div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add search-document
 example</div>
@@ -381,7 +378,7 @@ example</div>
     "yCategory": "woozy",
     "yRegistrationId": "0123456789"
   },
-  "source": "/x/123/y/abc/search-document"
+  "source": "my-service/00123/v1/x/123/y/abc/search-document"
 }
 ```
 
@@ -440,7 +437,7 @@ information about `Y`:
     "yCategory": "woozy",
     "yRegistrationId": "0123456789"
   },
-  "source": "/x/123/y/abc/search-document"
+  "source": "my-service/00123/v1/x/123/y/abc/search-document"
 }
 ```
 
@@ -459,11 +456,12 @@ adds references for content that must be fetched from another service. A data st
 in a transparent way.
 
 This is the approach that we will follow. The `search-document` is extended with the field `referencedContent`. This
-field contains an object. The value of each property of this object is a (versioned) `href` to a `search-document`. The
-`content` object that is retrieved from the original `search-document` must be enriched with properties matching the
-properties of `referencedContent`. The value of these properties must be the value of the `content` of the referenced
-`search-document`. Aside from that, for each `search-document` in `referencedContent`, both the `exact` and `fuzzy`
-fields must be taken and added to the `exact` and `fuzzy` fields of the original `search-document`.
+field contains an object. The value of each property of this object is a `href` to a `search-document`, including the
+version of the service to use. The `content` object that is retrieved from the original `search-document` must be
+enriched with properties matching the properties of `referencedContent`. The value of these properties must be the value
+of the `content` of the referenced `search-document`. Aside from that, for each `search-document` in
+`referencedContent`, both the `exact` and `fuzzy` fields must be taken and added to the `exact` and `fuzzy` fields of
+the original `search-document`.
 
 <div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add search-document
 example</div>
@@ -491,6 +489,6 @@ the referenced `search-document`s.
       "since": "2023-01-10"
     }
   },
-  "source": "/x/123/y/abc/search-document"
+  "source": "my-service/00123/v1/x/123/y/abc/search-document"
 }
 ```
