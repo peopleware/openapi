@@ -235,8 +235,14 @@ sequence is a valid value, as shown in version `1` and `2`. Again, we allow dumm
 non-applicable.
 
 The latter might be misleading in some cases, but we believe the possible confusion does not outweigh the high technical
-impact of separate types. In practice, it turns out that there are few representations where there is a mix of property
-types that might be confusing.
+impact of separate types in all layers. In practice, it turns out that there are few representations where there is a
+mix of property types that might be confusing.
+
+#### API
+
+If there are properties with values that have no meaning when there are no applicability intervals, the JSON
+representation communicated from the service to clients might make the effort not to include meaningless property
+values, i.e., be defined as a variant record, depending on there being or not being applicability intervals.
 
 Note that we can also undo marking the object as inapplicable, just be adding a version `9` with new values for the
 properties.
@@ -255,8 +261,34 @@ employees during certain intervals. When a person has a role, an `Employee Role`
 employee and 1 role. The benefits for the employee, over t<sub>ε</sub>, are defined by the _derived_ intersection
 sequence of the benefit intervals in the associated `Role`, and the employment intervals in the associated `Employee`.
 
-When we discover at t<sub>γ1</sub> that the `Employee` is created in error, it is updated with an empty employment
-sequence. As a result, the `Employee Role` derived benefit interval intersection sequence will be empty too for any
+```
+   +------------------------------------+
+   |              Employee              |
+   +------------------------------------+
+   | <<χ>> employments: Interval [0..*] |
+   +------------------------------------+
+                     | 0..1
+                     |
+                     |
+                   * |
++------------------------------------------+
+|              Employee Role               |
++------------------------------------------+
+| <<χ>> / benefits: BenefitInterval [0..*] |
++------------------------------------------+
+                     | 0..1
+                     |
+                     |
+                   * |
+ +----------------------------------------+
+ |                  Role                  |
+ +----------------------------------------+
+ | <<χ>> benefits: BenefitInterval [0..*] |
+ +----------------------------------------+
+```
+
+When we discover at t<sub>γ1</sub> that the `Employee` is created in error, it is updated with an empty `employments`
+sequence. As a result, the `Employee Role` derived `benefits` interval intersection sequence will be empty too for any
 t<sub>γ</sub> > t<sub>γ1</sub> , meaning that the person does not have the right to any benefits. When the `Role` is
 created in error, it is updated with an empty benefit sequence, with the same effect on the `Employee Role`'s
 applicability. In both cases, an empty `Employee Role` derived benefit interval intersection sequence signals there are
