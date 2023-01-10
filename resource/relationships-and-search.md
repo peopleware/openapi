@@ -70,6 +70,14 @@ because it would be a lot of (possibly brittle) work for little benefit.
 Relationships can be seen as a separate type of entity that can be stored in the search index in the same way as other
 types of entities. Some conventions are needed to make this usable.
 
+As an example, take relationship of type `R` with participating entities of type `X` and `Y`.
+
+```
++-----+            +-----+            +-----+
+|  X  |-1-----0..*-|  R  |-0..*-----1-|  Y  |
++-----+            +-----+            +-----+
+```
+
 ### Core requirements
 
 A relationship can be a one-to-one, a one-to-many, or a many-to-many relationship. Each record in the search index
@@ -93,35 +101,57 @@ At the bare minimum, the following criteria must be supported:
 
 These criteria only support searching on the relationship itself.
 
-To go one step further and support searching within relationships using terms that refer to the participating entities
-in the relationship, the search terms from one or both of the participating entities need to be added. For consistency
-reasons, it is recommended to support all search terms that are available when search on the entity itself.
-
-As an example, take relationship of type `R` with participating entities of type `X` and `Y`. To find the instances of
-`R` given a `href` of an instance of `X`, the following is needed:
+To find all `R` instances for a given `X` with `href = /x/123` in the example:
 
 - `discriminator`: filter on type `R`
-- `exact`: must contain the `hrefs` of both `X` and `Y`
+- `exact`: must contain the `href` of `X`
 
-To support searching within the relationship `R` on properties of `X`, the search terms of `X` must be added in the
+```
+search({discriminator: 'R', exact: ['/x/123`]})
+```
+
+To find all `R` instances for a given `Y` with `href = /y/abc` in the example:
+
+- `discriminator`: filter on type `R`
+- `exact`: must contain the `href` of `Y`
+
+```
+search({discriminator: 'R', exact: ['/y/abc`]})
+```
+
+To go one step further and support searching within relationships using terms that refer to the participating entities
+in the relationship, search terms for the participating entities we want to filter need to be added. For consistency
+reasons, it is recommended to support all search terms that are available when search on the entity itself.
+
+To support searching within the relationship `R` on properties of `Y`, the search terms of `Y` must be added in the
 search record. The following is needed:
 
 - `discriminator`: filter on type `R`
-- `exact`: contains the `href`s of both `X` and `Y`, contains the _exact_ search terms of `X`
-- `fuzzy`: contains _fuzzy_ search terms of `X`
+- `exact`: contains the `href` of `X`, contains the _exact_ search terms of `Y`
+- `fuzzy`: contains _fuzzy_ search terms of `Y`
 
 When search terms for one of the participating entities must be added in the search record, the system needs to retrieve
-the `search-document` of that participating entity. In this case, the `search-document` for `X` is needed to obtain the
-search terms of `X`.
+the `search-document` of that participating entity. In this case, the `search-document` for `Y` is needed to obtain the
+search terms of `Y`.
 
-Using this it is possible to search on relationship `R` using search terms that refer to `X`. Note that this would
-typically be used in combination with a `discriminator` filter on `R` and an `exact` filter on the `href` of a specific
-entity `Y`. This is useful in a relationship where you commonly have hundreds of relationships `R` for a given entity
-`Y`: the amount of relationships found can be further restricted by adding search terms that apply to `X`.
+Using this it is possible to search on relationship `R` using search terms that refer to `Y`, for a given `X`.
 
-Note that whether it is useful to add search terms of the participating entities depends on context and for each type of
-relationship `R` it needs to be determined whether search terms for either `X` or `Y`, or both or none of them, must be
-added.
+```
+search({
+  discriminator: 'R',
+  // must match '/x/123` and '0123456789', which is a property value of Y
+  exact: ['/x/123`, '0123456789'],
+  // fuzzy match properties of related Y
+  fuzzy: ['wizzy', 'woozy']
+})
+```
+
+This is useful in a relationship where you commonly have dozens of relationships `R` for a given entity `X`: the amount
+of relationships found can be further restricted by adding search terms that apply to `Y`.
+
+Whether it is useful to add search terms of the participating entities depends on context. It makes little sense to add
+search functionality when we expect less than 20 relationships. For each type of relationship `R` it needs to be
+determined whether search terms for either `X` or `Y`, or both or none of them, must be added.
 
 ### Display information through `content`
 
