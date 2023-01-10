@@ -2,7 +2,19 @@
 
 ## 4
 
-### 4.0
+### 4.3
+
+#### 4.3.0
+
+- add description of relationships in a search index
+
+### 4.2
+
+#### 4.2.0
+
+- add description of immutable data
+
+### 4.1
 
 #### 4.1.1
 
@@ -11,6 +23,8 @@
 #### 4.1.0
 
 - add cleaned string concept
+
+### 4.0
 
 #### 4.0.1
 
