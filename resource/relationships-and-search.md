@@ -16,6 +16,7 @@ As an example, take an entity `X`:
 | <<χ>> name           |
 | <<χ>> category       |
 | <<χ>> ranking        |
+| <<χ>> class          |
 | since                |
 | <<χ>> popularity     |
 | <<χ>> note           |
@@ -44,17 +45,23 @@ The main points are the following:
 
 E.g.:
 
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add event example</div>
+
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add search-document
+example</div>
+
 ```json
 {
   "discriminator": "Y",
   "href": "/y/abc",
   "exact": ["0123456789"],
-  "fuzzy": ["wizzy", "woozy"],
+  "fuzzy": ["wizzy", "woozy", "wuzzy"],
   "content": {
     "name": "wizzy",
     "category": "woozy",
     "registrationId": "0123456789",
     "ranking": 4,
+    "class": "wuzzy",
     "since": "2023-01-10"
   }
 }
@@ -116,6 +123,7 @@ As an example, take relationship of type `R` with participating entities of type
                    +---------------+            | <<χ>> name           |
                                                 | <<χ>> category       |
                                                 | <<χ>> ranking        |
+                                                | <<χ>> class          |
                                                 | since                |
                                                 | <<χ>> popularity     |
                                                 | <<χ>> note           |
@@ -150,8 +158,8 @@ To find all `R` instances for a given `X` with `href = /x/123` in the example:
 - `discriminator`: filter on type `R`
 - `exact`: must contain the `href` of `X`
 
-```
-search({discriminator: 'R', exact: ['/x/123`]})
+```javascript
+search({ discriminator: 'R', exact: ['/x/123'] })
 ```
 
 To find all `R` instances for a given `Y` with `href = /y/abc` in the example:
@@ -159,8 +167,8 @@ To find all `R` instances for a given `Y` with `href = /y/abc` in the example:
 - `discriminator`: filter on type `R`
 - `exact`: must contain the `href` of `Y`
 
-```
-search({discriminator: 'R', exact: ['/y/abc`]})
+```javascript
+search({ discriminator: 'R', exact: ['/y/abc'] })
 ```
 
 The record in the search index for `R` looks like:
@@ -196,6 +204,9 @@ The record in the search index for `R` looks like:
 
 E.g.:
 
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add search-document
+example</div>
+
 ```json
 {
   "discriminator": "R",
@@ -208,11 +219,11 @@ E.g.:
 
 Using this it is possible to search on relationship `R` using search terms that refer to `Y`, for a given `X`.
 
-```
+```javascript
 search({
   discriminator: 'R',
   // must match '/x/123` and '0123456789', which is a property value of Y
-  exact: ['/x/123`, '0123456789'],
+  exact: ['/x/123', '0123456789'],
   // fuzzy match properties of related Y
   fuzzy: ['wizzy', 'woo']
 })
@@ -223,7 +234,9 @@ relationships found can be further restricted by adding search terms that apply 
 
 Whether it is useful to add search terms of the participating entities depends on context. It makes little sense to add
 search functionality when we expect less than 20 relationships. For each type of relationship `R` it needs to be
-determined whether search terms for either `X` or `Y`, or both or none of them, must be added.
+determined whether search terms for either `X` or `Y`, or both or none of them, must be added. In the example, we
+imagine there are only a few instances of `X` related to an instance of `Y`, which makes searching superfluous, but many
+instances of `Y` related to an instance of `X`, which makes searching functionaly relevant.
 
 ### Display information through `content`
 
@@ -235,6 +248,27 @@ The contents of the `content` field are specific for the relationship type and d
 instance of that relationship type. The `content` of a relationship field can contain some metadata of the relationship
 itself. In many cases however, the `content` field of a relationship `R` will also contain data from either `X` and/or
 `Y`.
+
+E.g.,
+
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add search-document
+example</div>
+
+```json
+{
+  "discriminator": "R",
+  "href": "/x/123/y/abc",
+  "exact": ["/x/123", "/y/abc", "0123456789"],
+  "fuzzy": ["wizzy", "woozy"],
+  "content": {
+    "layer": "optimized",
+    "premium": 7457,
+    "yName": "wizzy",
+    "yCategory": "woozy",
+    "yRegistrationId": "0123456789"
+  }
+}
+```
 
 Note that it is possible that `X` or `Y` are also relationships, and that in that case, data is also needed from the
 participating entities of that relationship, such as `Ya` and `Yb`. This is possible and must be evaluated case-by-case.
@@ -273,6 +307,13 @@ entities. When `Yb` is updated, all search records of `Y` that have that `Yb` as
 updated. For each of those `Y` relationships, all search records of `R` that have that `Y` as participating entity, need
 to be updated.
 
+The example explicitly does not contain data related to `X`. If it would, the relationship search index record would
+need to be updated to when that information in `/x/123` changes. Since we imagine in the example that there are only a
+few instances of `X` related to an instance of `Y`, search for properties of `X` is functionally irrelevant. Since we
+imagine many instances of `Y` related to an instance of `X`, there would be many instance of `R` for a given `X`,
+resulting in many necessary updates. Not having information about `X` that can change in the search index record for `R`
+avoids this issue.
+
 ### How to approach _dependent_ updates
 
 With dependent updates, we refer to the fact that the update of an entity (or relationship) triggers not only an update
@@ -280,10 +321,10 @@ of the search record for that entity (or relationship), but also for all search 
 entity (or relationship) either in the search fields `exact` and `fuzzy`, or in the `content` field. In this section, we
 describe how these updates can be processed.
 
-#### Trigger dependents in the backend services
+#### Trigger dependents in the service (bad idea)
 
-In this approach, the search update events for the _dependents_ are triggered in the backend service during the update
-of the original entity.
+In this approach, the search update events for the _dependents_ are triggered in the service during the update of the
+original entity.
 
 Take the example of relationship `R` with participating entities `X` and `Y`. When `Y` is updated, the update will
 create a search update event for `Y` itself. During the update, the backend will also find all instances of `R` where
@@ -298,49 +339,124 @@ This is not a good solution:
 
 We will not follow this approach.
 
-#### Trigger dependents inside the search event handler
+#### Trigger dependents inside the search event handler (better)
 
-In this approach, the backend service triggers only one search update event, specifically for the entity that was
-updated. In that case, the search update event contains a reference to the `search-document` of the updated entity. The
-search handler will retrieve the `search-document` (with a general structure) and will create or update the search
-record.
+In this approach, the service triggers only one search update event, specifically for the entity that was updated. In
+that case, the search update event contains a reference to the `search-document` of the updated entity. The search
+handler will retrieve the `search-document` (with a general structure) and will create or update the search record.
 
-Subsequently, the search handler must find all dependent relationships. This can be done by searching the index with
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add event example</div>
+
+Subsequently, the search handler must find all dependent relationships. This can be done by searching the _index_ with
 exact match on the `exact` field with the value of the `href` of the updated entity. For each record in the search
 results, a new search update event needs to be created with a reference to the `search-document` of that entity (or
 relationship).
+
+```javascript
+search({
+  exact: ['/y/abc']
+})
+```
 
 Since the reference to the `search-document` is needed, this reference must be stored in the search record in the index.
 The property `source` is added for this: it contains the (versioned) `href` to the `search-document` that was used to
 create the search record.
 
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Unclear. Search documents
+are not versioned, are they?</div>
+
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add search-document
+example</div>
+
+```json
+{
+  "discriminator": "R",
+  "href": "/x/123/y/abc",
+  "exact": ["/x/123", "/y/abc", "0123456789"],
+  "fuzzy": ["wizzy", "woozy"],
+  "content": {
+    "layer": "optimized",
+    "premium": 7457,
+    "yName": "wizzy",
+    "yCategory": "woozy",
+    "yRegistrationId": "0123456789"
+  },
+  "source": "/x/123/y/abc/search-document"
+}
+```
+
 It makes sense to apply an extra filter on the relationships that must be searched in the index. The `search-document`
 of an entity will be extended with a property `dependents`. This property contains an array of discriminators that must
 be added as extra filter when searching the `href` on the `exact` field.
 
-This approach is preferable because it keeps the backend code simple for an update (only one search update event for the
-updated entity itself).
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add search-document
+example</div>
+
+```json
+{
+  "discriminator": "Y",
+  "href": "/y/abc",
+  "exact": ["0123456789"],
+  "fuzzy": ["wizzy", "woozy"],
+  "content": {
+    "name": "wizzy",
+    "category": "woozy",
+    "registrationId": "0123456789",
+    "ranking": 4,
+    "class": "wuzzy",
+    "since": "2023-01-10"
+  },
+  "dependents": ["R"]
+}
+```
+
+```javascript
+search({
+  discriminator: 'R',
+  exact: ['/y/abc']
+})
+```
+
+This approach is preferable because it keeps the service code simple for an update (only one search update event for the
+updated entity itself), and cascade updates are handled asynchronously.
 
 #### Retrieving `content` in the context of relationships
 
 In the context of relationships, the `content` field can contain some properties of the relationship itself, and in
 addition some data of the participating entities, and if those entities are also relationships, potentially some
-information of those participating entities too.
+information of those participating entities too. In the example, the search index record `content` for `R` contains
+information about `Y`:
 
-One approach for filling up the `content` field is to make it the responsibility of the backend service that implements
-the `search-document`: whenever a `search-document` is requested, it is always complete and the content is also
-complete. The search handler retrieves the `search-document`, transforms the incoming data and registers the search
-record.
+```json
+{
+  "discriminator": "R",
+  "href": "/x/123/y/abc",
+  "exact": ["/x/123", "/y/abc", "0123456789"],
+  "fuzzy": ["wizzy", "woozy"],
+  "content": {
+    "layer": "optimized",
+    "premium": 7457,
+    "yName": "wizzy",
+    "yCategory": "woozy",
+    "yRegistrationId": "0123456789"
+  },
+  "source": "/x/123/y/abc/search-document"
+}
+```
 
-An alternative approach would be that the backend service does not add the complete content in the `search-document`,
-but instead adds references to parts of the content that still need to be fetched by the search event handler. For a
+One approach for filling up the `content` field is to make it the responsibility of the service that implements the
+`search-document`: whenever a `search-document` is requested, it is always complete and the content is also complete.
+The search handler retrieves the `search-document`, transforms the incoming data and registers the search record.
+
+An alternative approach would be that the service does not add the complete content in the `search-document`, but
+instead adds references to parts of the content that still need to be fetched by the search event handler. For a
 relationship `R` with participating entities `X` and `Y`, the `search-document` for `R` would then contain references to
 the `search-document` for `X` and `Y` for the content for `X` and `Y`.
 
-It is also possible to envision a combination of both approaches. It would make sense that the backend service adds all
-content that is readily available within that backend service (participating entities that are available in the same
-service) and only adds references for content that must be fetched from another service. A data structure could be
-created to handle this in a transparent way.
+It is also possible to envision a combination of both approaches. It would make sense that the service adds all content
+that is readily available within that service (participating entities that are available in the same service) and only
+adds references for content that must be fetched from another service. A data structure could be created to handle this
+in a transparent way.
 
 This is the approach that we will follow. The `search-document` is extended with the field `referencedContent`. This
 field contains an object. The value of each property of this object is a (versioned) `href` to a `search-document`. The
@@ -349,7 +465,32 @@ properties of `referencedContent`. The value of these properties must be the val
 `search-document`. Aside from that, for each `search-document` in `referencedContent`, both the `exact` and `fuzzy`
 fields must be taken and added to the `exact` and `fuzzy` fields of the original `search-document`.
 
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add search-document
+example</div>
+
 To summarize, the `referencedContent` must be merged in the original `search-document` that can then be used as the base
 for the new search record in the index. The `exact` and `fuzzy` terms in the referenced `search-document`s must be added
 in the original `exact` and `fuzzy` terms, and the `content` from the original must be enriched with the `content` of
 the referenced `search-document`s.
+
+```json
+{
+  "discriminator": "R",
+  "href": "/x/123/y/abc",
+  "exact": ["/x/123", "/y/abc", "0123456789"],
+  "fuzzy": ["wizzy", "woozy", "wuzzy"],
+  "content": {
+    "layer": "optimized",
+    "premium": 7457,
+    "y": {
+      "name": "wizzy",
+      "category": "woozy",
+      "registrationId": "0123456789",
+      "ranking": 4,
+      "class": "wuzzy",
+      "since": "2023-01-10"
+    }
+  },
+  "source": "/x/123/y/abc/search-document"
+}
+```
