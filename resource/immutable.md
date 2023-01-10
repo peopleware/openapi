@@ -323,6 +323,18 @@ DELETE /api/person/8763478
 After this, the API returns 1 more version in the `history`, and the returned representation will have the empty
 sequence as property value for the derived applicability sequence.
 
+Note that, since there are no direct χ properties for the resource `Employee Role`, the API does not have to offer
+update functionality, but we still need a means to undo `DELETE`.
+
+When creation of the resource is realised with `PUT`, undo-ing `DELETE` is the same as creating the resource:
+
+```http request
+PUT /api/person/ac13118
+```
+
+When creation of the resource is realised with `POST`, we need to undo a `DELETE` with `PUT` too, and not create a new
+resource with `POST`.
+
 <p style="background-color: lightgray; color: darkorchid; padding: 3mm;"><strong>IDEA:</strong> These are
 exceptional measures, which make the API more difficult. We should consider generalizing this for all resources in
 some way.</p>
