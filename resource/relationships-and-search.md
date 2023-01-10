@@ -5,6 +5,22 @@ Notes regarding the use of a search index for storing and searching relationship
 As described elsewhere, a search index is used for searching entities. A general approach is used for storing entities
 in the index, as documented in the specifications for the `search-document` and the search api.
 
+As an example, take an entity `X`:
+
+```
++------------------+
+|        Y         |
++------------------+
+| registrationId   |
+| <<χ>> name       |
+| <<χ>> category   |
+| <<χ>> ranking    |
+| since            |
+| <<χ>> popularity |
+| <<χ>> note       |
++------------------+
+```
+
 ### Core points
 
 The main points are the following:
@@ -24,6 +40,24 @@ The main points are the following:
   - `fuzzy`: a list of strings that are searchable in a non-exact match manner
   - `content`: a JSON string with a representation of the entity, content is entity type specific, and thus
     `discriminator` specific
+
+E.g.:
+
+```json
+{
+  "discriminator": "Y",
+  "href": "/y/abc",
+  "exact": ["0123456789"],
+  "fuzzy": ["wizzy", "woozy"],
+  "content": {
+    "name": "wizzy",
+    "category": "woozy",
+    "registrationId": "0123456789",
+    "ranking": 4,
+    "since": "2023-01-10"
+  }
+}
+```
 
 ### Supported search criteria
 
@@ -119,6 +153,20 @@ To find all `R` instances for a given `Y` with `href = /y/abc` in the example:
 search({discriminator: 'R', exact: ['/y/abc`]})
 ```
 
+The record in the search index for `R` looks like:
+
+E.g.:
+
+```json
+{
+  "discriminator": "R",
+  "href": "/x/123/y/abc",
+  "exact": ["/x/123", "/y/abc"],
+  "fuzzy": …,
+  "content": …
+}
+```
+
 To go one step further and support searching within relationships using terms that refer to the participating entities
 in the relationship, search terms for the participating entities we want to filter need to be added. For consistency
 reasons, it is recommended to support all search terms that are available when search on the entity itself.
@@ -134,6 +182,20 @@ When search terms for one of the participating entities must be added in the sea
 the `search-document` of that participating entity. In this case, the `search-document` for `Y` is needed to obtain the
 search terms of `Y`.
 
+The record in the search index for `R` looks like:
+
+E.g.:
+
+```json
+{
+  "discriminator": "R",
+  "href": "/x/123/y/abc",
+  "exact": ["/x/123", "/y/abc", "0123456789"],
+  "fuzzy": ["wizzy", "woozy"],
+  "content": …
+}
+```
+
 Using this it is possible to search on relationship `R` using search terms that refer to `Y`, for a given `X`.
 
 ```
@@ -142,12 +204,12 @@ search({
   // must match '/x/123` and '0123456789', which is a property value of Y
   exact: ['/x/123`, '0123456789'],
   // fuzzy match properties of related Y
-  fuzzy: ['wizzy', 'woozy']
+  fuzzy: ['wizzy', 'woo']
 })
 ```
 
-This is useful in a relationship where you commonly have dozens of relationships `R` for a given entity `X`: the amount
-of relationships found can be further restricted by adding search terms that apply to `Y`.
+This is useful in a relationship where you expect dozens of relationships `R` for a given entity `X`: the amount of
+relationships found can be further restricted by adding search terms that apply to `Y`.
 
 Whether it is useful to add search terms of the participating entities depends on context. It makes little sense to add
 search functionality when we expect less than 20 relationships. For each type of relationship `R` it needs to be
