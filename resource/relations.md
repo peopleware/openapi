@@ -130,23 +130,23 @@ field is introduced as an optimization: it contains the information that the cli
 without the need for extra backend calls.
 
 The contents of the `content` field are specific for the relationship type and depend on the needs of the UI for the
-instance of that relationship type. In the case of a relationship, the `content` field can contain some metadata of the
-relationship itself. In many cases however, the `content` field of a relationship `R` will also contain data from either
-`X` and/or `Y`.
+instance of that relationship type. The `content` of a relationship field can contain some metadata of the relationship
+itself. In many cases however, the `content` field of a relationship `R` will also contain data from either `X` and/or
+`Y`.
 
 Note that it is possible that `X` or `Y` are also relationships, and that in that case, data is also needed from the
-participating entities of that relationship, such as `Ya` and `Yb`. This is possible and must be evaluated on a
-case-by-case basis. If data is needed from `Ya` and `Yb`, it is recommended to also add the `href` of these entities to
-the `exact` field (or, see further, a `dependencies` field), to make the relationships where entities are used,
-discoverable through the search index.
+participating entities of that relationship, such as `Ya` and `Yb`. This is possible and must be evaluated case-by-case.
+If data is needed from `Ya` and `Yb`, it is recommended to also add the `href` of these entities to the `exact` field
+(or, see further, a `dependencies` field), to make the relationships where entities are used, discoverable through the
+search index.
 
 (REMARK: Relationships in the search index as currently described do not work for directional relationships between
 entities of the same type. Suppose that we have the relationship `is-parent-of` on the entity `person`. With the current
-model, it is not possible to handle this because the direction of the relationship is not stored in the index and the
-direction cannot be derived from the types of the participating entities. The concrete case where `a` is parent of `b`
-and `b` is parent of `c`, would be stored in the search index in exactly the same way as the case where `b` is parent of
-both `a` and `c`, and also in exactly the same way as the case were `a` and `c` are both parents of `b`. The reason is
-that the relationship is directional and between entities of the same type.)
+model, it is impossible to handle this because the direction of the relationship is not stored in the index and the
+direction cannot be derived from the types of the participating entities. When `a` is parent of `b` and `b` is parent of
+`c` would be stored in the search index in the same way as when `b` is parent of both `a` and `c`, and also in the same
+way as when `a` and `c` are both parents of `b`. The reason is that the relationship is directional and between entities
+of the same type.)
 
 ### When to update the search index?
 
@@ -158,7 +158,7 @@ when any of the following fields changes:
 - `fuzzy`
 - `content`
 
-As discussed earlier, when the relationship itself changes, the search index must obviously be updated.
+As discussed earlier, when the relationship itself changes, the search index must be updated.
 
 The search index must also be updated when any of the fields contains data from a participating entity and that
 participating entity is updated. If one of the participating entities is a relationship, and the `content` field
