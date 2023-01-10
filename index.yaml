@@ -41,10 +41,10 @@ tags:
     x-traitTag: true
     description:
       $ref: 'resource/paging.md'
-  - name: Relations and search
+  - name: Relationships and search
     x-traitTag: true
     description:
-      $ref: 'resource/relations.md'
+      $ref: 'resource/relationships-and-search.md'
 security:
   - OAuth2:
       - use
