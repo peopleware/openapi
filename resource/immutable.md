@@ -114,12 +114,8 @@ knowledge about it (and thus represent administrative errors and corrections), o
 person in the real world_.
 
 These changes happen on another time axis, the _applicability time_, t<sub>ε</sub>, and is always interval-based: the
-`first name` and `score` of a person are applicable during a certain interval:
-
-> p.χ(t<sub>γ</sub>) → (`first name`, `date-of-birth`, `score`)
-
-The applicability intervals form a sequence. The value of the property of the resource is _not a simple value_, but _a
-sequence of values_.
+`first name` and `score` of a person are applicable during a certain interval. The applicability intervals form a
+sequence. The value of the property of the resource is _not a simple value_, but _a sequence of values_.
 
 > p.χ(t<sub>γ</sub>) → (sequence(`first name`), `date-of-birth`, sequence(`score`)).
 
