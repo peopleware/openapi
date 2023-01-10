@@ -8,17 +8,18 @@ in the index, as documented in the specifications for the `search-document` and 
 As an example, take an entity `X`:
 
 ```
-+------------------+
-|        Y         |
-+------------------+
-| registrationId   |
-| <<χ>> name       |
-| <<χ>> category   |
-| <<χ>> ranking    |
-| since            |
-| <<χ>> popularity |
-| <<χ>> note       |
-+------------------+
++----------------------+
+|          Y           |
++----------------------+
+| id                   |
+| <<χ>> registrationId |
+| <<χ>> name           |
+| <<χ>> category       |
+| <<χ>> ranking        |
+| since                |
+| <<χ>> popularity     |
+| <<χ>> note           |
++----------------------+
 ```
 
 ### Core points
@@ -107,9 +108,18 @@ types of entities. Some conventions are needed to make this usable.
 As an example, take relationship of type `R` with participating entities of type `X` and `Y`.
 
 ```
-+-----+            +-----+            +-----+
-|  X  |-1-----0..*-|  R  |-0..*-----1-|  Y  |
-+-----+            +-----+            +-----+
++-----+            +---------------+            +----------------------+
+|  X  |-1-----0..*-|  R            |-0..*-----1-|          Y           |
++-----+            +---------------+            +----------------------+
+                   | layer         |            | id                   |
+                   | <<χ>> premium |            | <<χ>> registrationId |
+                   +---------------+            | <<χ>> name           |
+                                                | <<χ>> category       |
+                                                | <<χ>> ranking        |
+                                                | since                |
+                                                | <<χ>> popularity     |
+                                                | <<χ>> note           |
+                                                +----------------------+
 ```
 
 ### Core requirements
