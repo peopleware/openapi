@@ -25,6 +25,13 @@ describe(testName(module), function () {
     CleanedString,
     stuff
       .filter(s => typeof s !== 'string' || s.startsWith(' ') || s.endsWith(' ') || s.includes(' '))
-      .concat(['  spaces in front', 'spaces at the end  ', 'spaces    in  the middle'])
+      .concat([
+        '  spaces in front',
+        'spaces at the end  ',
+        'spaces    in  the middle',
+        '0startswithanumber',
+        'contains-',
+        '#weirdstart'
+      ])
   )
 })
