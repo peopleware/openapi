@@ -14,7 +14,7 @@
 
 type: string
 format: Cleaned
-pattern: ^(?![0-9])[a-zA-Z0-9$_]+$
+pattern: ^[a-zA-Z$_][a-zA-Z0-9$_]*$
 minLength: 1
-description: Not empty and no whitespaces.
+description: Trimmed, not empty, cannot start with a digit, and only contain letters, `'$'`, or underscore.
 example: Anna
