@@ -1,5 +1,13 @@
 # Changes
 
+## 5
+
+### 5.0
+
+#### 5.0.0
+
+- renamed `id/sigedis/SigedisRegulationIdentification` to `SigedisRegistrantRegulationIdentification`
+
 ## 4
 
 ### 4.3

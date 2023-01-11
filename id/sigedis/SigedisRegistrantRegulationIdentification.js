@@ -3,11 +3,11 @@ const addExamples = require('../../_util/addExamples')
 const { CRN, crnExamples } = require('../legalPerson/be/CRN')
 const { SigedisRegistrantId, sigedisRegistrantIdExamples } = require('./SigedisRegistrantId')
 
-const sigedisRegulationIdentificationExamples = [
+const sigedisRegistrantRegulationIdentificationExamples = [
   { registrant: crnExamples[1], registrantId: sigedisRegistrantIdExamples[0] }
 ]
 
-const SigedisRegulationIdentification = addExamples(
+const SigedisRegistrantRegulationIdentification = addExamples(
   Joi.object({
     registrant: CRN.description(
       `CRN of the OFP that is responsible for this contract.
@@ -35,7 +35,10 @@ attributed, it can be used as identification in communication with Sigedis, but 
 that role as well.`
     )
     .unknown(true),
-  sigedisRegulationIdentificationExamples
+  sigedisRegistrantRegulationIdentificationExamples
 )
 
-module.exports = { sigedisRegulationIdentificationExamples, SigedisRegulationIdentification }
+module.exports = {
+  sigedisRegistrantRegulationIdentificationExamples,
+  SigedisRegistrantRegulationIdentification
+}

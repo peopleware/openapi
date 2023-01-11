@@ -448,8 +448,8 @@ components:
                       $ref: 'id/sigedis/SigedisId.yaml'
                     sigedisRegistrantId:
                       $ref: 'id/sigedis/SigedisRegistrantId.yaml'
-                    sigedisRegulationIdentification:
-                      $ref: 'id/sigedis/SigedisRegulationIdentification.yaml'
+                    sigedisRegistrantRegulationIdentification:
+                      $ref: 'id/sigedis/SigedisRegistrantRegulationIdentification.yaml'
                 uuid:
                   $ref: 'id/UUID.yaml'
                 mode:
