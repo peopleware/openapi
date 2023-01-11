@@ -26,7 +26,7 @@ _Regulation_ is a deliberately vague term. A sector contract is a _regulation_. 
 in the contract of each separate employer_ are considered separate _regulations_. Retirement contracts for a single
 employer each are separate _regulations_.
 
-Sigedis regulation identifications have to be unique, and cannot change over the life of a regulation.
+Sigedis registrant regulation identifications have to be unique, and cannot change over the life of a regulation.
 
 Regulations are attributed a _Sigedis id_ by Sigedis, but this attribution is done after creation of a regulation,
 and its declaration with Sigedis. The Sigedis id therefor cannot be used as a business key. This value can, since the
