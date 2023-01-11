@@ -7,6 +7,7 @@
 #### 5.0.0
 
 - renamed `id/sigedis/SigedisRegulationIdentification` to `SigedisRegistrantRegulationIdentification`
+- fix regexp syntax for OpenAPI in `CleanedString` (and simplify the pattern, and make the description complete)
 
 ## 4
 
