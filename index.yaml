@@ -486,6 +486,8 @@ components:
                   $ref: 'string/TelephoneNumber.yaml'
                 trimmedString:
                   $ref: 'string/TrimmedString.yaml'
+                cleanedString:
+                  $ref: 'string/CleanedString.yaml'
             time:
               type: object
               properties:
