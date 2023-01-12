@@ -1,7 +1,7 @@
 const Joi = require('joi')
 const addExamples = require('../../_util/addExamples')
 
-const sigedisRegistrantIdExamples = ['cunning-plan/interestedin2things']
+const sigedisRegistrantIdExamples = ['cunning-plan/covenant']
 
 const SigedisRegistrantId = addExamples(
   Joi.string()

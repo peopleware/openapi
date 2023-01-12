@@ -28,7 +28,7 @@ description: >-
   for a single employer each are separate _regulations_.
 
 
-  Sigedis regulation identifications have to be unique, and cannot change over the life of a regulation.
+  Sigedis registrant regulation identifications have to be unique, and cannot change over the life of a regulation.
 
 
   Regulations are attributed a _Sigedis id_ by Sigedis, but this attribution is done after creation of a regulation, and
@@ -89,8 +89,8 @@ properties:
 
       See `db2p_v3.11.8/Declaration/db2pBaseComponents_v3.xsd#FreeIdentificator`.
     type: string
-    example: cunning-plan/interestedin2things
+    example: cunning-plan/covenant
 additionalProperties: true
 example:
   registrant: '1453834119'
-  registrantId: cunning-plan/interestedin2things
+  registrantId: cunning-plan/covenant
