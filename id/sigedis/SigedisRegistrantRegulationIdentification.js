@@ -20,7 +20,7 @@ ${CRN.describe().flags.description}`
       `Unchangeable internal identification of a _regulation_ for communication with Sigedis.
 
 This consists of the CRN of the OFP that governs the contract as \`registrant\`, and the \`registrantId\`,
-which is an identification of the contract unqiue within the OFP.
+which is an identification of the contract unique within the OFP.
 
 _Regulation_ is a deliberately vague term. A sector contract is a _regulation_. For a MIPS contract, the _participations
 in the contract of each separate employer_ are considered separate _regulations_. Retirement contracts for a single

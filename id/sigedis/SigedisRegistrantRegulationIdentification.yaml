@@ -20,7 +20,7 @@ description: >-
 
 
   This consists of the CRN of the OFP that governs the contract as `registrant`, and the `registrantId`, which is an
-  identification of the contract unqiue within the OFP.
+  identification of the contract unique within the OFP.
 
 
   _Regulation_ is a deliberately vague term. A sector contract is a _regulation_. For a MIPS contract, the
