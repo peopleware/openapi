@@ -645,8 +645,8 @@ which the search index document is created.
   "href": "/my-service/v1/x/123/y/abc",
   "flowId": "5c10b07f-4327-4dfb-9913-12338123900f",
   "mode": "example",
-  "exact": ["/my-service/v1/x/123", "/my-service/v1/y/abc", …],
-  "fuzzy": […],
+  "exact": ["/my-service/v1/x/123", "/my-service/v1/y/abc", "0123456789"],
+  "fuzzy": ["wizzy", "woozy"],
   "content": {
     "layer": "optimized",
     "premium": 7457,
@@ -687,18 +687,21 @@ event.
 }
 ```
 
-#### Retrieving `content` in the context of relationships
+#### Retrieving `content`, `fuzzy`, and `exact`, in the context of relationships
 
-In the context of relationships, the `content` field can contain some properties of the relationship itself, and in
-addition some data of the participating entities, and if those entities are also relationships, potentially some
-information of those participating entities too. In the example, the search index record `content` for `R` contains
-information about `Y`:
+In the context of relationships, the `content`, `fuzzy`, and `exact` fields can contain some properties of the
+relationship itself, and in addition some data of the participating entities (and if those entities are also
+relationships, potentially some information of those participating entities too, recursively). In the example above, the
+search index record `content` for `R` contains information about `Y`:
 
 ```json
 {
+  "id": "my-service_v1_x_123_y_abc_example",
   "discriminator": "R",
-  "href": "/x/123/y/abc",
-  "exact": ["/x/123", "/y/abc", "0123456789"],
+  "href": "/my-service/v1/x/123/y/abc",
+  "flowId": "5c10b07f-4327-4dfb-9913-12338123900f",
+  "mode": "example",
+  "exact": ["/my-service/v1/x/123", "/my-service/v1/y/abc", "0123456789"],
   "fuzzy": ["wizzy", "woozy"],
   "content": {
     "layer": "optimized",
@@ -707,18 +710,20 @@ information about `Y`:
     "yCategory": "woozy",
     "yRegistrationId": "0123456789"
   },
-  "source": "my-service/00123/v1/x/123/y/abc/search-document"
+  "source": "my-service/00068/v1/x/123/y/abc/search-document",
+  "updatedAt": "2022-12-27T03:14:22.212775Z"
 }
 ```
 
 One approach for filling up the `content` field is to make it the responsibility of the service that implements the
 `search-document`: whenever a `search-document` is requested, it is always complete and the content is also complete.
-The search handler retrieves the `search-document`, transforms the incoming data and registers the search record.
+The search handler retrieves the `search-document`, transforms the incoming data and registers the search index
+document.
 
 An alternative approach would be that the service does not add the complete content in the `search-document`, but
 instead adds references to parts of the content that still need to be fetched by the search event handler. For a
 relationship `R` with participating entities `X` and `Y`, the `search-document` for `R` would then contain references to
-the `search-document` for `X` and `Y` for the content for `X` and `Y`.
+the `search-document` for `X` and / or `Y` for information from `X` and / or `Y`.
 
 It is also possible to envision a combination of both approaches. It would make sense that the service adds all content
 that is readily available within that service (participating entities that are available in the same service) and only
@@ -727,26 +732,50 @@ in a transparent way.
 
 This is the approach that we will follow. The `search-document` is extended with the field `referencedContent`. This
 field contains an object. The value of each property of this object is a `href` to a `search-document`, including the
-version of the service to use. The `content` object that is retrieved from the original `search-document` must be
-enriched with properties matching the properties of `referencedContent`. The value of these properties must be the value
-of the `content` of the referenced `search-document`. Aside from that, for each `search-document` in
-`referencedContent`, both the `exact` and `fuzzy` fields must be taken and added to the `exact` and `fuzzy` fields of
-the original `search-document`.
+build number of the service to use.
 
-<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add search-document
-example</div>
-
-To summarize, the `referencedContent` must be merged in the original `search-document` that can then be used as the base
-for the new search record in the index. The `exact` and `fuzzy` terms in the referenced `search-document`s must be added
-in the original `exact` and `fuzzy` terms, and the `content` from the original must be enriched with the `content` of
-the referenced `search-document`s.
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO: </strong> Impossible with the
+currect approach: `my-service` does not know what build to use for `your-service`. That’s in bookmarkable in the
+current way of working.</div>
 
 ```json
 {
+  "structureVersion": 1,
+  "href": "/my-service/v1/x/123/y/abc",
+  "exact": ["/my-service/v1/x/123", "/my-service/v1/y/abc"],
+  "fuzzy": ["wizzy", "woozy"],
+  "content": {
+    "structureVersion": 1,
+    "discriminator": "R",
+    "layer": "optimized",
+    "premium": 7457,
+    "href": "?at=2023-01-173T15:22:39.212Z"
+  },
+  "referencedContent": {
+    "y": "/my-service/00068/v1/y/abc/search-document"
+  }
+}
+```
+
+The `content` object that is retrieved from the original `search-document` must be enriched with properties matching the
+properties of `referencedContent`. The value of these properties must be the value of the `content` of the referenced
+`search-document`. Aside from that, for each `search-document` in `referencedContent`, both the `exact` and `fuzzy`
+fields must be taken and added to the `exact` and `fuzzy` fields of the original `search-document`.
+
+To summarize, the `referencedContent` must be merged in the original `search-document` that can then be used as the base
+for the new search index document. The `exact` and `fuzzy` terms in the referenced `search-document`s must be added in
+the original `exact` and `fuzzy` terms, and the `content` from the original must be enriched with the `content` of the
+referenced `search-document`s.
+
+```json
+{
+  "id": "my-service_v1_x_123_y_abc_example",
   "discriminator": "R",
-  "href": "/x/123/y/abc",
-  "exact": ["/x/123", "/y/abc", "0123456789"],
-  "fuzzy": ["wizzy", "woozy", "wuzzy"],
+  "href": "/my-service/v1/x/123/y/abc",
+  "flowId": "5c10b07f-4327-4dfb-9913-12338123900f",
+  "mode": "example",
+  "exact": ["/my-service/v1/x/123", "/my-service/v1/y/abc", "0123456789"],
+  "fuzzy": ["wizzy", "woozy"],
   "content": {
     "layer": "optimized",
     "premium": 7457,
@@ -759,6 +788,7 @@ the referenced `search-document`s.
       "since": "2023-01-10"
     }
   },
-  "source": "my-service/00123/v1/x/123/y/abc/search-document"
+  "source": "my-service/00068/v1/x/123/y/abc/search-document",
+  "updatedAt": "2022-12-27T03:14:22.212775Z"
 }
 ```
