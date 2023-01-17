@@ -410,8 +410,8 @@ E.g.,
 ```
 
 Note that it is possible that `X` or `Y` are also relationships, and that in that case, data is also needed from the
-participating entities of that relationship, such as `XA` and `XB`. This is possible and must be evaluated case-by-case.
-If data is needed from `XA` and `XB`, it is recommended to also add the `href` of these entities to the `exact` field,
+participating entities of that relationship, such as `YA` and `YB`. This is possible and must be evaluated case-by-case.
+If data is needed from `YA` and `YB`, it is recommended to also add the `href` of these entities to the `exact` field,
 to make the relationships where entities are used, discoverable through the search index.
 
 ### When to update the search index?
@@ -432,8 +432,8 @@ contains data from one of the participating entities of that relationship, then 
 when that participating entity is updated.
 
 Take the example from earlier on to make this concrete: relationship `R` with participating entities `X` and `Y`, with
-`Y` itself a relationship with participation entities `Ya` and `Yb`. Suppose that `content` of `R` contains data of all
-entities. When `Yb` is updated, all search records of `Y` that have that `Yb` as participating entity, need to be
+`X` itself a relationship with participation entities `YA` and `YB`. Suppose that `content` of `R` contains data of all
+entities. When `YB` is updated, all search records of `Y` that have that `YB` as participating entity, need to be
 updated. For each of those `Y` relationships, all search records of `R` that have that `Y` as participating entity, need
 to be updated.
 
