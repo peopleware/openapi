@@ -549,23 +549,6 @@ search({
 The search result will contain search index documents for instances of `R` related to `/my-service/v1/y/abc`, but also
 of other relationships dependent on `Y` (e.g., `S`, `T`, `U`, …).
 
-```json
-{
-  "id": "my-service_v1_x_123_y_abc_example",
-  "discriminator": "R",
-  "href": "/my-service/v1/x/123/y/abc",
-  "flowId": "5c10b07f-4327-4dfb-9913-12338123900f",
-  "mode": "example",
-  "exact": ["/my-service/v1/x/123", "/my-service/v1/y/abc", …],
-  "fuzzy": […],
-  "content": {
-    "layer": "optimized",
-    "premium": 7457,
-    …
-  }
-}
-```
-
 For each record in the search results, a new search update event needs to be created with a reference to the
 `search-document` of that entity (or relationship).
 
@@ -581,14 +564,19 @@ For `R`:
   },
   "MessageBody": {
     "structureVersion": 1,
-    "href": "/my-service/00123/v1/x/123/y/abc/search-document"
+    "href": "/my-service/00068/v1/x/123/y/abc/search-document"
   }
 }
 ```
 
 Since the reference to the `search-document` is needed, this reference must be stored in the search record in the index.
-The property `source` is added for this: it contains the `href` of the `search-document` , _including the version of the
-service_, from which the search index record was created.
+The property `source` is added for this: it contains the `href` of the `search-document` , _including the build number
+of the service_, from which the search index record was created.
+
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO: </strong> Don’t agree: this could
+be a very old build that no longer exists. Use
+the
+build number from the original event? But that will not work cross-service.</div>
 
 ```json
 {
@@ -604,7 +592,7 @@ service_, from which the search index record was created.
     "premium": 7457,
     …
   },
-  "source": "my-service/00123/v1/x/123/y/abc/search-document"
+  "source": "my-service/00068/v1/x/123/y/abc/search-document"
 }
 ```
 
@@ -626,7 +614,7 @@ be added as extra filter when searching the `href` on the `exact` field.
     "ranking": 4,
     "class": "wuzzy",
     "since": "2023-01-10"
-    "href": "?at=2023-01-173T15:22:39.212Z"
+    "href": ".?at=2023-01-173T15:22:39.212Z"
   },
   "dependents": ["R"]
 }
@@ -644,13 +632,60 @@ updated entity itself), and cascade updates are handled asynchronously.
 
 ##### Optimization
 
-To prevent running into update loops and optimize the updates that are executed on the search index, an extra field
-`createdAt` is added to the search record. This `createdAt` field contains a timestamp that corresponds with the value
-found in the `x-date` headers that is returned from the original `search-document` request.
+It is clear that this process could cause recursion if we are not careful. A good architecture and design should not
+contain dependency cycles, but an extra stop criterion will protect us. To prevent running into update loops and
+optimize the updates that are executed on the search index, an extra field `updatedAt` is added to the search index
+document, that contains the value found in the `x-date` headers that is returned with the `search-document` request from
+which the search index document is created.
 
-When searching for dependents, an extra filter is added on this new `createdAt` field: only those dependents are
-considered that are older than the `createdAt`. When creating search update events in the context of _dependents
-processing_, this timestamp should also be added in the event.
+```json
+{
+  "id": "my-service_v1_x_123_y_abc_example",
+  "discriminator": "R",
+  "href": "/my-service/v1/x/123/y/abc",
+  "flowId": "5c10b07f-4327-4dfb-9913-12338123900f",
+  "mode": "example",
+  "exact": ["/my-service/v1/x/123", "/my-service/v1/y/abc", …],
+  "fuzzy": […],
+  "content": {
+    "layer": "optimized",
+    "premium": 7457,
+    …
+  },
+  "source": "my-service/00068/v1/x/123/y/abc/search-document",
+  "updatedAt": "2022-12-27T03:14:22.212775Z"
+}
+```
+
+When searching for dependents, an extra filter is added on this new `updatedAt` field: only those dependents are
+considered that are older than the `updatedAt`.
+
+```javascript
+search({
+  discriminator: 'R',
+  exact: ['/my-service/v1/y/abc'],
+  updatedAt: '2023-01-173T15:22:39.212800Z'
+})
+```
+
+When creating search update events in the context of _dependents processing_, this timestamp should also be added in the
+event.
+
+```json
+{
+  "MessageProperties": {
+    "CustomProperties": {
+      "flowId": "a2d890b1-fa83-4bbf-bc26-15ab282b2e00",
+      "mode": "example"
+    }
+  },
+  "MessageBody": {
+    "structureVersion": 1,
+    "href": "/my-service/00068/v1/x/123/y/abc/search-document",
+    "updatedAt": "2023-01-173T15:22:39.212800Z"
+  }
+}
+```
 
 #### Retrieving `content` in the context of relationships
 
