@@ -144,6 +144,35 @@ entities.
 Search for a relationship will typically filter both on the `exact` field with a `href` value and on the `discriminator`
 field with the type of the relationship.
 
+#### Remark: roles
+
+Note that relations in the search index as currently described, do not have the concept of a "role". This means that if
+the `exact` contains 2 `href`s, it is not clear which `href` fulfills which role of the relation. In practice, this is
+not an issue when each side of the relation is a different entity type as the structure of the `href` is different for
+each entity type.
+
+In the case where the structure of the `href` is the same, because it is a (directed) relation between entities of the
+same type, it is not clear which one of the `href`s fulfills which role. A solution to this is it to add the `href` of a
+participating entity 2 times in the `exact` list: once as before (just the plain `href`) and once with the role as a
+prefix.
+
+Suppose we want to store the relation `is-parent-of` in the search index. This relation is between 2 instances of the
+type `person`. The exact list would then look as follows:
+
+- /persons/v1/person/105
+- /persons/v1/person/719
+- parent:/persons/v1/person/105
+- child:/persons/v1/person/719
+
+With this information, one can still use queries in the same way as before, but when it is needed, one can also take
+into account the role. It is both possible to search where `/persons/v1/person/105` participates in the relation
+`is-parent-of` (no matter the role) and where `/persons/v1/person/105` fulfills the specific roles of `parent` or
+`child`.
+
+As long as all participating entities in a relation are of a different type, the addition of a specific `role` is not
+needed. We believe that as long as there is no need for this, the role should not be added. Whenever the need is there,
+the role can be added on an as-needed basis.
+
 #### Supported search criteria
 
 At the bare minimum, the following criteria must be supported:
@@ -272,17 +301,8 @@ example</div>
 
 Note that it is possible that `X` or `Y` are also relationships, and that in that case, data is also needed from the
 participating entities of that relationship, such as `Ya` and `Yb`. This is possible and must be evaluated case-by-case.
-If data is needed from `Ya` and `Yb`, it is recommended to also add the `href` of these entities to the `exact` field
-(or, see further, a `dependencies` field), to make the relationships where entities are used, discoverable through the
-search index.
-
-(REMARK: Relationships in the search index as currently described do not work for directional relationships between
-entities of the same type. Suppose that we have the relationship `is-parent-of` on the entity `person`. With the current
-model, it is impossible to handle this because the direction of the relationship is not stored in the index and the
-direction cannot be derived from the types of the participating entities. When `a` is parent of `b` and `b` is parent of
-`c` would be stored in the search index in the same way as when `b` is parent of both `a` and `c`, and also in the same
-way as when `a` and `c` are both parents of `b`. The reason is that the relationship is directional and between entities
-of the same type.)
+If data is needed from `Ya` and `Yb`, it is recommended to also add the `href` of these entities to the `exact` field,
+to make the relationships where entities are used, discoverable through the search index.
 
 ### When to update the search index?
 
