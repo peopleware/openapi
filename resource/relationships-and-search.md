@@ -437,6 +437,16 @@ search({
 This approach is preferable because it keeps the service code simple for an update (only one search update event for the
 updated entity itself), and cascade updates are handled asynchronously.
 
+##### Optimization
+
+To prevent running into update loops and optimize the updates that are executed on the search index, an extra field
+`createdAt` is added to the search record. This `createdAt` field contains a timestamp that corresponds with the value
+found in the `x-date` headers that is returned from the original `search-document` request.
+
+When searching for dependents, an extra filter is added on this new `createdAt` field: only those dependents are
+considered that are older than the `createdAt`. When creating search update events in the context of _dependents
+processing_, this timestamp should also be added in the event.
+
 #### Retrieving `content` in the context of relationships
 
 In the context of relationships, the `content` field can contain some properties of the relationship itself, and in
