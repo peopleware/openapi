@@ -627,6 +627,12 @@ search({
 })
 ```
 
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO: </strong> Contentious: this seems
+brittle. Is it worth the effort? What if this is cross-service? Now we have a dependency loop between 2 services.
+Isn’t it better to split `exact`, and use a new field `dependencies`, where we store `["/my-service/v1/x/123",
+"/my-service/v1/y/abc"]`, separate from `exact`? This is also a form of meta-information, but `R` stays in control.
+</div>
+
 This approach is preferable because it keeps the service code simple for an update (only one search update event for the
 updated entity itself), and cascade updates are handled asynchronously.
 
