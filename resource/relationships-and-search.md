@@ -472,41 +472,137 @@ We will not follow this approach.
 #### Trigger dependents inside the search event handler (better)
 
 In this approach, the service triggers only one search update event, specifically for the entity that was updated. In
-that case, the search update event contains a reference to the `search-document` of the updated entity. The search
-handler will retrieve the `search-document` (with a general structure) and will create or update the search record.
+that case, the search update event contains a reference to the `search-document` of the updated entity.
 
-<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add event example</div>
+Suppose, in the example, `Y` gets updated:
 
-Subsequently, the search handler must find all dependent relationships. This can be done by searching the _index_ with
-exact match on the `exact` field with the value of the `href` of the updated entity. For each record in the search
-results, a new search update event needs to be created with a reference to the `search-document` of that entity (or
-relationship).
+```json
+{
+  "MessageProperties": {
+    "CustomProperties": {
+      "flowId": "a2d890b1-fa83-4bbf-bc26-15ab282b2e00",
+      "mode": "example"
+    }
+  },
+  "MessageBody": {
+    "structureVersion": 1,
+    "href": "/my-service/00123/v1/y/abc/search-document"
+  }
+}
+```
+
+The search handler will retrieve the `search-document` for `Y` (with a general structure) and will create or update the
+search index document, as described above.
+
+```json
+{
+  "structureVersion": 1,
+  "exact": ["0123456789"],
+  "fuzzy":  ["wizzy", "woozy", "wuzzy"],
+  "content": {
+    "structureVersion": 1,
+    "discriminator": "Y",
+    "name": "wizzy",
+    "category": "woozy",
+    "registrationId": "0123456789",
+    "ranking": 4,
+    "class": "wuzzy",
+    "since": "2023-01-10"
+    "href": "?at=2023-01-173T15:22:39.212Z"
+  }
+}
+```
+
+```json
+{
+  "id": "my-service_v1_y_abc_example",
+  "discriminator": "Y",
+  "href": "/my-service/v1/y/abc",
+  "flowId": "a2d890b1-fa83-4bbf-bc26-15ab282b2e00",
+  "mode": "example",
+  "exact": ["0123456789"],
+  "fuzzy": ["wizzy", "woozy", "wuzzy"],
+  "content": {
+    "structureVersion": 1,
+    "discriminator": "Y",
+    "name": "wizzy",
+    "category": "woozy",
+    "registrationId": "0123456789",
+    "ranking": 4,
+    "class": "wuzzy",
+    "since": "2023-01-10",
+    "href": "/my-service/v1/y/abc?at=2023-01-173T15:22:39.212Z"
+  }
+}
+```
+
+Subsequently, the search handler must find all dependent entities (`R` in the example). This can be done by searching
+the _index_ with exact match on the `exact` field (and the `mode` from the event) with the value of the `href` of the
+updated entity (`Y`).
 
 ```javascript
 search({
-  exact: ['/y/abc']
+  exact: ['/my-service/v1/y/abc']
 })
+```
+
+The search result will contain search index documents for instances of `R` related to `/my-service/v1/y/abc`, but also
+of other relationships dependent on `Y` (e.g., `S`, `T`, `U`, …).
+
+```json
+{
+  "id": "my-service_v1_x_123_y_abc_example",
+  "discriminator": "R",
+  "href": "/my-service/v1/x/123/y/abc",
+  "flowId": "5c10b07f-4327-4dfb-9913-12338123900f",
+  "mode": "example",
+  "exact": ["/my-service/v1/x/123", "/my-service/v1/y/abc", …],
+  "fuzzy": […],
+  "content": {
+    "layer": "optimized",
+    "premium": 7457,
+    …
+  }
+}
+```
+
+For each record in the search results, a new search update event needs to be created with a reference to the
+`search-document` of that entity (or relationship).
+
+For `R`:
+
+```json
+{
+  "MessageProperties": {
+    "CustomProperties": {
+      "flowId": "a2d890b1-fa83-4bbf-bc26-15ab282b2e00",
+      "mode": "example"
+    }
+  },
+  "MessageBody": {
+    "structureVersion": 1,
+    "href": "/my-service/00123/v1/x/123/y/abc/search-document"
+  }
+}
 ```
 
 Since the reference to the `search-document` is needed, this reference must be stored in the search record in the index.
 The property `source` is added for this: it contains the `href` of the `search-document` , _including the version of the
 service_, from which the search index record was created.
 
-<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add search-document
-example</div>
-
 ```json
 {
+  "id": "my-service_v1_x_123_y_abc_example",
   "discriminator": "R",
-  "href": "/x/123/y/abc",
-  "exact": ["/x/123", "/y/abc", "0123456789"],
-  "fuzzy": ["wizzy", "woozy"],
+  "href": "/my-service/v1/x/123/y/abc",
+  "flowId": "5c10b07f-4327-4dfb-9913-12338123900f",
+  "mode": "example",
+  "exact": ["/my-service/v1/x/123", "/my-service/v1/y/abc", …],
+  "fuzzy": […],
   "content": {
     "layer": "optimized",
     "premium": 7457,
-    "yName": "wizzy",
-    "yCategory": "woozy",
-    "yRegistrationId": "0123456789"
+    …
   },
   "source": "my-service/00123/v1/x/123/y/abc/search-document"
 }
@@ -516,22 +612,21 @@ It makes sense to apply an extra filter on the relationships that must be search
 of an entity will be extended with a property `dependents`. This property contains an array of discriminators that must
 be added as extra filter when searching the `href` on the `exact` field.
 
-<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add search-document
-example</div>
-
 ```json
 {
-  "discriminator": "Y",
-  "href": "/y/abc",
+  "structureVersion": 1,
   "exact": ["0123456789"],
-  "fuzzy": ["wizzy", "woozy"],
+  "fuzzy":  ["wizzy", "woozy", "wuzzy"],
   "content": {
+    "structureVersion": 1,
+    "discriminator": "Y",
     "name": "wizzy",
     "category": "woozy",
     "registrationId": "0123456789",
     "ranking": 4,
     "class": "wuzzy",
     "since": "2023-01-10"
+    "href": "?at=2023-01-173T15:22:39.212Z"
   },
   "dependents": ["R"]
 }
@@ -540,7 +635,7 @@ example</div>
 ```javascript
 search({
   discriminator: 'R',
-  exact: ['/y/abc']
+  exact: ['/my-service/v1/y/abc']
 })
 ```
 
