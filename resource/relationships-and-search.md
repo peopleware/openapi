@@ -25,44 +25,125 @@ As an example, take an entity `X`:
 
 ### Core points
 
-The main points are the following:
+There is one search index that supports all types of searchable entities.
 
-- there is one search index that supports all types of searchable entities
-- the search index is kept up-to-date using the following general flow
-  - searchable entity is updated
-  - event is pushed on the search queue with a reference to the `search-document` of the entity
-  - search handler processes the event
-    - fetches the `search-document` that has the same structure for all entities
-    - builds a record for the search index using the `search-document`
-    - registers the record in the search index
-- the record for the search index has the following fields
-  - `discriminator`: the type of entity, can be filtered upon with exact match
-  - `href`: a reference to the entity, can be filtered upon with exact match
-  - `exact`: a list of strings that are searchable in an exact match manner
-  - `fuzzy`: a list of strings that are searchable in a non-exact match manner
-  - `content`: a JSON string with a representation of the entity, content is entity type specific, and thus
-    `discriminator` specific
+The search index is kept up-to-date using the following general flow:
 
-E.g.:
+- A searchable entity is updated
 
-<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add event example</div>
+- An event is pushed on the search queue with a reference to the `search-document` of the entity. This contains
 
-<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add search-document
-example</div>
+  - the reference to the service,
+  - the build number (so we can be sure that the search document exists as intended when the search handler processes
+    the request),
+  - the `mode`,
+  - the reference to the entity in the service with the given `mode`, and
+  - the `flowId` of the request that initiated the event.
+
+- The search handler processes the event:
+  - fetches the `search-document` that has the same structure for all entities
+  - builds a document for the search index using the `search-document`
+  - registers the search index document in the search index
+
+The search index document has the following fields:
+
+- `id`: The search index technology we use requires a unique identifier`id` of the search index document, so it can be
+  updated later. Some syntax rules apply.
+- `mode`: any search request happens for an exact mode
+- `flowId`: added to be able to cross-reference the search index document with logs.
+- `discriminator`: the type of entity, can be filtered upon with exact match
+- `href`: A reference to the entity. This is used for authorization with RAAs when a search is initiated from a client.
+- `exact`: a list of strings that are searchable in an exact match manner
+- `fuzzy`: a list of strings that are searchable in a non-exact match manner
+- `content`: A JSON string with a representation of the entity. `content` is entity type specific, and thus
+  `discriminator` specific.
+
+E.g.: A service posts an event concerning a change in a `Y` instance:
 
 ```json
 {
-  "discriminator": "Y",
-  "href": "/y/abc",
+  "MessageProperties": {
+    "CustomProperties": {
+      "flowId": "9fc6ad82-6626-4ac3-bc1c-17a3fbd5dc3f",
+      "mode": "example"
+    }
+  },
+  "MessageBody": {
+    "structureVersion": 1,
+    "href": "/my-service/00123/v1/y/abc/search-document"
+  }
+}
+```
+
+The search handler retrieves the search document from the service, at the event’s `MessageBody.href`, for the given
+`CustomProperties.mode`, and uses the `CustomProperties.flowId`:
+
+```json
+{
+  "structureVersion": 1,
   "exact": ["0123456789"],
-  "fuzzy": ["wizzy", "woozy", "wuzzy"],
+  "fuzzy":  ["wizzy", "woozy", "wuzzy"],
   "content": {
+    "structureVersion": 1,
+    "discriminator": "Y",
     "name": "wizzy",
     "category": "woozy",
     "registrationId": "0123456789",
     "ranking": 4,
     "class": "wuzzy",
     "since": "2023-01-10"
+    "href": "?at=2020-01-23T15:22:39.212Z",
+  }
+}
+```
+
+The `content` is, more or less, what will be returned to a client when a search matches. The client uses the `content`
+to show search results quickly, without additional service calls, allowing to click through to the details of a found
+resource. The `content` contains the `discriminator`, so the client knows the type of the found resource. The `content`
+contains the `href`, so the client knows where to get the details of the found resource.
+
+The `href` in the search document is relative.
+
+The search handler converts this information into a search index document. It copies the `discriminator` from the
+`content` to the top level, because we need to provide the possibility for clients to search for resources of an exact
+type. It creates a variant of the `href`, the _canonical_ URI, based on the relative URI in the search document
+`content` and the URI of the search document from the event, where the client can find the details of the resource. The
+canonical URI
+
+- is used as `href` on the top level of the search index document, where it is used for authorization, matching a RAA,
+  and
+- replaces the `content.href` for the client.
+
+The canonical URI does not include a build number of the service, since the client determines what build to use for
+itself (it might not be compatible with another build). The `content.href` does add the `createdAt` of the search
+document as query parameter. In the client, the user would navigate to the indexed version of the entity, and not
+necessarily the latest. The search index is eventually consistent, and we want to show the user the same information as
+was used in finding the entity.
+
+An `id` with an allowed syntax is calculated from the canonical URI and the `mode`.
+
+The `mode` is not included in the `content`. The client supplies a `mode` in a search request, and only index search
+documents with that exact mode are returned.
+
+```json
+{
+  "id": "my-service_v1_y_abc_example",
+  "discriminator": "Y",
+  "href": "/my-service/v1/y/abc",
+  "flowId": "9fc6ad82-6626-4ac3-bc1c-17a3fbd5dc3f",
+  "mode": "example",
+  "exact": ["0123456789"],
+  "fuzzy": ["wizzy", "woozy", "wuzzy"],
+  "content": {
+    "structureVersion": 1,
+    "discriminator": "Y",
+    "name": "wizzy",
+    "category": "woozy",
+    "registrationId": "0123456789",
+    "ranking": 4,
+    "class": "wuzzy",
+    "since": "2023-01-10"
+    "href": "/my-service/v1/y/abc?at=2020-01-23T15:22:39.212Z",
   }
 }
 ```
@@ -89,6 +170,22 @@ faster for the client and additionally reduces load on the backend services.
 
 Do note that what is stored inside the `content` field is specific for each entity type. Exactly what must be stored,
 depends on the needs of the client or UI for that specific entity type.
+
+In the example, the client would receive the `content` of the search index document:
+
+```json
+{
+  "structureVersion": 1,
+  "discriminator": "Y",
+  "name": "wizzy",
+  "category": "woozy",
+  "registrationId": "0123456789",
+  "ranking": 4,
+  "class": "wuzzy",
+  "since": "2023-01-10"
+  "href": "/my-service/v1/y/abc?at=2020-01-23T15:22:39.212Z"
+}
+```
 
 ### When to update the search index?
 
