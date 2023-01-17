@@ -142,8 +142,8 @@ documents with that exact mode are returned.
     "registrationId": "0123456789",
     "ranking": 4,
     "class": "wuzzy",
-    "since": "2023-01-10"
-    "href": "/my-service/v1/y/abc?at=2020-01-23T15:22:39.212Z",
+    "since": "2023-01-10",
+    "href": "/my-service/v1/y/abc?at=2020-01-23T15:22:39.212Z"
   }
 }
 ```
@@ -158,6 +158,12 @@ When performing a search for an entity, the following criteria can be used:
 - `fuzzy`: a contains search, the given term must appear as part of a member of the `fuzzy` field, used for names,
   descriptions, ...
 
+For all search requests,
+
+- the `mode` of the request is used with an exact match on the `mode` in the search index document, and
+- the RAAs of the request’s authenticated subject are converted to a regular expression that must match the `href` of
+  the search index document.
+
 ### Display information through `content`
 
 The `content` field in the search record is introduced as an optimization. Without the `content` field, the client would
@@ -165,8 +171,8 @@ first need to perform the search on the search index and would then subsequently
 found entity using the `href` field.
 
 The client often needs to show a limited amount of data as part of the search result and adding that information in the
-`content` field saves a call to the backend for _each_ record in the search results. This makes the search for entities
-faster for the client and additionally reduces load on the backend services.
+`content` field saves a call to the service for _each_ record in the search results. This makes the search for entities
+faster for the client and additionally reduces load on the services.
 
 Do note that what is stored inside the `content` field is specific for each entity type. Exactly what must be stored,
 depends on the needs of the client or UI for that specific entity type.
@@ -182,7 +188,7 @@ In the example, the client would receive the `content` of the search index docum
   "registrationId": "0123456789",
   "ranking": 4,
   "class": "wuzzy",
-  "since": "2023-01-10"
+  "since": "2023-01-10",
   "href": "/my-service/v1/y/abc?at=2020-01-23T15:22:39.212Z"
 }
 ```
@@ -285,7 +291,7 @@ To find all `R` instances for a given `X` with `href = /x/123` in the example:
 - `exact`: must contain the `href` of `X`
 
 ```javascript
-search({ discriminator: 'R', exact: ['/x/123'] })
+search({ discriminator: 'R', exact: ['/my-service/v1/x/123'] })
 ```
 
 To find all `R` instances for a given `Y` with `href = /y/abc` in the example:
@@ -294,18 +300,21 @@ To find all `R` instances for a given `Y` with `href = /y/abc` in the example:
 - `exact`: must contain the `href` of `Y`
 
 ```javascript
-search({ discriminator: 'R', exact: ['/y/abc'] })
+search({ discriminator: 'R', exact: ['/my-service/v1/y/abc'] })
 ```
 
-The record in the search index for `R` looks like:
+The search index document for `R` looks like:
 
 E.g.:
 
 ```json
 {
+  "id": "my-service_v1_x_123_y_abc_example",
   "discriminator": "R",
-  "href": "/x/123/y/abc",
-  "exact": ["/x/123", "/y/abc"],
+  "href": "/my-service/v1/x/123/y/abc",
+  "flowId": "5c10b07f-4327-4dfb-9913-12338123900f",
+  "mode": "example",
+  "exact": ["/my-service/v1/x/123", "/my-service/v1/y/abc"],
   "fuzzy": …,
   "content": …
 }
@@ -322,34 +331,38 @@ search record. The following is needed:
 - `exact`: contains the `href` of `X`, contains the _exact_ search terms of `Y`
 - `fuzzy`: contains _fuzzy_ search terms of `Y`
 
-When search terms for one of the participating entities must be added in the search record, the system needs to retrieve
-the `search-document` of that participating entity. In this case, the `search-document` for `Y` is needed to obtain the
-search terms of `Y`.
+When search terms for one of the participating entities must be added in the search record, somewhere the system needs
+to retrieve the `search-document` of that participating entity. In this case, the `search-document` for `Y` is needed to
+obtain the search terms of `Y`.
 
-The record in the search index for `R` looks like:
-
-E.g.:
-
-<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add search-document
-example</div>
+E.g., with a search index document for `R` that looks like:
 
 ```json
 {
+  "id": "my-service_v1_x_123_y_abc_example",
   "discriminator": "R",
-  "href": "/x/123/y/abc",
-  "exact": ["/x/123", "/y/abc", "0123456789"],
+  "href": "/my-service/v1/x/123/y/abc",
+  "flowId": "5c10b07f-4327-4dfb-9913-12338123900f",
+  "mode": "example",
+  "exact": ["/my-service/v1/x/123", "/my-service/v1/y/abc", "0123456789"],
   "fuzzy": ["wizzy", "woozy"],
   "content": …
 }
 ```
 
-Using this it is possible to search on relationship `R` using search terms that refer to `Y`, for a given `X`.
+it is possible to search on relationship `R` using search terms that refer to `Y`, for a given `X`.
 
 ```javascript
 search({
   discriminator: 'R',
   // must match '/x/123` and '0123456789', which is a property value of Y
-  exact: ['/x/123', '0123456789'],
+  exact: ['/my-service/v1/x/123', '0123456789']
+})
+
+search({
+  discriminator: 'R',
+  // must match '/x/123`
+  exact: ['/my-service/v1/x/123'],
   // fuzzy match properties of related Y
   fuzzy: ['wizzy', 'woo']
 })
@@ -368,7 +381,7 @@ instances of `Y` related to an instance of `X`, which makes searching functional
 
 The general search record contains a `content` field, as was discussed in the section on entity types. The `content`
 field is introduced as an optimization: it contains the information that the client can use to visualize a search result
-without the need for extra backend calls.
+without the need for extra service calls.
 
 The contents of the `content` field are specific for the relationship type and depend on the needs of the UI for the
 instance of that relationship type. The `content` of a relationship field can contain some metadata of the relationship
@@ -377,14 +390,14 @@ itself. In many cases however, the `content` field of a relationship `R` will al
 
 E.g.,
 
-<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO</strong>: Add search-document
-example</div>
-
 ```json
 {
+  "id": "my-service_v1_x_123_y_abc_example",
   "discriminator": "R",
-  "href": "/x/123/y/abc",
-  "exact": ["/x/123", "/y/abc", "0123456789"],
+  "href": "/my-service/v1/x/123/y/abc",
+  "flowId": "5c10b07f-4327-4dfb-9913-12338123900f",
+  "mode": "example",
+  "exact": ["/my-service/v1/x/123", "/my-service/v1/y/abc", "0123456789"],
   "fuzzy": ["wizzy", "woozy"],
   "content": {
     "layer": "optimized",
@@ -397,8 +410,8 @@ example</div>
 ```
 
 Note that it is possible that `X` or `Y` are also relationships, and that in that case, data is also needed from the
-participating entities of that relationship, such as `Ya` and `Yb`. This is possible and must be evaluated case-by-case.
-If data is needed from `Ya` and `Yb`, it is recommended to also add the `href` of these entities to the `exact` field,
+participating entities of that relationship, such as `XA` and `XB`. This is possible and must be evaluated case-by-case.
+If data is needed from `XA` and `XB`, it is recommended to also add the `href` of these entities to the `exact` field,
 to make the relationships where entities are used, discoverable through the search index.
 
 ### When to update the search index?
