@@ -597,8 +597,8 @@ build number from the original event? But that will not work cross-service.</div
 ```
 
 It makes sense to apply an extra filter on the relationships that must be searched in the index. The `search-document`
-of an entity will be extended with a property `dependents`. This property contains an array of discriminators that must
-be added as extra filter when searching the `href` on the `exact` field.
+and search index document of an entity will be extended with a property `dependents`. This property contains an array of
+discriminators that must be added as extra filter when searching the `href` on the `exact` field.
 
 ```json
 {
@@ -653,6 +653,7 @@ which the search index document is created.
     …
   },
   "source": "my-service/00068/v1/x/123/y/abc/search-document",
+  "dependents": [],
   "updatedAt": "2022-12-27T03:14:22.212775Z"
 }
 ```
@@ -710,6 +711,7 @@ search index record `content` for `R` contains information about `Y`:
     "yCategory": "woozy",
     "yRegistrationId": "0123456789"
   },
+  "dependents": [],
   "source": "my-service/00068/v1/x/123/y/abc/search-document",
   "updatedAt": "2022-12-27T03:14:22.212775Z"
 }
@@ -751,6 +753,7 @@ current way of working.</div>
     "premium": 7457,
     "href": "?at=2023-01-173T15:22:39.212Z"
   },
+  "dependents": [],
   "referencedContent": {
     "y": "/my-service/00068/v1/y/abc/search-document"
   }
@@ -788,6 +791,7 @@ referenced `search-document`s.
       "since": "2023-01-10"
     }
   },
+  "dependents": [],
   "source": "my-service/00068/v1/x/123/y/abc/search-document",
   "updatedAt": "2022-12-27T03:14:22.212775Z"
 }
