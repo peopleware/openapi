@@ -326,6 +326,8 @@ Search index documents have the following properties:
 
 - `mode`: any search request happens for an exact `mode`
 
+- `source`: canonical URI where the search document from which this search index document was build was retrieved
+
 - `flowId`: to be able to cross-reference the search index document with logs
 
 - `createdAt`: the value of the `x-date` header that is returned with the search document request from which the search
@@ -369,6 +371,8 @@ This is a stable and unique identification of the search index document in the s
 
 The search index document contains the `mode`, because each search should only return matches from an exact `mode`.
 
+`source` is added for handling dependent updates (described later). It is the value of the `href` in the event.
+
 The `flowId` is added to easily cross-reference search index document instances with logs, events, and recorded changes
 in resources.
 
@@ -410,6 +414,7 @@ document:
 {
   "id": "my-service_v1_y_abc_example",
   "mode": "example",
+  "source": "/my-service/v1/y/abc/search-document",
   "flowId": "74551439-d945-41c9-89ab-0805087c4ec0",
   "createdAt": "2022-12-27T03:14:22.212775Z",
   "discriminator": "Y",
@@ -451,6 +456,7 @@ information from the search index document of `/my-service/v1/y/abc` as referenc
 {
   "id": "my-service_v1_z_123_y_abc_example",
   "mode": "example",
+  "source": "/my-service/v1/x/123/y/abc/search-document",
   "flowId": "0a170f19-e545-4699-9495-ff2e8067f710",
   "createdAt": "2022-12-28T12:48:09.558745Z",
   "discriminator": "R",
@@ -636,8 +642,9 @@ indexSearch({
 // returns search index document for `/my-service/v1/x/123y/abc`
 ```
 
-The search index document that is returned, is the one represented above for `/my-service/v1/x/123y/abc`. It must be
-updated. The following event is posted on the search topic:
+The search index document that is returned, is the one represented above for `/my-service/v1/x/123/y/abc`. It must be
+updated. The value of its `source` is `/my-service/v1/x/123/y/abc/search-document`. `The following event is posted on
+the search topic:
 
 ```json
 {
