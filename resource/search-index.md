@@ -86,8 +86,9 @@ Note that the architecture is acyclic.
 
 ## General process
 
-_Services_ are triggered from outside, by a client, to create or update a resource in a given `mode`. After this is done
-and committed, the service posts a minimal event on the _search topic_ for asynchronous processing.
+_Services_ are triggered from outside, by a client, to create or update a resource in a particular `mode`, with a
+`flowId`. After this is done and committed, the service posts a minimal event on the _search topic_ for asynchronous
+processing.
 
 The _search topic handler_ picks up the event, and requests the _search document_ for the resource from the originating
 service. This contains the most up-to-date search-relevant information at this time, and contains general data
