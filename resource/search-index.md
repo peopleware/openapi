@@ -254,17 +254,17 @@ The search documents a service offer are specializations of a common structure. 
 
 - `fuzzy`: array of strings on which the represented resource is to be found with a fuzzy match
 
-- `dependendencies`: array of canonical URIs of the resources the represented resource depends on; when the search index
-  document for the referenced resources is updated, the search index document for the represented resource needs to be
-  updated too
+- `dependencies`: array of canonical URIs of the resources the represented resource depends on; used to find collections
+  of associated dependent represented resources from a resource that is a dependency
 
 - `content`: A data structure that is different for each resource, but has some common properties:
 
   - `structureVersion`: an integer describing the version of this data structure
   - `discriminator`: the type of represented resource
 
-- `referencedContent`: Dictionary of property names to canonical URIs of other resources. The search document of the
-  referenced resources will be spliced into the content by the search topic handler.
+- `referenced`: Dictionary of property names to canonical URIs of other resources. The search document of the referenced
+  resources will be spliced into the content by the search topic handler. When the search index document for the
+  referenced resources is updated, the search index document for the represented resource needs to be updated too.
 
 The `content` is, more or less, what will be returned to a client when a search matches. The client uses the `content`
 to show search results quickly, without additional service calls. The `content` contains the `discriminator`, so the
@@ -291,7 +291,7 @@ Below is the example of the search document for a resource of type `Y` and `R`:
     "class": "wuzzy",
     "since": "2023-01-10"
   },
-  "referencedContent": {}
+  "referenced": {}
 }
 ```
 
@@ -303,15 +303,15 @@ Note that there is no mention of `your-service` in this representation.
   "href": ".?at=2022-12-28T12:48:09.558745Z",
   "exact": ["7457"],
   "fuzzy": [],
-  "dependencies": ["/my-service/v1/y/abc"],
+  "dependencies": ["/some-service/v1/x/123", "/my-service/v1/y/abc"],
   "content": {
     "structureVersion": 1,
     "discriminator": "R",
     "layer": "optimized",
     "premium": 7457,
-    "x": "/my-service/v1/x/123"
+    "x": "/some-service/v1/x/123"
   },
-  "referencedContent": {
+  "referenced": {
     "y": "/my-service/v1/y/abc"
   }
 }
@@ -349,7 +349,10 @@ Search index documents have the following properties:
 - `href`: The canonical URI of the resource. This is used for authorization with RAAs when a search is initiated from a
   client.
 
-- `dependendencies`: array of canonical URIs of the resources the represented resource depends on; when the search index
+- `dependencies`: array of canonical URIs of the resources the represented resource depends on; used to find collections
+  of associated dependent represented resources from a resource that is a dependency
+
+- `referenced`: array of canonical URIs of the resources this search index document depends on; when the search index
   document for the referenced resources is updated, the search index document for the represented resource needs to be
   updated too
 
@@ -393,11 +396,14 @@ same as the value in the `at` query parameter for a simple update, of an isolate
 The search topic handler copies the `discriminator` from the `searchDocument.content` to the top level, because we need
 to provide the possibility for clients to search for resources of an exact type.
 
-The top level `href` is used in authorization (described later), and `dependencies` is used to propage updates
-(described later). The `dependencies` value is copied from the search document.
+The top level `href` is used in authorization (described later).
 
-`exact` and `fuzzy` are used in different kinds of search requests. These are copied from the retrieved search document,
-and possibly extended with referenced content.
+The top level `referenced` property is related to the `referenced` property in the search document. It is described
+below.
+
+`dependencies` is used so this search index document can be found from resources that are dependencies (described
+later). The `dependencies` value is copied from the search document. `exact` and `fuzzy` are used in different kinds of
+search requests. These are copied from the retrieved search document, and possibly extended with referenced content.
 
 #### Content
 
@@ -431,6 +437,7 @@ document:
   "discriminator": "Y",
   "href": "/my-service/v1/y/abc",
   "dependencies": [],
+  "referenced": [],
   "exact": ["0123456789"],
   "fuzzy": ["wizzy", "woozy", "wuzzy"],
   "content": {
@@ -447,9 +454,9 @@ document:
 }
 ```
 
-#### Referenced content
+#### Referenced content, exact, and fuzzy
 
-When the search document contains entries in the `referencedContent` dictionary, the search topic handler splices extra
+When the search document contains entries in the `referenced` dictionary, the search topic handler splices extra
 information into the new search index `content`, `exact`, and `fuzzy`. For every entry `(key, value)` in the dictionary,
 it
 
@@ -472,7 +479,8 @@ information from the search index document of `/my-service/v1/y/abc` as referenc
   "createdAt": "2022-12-28T12:48:09.558745Z",
   "discriminator": "R",
   "href": "/your-service/v1/x/123/y/abc",
-  "dependencies": ["/my-service/v1/y/abc"],
+  "dependencies": ["/some-service/v1/x/123", "/my-service/v1/y/abc"],
+  "referenced": ["/my-service/v1/y/abc"],
   "exact": ["7457", "0123456789"],
   "fuzzy": ["wizzy", "woozy", "wuzzy"],
   "content": {
@@ -496,6 +504,10 @@ information from the search index document of `/my-service/v1/y/abc` as referenc
   }
 }
 ```
+
+Since the search index document (`/your-service/v1/x/123/y/abc`) now contains information from another resource
+(`/my-service/v1/y/abc`), this search index document needs to be updated when the search index document of the other
+resource changes to.
 
 ## Global search
 
