@@ -170,14 +170,16 @@ Events have the following properties:
 
 - `href`: The canonical URI where the search document for the created or changed resource can be retrieved.
 
-When a resource of type `Y` is created or updated in `my-service`, and event is posted on the search topic that looks
-like:
+- `createdBefore`: optional property, that signals to only consider possible dependents that are not already updated
+
+When a resource of type `Y`, respectively `R`, is created or updated in `my-service`, and event is posted on the search
+topic that looks like:
 
 ```json
 {
   "MessageProperties": {
     "CustomProperties": {
-      "flowId": "9fc6ad82-6626-4ac3-bc1c-17a3fbd5dc3f",
+      "flowId": "74551439-d945-41c9-89ab-0805087c4ec0",
       "mode": "example",
       "build": "00456"
     }
@@ -189,7 +191,23 @@ like:
 }
 ```
 
-## Search topic handler
+```json
+{
+  "MessageProperties": {
+    "CustomProperties": {
+      "flowId": "0a170f19-e545-4699-9495-ff2e8067f710",
+      "mode": "example",
+      "build": "00456"
+    }
+  },
+  "MessageBody": {
+    "structureVersion": 1,
+    "href": "/my-service/v1/x/123/y/abc/search-document"
+  }
+}
+```
+
+## Search topic handler, without dependencies
 
 ### Pick up event, and get the search document
 
@@ -230,8 +248,9 @@ The search documents a service offer are specializations of a common structure. 
 
 - `fuzzy`: array of strings on which the represented resource is to be found with a fuzzy match
 
-- `dependendencies`: array of canonical URIs of the resources; the search index document for this resource needs to be
-  updated too when the search index document for the reference resources is updated
+- `dependendencies`: array of canonical URIs of the resources the represented resource depends on; when the search index
+  document for the referenced resources is updated, the search index document for the represented resource needs to be
+  updated too
 
 - `content`: A data structure that is different for each resource, but has some common properties:
 
@@ -276,7 +295,7 @@ Below is the example of the search document for a resource of type `Y` and `R`:
   "href": ".?at=2022-12-28T12:48:09.558745Z",
   "exact": ["7457"],
   "fuzzy": [],
-  "dependencies": ["/my-service/v1/x/123", "/my-service/v1/y/abc"],
+  "dependencies": ["/my-service/v1/y/abc"],
   "content": {
     "structureVersion": 1,
     "discriminator": "R",
@@ -317,6 +336,10 @@ Search index documents have the following properties:
 - `href`: The canonical URI of the resource. This is used for authorization with RAAs when a search is initiated from a
   client.
 
+- `dependendencies`: array of canonical URIs of the resources the represented resource depends on; when the search index
+  document for the referenced resources is updated, the search index document for the represented resource needs to be
+  updated too
+
 - `exact`: a list of strings that are searchable in an exact match manner
 
 - `fuzzy`: a list of strings that are searchable in with a fuzzy match
@@ -355,7 +378,8 @@ same as the value in the `at` query parameter for a simple update, of an isolate
 The search topic handler copies the `discriminator` from the `searchDocument.content` to the top level, because we need
 to provide the possibility for clients to search for resources of an exact type.
 
-The top level `href` is used in authorization (described later).
+The top level `href` is used in authorization (described later), and `dependencies` is used to propage updates
+(described later). The `dependencies` value is copied from the search document.
 
 `exact` and `fuzzy` are used in different kinds of search requests. These are copied from the retrieved search document,
 and possibly extended with referenced content.
@@ -386,10 +410,11 @@ document:
 {
   "id": "my-service_v1_y_abc_example",
   "mode": "example",
-  "flowId": "a2d890b1-fa83-4bbf-bc26-15ab282b2e00",
+  "flowId": "74551439-d945-41c9-89ab-0805087c4ec0",
   "createdAt": "2022-12-27T03:14:22.212775Z",
   "discriminator": "Y",
   "href": "/my-service/v1/y/abc",
+  "dependencies": [],
   "exact": ["0123456789"],
   "fuzzy": ["wizzy", "woozy", "wuzzy"],
   "content": {
@@ -426,10 +451,11 @@ information from the search index document of `/my-service/v1/y/abc` as referenc
 {
   "id": "my-service_v1_z_123_y_abc_example",
   "mode": "example",
-  "flowId": "a2d890b1-fa83-4bbf-bc26-15ab282b2e00",
+  "flowId": "0a170f19-e545-4699-9495-ff2e8067f710",
   "createdAt": "2022-12-28T12:48:09.558745Z",
   "discriminator": "R",
   "href": "/my-service/v1/x/123/y/abc",
+  "dependencies": ["/my-service/v1/y/abc"],
   "exact": ["7457", "0123456789"],
   "fuzzy": ["wizzy", "woozy", "wuzzy"],
   "content": {
@@ -454,7 +480,7 @@ information from the search index document of `/my-service/v1/y/abc` as referenc
 }
 ```
 
-## Search
+## Global search
 
 A client can search for matching resources by sending a search request to the search service, with paging parameters. A
 `mode` has to be supplied with each search request. Clients can issue search requests with any combination of
@@ -487,21 +513,155 @@ Examples for searches, applied to the 2 examples above, follow. The call returns
 authorized for, paged.
 
 ```javascript
-search({ exact: '0123456789' }) // returns `/my-service/v1/y/abc` and `/my-service/v1/x/123y/abc`
-
-search({ discriminators: ['Y'], exact: '0123456789' }) // returns `/my-service/v1/y/abc`
-
-search({ discriminators: ['R'], exact: '0123456789' }) // returns `/my-service/v1/x/123y/abc`
-
-search({ discriminators: ['X', 'Y', 'R'], exact: '0123456789' })
+search({
+  authorization: 'Bearer XXXXX',
+  mode: 'example',
+  flowId: 'b5a9f49a-cf7e-4607-94a4-0c61f3821c4f',
+  exact: '0123456789'
+})
 // returns `/my-service/v1/y/abc` and `/my-service/v1/x/123y/abc`
 
-search({ fuzzy: 'wizzy woo' }) // returns `/my-service/v1/y/abc` and `/my-service/v1/x/123y/abc`
+search({
+  authorization: 'Bearer XXXXX',
+  mode: 'example',
+  flowId: 'bd865481-ad8a-4205-9670-dc9548461004',
+  discriminators: ['Y'],
+  exact: '0123456789'
+})
+// returns `/my-service/v1/y/abc`
 
-search({ discriminators: ['Y'], fuzzy: 'wizzy woo' }) // returns `/my-service/v1/y/abc`
+search({
+  authorization: 'Bearer XXXXX',
+  mode: 'example',
+  flowId: '04e3156a-14da-423a-a9ec-676e7d08af3d',
+  discriminators: ['R'],
+  exact: '0123456789'
+})
+// returns `/my-service/v1/x/123y/abc`
 
-search({ discriminators: ['R'], fuzzy: 'wizzy woo' }) // returns `/my-service/v1/x/123y/abc`
+search({
+  authorization: 'Bearer XXXXX',
+  mode: 'example',
+  flowId: 'b5a9f49a-cf7e-4607-94a4-0c61f3821c4f',
+  discriminators: ['X', 'Y', 'R'],
+  exact: '0123456789'
+})
+// returns `/my-service/v1/y/abc` and `/my-service/v1/x/123y/abc`
 
-search({ discriminators: ['X', 'Y', 'R'], fuzzy: 'wizzy woo' })
+search({
+  authorization: 'Bearer XXXXX',
+  mode: 'example',
+  flowId: 'f17dc656-8061-416d-aaa8-6dd1452c2654',
+  fuzzy: 'wizzy woo'
+})
+// returns `/my-service/v1/y/abc` and `/my-service/v1/x/123y/abc`
+
+search({
+  authorization: 'Bearer XXXXX',
+  mode: 'example',
+  flowId: '9038754c-f750-4f23-83b8-626372047895',
+  discriminators: ['Y'],
+  fuzzy: 'wizzy woo'
+})
+// returns `/my-service/v1/y/abc`
+
+search({
+  authorization: 'Bearer XXXXX',
+  mode: 'example',
+  flowId: '10a9a88d-bf17-4ce7-b1da-88ff493d3911',
+  discriminators: ['R'],
+  fuzzy: 'wizzy woo'
+})
+// returns `/my-service/v1/x/123y/abc`
+
+search({
+  authorization: 'Bearer XXXXX',
+  mode: 'example',
+  flowId: 'b5a9f49a-cf7e-4607-94a4-0c61f3821c4f',
+  discriminators: ['X', 'Y', 'R'],
+  fuzzy: 'wizzy woo'
+})
 // returns `/my-service/v1/y/abc` and `/my-service/v1/x/123y/abc`
 ```
+
+### Dependencies
+
+In the example, the search index document for resources of type `R` contain `content`, `exact`, and `fuzzy` entries of
+the resource of type `Y` it depends on. It is clear that, when the resource `/my-service/v1/y/abc` changes, the search
+index document for `/my-service/v1/x/123/y/abc` must be updated too.
+
+The search topic handler will therefore, after having done the work describe above in response to an event, search in
+the search index for search index documents that have
+
+- an entry in `dependencies` with an exact match on the calculated canonical URI of the newly created search index
+  document, and where
+- `createdAt` is smaller than `createdBefore`.
+
+`createdBefore` is the value from the event, if it exists. If not, it is the value of the `x-date` response header of
+the retrieved search document.
+
+For all results of this search, for all pages, the search topic handler will build and post new events, with the same
+`mode` and `flowId` of the original request, the `createdBefore` value, and the `source` and as `href`. `build` is the
+value the service determines for the service the `source` refers to as first `segment`, in the used `mode`. Eventually,
+the search topic handler will handle these new events, so that eventually the dependent search index documents will be
+brought up to date too. Those search index documents might have dependents too, making the process recursive.
+
+Consider a second, later event for `Y` in the example:
+
+```json
+{
+  "MessageProperties": {
+    "CustomProperties": {
+      "flowId": "410ae3c3-2a74-4318-9ca6-ea85c8e4c23a",
+      "mode": "example",
+      "build": "00544"
+    }
+  },
+  "MessageBody": {
+    "structureVersion": 1,
+    "href": "/my-service/v1/y/abc/search-document"
+  }
+}
+```
+
+After building and updating the search index document for `/my-service/v1/y/abc`, the search topic handler will execute
+the following search, with the `mode` of the `event`:
+
+```javascript
+indexSearch({
+  mode: 'example',
+  dependencies: ['/my-service/v1/y/abc'],
+  createdBefore: '2023-01-18T16:12:12.008500Z'
+})
+// returns search index document for `/my-service/v1/x/123y/abc`
+```
+
+The search index document that is returned, is the one represented above for `/my-service/v1/x/123y/abc`. It must be
+updated. The following event is posted on the search topic:
+
+```json
+{
+  "MessageProperties": {
+    "CustomProperties": {
+      "flowId": "410ae3c3-2a74-4318-9ca6-ea85c8e4c23a",
+      "mode": "example",
+      "build": "00541"
+    }
+  },
+  "MessageBody": {
+    "structureVersion": 1,
+    "href": "/my-service/v1/x/123/y/abc/search-document"
+  }
+}
+```
+
+Note that the build number might be different from the originating event.
+
+For the recursion, imagine in the example that the `Y` resource is dependent on a `YA` resource, and that the `YA`
+resource is updated. After the update of the search index document for the `YA` resource, the `Y` resource is discovered
+as dependent, and eventually handled. After the update of the search index document for the `Y` resource, the `R`
+resource is discovered as dependent, and eventually handled.
+
+### Infinite loops
+
+### Rejected alternatives
