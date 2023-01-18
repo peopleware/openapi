@@ -53,7 +53,8 @@ There are several components in this architecture.
   +------------+                         +--------------+  |
   | My Service +-------------+---------->| Search Topic |  |
   +------------+             |           +--------------+  |
-                             |                   ^         |
+        ^                    |                   ^         |
+        |                    |                   |         |
 +--------------+             |                   |         |
 | Your Service +-------------         +----------+---------+-+
 |              |<---------------------| Search Topic Handler |
@@ -83,6 +84,11 @@ Each of the components can evolve over time, with immutable deploy. At a given t
 might exist with different _build numbers_. Each component supports several `mode`s.
 
 Note that the architecture is acyclic.
+
+To make the example as expressive as possible, we will assume that `Y` resource are managed by `my-service`, and `R`
+resources are managed by `your-service`. This means that `your-service` depends on `my-service`. A good architecture and
+design should not contain dependency cycles, which means that code or data structures managed in `my-service` should not
+have any knowledge of `your-service`. The process is also intended for depencies beween resources in the same service.
 
 ## Process overview
 
@@ -202,7 +208,7 @@ topic that looks like:
   },
   "MessageBody": {
     "structureVersion": 1,
-    "href": "/my-service/v1/x/123/y/abc/search-document"
+    "href": "/your-service/v1/x/123/y/abc/search-document"
   }
 }
 ```
@@ -289,6 +295,8 @@ Below is the example of the search document for a resource of type `Y` and `R`:
 }
 ```
 
+Note that there is no mention of `your-service` in this representation.
+
 ```json
 {
   "structureVersion": 1,
@@ -313,6 +321,9 @@ Note that in the content of the search document for `R`, the property `x` is the
 `X` that this resource of type `R` depends on. The client can use this to get that resource. This specification is
 opaque for the search topic, search topic handler, search index, and search service. It is a dependency of clients on
 the service API, expressed by the discriminator.
+
+Note further that this data structure contains implicit references to `my-service`. This data structure is under control
+of `your-service` in the example, and `your-service` has a known dependency on `my-service`, so that is allowed.
 
 ### Search index documents
 
@@ -456,18 +467,18 @@ information from the search index document of `/my-service/v1/y/abc` as referenc
 {
   "id": "my-service_v1_z_123_y_abc_example",
   "mode": "example",
-  "source": "/my-service/v1/x/123/y/abc/search-document",
+  "source": "/your-service/v1/x/123/y/abc/search-document",
   "flowId": "0a170f19-e545-4699-9495-ff2e8067f710",
   "createdAt": "2022-12-28T12:48:09.558745Z",
   "discriminator": "R",
-  "href": "/my-service/v1/x/123/y/abc",
+  "href": "/your-service/v1/x/123/y/abc",
   "dependencies": ["/my-service/v1/y/abc"],
   "exact": ["7457", "0123456789"],
   "fuzzy": ["wizzy", "woozy", "wuzzy"],
   "content": {
     "structureVersion": 1,
     "discriminator": "R",
-    "href": "/my-service/v1/x/123/y/abc?at=2022-12-28T12:48:09.558745Z",
+    "href": "/your-service/v1/x/123/y/abc?at=2022-12-28T12:48:09.558745Z",
     "layer": "optimized",
     "premium": 7457,
     "x": "/my-service/v1/x/123",
@@ -525,7 +536,7 @@ search({
   flowId: 'b5a9f49a-cf7e-4607-94a4-0c61f3821c4f',
   exact: '0123456789'
 })
-// returns `/my-service/v1/y/abc` and `/my-service/v1/x/123y/abc`
+// returns `/my-service/v1/y/abc` and `/your-service/v1/x/123/y/abc`
 
 search({
   authorization: 'Bearer XXXXX',
@@ -543,7 +554,7 @@ search({
   discriminators: ['R'],
   exact: '0123456789'
 })
-// returns `/my-service/v1/x/123y/abc`
+// returns `/your-service/v1/x/123/y/abc`
 
 search({
   authorization: 'Bearer XXXXX',
@@ -552,7 +563,7 @@ search({
   discriminators: ['X', 'Y', 'R'],
   exact: '0123456789'
 })
-// returns `/my-service/v1/y/abc` and `/my-service/v1/x/123y/abc`
+// returns `/my-service/v1/y/abc` and `/your-service/v1/x/123/y/abc`
 
 search({
   authorization: 'Bearer XXXXX',
@@ -560,7 +571,7 @@ search({
   flowId: 'f17dc656-8061-416d-aaa8-6dd1452c2654',
   fuzzy: 'wizzy woo'
 })
-// returns `/my-service/v1/y/abc` and `/my-service/v1/x/123y/abc`
+// returns `/my-service/v1/y/abc` and `/your-service/v1/x/123/y/abc`
 
 search({
   authorization: 'Bearer XXXXX',
@@ -578,7 +589,7 @@ search({
   discriminators: ['R'],
   fuzzy: 'wizzy woo'
 })
-// returns `/my-service/v1/x/123y/abc`
+// returns `/your-service/v1/x/123/y/abc`
 
 search({
   authorization: 'Bearer XXXXX',
@@ -587,7 +598,7 @@ search({
   discriminators: ['X', 'Y', 'R'],
   fuzzy: 'wizzy woo'
 })
-// returns `/my-service/v1/y/abc` and `/my-service/v1/x/123y/abc`
+// returns `/my-service/v1/y/abc` and `/your-service/v1/x/123/y/abc`
 ```
 
 ### Dependencies
@@ -657,7 +668,7 @@ the search topic:
   },
   "MessageBody": {
     "structureVersion": 1,
-    "href": "/my-service/v1/x/123/y/abc/search-document"
+    "href": "/your-service/v1/x/123/y/abc/search-document"
   }
 }
 ```
@@ -671,4 +682,81 @@ resource is discovered as dependent, and eventually handled.
 
 ### Infinite loops
 
-### Rejected alternatives
+When creating recursive processes such as the above, we must make sure the process ends eventually. A good architecture
+and design should not contain dependency cycles, but an extra stop criterion will protect us. This is why the
+`createdAt` property is added to the search index document and the `createdBefore` parameter is used in determining the
+next resources to post events for. When, after this process started, a referenced search index document is updated
+before we require it, a new event is not created. In the update that happened in the meantime, whether it was triggered
+by an outside force, or by this process in a bad loop, it has been updated already with the up-to-date information about
+its dependencies.
+
+### Cross-service dependencies
+
+Dependent resources might live in a different service than their dependencies. In the example, `Y` lives in
+`my-service`, and `R` is managed by `your-service`. It is clear in that example that `your-service` depends on
+`my-service`, because a resource in it depends on a resource in `my-service`. In a clean architecture, there are no
+cyclic dependencies. In other words, in resources and code of `your-service`, references to resources, APIs, or
+structures of `my-service` are allowed, but not the other way around. This is supported by this architecture.
+
+## Displaying to-many associations with search
+
+Clients, such as the UI, need to find resources that are associated with a resource that is presented, and display
+information about it. This enables the user to recognize an associated resource, and navigate to it.
+
+When the association is to-one, this is simple. The associated resource is mentioned in the resource’s `href`, as
+HATEOAS link. As an example, consider a UI that displays the details of `R` resource `/your-service/v1/x/123/y/abc`. The
+UI wants to display information about the one associated `X` resource `/some-service/v1/x/123`, and the one associated
+`Y` resource `/my-service/v1/y/abc`. Both canonical URIs are mentioned in `R`’s `href`. The UI can retrieve both
+associated resources, and display some information about the associated `X` and `Y` in the representation of `R`. Both
+representations can be fitted with a clickable link, to navigate to one of the associated resources, for which the UI
+knows the canonical URI (it is the one it just used, and the response to which, by the way, is probably cached).
+
+When the association is to-many, this is more complex. As an example consider the examples where the UI displays the
+details of `X` resource `/some-service/v1/x/123`, or `Y` resource `/my-service/v1/y/abc`. In both cases, the UI wants to
+display the collection of associated `R` resources, clickable. For this, it requires information that makes it possible
+for the user to recognize an element of that collection, and the URI of the represented associated resource.
+
+In our example, `R` reifies a many-to-many relationship between `X` and `Y`. In this case, most often, the resources of
+type `R` or only identified, both programmatically, as to humans, by the identity or properties of the associated `X`
+and `Y`. In the example, imagine `X` resources are identified by humans by the `premium` and `layer` property together,
+and `Y` resources are identified by humans by the `name` property. When the associated `R` resources of `X` resource
+`/some-service/v1/x/123` are shown in its details, the user needs to see the `name` of the `Y` resource on which the
+represented `R` resource depends. When the associated `R` resources of `Y` resource `/my-service/v1/y/abc` are shown in
+its details, the user needs to see the `premium` and `layer` of the `X` resource on which the represented `R` resource
+depends.
+
+The UI can get the collection of to-many associated resources for given resource by executing a search request, with a
+`mode`, on the search service, with
+
+- `discriminators` set to the discriminator of the resource type of the elements of the collection, and
+- `dependencies` set to the canonical URI of the given resource.
+
+The UI can get the collection of associated `R` resources for `/my-service/v1/y/abc` with search request
+
+```javascript
+search({
+  authorization: 'Bearer XXXXX',
+  mode: 'example',
+  flowId: '383007df-8b0f-4db3-9d4b-a17227ab7c03',
+  discriminators: ['R'],
+  dependencies: '/my-service/v1/y/abc'
+})
+// returns `/your-service/v1/x/123/y/abc`
+```
+
+## Too many updates
+
+The UI can get the collection of associated `R` resources for `/some-service/v1/x/123` with search request
+
+```javascript
+search({
+  authorization: 'Bearer XXXXX',
+  mode: 'example',
+  flowId: '383007df-8b0f-4db3-9d4b-a17227ab7c03',
+  discriminators: ['R'],
+  dependencies: '/some-service/v1/x/123'
+})
+// returns `/your-service/v1/x/123/y/abc`
+```
+
+## Rejected alternatives
