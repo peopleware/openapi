@@ -5,33 +5,26 @@ collection too. Other clients can use this functionality to, if appropriate.
 In this text, we will illustrate the behavior of the system in the context of an example:
 
 ```
-                                                         +----+
-                                                         | YA |
-                                                         +----+
-                                                           | 1
-                                                           |
-                                                           |
-                                                      0..* |
-+-----+ 1          +---------------+          1 +----------------------+
-|  X  |------------|  R            |------------|          Y           |
-+-----+       0..* +---------------+ 0..*       +----------------------+
-                   | layer         |            | id                   |
-                   | <<χ>> premium |            | <<χ>> registrationId |
-                   +---------------+            | <<χ>> name           |
-                                                | <<χ>> category       |
-                                                | <<χ>> ranking        |
-                                                | <<χ>> class          |
-                                                | since                |
-                                                | <<χ>> popularity     |
-                                                | <<χ>> note           |
-                                                +----------------------+
-                                                      0..* |
-                                                           |
-                                                           |
-                                                           | 1
-                                                         +----+
-                                                         | YB |
-                                                         +----+
++-------------+            +---------------+            +----------------------+
+|      X      | 1          |  R            |          1 |          Y           |
++-------------+------------+---------------+------------+----------------------+
+| <<χ>> title |       0..* | layer         | 0..*       | id                   |
++-------------+            | <<χ>> premium |            | <<χ>> registrationId |
+                           +---------------+            | <<χ>> name           |
+                                                        | <<χ>> category       |
+                                                        | <<χ>> ranking        |
+                                                        | <<χ>> class          |
+                                                        | since                |
+                                                        | <<χ>> popularity     |
+                                                        | <<χ>> note           |
+                                                        +----------------------+
+                                                              0..* |
+                                                                   |
+                                                                   |
+                                                                   | 1
+                                                                 +----+
+                                                                 | YA |
+                                                                 +----+
 ```
 
 A resource `Y` has a number of _zeitliche_ (χ) and _unzeitliche_ properties. We will first discuss searching globally
@@ -40,8 +33,8 @@ associated with exactly one instance of `X` and `Y`, and `X` and `Y` can optiona
 `R`. A resource `R` has a number of _zeitliche_ and _unzeitliche_ properties. We will discuss showing the collection of
 instances of `R` in which an instance of `X`, or `Y`, participates, in the detail representation of `X`, respectively
 `Y`, in the UI. We will discuss searching in this collection of `X`. For this, we will need to revisit searching for
-instances of `Y` in the context of the relationship. `YA` and `YB` are used as illustration in this discussing for the
-recursive behavior of this issue.
+instances of `Y` in the context of the relationship. `YA` is used as illustration in discussing the recursive behavior
+of this issue.
 
 ## Architecture
 
@@ -739,7 +732,7 @@ Eventually consistent is nice, but that is pushing it.
 
 Such cases must be avoided. This will be discussed below.
 
-## Displaying to-many associations with search
+## Displaying to-many associations with search for large collections
 
 Clients, such as the UI, need to find resources that are associated with a resource that is presented, and display
 information about it. This enables the user to recognize an associated resource, and navigate to it.
@@ -752,19 +745,16 @@ associated resources, and display some information about the associated `X` and 
 representations can be fitted with a clickable link, to navigate to one of the associated resources, for which the UI
 knows the canonical URI (it is the one it just used, and the response to which, by the way, is probably cached).
 
-When the association is to-many, this is more complex. As an example consider the examples where the UI displays the
-details of `X` resource `/some-service/v1/x/123`, or `Y` resource `/my-service/v1/y/abc`. In both cases, the UI wants to
-display the collection of associated `R` resources, clickable. For this, it requires information that makes it possible
-for the user to recognize an element of that collection, and the URI of the represented associated resource.
+When the association is to-many, this is more complex. Consider the UI displaying the details of `X` resource
+`/some-service/v1/x/123`. The UI wants to display the collection of associated `R` resources, clickable, as part of the
+details. For this, it requires information that makes it possible for the user to recognize an element of that
+collection, and the URI of the represented associated resource.
 
 In our example, `R` reifies a many-to-many relationship between `X` and `Y`. In this case, most often, the resources of
 type `R` or only identified, both programmatically, as to humans, by the identity or properties of the associated `X`
-and `Y`. In the example, imagine `X` resources are identified by humans by the `premium` and `layer` property together,
-and `Y` resources are identified by humans by the `name` property. When the associated `R` resources of `X` resource
-`/some-service/v1/x/123` are shown in its details, the user needs to see the `name` of the `Y` resource on which the
-represented `R` resource depends. When the associated `R` resources of `Y` resource `/my-service/v1/y/abc` are shown in
-its details, the user needs to see the `premium` and `layer` of the `X` resource on which the represented `R` resource
-depends.
+and `Y`. In the example, imagine `Y` resources are identified by humans by the `name` property. When the associated `R`
+resources of `X` resource `/some-service/v1/x/123` are shown in its details, the user needs to see the `name` of the `Y`
+resource on which the represented `R` resource depends.
 
 The UI can get the collection of to-many associated resources for given resource by executing a search request, with a
 `mode`, on the search service, with
@@ -772,7 +762,8 @@ The UI can get the collection of to-many associated resources for given resource
 - `discriminators` set to the discriminator of the resource type of the elements of the collection, and
 - `dependencies` set to the canonical URI of the given resource.
 
-The UI can get the collection of associated `R` resources for `/some-service/v1/x/123` with search request
+In the example, to get the collection of associated `R` resources for `/some-service/v1/x/123`, the UI executes the
+search request
 
 ```javascript
 search({
@@ -785,7 +776,7 @@ search({
 // returns `/your-service/v1/x/123/y/abc`
 ```
 
-In the example, the returned results contains information about `/your-service/v1/x/123/y/abc` and nested information
+The returned results contains information about `R` resources `/your-service/v1/x/123/y/abc` and nested information
 about the associated `Y` resource `/my-service/v1/y/abc`. The UI can use this information directly to show the
 instances, using, e.g., the `name` of the associated `Y` resource, without any additional requests. In the example,
 there is no information about the associated `X` resources, but in this case we are displaying the collection of `R`
@@ -824,7 +815,12 @@ search({
 })
 ```
 
-## Too many updates
+## Displaying to-many associations for small collections
+
+Consider the example where the UI displays the details of `Y` resource `/my-service/v1/y/abc`. In the example, imagine
+`X` resources are identified by humans by the `title` property. When the associated `R` resources of `Y` resource
+`/my-service/v1/y/abc` are shown in its details, the user needs to see the `title` of the `X` resource on which the
+represented `R` resource depends.
 
 The UI can get the collection of associated `R` resources for `/my-service/v1/y/abc` with search request
 
@@ -836,8 +832,24 @@ search({
   discriminators: ['R'],
   dependencies: '/my-service/v1/y/abc'
 })
-// returns `/your-service/v1/x/123/y/abc`
 ```
+
+In the example, in this case, the `R` `premium` and `layer` are included in the search result, but the `X` `title` is
+not. This is deliberate. The search result does contain an `x` property, with the canonical URI of the associated `X`
+resource as value. The intention of this is for the UI to now retrieve the details of the associated `X` resource from
+the service directly, asynchronously for each entry in the search result, and to fill out the missing information in the
+visualization when the responses arive. The UI should deduplicate requests for the same `X` resource mentioned in the
+collection. Note that the responses will be cached.
+
+This is more than feasible when number of associated resources is small (< 20), or collections of medium size (< 100),
+since the results are paged, and more information must only be retrieved when a new page is shown.
+
+Note that in the example, the UI could still offer the user the functionality to search on `R`’s `premium` with exact
+search. However, if the number of associated resources is small, this functionality would never be used.
+
+We advise to not offer search on small collections.
+
+## Too many updates
 
 ## Rejected alternatives
 
