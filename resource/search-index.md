@@ -698,6 +698,27 @@ Dependent resources might live in a different service than their dependencies. I
 cyclic dependencies. In other words, in resources and code of `your-service`, references to resources, APIs, or
 structures of `my-service` are allowed, but not the other way around. This is supported by this architecture.
 
+### Exponential explosion
+
+This process can propagate over the entire system.
+
+Imagine a resource that has dependents `N` levels deep, where each level has `~M` dependents. An event for such a
+resource will result in <code>∑<sub>i&nbsp;=&nbsp;0..N</sub>&nbsp;M<sup>i</sup> &gt; M<sup>N</sup></code> events. With
+`N = 5`, and `M = 100`, the result is > 10<sup>2⋅5</sup> = 10<sup>10</sup> = 10&nbsp;000&nbsp;000&nbsp;000 (> 10
+billion) events. With <code>M<sub>1</sub> = 1000</code>, <code>M<sub>2</sub> = 1.5</code>, <code>M<sub>3</sub> =
+500</code>, <code>M<sub>4</sub> = 2</code> (a realistic example), there are <code>1 + 1000 + (1000&nbsp;⋅&nbsp;1.5) +
+(1000&nbsp;⋅&nbsp;1.5&nbsp;⋅&nbsp;500) + (1000&nbsp;⋅&nbsp;1.5&nbsp;⋅&nbsp;500&nbsp;⋅&nbsp;2) =
+(1&nbsp;+&nbsp;1000&nbsp;⋅&nbsp;(1&nbsp;+&nbsp;1.5&nbsp;⋅&nbsp;(1&nbsp;+&nbsp;500&nbsp;⋅&nbsp;(1&nbsp;+&nbsp;2)))) =
+2&nbsp;252&nbsp;501</code> events.
+
+While these are extreme cases, we must take this into account.
+
+The system we are applying this in can handle ~ 1000 events per minute (this could be larger with other infrastructure
+choices). In the realistic case mentioned above, handling a change to a root resource would take ~ 2&nbsp;252 minutes =
+~37 hours. Eventually consistent is nice, but that is pushing it.
+
+Such cases must be avoided.
+
 ## Displaying to-many associations with search
 
 Clients, such as the UI, need to find resources that are associated with a resource that is presented, and display
