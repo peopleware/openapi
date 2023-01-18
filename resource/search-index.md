@@ -149,3 +149,35 @@ When a service, such as `your-service` , or the search topic handler, accesses o
 build number is determined from the `mode` using _deployment configuration_. Deployment parameters might mention that
 build number `00432` of `my-service` must be used in a `qa-023` mode, and build `LATEST` must be used in mode
 `dev-experiment`.
+
+## Events
+
+Events have the following properties:
+
+- `structureVersion`: an integer describing the version of this data structure
+
+- `mode`: The `mode` in which the resource that was created or updated resides.
+
+- `flowId`: The `flowId` of the request to the service that triggered the creation or update of the resource. This is
+  added to make it possible to cross-reference events, search document requests, and search index documents with each
+  other and logs.
+
+- `href`: The canonical URI where the search document for the created or changed resource can be retrieved.
+
+When a resource of type `Y` is created or updated in `my-service`, and event is posted on the search topic that looks
+like:
+
+```json
+{
+  "MessageProperties": {
+    "CustomProperties": {
+      "flowId": "9fc6ad82-6626-4ac3-bc1c-17a3fbd5dc3f",
+      "mode": "example"
+    }
+  },
+  "MessageBody": {
+    "structureVersion": 1,
+    "href": "/my-service/v1/y/abc/search-document"
+  }
+}
+```
