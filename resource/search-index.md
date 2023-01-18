@@ -34,14 +34,14 @@ In this text, we will illustrate the behavior of the system in the context of an
                                                          +----+
 ```
 
-A resource `Y` has a number of _zeitliche_ (χ) and _unzeitliche_ properties. We will first discuss searching for
-instances of `Y` in isolation. `Y` is in a many-to-many relationship with `X`, which is reified in `R`: each instance of
-`R` is associated with exactly one instance of `X` and `Y`, and `X` and `Y` can optionally participate in many instances
-of `R`. A resource `R` has a number of _zeitliche_ and _unzeitliche_ properties. We will discuss showing the collection
-of instances of `R` in which an instance of `X`, or `Y`, participates, in the detail representation of `X`, respectively
-`Y`, in the UI. Next, we will discuss searching in this collection of `X`. For this, we will need to revisit searching
-for instances of `Y` in the context of the relationship. `YA` and `YB` are used as illustration in this discussing for
-the recursive behavior of this issue.
+A resource `Y` has a number of _zeitliche_ (χ) and _unzeitliche_ properties. We will first discuss searching globally
+for instances of `Y`. `Y` is in a many-to-many relationship with `X`, which is reified in `R`: each instance of `R` is
+associated with exactly one instance of `X` and `Y`, and `X` and `Y` can optionally participate in many instances of
+`R`. A resource `R` has a number of _zeitliche_ and _unzeitliche_ properties. We will discuss showing the collection of
+instances of `R` in which an instance of `X`, or `Y`, participates, in the detail representation of `X`, respectively
+`Y`, in the UI. We will discuss searching in this collection of `X`. For this, we will need to revisit searching for
+instances of `Y` in the context of the relationship. `YA` and `YB` are used as illustration in this discussing for the
+recursive behavior of this issue.
 
 ## Architecture
 
