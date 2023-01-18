@@ -686,7 +686,8 @@ the search topic:
   },
   "MessageBody": {
     "structureVersion": 1,
-    "href": "/your-service/v1/x/123/y/abc/search-document"
+    "href": "/your-service/v1/x/123/y/abc/search-document",
+    "createdBefore": "2023-01-18T16:12:12.008500Z"
   }
 }
 ```
