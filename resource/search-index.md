@@ -686,9 +686,14 @@ When creating recursive processes such as the above, we must make sure the proce
 and design should not contain dependency cycles, but an extra stop criterion will protect us. This is why the
 `createdAt` property is added to the search index document and the `createdBefore` parameter is used in determining the
 next resources to post events for. When, after this process started, a referenced search index document is updated
-before we require it, a new event is not created. In the update that happened in the meantime, whether it was triggered
+before we require it, a new event is not created. If the update that happened in the meantime, whether it was triggered
 by an outside force, or by this process in a bad loop, it has been updated already with the up-to-date information about
 its dependencies.
+
+Note that, because the search index is eventually consistent, that a fast handling of a later event might not see an
+earlier update yet. When there is a loop, new events would be created, although they should not be. In extreme cases, we
+could loop 1, or a small number of times, but eventually the first update would be seen, and the loop would stop. Since
+this is only a back-stop for infinite loops, and repeated updates are idemponent, this is acceptable.
 
 ### Cross-service dependencies
 
