@@ -517,7 +517,7 @@ A client can search for matching resources by sending a search request to the se
 - an exact match on `discriminators`
 - an exact match on any entry in `exact`
 - a fuzzy match on any entry `fuzzy`
-- an exact match on `href`
+- an exact match on `dependencies`
 
 The search service will
 
@@ -612,6 +612,8 @@ search({
 })
 // returns `/my-service/v1/y/abc` and `/your-service/v1/x/123/y/abc`
 ```
+
+The use of an exact match on `dependencies` is discussed below.
 
 ### Referenced
 
@@ -770,21 +772,6 @@ The UI can get the collection of to-many associated resources for given resource
 - `discriminators` set to the discriminator of the resource type of the elements of the collection, and
 - `dependencies` set to the canonical URI of the given resource.
 
-The UI can get the collection of associated `R` resources for `/my-service/v1/y/abc` with search request
-
-```javascript
-search({
-  authorization: 'Bearer XXXXX',
-  mode: 'example',
-  flowId: '383007df-8b0f-4db3-9d4b-a17227ab7c03',
-  discriminators: ['R'],
-  dependencies: '/my-service/v1/y/abc'
-})
-// returns `/your-service/v1/x/123/y/abc`
-```
-
-## Too many updates
-
 The UI can get the collection of associated `R` resources for `/some-service/v1/x/123` with search request
 
 ```javascript
@@ -794,6 +781,60 @@ search({
   flowId: '383007df-8b0f-4db3-9d4b-a17227ab7c03',
   discriminators: ['R'],
   dependencies: '/some-service/v1/x/123'
+})
+// returns `/your-service/v1/x/123/y/abc`
+```
+
+In the example, the returned results contains information about `/your-service/v1/x/123/y/abc` and nested information
+about the associated `Y` resource `/my-service/v1/y/abc`. The UI can use this information directly to show the
+instances, using, e.g., the `name` of the associated `Y` resource, without any additional requests. In the example,
+there is no information about the associated `X` resources, but in this case we are displaying the collection of `R`
+resources associated with 1 specific `X` `/some-service/v1/x/123`, of which we are displaying the detail, so there is no
+need for this information.
+
+The results returned from the search request are paged. The UI should offer some mechanism to navigate between the
+pages.
+
+When the collection of associated resources is large (> 20), it is difficult for users to visually find the relationship
+they need. In this case, it makes sense to offer the user the possibility to limit the collection of associated
+resources with search functionality. The architecture described here supports that, if the relationship search index
+document has entries in `exact` or `fuzzy`. These can be entries directly from the search document of the relationship
+resources, or from `referenced` resources.
+
+In the example, search index documents with discriminator `R` support exact search on `R`’s `premium`, and `Y`’s
+`registrationId`, and fuzzy search on `Y`’s `name`, `category`, and `class`.
+
+```javascript
+search({
+  authorization: 'Bearer XXXXX',
+  mode: 'example',
+  flowId: '383007df-8b0f-4db3-9d4b-a17227ab7c03',
+  discriminators: ['R'],
+  dependencies: '/some-service/v1/x/123',
+  exact: '0123456789'
+})
+
+search({
+  authorization: 'Bearer XXXXX',
+  mode: 'example',
+  flowId: '383007df-8b0f-4db3-9d4b-a17227ab7c03',
+  discriminators: ['R'],
+  dependencies: '/some-service/v1/x/123',
+  fuzzy: ['wuzzy', 'woo']
+})
+```
+
+## Too many updates
+
+The UI can get the collection of associated `R` resources for `/my-service/v1/y/abc` with search request
+
+```javascript
+search({
+  authorization: 'Bearer XXXXX',
+  mode: 'example',
+  flowId: '383007df-8b0f-4db3-9d4b-a17227ab7c03',
+  discriminators: ['R'],
+  dependencies: '/my-service/v1/y/abc'
 })
 // returns `/your-service/v1/x/123/y/abc`
 ```
