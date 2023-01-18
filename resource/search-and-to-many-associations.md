@@ -207,7 +207,7 @@ topic that looks like:
 }
 ```
 
-## Search topic handler, without dependencies
+## Search topic handler
 
 ### Pick up event, and get the search document
 
