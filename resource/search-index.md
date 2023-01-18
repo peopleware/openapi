@@ -84,7 +84,7 @@ might exist with different _build numbers_. Each component supports several `mod
 
 Note that the architecture is acyclic.
 
-## General process
+## Process overview
 
 _Services_ are triggered from outside, by a client, to create or update a resource in a particular `mode`, with a
 `flowId`. After this is done and committed, the service posts a minimal event on the _search topic_ for asynchronous
@@ -211,7 +211,7 @@ handler logs this as an error, mentioning the `build` from the `event` and the b
 considers the event handled. When this would occur in stable environments or `mode`s, this is still the best approach to
 deal with a configuration error.
 
-## Search documents
+### Search documents
 
 The search documents a service offer are specializations of a common structure. They have the following properties:
 
@@ -219,7 +219,8 @@ The search documents a service offer are specializations of a common structure. 
 
 - `href`: The _relative_ canonical URI where the version of the resource this search document represents can be
   retrieved from, with the start-of-transaction of the request for the search document as knowledge time (`at` query
-  parameter). Given the conventions, this is always of the form `.?at=2023-01-173T15:22:39.212889Z`
+  parameter). Given the conventions, this is always of the form `.?at=2022-12-27T03:14:22.212775Z`, and has the same
+  value as the `x-date` response header.
 
 - `exact`: array of strings on which the represented resource is to be found with an exact match
 
@@ -243,7 +244,7 @@ Below is the example of the search document for a resource of type `Y`:
 ```json
 {
   "structureVersion": 1,
-  "href": ".?at=2023-01-173T15:22:39.212889Z",
+  "href": ".?at=2022-12-27T03:14:22.212775Z",
   "exact": ["0123456789"],
   "fuzzy": ["wizzy", "woozy", "wuzzy"],
   "dependencies": ["/my-service/v1/x/123/y/abc/search-document"],
@@ -260,9 +261,10 @@ Below is the example of the search document for a resource of type `Y`:
 }
 ```
 
-## Search index document
+### Search index documents
 
-With this information, the search topic handler builds the new or updated search index document for the resource.
+With this information, the search topic handler builds the new or updated search index document for the resource, and
+adds it to the search index.
 
 Search index documents have the following properties:
 
@@ -272,6 +274,9 @@ Search index documents have the following properties:
 - `mode`: any search request happens for an exact `mode`
 
 - `flowId`: to be able to cross-reference the search index document with logs
+
+- `createdAt`: the value of the `x-date` header that is returned with the search document request from which the search
+  index document is created.
 
 - `discriminator`: the type of resource; can be filtered upon with exact match
 
@@ -290,18 +295,16 @@ Search index documents have the following properties:
   - `href`: canonical URI where the resource can be found, with the time the search document was generated as knowledge
     time (`?at`)
 
-- `createdAt`:
-
 Note that this is similar, but different, from the structure of the search document.
 
-### Canonical URI and id
+#### Canonical URI and id
 
 The search topic handler creates the canonical URI of the resource, based on the relative `href` in the search document
 and the URI of the search document from the event (it strips of the last `/search-document` segment, and adds the `at`
 query parameter). This is inserted as `href` _without the `at` query parameter_ in the index search document at the top
 level, and as `href` in the search index document `content`, with the `at` query parameter.
 
-### Content
+#### Content
 
 The `content` is what will be returned to a client when a search matches. The client uses the `content` to show search
 results quickly, without, or with limited extra service calls, and to allow click-through to the details of a found
@@ -318,7 +321,7 @@ dependency of clients on the service API, expressed by the discriminator.
 The `mode` is not included in the `content`. The client supplies a `mode` in a search request, and only index search
 documents with that exact mode are returned.
 
-### Other properties
+#### Other properties
 
 The `id` is the canonical URI, with `/` replaced by `_`, because of syntax constraints, and appended with the `mode`.
 This is a stable and unique identification of the search index document in the search index, accross all services and
@@ -329,6 +332,9 @@ The search index document contains the `mode`, because each search should only r
 The `flowId` is added to easily cross-reference search index document instances with logs, events, and recorded changes
 in resources.
 
+`createdAt` is introduced as a safeguard against infinite update loops, discussed later. Note that this value is the
+same as the value in the `at` query parameter for a simple update, of an isolated changed resource.
+
 The search topic handler copies the `discriminator` from the `searchDocument.content` to the top level, because we need
 to provide the possibility for clients to search for resources of an exact type.
 
@@ -336,7 +342,7 @@ The top level `href` is used in authorization (described later).
 
 `exact` and `fuzzy` are used in different kinds of search requests.
 
-### Example
+#### Example
 
 The above example event and search document for a resource of type `Y` would result in the following search index
 document:
@@ -346,6 +352,7 @@ document:
   "id": "my-service_v1_y_abc_example",
   "mode": "example",
   "flowId": "a2d890b1-fa83-4bbf-bc26-15ab282b2e00",
+  "createdAt": "2022-12-27T03:14:22.212775Z",
   "discriminator": "Y",
   "href": "/my-service/v1/y/abc",
   "exact": ["0123456789"],
@@ -353,7 +360,7 @@ document:
   "content": {
     "structureVersion": 1,
     "discriminator": "Y",
-    "href": "/my-service/v1/y/abc?at=2023-01-173T15:22:39.212Z",
+    "href": "/my-service/v1/y/abc?at=2022-12-27T03:14:22.212775Z",
     "name": "wizzy",
     "category": "woozy",
     "registrationId": "0123456789",
