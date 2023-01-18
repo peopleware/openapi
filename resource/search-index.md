@@ -613,7 +613,7 @@ search({
 // returns `/my-service/v1/y/abc` and `/your-service/v1/x/123/y/abc`
 ```
 
-### Dependencies
+### Referenced
 
 In the example, the search index document for resources of type `R` contain `content`, `exact`, and `fuzzy` entries of
 the resource of type `Y` it depends on. It is clear that, when the resource `/my-service/v1/y/abc` changes, the search
@@ -622,7 +622,7 @@ index document for `/my-service/v1/x/123/y/abc` must be updated too.
 The search topic handler will therefore, after having done the work describe above in response to an event, search in
 the search index for search index documents that have
 
-- an entry in `dependencies` with an exact match on the calculated canonical URI of the newly created search index
+- an entry in `referenced` with an exact match on the calculated canonical URI of the newly created search index
   document, and where
 - `createdAt` is smaller than `createdBefore`.
 
@@ -630,10 +630,11 @@ the search index for search index documents that have
 the retrieved search document.
 
 For all results of this search, for all pages, the search topic handler will build and post new events, with the same
-`mode` and `flowId` of the original request, the `createdBefore` value, and the `source` and as `href`. `build` is the
-value the service determines for the service the `source` refers to as first `segment`, in the used `mode`. Eventually,
-the search topic handler will handle these new events, so that eventually the dependent search index documents will be
-brought up to date too. Those search index documents might have dependents too, making the process recursive.
+`mode` and `flowId` of the original request, the `createdBefore` value, and the `source` of the found search index
+document as `href`. `build` is the value the service determines for the service the `source` refers to as first
+`segment`, in the used `mode`. Eventually, the search topic handler will handle these new events, so that eventually the
+dependent search index documents will be brought up to date too. Those search index documents might have referenced
+others too, making the process recursive.
 
 Consider a second, later event for `Y` in the example:
 
@@ -659,7 +660,7 @@ the following search, with the `mode` of the `event`:
 ```javascript
 indexSearch({
   mode: 'example',
-  dependencies: ['/my-service/v1/y/abc'],
+  referenced: '/my-service/v1/y/abc',
   createdBefore: '2023-01-18T16:12:12.008500Z'
 })
 // returns search index document for `/my-service/v1/x/123y/abc`
@@ -687,42 +688,42 @@ the search topic:
 
 Note that the build number might be different from the originating event.
 
-For the recursion, imagine in the example that the `Y` resource is dependent on a `YA` resource, and that the `YA`
-resource is updated. After the update of the search index document for the `YA` resource, the `Y` resource is discovered
-as dependent, and eventually handled. After the update of the search index document for the `Y` resource, the `R`
-resource is discovered as dependent, and eventually handled.
+For the recursion, imagine in the example that the `Y` resource references a `YA` resource, and that the `YA` resource
+is updated. After the update of the search index document for the `YA` resource, the `Y` resource is discovered as
+referencing, and eventually handled. After the update of the search index document for the `Y` resource, the `R`
+resource is discovered as referencing, and eventually handled.
 
 ### Infinite loops
 
 When creating recursive processes such as the above, we must make sure the process ends eventually. A good architecture
 and design should not contain dependency cycles, but an extra stop criterion will protect us. This is why the
 `createdAt` property is added to the search index document and the `createdBefore` parameter is used in determining the
-next resources to post events for. When, after this process started, a referenced search index document is updated
-before we require it, a new event is not created. If the update that happened in the meantime, whether it was triggered
-by an outside force, or by this process in a bad loop, it has been updated already with the up-to-date information about
-its dependencies.
+next referencing resources to post events for. When, after this process started, a referencing search index document is
+updated before we require it, a new event is not created. If the update that happened in the meantime, whether it was
+triggered by an outside force, or by this process in a bad loop, it has been updated already with the up-to-date
+information about its dependencies.
 
 Note that, because the search index is eventually consistent, that a fast handling of a later event might not see an
 earlier update yet. When there is a loop, new events would be created, although they should not be. In extreme cases, we
 could loop 1, or a small number of times, but eventually the first update would be seen, and the loop would stop. Since
 this is only a back-stop for infinite loops, and repeated updates are idemponent, this is acceptable.
 
-### Cross-service dependencies
+### Cross-service references
 
-Dependent resources might live in a different service than their dependencies. In the example, `Y` lives in
-`my-service`, and `R` is managed by `your-service`. It is clear in that example that `your-service` depends on
-`my-service`, because a resource in it depends on a resource in `my-service`. In a clean architecture, there are no
-cyclic dependencies. In other words, in resources and code of `your-service`, references to resources, APIs, or
-structures of `my-service` are allowed, but not the other way around. This is supported by this architecture.
+Referencing resources might live in a different service than their referents. In the example, `Y` lives in `my-service`,
+and `R` is managed by `your-service`. It is clear in that example that `your-service` depends on `my-service`, because a
+resource in it depends on a resource in `my-service`. In a clean architecture, there are no cyclic dependencies. In
+other words, in resources and code of `your-service`, references to resources, APIs, or structures of `my-service` are
+allowed, but not the other way around. This is upheld by this architecture.
 
 ### Exponential explosion
 
 This process can propagate over the entire system.
 
-Imagine a resource that has dependents `N` levels deep, where each level has `~M` dependents. An event for such a
-resource will result in <code>∑<sub>i&nbsp;=&nbsp;0..N</sub>&nbsp;M<sup>i</sup> &gt; M<sup>N</sup></code> events. With
-`N = 5`, and `M = 100`, the result is > 10<sup>2⋅5</sup> = 10<sup>10</sup> = 10&nbsp;000&nbsp;000&nbsp;000 (> 10
-billion) events. With <code>M<sub>1</sub> = 1000</code>, <code>M<sub>2</sub> = 1.5</code>, <code>M<sub>3</sub> =
+Imagine a resource that has direct and indirect referents `N` levels deep, where each level has `~M` referents. An event
+for such a resource will result in <code>∑<sub>i&nbsp;=&nbsp;0..N</sub>&nbsp;M<sup>i</sup> &gt; M<sup>N</sup></code>
+events. With `N = 5`, and `M = 100`, the result is > 10<sup>2⋅5</sup> = 10<sup>10</sup> = 10&nbsp;000&nbsp;000&nbsp;000
+(> 10 billion) events. With <code>M<sub>1</sub> = 1000</code>, <code>M<sub>2</sub> = 1.5</code>, <code>M<sub>3</sub> =
 500</code>, <code>M<sub>4</sub> = 2</code> (a realistic example), there are <code>1 + 1000 + (1000&nbsp;⋅&nbsp;1.5) +
 (1000&nbsp;⋅&nbsp;1.5&nbsp;⋅&nbsp;500) + (1000&nbsp;⋅&nbsp;1.5&nbsp;⋅&nbsp;500&nbsp;⋅&nbsp;2) =
 (1&nbsp;+&nbsp;1000&nbsp;⋅&nbsp;(1&nbsp;+&nbsp;1.5&nbsp;⋅&nbsp;(1&nbsp;+&nbsp;500&nbsp;⋅&nbsp;(1&nbsp;+&nbsp;2)))) =
@@ -730,9 +731,9 @@ billion) events. With <code>M<sub>1</sub> = 1000</code>, <code>M<sub>2</sub> = 1
 
 While these are extreme cases, we must take this into account.
 
-The system we are applying this in can handle ~ 1000 events per minute (this could be larger with other infrastructure
-choices). In the realistic case mentioned above, handling a change to a root resource would take ~ 2&nbsp;252 minutes =
-~37 hours. Eventually consistent is nice, but that is pushing it.
+The system we are applying this in can handle ~ 1000 events per minute (because of other infrastructure choices). In the
+realistic case mentioned above, handling a change to a root resource would take ~ 2&nbsp;252 minutes = ~37 hours.
+Eventually consistent is nice, but that is pushing it.
 
 Such cases must be avoided. This will be discussed below.
 
