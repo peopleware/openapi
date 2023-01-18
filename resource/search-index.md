@@ -211,6 +211,10 @@ handler logs this as an error, mentioning the `build` from the `event` and the b
 considers the event handled. When this would occur in stable environments or `mode`s, this is still the best approach to
 deal with a configuration error.
 
+Depending on the results returned from the retrieved search document, the search topic handler retrieves extra
+referenced content from the search engine to use in the search index document it creates, and might create new events
+for other search index documents to be updated eventually too.
+
 ### Search documents
 
 The search documents a service offer are specializations of a common structure. They have the following properties:
@@ -226,12 +230,16 @@ The search documents a service offer are specializations of a common structure. 
 
 - `fuzzy`: array of strings on which the represented resource is to be found with a fuzzy match
 
-- `dependencies`: array of canonical URIs of the search document of resources for which the search index document needs
-  to be updated too when the search index document for this resource is updated
+- `dependendencies`: array of canonical URIs of the resources; the search index document for this resource needs to be
+  updated too when the search index document for the reference resources is updated
 
 - `content`: A data structure that is different for each resource, but has some common properties:
+
   - `structureVersion`: an integer describing the version of this data structure
   - `discriminator`: the type of represented resource
+
+- `referencedContent`: Dictionary of property names to canonical URIs of other resources. The search document of the
+  referenced resources will be spliced into the content by the search topic handler.
 
 The `content` is, more or less, what will be returned to a client when a search matches. The client uses the `content`
 to show search results quickly, without additional service calls. The `content` contains the `discriminator`, so the
@@ -239,7 +247,7 @@ client knows the type of the found resource, and type specific extra fields or n
 structure of the `content` property data structure is opaque for the search topic, search topic handler, search index,
 and search service. It is a dependency of clients on the service API, expressed by the discriminator.
 
-Below is the example of the search document for a resource of type `Y`:
+Below is the example of the search document for a resource of type `Y` and `R`:
 
 ```json
 {
@@ -247,7 +255,7 @@ Below is the example of the search document for a resource of type `Y`:
   "href": ".?at=2022-12-27T03:14:22.212775Z",
   "exact": ["0123456789"],
   "fuzzy": ["wizzy", "woozy", "wuzzy"],
-  "dependencies": ["/my-service/v1/x/123/y/abc/search-document"],
+  "dependendencies": [],
   "content": {
     "structureVersion": 1,
     "discriminator": "Y",
@@ -257,9 +265,35 @@ Below is the example of the search document for a resource of type `Y`:
     "ranking": 4,
     "class": "wuzzy",
     "since": "2023-01-10"
+  },
+  "referencedContent": {}
+}
+```
+
+```json
+{
+  "structureVersion": 1,
+  "href": ".?at=2022-12-28T12:48:09.558745Z",
+  "exact": ["7457"],
+  "fuzzy": [],
+  "dependencies": ["/my-service/v1/x/123", "/my-service/v1/y/abc"],
+  "content": {
+    "structureVersion": 1,
+    "discriminator": "R",
+    "layer": "optimized",
+    "premium": 7457,
+    "x": "/my-service/v1/x/123"
+  },
+  "referencedContent": {
+    "y": "/my-service/v1/y/abc"
   }
 }
 ```
+
+Note that in the content of the search document for `R`, the property `x` is the canonical URI of the resource of type
+`X` that this resource of type `R` depends on. The client can use this to get that resource. This specification is
+opaque for the search topic, search topic handler, search index, and search service. It is a dependency of clients on
+the service API, expressed by the discriminator.
 
 ### Search index documents
 
@@ -304,23 +338,6 @@ and the URI of the search document from the event (it strips of the last `/searc
 query parameter). This is inserted as `href` _without the `at` query parameter_ in the index search document at the top
 level, and as `href` in the search index document `content`, with the `at` query parameter.
 
-#### Content
-
-The `content` is what will be returned to a client when a search matches. The client uses the `content` to show search
-results quickly, without, or with limited extra service calls, and to allow click-through to the details of a found
-resource. It is the `content` of the retrieved search document, with the addition of a `href` property, so the client
-knows where to get the details of the found resource.
-
-The `content.href` is the canonical URI calculated above, including the `at` query parameter. In the client, the user
-would navigate to the indexed version of the resource, and not necessarily the latest. The search index is eventually
-consistent, and we want to show the user the same information as was used in finding the resource.
-
-The exact structure of the `content` property data structure is opaque for the search index and search service. It is a
-dependency of clients on the service API, expressed by the discriminator.
-
-The `mode` is not included in the `content`. The client supplies a `mode` in a search request, and only index search
-documents with that exact mode are returned.
-
 #### Other properties
 
 The `id` is the canonical URI, with `/` replaced by `_`, because of syntax constraints, and appended with the `mode`.
@@ -340,7 +357,25 @@ to provide the possibility for clients to search for resources of an exact type.
 
 The top level `href` is used in authorization (described later).
 
-`exact` and `fuzzy` are used in different kinds of search requests.
+`exact` and `fuzzy` are used in different kinds of search requests. These are copied from the retrieved search document,
+and possibly extended with referenced content.
+
+#### Content
+
+The `content` is what will be returned to a client when a search matches. The client uses the `content` to show search
+results quickly, without, or with limited extra service calls, and to allow click-through to the details of a found
+resource. It is the `content` of the retrieved search document, with the addition of a `href` property, so the client
+knows where to get the details of the found resource.
+
+The `content.href` is the canonical URI calculated above, including the `at` query parameter. In the client, the user
+would navigate to the indexed version of the resource, and not necessarily the latest. The search index is eventually
+consistent, and we want to show the user the same information as was used in finding the resource.
+
+The exact structure of the `content` property data structure is opaque for the search index and search service. It is a
+dependency of clients on the service API, expressed by the discriminator.
+
+The `mode` is not included in the `content`. The client supplies a `mode` in a search request, and only index search
+documents with that exact mode are returned.
 
 #### Example
 
@@ -369,4 +404,104 @@ document:
     "since": "2023-01-10"
   }
 }
+```
+
+#### Referenced content
+
+When the search document contains entries in the `referencedContent` dictionary, the search topic handler splices extra
+information into the new search index `content`, `exact`, and `fuzzy`. For every entry `(key, value)` in the dictionary,
+it
+
+- retrieves the search index documents from the search index with an exact match of `value` on `href` (canonical URI)
+  for the same `mode`, and
+- splices the returned search index document’ `content` in the new search index document’ `content` with as property
+  with name `key`.
+- concatenates the `exact` of the returned search index document to the `exact` of the new search index document
+- concatenates the `fuzzy` of the returned search index document to the `fuzzy` of the new search index document
+
+The example search document for type `R` above results in the following search index document, after splicing in
+information from the search index document of `/my-service/v1/y/abc` as referenced content:
+
+```json
+{
+  "id": "my-service_v1_z_123_y_abc_example",
+  "mode": "example",
+  "flowId": "a2d890b1-fa83-4bbf-bc26-15ab282b2e00",
+  "createdAt": "2022-12-28T12:48:09.558745Z",
+  "discriminator": "R",
+  "href": "/my-service/v1/x/123/y/abc",
+  "exact": ["7457", "0123456789"],
+  "fuzzy": ["wizzy", "woozy", "wuzzy"],
+  "content": {
+    "structureVersion": 1,
+    "discriminator": "R",
+    "href": "/my-service/v1/x/123/y/abc?at=2022-12-28T12:48:09.558745Z",
+    "layer": "optimized",
+    "premium": 7457,
+    "x": "/my-service/v1/x/123",
+    "y": {
+      "structureVersion": 1,
+      "discriminator": "Y",
+      "href": "/my-service/v1/y/abc?at=2022-12-27T03:14:22.212775Z",
+      "name": "wizzy",
+      "category": "woozy",
+      "registrationId": "0123456789",
+      "ranking": 4,
+      "class": "wuzzy",
+      "since": "2023-01-10"
+    }
+  }
+}
+```
+
+## Search
+
+A client can search for matching resources by sending a search request to the search service, with paging parameters. A
+`mode` has to be supplied with each search request. Clients can issue search requests with any combination of
+
+- an exact match on `discriminators`
+- an exact match on any entry in `exact`
+- a fuzzy match on any entry `fuzzy`
+- an exact match on `href`
+
+The search service will
+
+- determine wether the request is authenticated
+- retrieve the RAAs for the `mode` of the request, for the authenticated subject
+- convert the `GET` RAAs to a regular expression
+- do a search on the search index with the necessary parameters
+
+The common parameters are always:
+
+- an exact match on `mode` with the `mode` of the request
+- a regular expression match on the search index document `href` (canonical URI of the resource) with the converted
+  `GET` RAAs; this way, only resources the subject is authorized to read will be returned
+- paging parameters
+
+If `discriminators`, an `exact`, a `fuzzy`, or `href` exists in the search request, these are added to the search index
+search.
+
+The `contents` values of the found results are doctored a bit, and returned to the client.
+
+Examples for searches, applied to the 2 examples above, follow. The call returns all matching resources the subject is
+authorized for, paged.
+
+```javascript
+search({ exact: '0123456789' }) // returns `/my-service/v1/y/abc` and `/my-service/v1/x/123y/abc`
+
+search({ discriminators: ['Y'], exact: '0123456789' }) // returns `/my-service/v1/y/abc`
+
+search({ discriminators: ['R'], exact: '0123456789' }) // returns `/my-service/v1/x/123y/abc`
+
+search({ discriminators: ['X', 'Y', 'R'], exact: '0123456789' })
+// returns `/my-service/v1/y/abc` and `/my-service/v1/x/123y/abc`
+
+search({ fuzzy: 'wizzy woo' }) // returns `/my-service/v1/y/abc` and `/my-service/v1/x/123y/abc`
+
+search({ discriminators: ['Y'], fuzzy: 'wizzy woo' }) // returns `/my-service/v1/y/abc`
+
+search({ discriminators: ['R'], fuzzy: 'wizzy woo' }) // returns `/my-service/v1/x/123y/abc`
+
+search({ discriminators: ['X', 'Y', 'R'], fuzzy: 'wizzy woo' })
+// returns `/my-service/v1/y/abc` and `/my-service/v1/x/123y/abc`
 ```
