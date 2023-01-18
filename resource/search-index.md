@@ -781,3 +781,7 @@ search({
 ```
 
 ## Rejected alternatives
+
+The process described above is optimized to use the search index as much as possible, where some requests could also be
+replaced with calls to a life resource in a service. In the infrastructure we use, the search index is a separate
+powerfull resource. It makes sense to move load from the services to the search index as much as possible.
