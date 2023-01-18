@@ -108,9 +108,9 @@ handling of events on the topic is not guaranteed to be in the order of posting 
 distributed systems). This way, if an earlier event is processed after a later event for a same resource, both will work
 with the same version of the data, and the second handling will be idempotent.
 
-If the search document tells the search topic handler that the changed resource has dependencies, it posts additional
-events on the search topic to update the search index documents for those resources eventually. This is a recursive
-process.
+The topic handler determines whether the changed search index document is referenced by other search index documents. If
+so, it posts additional events on the search topic to update those search index documents eventually. This is a
+recursive process.
 
 ## Canonical and fully qualified URI
 
