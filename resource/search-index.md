@@ -888,8 +888,81 @@ itself, because it seems like a far-fetched idea to create a UI where you want t
 payments to and from another bank. If you encounter large symmetric many-to-many relationships in the business domain at
 hand, other solutions must be found.
 
-## Rejected alternatives
+## Notes and Rejected alternatives
+
+### Move load from services to search index as much as possible
 
 The process described above is optimized to use the search index as much as possible, where some requests could also be
 replaced with calls to a life resource in a service. In the infrastructure we use, the search index is a separate
 powerfull resource. It makes sense to move load from the services to the search index as much as possible.
+
+### Limit the number of events posted
+
+Strictly speaking, a search index document must only be updated whenever the data that is stored in it changes. In
+practice this means that an update is only needed when data changes that appears in the search document’s `exact`,
+`fuzzy`, or `content` (the data in `dependencies` can never change with immutable relationships).
+
+It would be possible to write code in the originating service that only posts events when data used in these search
+document properties changes. In practice this is not done because it would be a lot of (possibly brittle) work for
+little benefit.
+
+### Roles in dependencies
+
+Relations in the search index as currently described, do not have the concept of a _role_. If the `dependencies`
+contains 2 or more canonical URIs, it is not clear what element expresses what role of the relationships. This is not an
+issue when each side of the relationship is a different resource type as the structure of the canonical URI is different
+for each resource type.
+
+When the structure of the canonical URIs are the same, because the resource is the reification of a directed
+relationship between resources of the same type, it is not clear what canonical URI expresses what role.
+
+A solution to this is it to add the canonical URI of a participating resource 2 times in the `dependencies`: once as
+before (just the plain canonical URI) and once with the role as a prefix.
+
+Suppose we want to store the relation `is-parent-of` in a search index document. This relation is between 2 resources of
+the type person. The `dependencies` list would then look as follows:
+
+- `/persons/v1/person/105`
+- `/persons/v1/person/719`
+- `parent:/persons/v1/person/105`
+- `child:/persons/v1/person/719`
+
+With this information, one can still search in the same way as before, but when it is needed, one can also take into
+account the role. It is both possible to search resources where `/persons/v1/person/105` participates in the relation
+`is-parent-of` (no matter the role) and where `/persons/v1/person/105` fulfills the specific roles of `parent` or
+`child`.
+
+As long as all participating resources in a relationship are of a different type, the addition of a specific `role` is
+not needed.
+
+As long as there is no need for this, the role should not be added. Whenever the need is there, the role can be added on
+an as-needed basis.
+
+### Trigger updates of referencing resources in the service
+
+In the described process, the events for _referencing_ resources are triggered by the search topic handler when handling
+the original event, recursively.
+
+Alternatively, we considered to have the service post not only the original event, but also events for all referencing
+resources, recursively.
+
+In the example, when a resource of type `Y` is updated, the service creates an event for that resource. But the service
+could also, during the update, find all instances of `R` for which the search document references this instance of `Y`
+and create events for each of the found `R` instances too, immediately.
+
+This is not a good solution.
+
+- Finding the associated referencing resources (recursively) is done synchronously during the update of the `Y`
+  resource. All synchronous actions should be as fast as possible..
+
+- The service managing the updated resource would need to know everything that references it. If a referencing resource
+  is managed by another service, this creates a dependency loop between the services. If `R` references `Y`, this
+  implies that the service managing `R` (`your-service`) depends on the service managing `Y` (`my-service`). But now the
+  update code for `Y` in `my-service` needs to know about `R` in `your-service`, making `my-service` dependent on
+  `your-service`. This is a bad architecture for distributed systems, but the reasoning also applies between different
+  logical components and code constructs within one service.
+
+We will not follow this approach.
+
+In the described process, the service code for an update is kept simple (only one event for the updated entity itself),
+and cascade updates of referencing resources are handled asynchronously, with eventual consistency, even cross-service.
