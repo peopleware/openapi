@@ -460,6 +460,7 @@ it
   with name `key`.
 - concatenates the `exact` of the returned search index document to the `exact` of the new search index document
 - concatenates the `fuzzy` of the returned search index document to the `fuzzy` of the new search index document
+- adds the `value` to the new search index document’s `referenced` property
 
 The example search document for type `R` above results in the following search index document, after splicing in
 information from the search index document of `/my-service/v1/y/abc` as referenced content:
