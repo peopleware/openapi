@@ -508,10 +508,17 @@ resource changes to.
 A client can search for matching resources by sending a search request to the search service, with paging parameters. A
 `mode` has to be supplied with each search request. Clients can issue search requests with any combination of
 
-- an exact match on `discriminators`
-- an exact match on any entry in `exact`
-- a fuzzy match on any entry `fuzzy`
-- an exact match on `dependencies`
+- `discriminators`: Array of discriminators. Matching search index documents must have a `discriminator` that exactly
+  matches on of the entries in the array. Used to filter on specific resource types.
+
+- `exact`: String. Matching search index documents must have an entry in `exact` that exactly matches this string. Used
+  for business keys, identifiers, ...
+
+- `fuzzy`: String. The given term must appear as part of a member of the `fuzzy` field of matching search index
+  documents. Used for names, descriptions, ...
+
+- `dependency`: Canonical URI. Matching search index documents must have an entry in `dependencies` that exactly matches
+  this value. Used to retrieve to-many associations.
 
 The search service will
 
@@ -527,8 +534,8 @@ The common parameters are always:
   `GET` RAAs; this way, only resources the subject is authorized to read will be returned
 - paging parameters
 
-If `discriminators`, an `exact`, a `fuzzy`, or `href` exists in the search request, these are added to the search index
-search.
+If `discriminators`, an `exact`, a `fuzzy`, or `dependency` exists in the search request, these are added to the search
+index search to perform as described.
 
 The `contents` values of the found results are doctored a bit, and returned to the client.
 
@@ -607,7 +614,7 @@ search({
 // returns `/my-service/v1/y/abc` and `/your-service/v1/x/123/y/abc`
 ```
 
-The use of an exact match on `dependencies` is discussed below.
+The use of an exact match on `dependency` is discussed below.
 
 ### Referenced
 
@@ -661,6 +668,8 @@ indexSearch({
 })
 // returns search index document for `/my-service/v1/x/123y/abc`
 ```
+
+Note that the search on `referenced` is not exposed by the search service API.
 
 The search index document that is returned, is the one represented above for `/my-service/v1/x/123/y/abc`. It must be
 updated. The value of its `source` is `/my-service/v1/x/123/y/abc/search-document`. `The following event is posted on
@@ -761,7 +770,7 @@ The UI can get the collection of to-many associated resources for given resource
 `mode`, on the search service, with
 
 - `discriminators` set to the discriminator of the resource type of the elements of the collection, and
-- `dependencies` set to the canonical URI of the given resource.
+- `dependency` set to the canonical URI of the given resource.
 
 In the example, to get the collection of associated `R` resources for `/some-service/v1/x/123`, the UI executes the
 search request
@@ -772,7 +781,7 @@ search({
   mode: 'example',
   flowId: '383007df-8b0f-4db3-9d4b-a17227ab7c03',
   discriminators: ['R'],
-  dependencies: '/some-service/v1/x/123'
+  dependency: '/some-service/v1/x/123'
 })
 // returns `/your-service/v1/x/123/y/abc`
 ```
@@ -802,7 +811,7 @@ search({
   mode: 'example',
   flowId: '383007df-8b0f-4db3-9d4b-a17227ab7c03',
   discriminators: ['R'],
-  dependencies: '/some-service/v1/x/123',
+  dependency: '/some-service/v1/x/123',
   exact: '0123456789'
 })
 
@@ -811,7 +820,7 @@ search({
   mode: 'example',
   flowId: '383007df-8b0f-4db3-9d4b-a17227ab7c03',
   discriminators: ['R'],
-  dependencies: '/some-service/v1/x/123',
+  dependency: '/some-service/v1/x/123',
   fuzzy: ['wuzzy', 'woo']
 })
 ```
@@ -831,7 +840,7 @@ search({
   mode: 'example',
   flowId: '383007df-8b0f-4db3-9d4b-a17227ab7c03',
   discriminators: ['R'],
-  dependencies: '/my-service/v1/y/abc'
+  dependency: '/my-service/v1/y/abc'
 })
 ```
 
