@@ -146,10 +146,13 @@ The UI, accessed as `immutable` build, uses `LATEST` as build number for each se
 exceptions where some build numbers are hard coded. Accessed as `bookmarkable` build, the UI contains a configuration
 that explicitly lists the build numbers of all services to use.
 
-When a service, such as `your-service` , or the search topic handler, accesses other services, e.g., `my-service`, the
+When a service, such as `your-service`, or the search topic handler, accesses other services, e.g., `my-service`, the
 build number is determined from the `mode` using _deployment configuration_. Deployment parameters might mention that
-build number `00432` of `my-service` must be used in a `qa-023` mode, and build `LATEST` must be used in mode
-`dev-experiment`.
+build number `00432` of `my-service` must be used in a `qa-023` `mode`, and build `LATEST` must be used in mode
+`dev-experiment`. The deployment configuration can differ between different deployed builds of the dependent service,
+and can evolve without a new build or deploy. It is the resonsibility of the deployment configuration to make sure that
+the build of the dependent service is compatible with the version of the API the build of the service that is called
+offers.
 
 ## Events
 
