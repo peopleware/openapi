@@ -34,7 +34,8 @@ associated with exactly one instance of `X` and `Y`, and `X` and `Y` can optiona
 instances of `R` in which an instance of `X`, or `Y`, participates, in the detail representation of `X`, respectively
 `Y`, in the UI. We will discuss searching in this collection of `X`. For this, we will need to revisit searching for
 instances of `Y` in the context of the relationship. `YA` is used as illustration in discussing the recursive behavior
-of this issue.
+of this issue. We imagine, in this example, many related `Y` instances for a given `X` resource, and just a few related
+`X` instances for a given `Y` instance.
 
 ## Architecture
 
@@ -849,7 +850,34 @@ search. However, if the number of associated resources is small, this functional
 
 We advise to not offer search on small collections.
 
-## Too many updates
+## Too many updates, asymmetry hypothesis
+
+In the example, the search index document for `R` does not include information about the associated `X` resource because
+this illustrates our main mitigation of the exponential explosion issue exposed above.
+
+Imagine that, for every `X` resource we expect a large collection of related `Y` resources, but that for every `Y`
+resource, the collection of related `X` resources is expected to be small (< 20).
+
+In the example, where the `R` search index document references `Y` information, the `R` search index document needs to
+be updated too when a referenced `Y` resource changes. Since we expect the collection of related `X` resources for a `Y`
+resource is small, there will be only a few `R` search index documents that have to be updated.
+
+When the `R` search index document would reference `X` information, it needs to be updated too when a referenced `X`
+resource changes. Since we expect the collection of related `Y` resources for a `X` to be large (imagine 10<sup>5</sup>
+relationships), there would be many `R` search index documents that have to be updated. In the example, the `R` search
+index document does not reference `X` information to avoid this issue, deliberately.
+
+We hypothesize that, in practice, most many-to-many relationships have a small multiplicitly on both sides, or have
+asymmetric multiplicitly: if the relationship is big in one direction, it is small in the other direction. Consider
+people who are members of a club. Each club might have a large set of members, but each person will only be a member in
+a small number of clubs. A bank holds accounts for many customers, but each person only has account with a limited
+number of banks.
+
+An example of a large symmetric many-to-many relationship might be international payments between banks. Every bank has
+a large collection of payments (> 10<sup>10</sup>) to most other banks. In this case, the issue might not present
+itself, because it seems like a far-fetched idea to create a UI where you want to show all outgoing and incoming
+payments to and from another bank. If you encounter large symmetric many-to-many relationships in the business domain at
+hand, other solutions must be found.
 
 ## Rejected alternatives
 
