@@ -853,7 +853,10 @@ visualization when the responses arive. The UI should deduplicate requests for t
 collection. Note that the responses will be cached.
 
 This is more than feasible when number of associated resources is small (< 20), or collections of medium size (< 100),
-since the results are paged, and more information must only be retrieved when a new page is shown.
+since the results are paged, and more information must only be retrieved when a new page is shown. Actually, the
+inclusion of any `content` in search index documents of any resource is an optimization, that makes displaying search
+results faster for the client, and reduces load on the services. The process described here for small collections, with
+paging, is scaleable. It does not offer, however, a possibility to search in large collections of related resources.
 
 Note that in the example, the UI could still offer the user the functionality to search on `R`’s `premium` with exact
 search. However, if the number of associated resources is small, this functionality would never be used.
