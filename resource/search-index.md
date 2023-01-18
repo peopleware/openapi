@@ -722,7 +722,7 @@ The system we are applying this in can handle ~ 1000 events per minute (this cou
 choices). In the realistic case mentioned above, handling a change to a root resource would take ~ 2&nbsp;252 minutes =
 ~37 hours. Eventually consistent is nice, but that is pushing it.
 
-Such cases must be avoided.
+Such cases must be avoided. This will be discussed below.
 
 ## Displaying to-many associations with search
 
