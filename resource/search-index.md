@@ -456,7 +456,7 @@ it
 
 - retrieves the search index documents from the search index with an exact match of `value` on `href` (canonical URI)
   for the same `mode`, and
-- splices the returned search index document’ `content` in the new search index document’ `content` with as property
+- splices the returned search index document’s `content` in the new search index document’s `content` with as property
   with name `key`.
 - concatenates the `exact` of the returned search index document to the `exact` of the new search index document
 - concatenates the `fuzzy` of the returned search index document to the `fuzzy` of the new search index document
