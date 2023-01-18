@@ -162,6 +162,8 @@ Events have the following properties:
 
 - `mode`: The `mode` in which the resource that was created or updated resides.
 
+- `build`: The build number of the service that posts the event.
+
 - `flowId`: The `flowId` of the request to the service that triggered the creation or update of the resource. This is
   added to make it possible to cross-reference events, search document requests, and search index documents with each
   other and logs.
@@ -176,7 +178,8 @@ like:
   "MessageProperties": {
     "CustomProperties": {
       "flowId": "9fc6ad82-6626-4ac3-bc1c-17a3fbd5dc3f",
-      "mode": "example"
+      "mode": "example",
+      "build": "00456"
     }
   },
   "MessageBody": {
