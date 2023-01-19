@@ -971,3 +971,21 @@ We will not follow this approach.
 
 In the described process, the service code for an update is kept simple (only one event for the updated entity itself),
 and cascade updates of referencing resources are handled asynchronously, with eventual consistency, even cross-service.
+
+### Splicing referenced content on retrieval from the search index instead of before putting it in
+
+In the process as described, `referenced` `content`, `exact`, and `fuzzy` data is spliced in the search index document
+before it is put in the search index. This requires recursive updates when a `referenced` search index document changes.
+
+Alternatively, we could not splice this information in the search index document before we put it in the search index,
+but rely on the search service to do this when search results are retrieved. This voids the need for recursive updates
+when a `referenced` search index document changes, and has the added benefit that the user would always get the latest
+version of `referenced` information.
+
+However, the search service returns many matches mostly. The search service would need to retrieve the `referenced` data
+for all search results in a page. We want the search to return as fast as possible. It is typical in a distributed
+application to do more work when saving data (asynchronously, possibly with redundancy), to make retrieval
+straigtforward and fast. Furthermore, the `referenced` content needs to be spliced in all search results _recursively_,
+which could lead to exponential explosion in the search request.
+
+Therefore, we choose to make the effort when saving the search index document, and not when retrieving it.
