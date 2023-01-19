@@ -456,8 +456,10 @@ it
   for the same `mode`, and
 - splices the returned search index document’s `content` in the new search index document’s `content` with as property
   with name `key`.
-- concatenates the `exact` of the returned search index document to the `exact` of the new search index document
-- concatenates the `fuzzy` of the returned search index document to the `fuzzy` of the new search index document
+- concatenates the `exact` of the returned search index document to the `exact` of the new search index document, and
+  removes duplicates (`nub()`)
+- concatenates the `fuzzy` of the returned search index document to the `fuzzy` of the new search index document, and
+  removes duplicates (`nub()`)
 - adds the `value` to the new search index document’s `referenced` property
 
 The example search document for type `R` above results in the following search index document, after splicing in
