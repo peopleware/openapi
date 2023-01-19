@@ -893,7 +893,7 @@ itself, because it seems like a far-fetched idea to create a UI where you want t
 payments to and from another bank. If you encounter large symmetric many-to-many relationships in the business domain at
 hand, other solutions must be found.
 
-## Notes and Rejected alternatives
+## Notes and rejected alternatives
 
 ### Move load from services to search index as much as possible
 
