@@ -94,7 +94,9 @@ The _search topic handler_ picks up the event, and requests the _search document
 service. This contains the most up-to-date search-relevant information at this time, and contains general data
 structures, and data structure specific for the resource at hand. For the search index handler, search index, and search
 service, the latter is opaque. Based on this data, the search index handler builds a _search index document_, and
-creates or updates it in the search index.
+creates or updates it in the search index. The topic handler determines whether the changed search index document is
+referenced by other search index documents. If so, it posts additional events on the search topic to update those search
+index documents eventually. This is a recursive process.
 
 _Clients_ send _search requests_ to the _search service_ for a given `mode`. The search service handles authentication,
 and supports different, but limited, kinds of search. The search service creates appropriate search paramaters in the
@@ -107,10 +109,6 @@ The search-relevant information is not included in the event, but requested by t
 handling of events on the topic is not guaranteed to be in the order of posting (which is typical in asynchronous
 distributed systems). This way, if an earlier event is processed after a later event for a same resource, both will work
 with the same version of the data, and the second handling will be idempotent.
-
-The topic handler determines whether the changed search index document is referenced by other search index documents. If
-so, it posts additional events on the search topic to update those search index documents eventually. This is a
-recursive process.
 
 ## Canonical and fully qualified URI
 
