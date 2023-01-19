@@ -47,7 +47,7 @@ The search index is kept up-to-date using the following general flow:
 
 The search index document has the following fields:
 
-- `id`: The search index technology we use requires a unique identifier`id` of the search index document, so it can be
+- `id`: The search index technology we use requires a unique identifier `id` of the search index document, so it can be
   updated later. Some syntax rules apply.
 - `mode`: any search request happens for an exact mode
 - `flowId`: added to be able to cross-reference the search index document with logs.
@@ -82,7 +82,7 @@ The search handler retrieves the search document from the service, at the event�
 {
   "structureVersion": 1,
   "exact": ["0123456789"],
-  "fuzzy":  ["wizzy", "woozy", "wuzzy"],
+  "fuzzy": ["wizzy", "woozy", "wuzzy"],
   "content": {
     "structureVersion": 1,
     "discriminator": "Y",
@@ -91,8 +91,8 @@ The search handler retrieves the search document from the service, at the event�
     "registrationId": "0123456789",
     "ranking": 4,
     "class": "wuzzy",
-    "since": "2023-01-10"
-    "href": "?at=2020-01-23T15:22:39.212Z",
+    "since": "2023-01-10",
+    "href": "?at=2020-01-23T15:22:39.212Z"
   }
 }
 ```
@@ -322,7 +322,7 @@ E.g.:
 
 To go one step further and support searching within relationships using terms that refer to the participating entities
 in the relationship, search terms for the participating entities we want to filter need to be added. For consistency
-reasons, it is recommended to support all search terms that are available when search on the entity itself.
+reasons, it is recommended to support all search terms that are available when searching on the entity itself.
 
 To support searching within the relationship `R` on properties of `Y`, the search terms of `Y` must be added in the
 search record. The following is needed:
@@ -375,7 +375,7 @@ Whether it is useful to add search terms of the participating entities depends o
 search functionality when we expect less than 20 relationships. For each type of relationship `R` it needs to be
 determined whether search terms for either `X` or `Y`, or both or none of them, must be added. In the example, we
 imagine there are only a few instances of `X` related to an instance of `Y`, which makes searching superfluous, but many
-instances of `Y` related to an instance of `X`, which makes searching functionaly relevant.
+instances of `Y` related to an instance of `X`, which makes searching functionally relevant.
 
 ### Display information through `content`
 
@@ -432,13 +432,13 @@ contains data from one of the participating entities of that relationship, then 
 when that participating entity is updated.
 
 Take the example from earlier on to make this concrete: relationship `R` with participating entities `X` and `Y`, with
-`X` itself a relationship with participation entities `YA` and `YB`. Suppose that `content` of `R` contains data of all
+`X` itself a relationship with participating entities `YA` and `YB`. Suppose that `content` of `R` contains data of all
 entities. When `YB` is updated, all search records of `Y` that have that `YB` as participating entity, need to be
 updated. For each of those `Y` relationships, all search records of `R` that have that `Y` as participating entity, need
 to be updated.
 
 The example explicitly does not contain data related to `X`. If it would, the relationship search index record would
-need to be updated to when that information in `/x/123` changes. Since we imagine in the example that there are only a
+need to be updated too when that information in `/x/123` changes. Since we imagine in the example that there are only a
 few instances of `X` related to an instance of `Y`, search for properties of `X` is functionally irrelevant. Since we
 imagine many instances of `Y` related to an instance of `X`, there would be many instance of `R` for a given `X`,
 resulting in many necessary updates. Not having information about `X` that can change in the search index record for `R`
@@ -573,10 +573,15 @@ Since the reference to the `search-document` is needed, this reference must be s
 The property `source` is added for this: it contains the `href` of the `search-document` , _including the build number
 of the service_, from which the search index record was created.
 
-<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO: </strong> Don’t agree: this could
-be a very old build that no longer exists. Use
-the
-build number from the original event? But that will not work cross-service.</div>
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO: </strong> Don’t agree: this could be a very old build that no longer exists. Use
+the build number from the original event? But that will not work cross-service.</div>
+
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// Ruben: </strong>I think the build number must be included so that we know which version of
+the service generated the data.  The current implementation of the search handler can convert the found href to a
+canonical one, and then back to the versioned one that the search handler is configured to work with.  So it currently
+attempts to use the versioned it finds in the event, and falls back the versioned configured in the handler when the
+original one cannot be found.
+</div>
 
 ```json
 {
@@ -604,7 +609,7 @@ discriminators that must be added as extra filter when searching the `href` on t
 {
   "structureVersion": 1,
   "exact": ["0123456789"],
-  "fuzzy":  ["wizzy", "woozy", "wuzzy"],
+  "fuzzy": ["wizzy", "woozy", "wuzzy"],
   "content": {
     "structureVersion": 1,
     "discriminator": "Y",
@@ -613,7 +618,7 @@ discriminators that must be added as extra filter when searching the `href` on t
     "registrationId": "0123456789",
     "ranking": 4,
     "class": "wuzzy",
-    "since": "2023-01-10"
+    "since": "2023-01-10",
     "href": ".?at=2023-01-173T15:22:39.212Z"
   },
   "dependents": ["R"]
@@ -631,6 +636,14 @@ search({
 brittle. Is it worth the effort? What if this is cross-service? Now we have a dependency loop between 2 services.
 Isn’t it better to split `exact`, and use a new field `dependencies`, where we store `["/my-service/v1/x/123",
 "/my-service/v1/y/abc"]`, separate from `exact`? This is also a form of meta-information, but `R` stays in control.
+</div>
+
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// Ruben: </strong> After giving some more thought to this, I believe we do not need any kind
+of extra filter.  We do need the `dependencies` field though. Take as an example a relation `R` between `X` and `Y`,
+where we additionally store the search terms and content from `Y`, but not from `X`.  In that case `href`s from both `X`
+and `Y` must be part of `exact`.  Still for the update of the dependents, we do not want to find this `R` for an update
+of `Y`.  So, we do need a new field `dependencies` that in this case would only contain the `href` from `X`.  `Y` is not
+considered a dependency since no search terms and content is used from `Y`.
 </div>
 
 This approach is preferable because it keeps the service code simple for an update (only one search update event for the
@@ -743,8 +756,13 @@ field contains an object. The value of each property of this object is a `href` 
 build number of the service to use.
 
 <div style="background-color: red; color: yellow; padding: 5mm;"><strong>// MUDO: </strong> Impossible with the
-currect approach: `my-service` does not know what build to use for `your-service`. That’s in bookmarkable in the
+current approach: `my-service` does not know what build to use for `your-service`. That’s in bookmarkable in the
 current way of working.</div>
+
+<div style="background-color: red; color: yellow; padding: 5mm;"><strong>// Ruben: </strong> This is not how current
+services work.  Every service and handler is aware of which version of a dependent service it can communicate with.
+There is currently no mechanism for services and handlers to know in which context (a bookmarkable _is_ a context) they
+are called. </div>
 
 ```json
 {
