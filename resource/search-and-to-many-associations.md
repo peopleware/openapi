@@ -197,7 +197,7 @@ topic that looks like:
     "CustomProperties": {
       "flowId": "0a170f19-e545-4699-9495-ff2e8067f710",
       "mode": "example",
-      "build": "00456"
+      "build": "00789"
     }
   },
   "MessageBody": {
@@ -336,6 +336,9 @@ Search index documents have the following properties:
 
 - `flowId`: to be able to cross-reference the search index document with logs
 
+- `build`: the build number of the service from which we got the search document this search index document is based on;
+  used to be able to cross-reference in case of errors
+
 - `createdAt`: the value of the `x-date` header that is returned with the search document request from which the search
   index document is created.
 
@@ -429,6 +432,7 @@ document:
   "mode": "example",
   "source": "/my-service/v1/y/abc/search-document",
   "flowId": "74551439-d945-41c9-89ab-0805087c4ec0",
+  "build": "00456",
   "createdAt": "2022-12-27T03:14:22.212775Z",
   "discriminator": "Y",
   "href": "/my-service/v1/y/abc",
@@ -474,6 +478,7 @@ information from the search index document of `/my-service/v1/y/abc` as embedded
   "mode": "example",
   "source": "/your-service/v1/x/123/y/abc/search-document",
   "flowId": "0a170f19-e545-4699-9495-ff2e8067f710",
+  "build": "00789",
   "createdAt": "2022-12-28T12:48:09.558745Z",
   "discriminator": "R",
   "href": "/your-service/v1/x/123/y/abc",
@@ -685,7 +690,7 @@ the search topic:
     "CustomProperties": {
       "flowId": "410ae3c3-2a74-4318-9ca6-ea85c8e4c23a",
       "mode": "example",
-      "build": "00541"
+      "build": "00890"
     }
   },
   "MessageBody": {
