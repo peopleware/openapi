@@ -95,8 +95,8 @@ service. This contains the most up-to-date search-relevant information at this t
 structures, and data structure specific for the resource at hand. For the search index handler, search index, and search
 service, the latter is opaque. Based on this data, the search index handler builds a _search index document_, and
 creates or updates it in the search index. The topic handler determines whether the changed search index document is
-referenced by other search index documents. If so, it posts additional events on the search topic to update those search
-index documents eventually. This is a recursive process.
+referenced by other search index documents that embed information from it. If so, it posts additional events on the
+search topic to update those search index documents eventually. This is a recursive process.
 
 _Clients_ send _search requests_ to the _search service_ for a given `mode`. The search service handles authentication,
 and supports different, but limited, kinds of search. The search service creates appropriate search paramaters in the
@@ -227,9 +227,9 @@ handler logs this as an error, mentioning the `build` from the `event` and the b
 considers the event handled. When this would occur in stable environments or `mode`s, this is still the best approach to
 deal with a configuration error.
 
-Depending on the results returned from the retrieved search document, the search topic handler retrieves extra
-referenced content from the search engine to use in the search index document it creates, and might create new events
-for other search index documents to be updated eventually too.
+Depending on the results returned from the retrieved search document, the search topic handler retrieves extra content
+from the search engine to embed in the search index document it creates, and might create new events for other search
+index documents that embedded content from this search index document to be updated eventually too.
 
 ### Search documents
 
@@ -254,9 +254,10 @@ The search documents a service offer are specializations of a common structure. 
   - `structureVersion`: an integer describing the version of this data structure
   - `discriminator`: the type of represented resource
 
-- `referenced`: Dictionary of property names to canonical URIs of other resources. The search document of the referenced
-  resources will be spliced into the content by the search topic handler. When the search index document for the
-  referenced resources is updated, the search index document for the represented resource needs to be updated too.
+- `embed`: Dictionary of property names to canonical URIs of other resources. Information from the search index document
+  of the referenced resources will be embedded into this search index document by the search topic handler. When the
+  search index document of which information is embedded is updated, the search index document for the represented
+  resource needs to be updated too.
 
 The `content` is, more or less, what will be returned to a client when a search matches. The client uses the `content`
 to show search results quickly, without additional service calls. The `content` contains the `discriminator`, so the
@@ -283,7 +284,7 @@ Below is the example of the search document for a resource of type `Y` and `R`:
     "class": "wuzzy",
     "since": "2023-01-10"
   },
-  "referenced": {}
+  "embed": {}
 }
 ```
 
@@ -303,7 +304,7 @@ Note that there is no mention of `your-service` in this representation.
     "premium": 7457,
     "x": "/some-service/v1/x/123"
   },
-  "referenced": {
+  "embed": {
     "y": "/my-service/v1/y/abc"
   }
 }
@@ -344,9 +345,9 @@ Search index documents have the following properties:
 - `dependencies`: array of canonical URIs of the resources the represented resource depends on; used to find collections
   of associated dependent represented resources from a resource that is a dependency
 
-- `referenced`: array of canonical URIs of the resources this search index document depends on; when the search index
-  document for the referenced resources is updated, the search index document for the represented resource needs to be
-  updated too
+- `embedded`: array of canonical URIs of the resources this search index document embeds information of; when the search
+  index document for the referenced resources is updated, the search index document for the represented resource needs
+  to be updated too
 
 - `exact`: a list of strings that are searchable in an exact match manner
 
@@ -390,12 +391,11 @@ to provide the possibility for clients to search for resources of an exact type.
 
 The top level `href` is used in authorization (described later).
 
-The top level `referenced` property is related to the `referenced` property in the search document. It is described
-below.
+The top level `embedded` property is related to the `embed` property in the search document. It is described below.
 
 `dependencies` is used so this search index document can be found from resources that are dependencies (described
 later). The `dependencies` value is copied from the search document. `exact` and `fuzzy` are used in different kinds of
-search requests. These are copied from the retrieved search document, and possibly extended with referenced content.
+search requests. These are copied from the retrieved search document, and possibly extended with embedded content.
 
 #### Content
 
@@ -429,7 +429,7 @@ document:
   "discriminator": "Y",
   "href": "/my-service/v1/y/abc",
   "dependencies": [],
-  "referenced": [],
+  "embedded": [],
   "exact": ["0123456789"],
   "fuzzy": ["wizzy", "woozy", "wuzzy"],
   "content": {
@@ -446,13 +446,12 @@ document:
 }
 ```
 
-#### Referenced content, exact, and fuzzy
+#### Embedded content, exact, and fuzzy
 
-When the search document contains entries in the `referenced` dictionary, the search topic handler splices extra
-information into the new search index `content`, `exact`, and `fuzzy`. For every entry `(key, value)` in the dictionary,
-it
+When the search document contains entries in the `embed` dictionary, the search topic handler splices extra information
+into the new search index `content`, `exact`, and `fuzzy`. For every entry `(key, value)` in the dictionary, it
 
-- retrieves the search index documents from the search index with an exact match of `value` on `href` (canonical URI)
+- retrieves the search index documents _from the search index_ with an exact match of `value` on `href` (canonical URI)
   for the same `mode`, and
 - splices the returned search index document’s `content` in the new search index document’s `content` with as property
   with name `key`.
@@ -460,10 +459,10 @@ it
   removes duplicates (`nub()`)
 - concatenates the `fuzzy` of the returned search index document to the `fuzzy` of the new search index document, and
   removes duplicates (`nub()`)
-- adds the `value` to the new search index document’s `referenced` property
+- adds the `value` to the new search index document’s `embedded` property
 
 The example search document for type `R` above results in the following search index document, after splicing in
-information from the search index document of `/my-service/v1/y/abc` as referenced content:
+information from the search index document of `/my-service/v1/y/abc` as embedded content:
 
 ```json
 {
@@ -475,7 +474,7 @@ information from the search index document of `/my-service/v1/y/abc` as referenc
   "discriminator": "R",
   "href": "/your-service/v1/x/123/y/abc",
   "dependencies": ["/some-service/v1/x/123", "/my-service/v1/y/abc"],
-  "referenced": ["/my-service/v1/y/abc"],
+  "embedded": ["/my-service/v1/y/abc"],
   "exact": ["7457", "0123456789"],
   "fuzzy": ["wizzy", "woozy", "wuzzy"],
   "content": {
@@ -617,7 +616,7 @@ search({
 
 The use of an exact match on `dependency` is discussed below.
 
-### Referenced
+### Embedded
 
 In the example, the search index document for resources of type `R` contain `content`, `exact`, and `fuzzy` entries of
 the resource of type `Y` it depends on. It is clear that, when the resource `/my-service/v1/y/abc` changes, the search
@@ -626,8 +625,8 @@ index document for `/my-service/v1/x/123/y/abc` must be updated too.
 The search topic handler will therefore, after having done the work describe above in response to an event, search in
 the search index for search index documents that have
 
-- an entry in `referenced` with an exact match on the calculated canonical URI of the newly created search index
-  document, and where
+- an entry in `embedded` with an exact match on the calculated canonical URI of the newly created search index document,
+  and where
 - `createdAt` is smaller than `createdBefore`.
 
 `createdBefore` is the value from the event, if it exists. If not, it is the value of the `x-date` response header of
@@ -637,8 +636,8 @@ For all results of this search, for all pages, the search topic handler will bui
 `mode` and `flowId` of the original request, the `createdBefore` value, and the `source` of the found search index
 document as `href`. `build` is the value the service determines for the service the `source` refers to as first
 `segment`, in the used `mode`. Eventually, the search topic handler will handle these new events, so that eventually the
-dependent search index documents will be brought up to date too. Those search index documents might have referenced
-others too, making the process recursive.
+dependent search index documents will be brought up to date too. Those search index documents might have embedded
+information from others too, making the process recursive.
 
 Consider a second, later event for `Y` in the example:
 
@@ -664,13 +663,13 @@ the following search, with the `mode` of the `event`:
 ```javascript
 indexSearch({
   mode: 'example',
-  referenced: '/my-service/v1/y/abc',
+  embedded: '/my-service/v1/y/abc',
   createdBefore: '2023-01-18T16:12:12.008500Z'
 })
 // returns search index document for `/my-service/v1/x/123y/abc`
 ```
 
-Note that the search on `referenced` is not exposed by the search service API.
+Note that the search on `embedded` is not exposed by the search service API.
 
 The search index document that is returned, is the one represented above for `/my-service/v1/x/123/y/abc`. It must be
 updated. The value of its `source` is `/my-service/v1/x/123/y/abc/search-document`. `The following event is posted on
@@ -695,9 +694,9 @@ the search topic:
 
 Note that the build number might be different from the originating event.
 
-For the recursion, imagine in the example that the `Y` resource references a `YA` resource, and that the `YA` resource
-is updated. After the update of the search index document for the `YA` resource, the `Y` resource is discovered as
-referencing, and eventually handled. After the update of the search index document for the `Y` resource, the `R`
+For the recursion, imagine in the example that the `Y` resource embeds information of a `YA` resource, and that the `YA`
+resource is updated. After the update of the search index document for the `YA` resource, the `Y` resource is discovered
+as referencing, and eventually handled. After the update of the search index document for the `Y` resource, the `R`
 resource is discovered as referencing, and eventually handled.
 
 ### Infinite loops
@@ -715,13 +714,14 @@ earlier update yet. When there is a loop, new events would be created, although 
 could loop 1, or a small number of times, but eventually the first update would be seen, and the loop would stop. Since
 this is only a back-stop for infinite loops, and repeated updates are idemponent, this is acceptable.
 
-### Cross-service references
+### Cross-service embeddings
 
-Referencing resources might live in a different service than their referents. In the example, `Y` lives in `my-service`,
-and `R` is managed by `your-service`. It is clear in that example that `your-service` depends on `my-service`, because a
-resource in it depends on a resource in `my-service`. In a clean architecture, there are no cyclic dependencies. In
-other words, in resources and code of `your-service`, references to resources, APIs, or structures of `my-service` are
-allowed, but not the other way around. This is upheld by this architecture.
+Embedding resources might live in a different service than the resources of which they embed information. Embedding is a
+form of dependency. In the example, `Y` lives in `my-service`, and `R` is managed by `your-service`. It is clear in that
+example that `your-service` depends on `my-service`, because a resource in it depends on a resource in `my-service`. In
+a clean architecture, there are no cyclic dependencies. In other words, in resources and code of `your-service`,
+references to resources, APIs, or structures of `my-service` are allowed, but not the other way around. This is upheld
+by this architecture.
 
 ### Exponential explosion
 
@@ -802,7 +802,7 @@ When the collection of associated resources is large (> 20), it is difficult for
 they need. In this case, it makes sense to offer the user the possibility to limit the collection of associated
 resources with search functionality. The architecture described here supports that, if the relationship search index
 document has entries in `exact` or `fuzzy`. These can be entries directly from the search document of the relationship
-resources, or from `referenced` resources.
+resources, or from `embedded` resources.
 
 In the example, search index documents with discriminator `R` support exact search on `R`’s `premium`, and `Y`’s
 `registrationId`, and fuzzy search on `Y`’s `name`, `category`, and `class`.
@@ -872,14 +872,14 @@ this illustrates our main mitigation of the exponential explosion issue exposed 
 Imagine that, for every `X` resource we expect a large collection of related `Y` resources, but that for every `Y`
 resource, the collection of related `X` resources is expected to be small (< 20).
 
-In the example, where the `R` search index document references `Y` information, the `R` search index document needs to
-be updated too when a referenced `Y` resource changes. Since we expect the collection of related `X` resources for a `Y`
-resource is small, there will be only a few `R` search index documents that have to be updated.
+In the example, where the `R` search index document embeds `Y` information, the `R` search index document needs to be
+updated too when a `Y` resource from which information is embedded changes. Since we expect the collection of related
+`X` resources for a `Y` resource is small, there will be only a few `R` search index documents that have to be updated.
 
-When the `R` search index document would reference `X` information, it needs to be updated too when a referenced `X`
-resource changes. Since we expect the collection of related `Y` resources for a `X` to be large (imagine 10<sup>5</sup>
-relationships), there would be many `R` search index documents that have to be updated. In the example, the `R` search
-index document does not reference `X` information to avoid this issue, deliberately.
+When the `R` search index document would embed `X` information, it needs to be updated too when an `X` resource changes.
+Since we expect the collection of related `Y` resources for a `X` to be large (imagine 10<sup>5</sup> relationships),
+there would be many `R` search index documents that have to be updated. In the example, the `R` search index document
+does not embed `X` information to avoid this issue, deliberately.
 
 We hypothesize that, in practice, most many-to-many relationships have a small multiplicitly on both sides, or have
 asymmetric multiplicitly: if the relationship is big in one direction, it is small in the other direction. Consider
@@ -952,40 +952,40 @@ Alternatively, we considered to have the service post not only the original even
 resources, recursively.
 
 In the example, when a resource of type `Y` is updated, the service creates an event for that resource. But the service
-could also, during the update, find all instances of `R` for which the search document references this instance of `Y`
-and create events for each of the found `R` instances too, immediately.
+could also, during the update, find all instances of `R` for which the search document embeds information of this
+instance of `Y` and create events for each of the found `R` instances too, immediately.
 
 This is not a good solution.
 
 - Finding the associated referencing resources (recursively) is done synchronously during the update of the `Y`
   resource. All synchronous actions should be as fast as possible..
 
-- The service managing the updated resource would need to know everything that references it. If a referencing resource
-  is managed by another service, this creates a dependency loop between the services. If `R` references `Y`, this
-  implies that the service managing `R` (`your-service`) depends on the service managing `Y` (`my-service`). But now the
-  update code for `Y` in `my-service` needs to know about `R` in `your-service`, making `my-service` dependent on
-  `your-service`. This is a bad architecture for distributed systems, but the reasoning also applies between different
-  logical components and code constructs within one service.
+- The service managing the updated resource would need to know everything that embeds information of it. If an embedding
+  resource is managed by another service, this creates a dependency loop between the services. If `R` embeds information
+  of `Y`, this implies that the service managing `R` (`your-service`) depends on the service managing `Y`
+  (`my-service`). But now the update code for `Y` in `my-service` needs to know about `R` in `your-service`, making
+  `my-service` dependent on `your-service`. This is a bad architecture for distributed systems, but the reasoning also
+  applies between different logical components and code constructs within one service.
 
 We will not follow this approach.
 
 In the described process, the service code for an update is kept simple (only one event for the updated entity itself),
 and cascade updates of referencing resources are handled asynchronously, with eventual consistency, even cross-service.
 
-### Splicing referenced content on retrieval from the search index instead of before putting it in
+### Embed content on retrieval from the search index instead of before putting it in
 
-In the process as described, `referenced` `content`, `exact`, and `fuzzy` data is spliced in the search index document
-before it is put in the search index. This requires recursive updates when a `referenced` search index document changes.
+In the process as described, `embedded` `content`, `exact`, and `fuzzy` data is spliced in the search index document
+before it is put in the search index. This requires recursive updates when an `embedded` search index document changes.
 
 Alternatively, we could not splice this information in the search index document before we put it in the search index,
 but rely on the search service to do this when search results are retrieved. This voids the need for recursive updates
-when a `referenced` search index document changes, and has the added benefit that the user would always get the latest
-version of `referenced` information.
+when an `embedded` search index document changes, and has the added benefit that the user would always get the latest
+version of `embedded` information.
 
-However, the search service returns many matches mostly. The search service would need to retrieve the `referenced` data
+However, the search service returns many matches mostly. The search service would need to retrieve the `embedded` data
 for all search results in a page. We want the search to return as fast as possible. It is typical in a distributed
 application to do more work when saving data (asynchronously, possibly with redundancy), to make retrieval
-straigtforward and fast. Furthermore, the `referenced` content needs to be spliced in all search results _recursively_,
+straigtforward and fast. Furthermore, the `embedded` content needs to be spliced in all search results _recursively_,
 which could lead to exponential explosion in the search request.
 
 Therefore, we choose to make the effort when saving the search index document, and not when retrieving it.
