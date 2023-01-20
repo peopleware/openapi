@@ -82,7 +82,8 @@ Note that the architecture is acyclic.
 To make the example as expressive as possible, we will assume that `Y` resource are managed by `my-service`, and `R`
 resources are managed by `your-service`. This means that `your-service` depends on `my-service`. A good architecture and
 design should not contain dependency cycles, which means that code or data structures managed in `my-service` should not
-have any knowledge of `your-service`. The process is also intended for depencies beween resources in the same service.
+have any knowledge of `your-service`. The process is also intended for dependencies beween resources in the same
+service.
 
 ## Process overview
 
@@ -168,7 +169,8 @@ Events have the following properties:
 
 - `href`: The canonical URI where the search document for the created or changed resource can be retrieved.
 
-- `createdBefore`: optional property, that signals to only consider possible dependents that are not already updated
+- `createdBefore`: optional property, that signals to only consider possible embedding search index documents that are
+  not already updated
 
 When a resource of type `Y`, respectively `R`, is created or updated in `my-service`, and event is posted on the search
 topic that looks like:
@@ -246,8 +248,8 @@ The search documents a service offer are specializations of a common structure. 
 
 - `fuzzy`: array of strings on which the represented resource is to be found with a fuzzy match
 
-- `dependencies`: array of canonical URIs of the resources the represented resource depends on; used to find collections
-  of associated dependent represented resources from a resource that is a dependency
+- `toOneAssociations`: array of canonical URIs of the resources the represented resource has a to-one association to;
+  used to find the represented resource as element of the to-many association of the referenced resource
 
 - `content`: A data structure that is different for each resource, but has some common properties:
 
@@ -273,7 +275,7 @@ Below is the example of the search document for a resource of type `Y` and `R`:
   "href": ".?at=2022-12-27T03:14:22.212775Z",
   "exact": ["0123456789"],
   "fuzzy": ["wizzy", "woozy", "wuzzy"],
-  "dependendencies": [],
+  "toOneAssociations": [],
   "content": {
     "structureVersion": 1,
     "discriminator": "Y",
@@ -296,7 +298,7 @@ Note that there is no mention of `your-service` in this representation.
   "href": ".?at=2022-12-28T12:48:09.558745Z",
   "exact": ["7457"],
   "fuzzy": [],
-  "dependencies": ["/some-service/v1/x/123", "/my-service/v1/y/abc"],
+  "toOneAssociations": ["/some-service/v1/x/123", "/my-service/v1/y/abc"],
   "content": {
     "structureVersion": 1,
     "discriminator": "R",
@@ -311,9 +313,9 @@ Note that there is no mention of `your-service` in this representation.
 ```
 
 Note that in the content of the search document for `R`, the property `x` is the canonical URI of the resource of type
-`X` that this resource of type `R` depends on. The client can use this to get that resource. This specification is
-opaque for the search topic, search topic handler, search index, and search service. It is a dependency of clients on
-the service API, expressed by the discriminator.
+`X` that this resource of type `R` has a to-one association to. The client can use this to get that resource. This
+specification is opaque for the search topic, search topic handler, search index, and search service. It is a dependency
+of clients on the service API, expressed by the discriminator.
 
 Note further that this data structure contains implicit references to `my-service`. This data structure is under control
 of `your-service` in the example, and `your-service` has a known dependency on `my-service`, so that is allowed.
@@ -342,8 +344,8 @@ Search index documents have the following properties:
 - `href`: The canonical URI of the resource. This is used for authorization with RAAs when a search is initiated from a
   client.
 
-- `dependencies`: array of canonical URIs of the resources the represented resource depends on; used to find collections
-  of associated dependent represented resources from a resource that is a dependency
+- `toOneAssociations`: array of canonical URIs of the resources the represented resource has a to-one association to;
+  used to find the represented resource as element of the to-many association of the referenced resource
 
 - `embedded`: array of canonical URIs of the resources this search index document embeds information of; when the search
   index document for the referenced resources is updated, the search index document for the represented resource needs
@@ -378,7 +380,8 @@ This is a stable and unique identification of the search index document in the s
 
 The search index document contains the `mode`, because each search should only return matches from an exact `mode`.
 
-`source` is added for handling dependent updates (described later). It is the value of the `href` in the event.
+`source` is added for handling updates of embedding resources (described later). It is the value of the `href` in the
+event.
 
 The `flowId` is added to easily cross-reference search index document instances with logs, events, and recorded changes
 in resources.
@@ -393,9 +396,10 @@ The top level `href` is used in authorization (described later).
 
 The top level `embedded` property is related to the `embed` property in the search document. It is described below.
 
-`dependencies` is used so this search index document can be found from resources that are dependencies (described
-later). The `dependencies` value is copied from the search document. `exact` and `fuzzy` are used in different kinds of
-search requests. These are copied from the retrieved search document, and possibly extended with embedded content.
+`toOneAssociations` is used so this search index document can be found from resources that have a to-many association
+with it (described later). The `toOneAssociations` value is copied from the search document. `exact` and `fuzzy` are
+used in different kinds of search requests. These are copied from the retrieved search document, and possibly extended
+with embedded content.
 
 #### Content
 
@@ -428,7 +432,7 @@ document:
   "createdAt": "2022-12-27T03:14:22.212775Z",
   "discriminator": "Y",
   "href": "/my-service/v1/y/abc",
-  "dependencies": [],
+  "toOneAssociations": [],
   "embedded": [],
   "exact": ["0123456789"],
   "fuzzy": ["wizzy", "woozy", "wuzzy"],
@@ -473,7 +477,7 @@ information from the search index document of `/my-service/v1/y/abc` as embedded
   "createdAt": "2022-12-28T12:48:09.558745Z",
   "discriminator": "R",
   "href": "/your-service/v1/x/123/y/abc",
-  "dependencies": ["/some-service/v1/x/123", "/my-service/v1/y/abc"],
+  "toOneAssociations": ["/some-service/v1/x/123", "/my-service/v1/y/abc"],
   "embedded": ["/my-service/v1/y/abc"],
   "exact": ["7457", "0123456789"],
   "fuzzy": ["wizzy", "woozy", "wuzzy"],
@@ -517,8 +521,8 @@ A client can search for matching resources by sending a search request to the se
 - `fuzzy`: String. The given term must appear as part of a member of the `fuzzy` field of matching search index
   documents. Used for names, descriptions, ...
 
-- `dependency`: Canonical URI. Matching search index documents must have an entry in `dependencies` that exactly matches
-  this value. Used to retrieve to-many associations.
+- `toOneAssociation`: Canonical URI. Matching search index documents must have an entry in `toOneAssociations` that
+  exactly matches this value. Used to retrieve to-many associations.
 
 The search service will
 
@@ -534,8 +538,8 @@ The common parameters are always:
   `GET` RAAs; this way, only resources the subject is authorized to read will be returned
 - paging parameters
 
-If `discriminators`, an `exact`, a `fuzzy`, or `dependency` exists in the search request, these are added to the search
-index search to perform as described.
+If `discriminators`, an `exact`, a `fuzzy`, or `toOneAssociation` exists in the search request, these are added to the
+search index search to perform as described.
 
 The `contents` values of the found results are doctored a bit, and returned to the client.
 
@@ -614,13 +618,13 @@ search({
 // returns `/my-service/v1/y/abc` and `/your-service/v1/x/123/y/abc`
 ```
 
-The use of an exact match on `dependency` is discussed below.
+The use of an exact match on `toOneAssociation` is discussed below.
 
 ### Embedded
 
-In the example, the search index document for resources of type `R` contain `content`, `exact`, and `fuzzy` entries of
-the resource of type `Y` it depends on. It is clear that, when the resource `/my-service/v1/y/abc` changes, the search
-index document for `/my-service/v1/x/123/y/abc` must be updated too.
+In the example, the search index document for resources of type `R` embeds `content`, `exact`, and `fuzzy` entries of
+the resource of type `Y`. It is clear that, when the resource `/my-service/v1/y/abc` changes, the search index document
+for `/my-service/v1/x/123/y/abc` must be updated too.
 
 The search topic handler will therefore, after having done the work describe above in response to an event, search in
 the search index for search index documents that have
@@ -636,8 +640,8 @@ For all results of this search, for all pages, the search topic handler will bui
 `mode` and `flowId` of the original request, the `createdBefore` value, and the `source` of the found search index
 document as `href`. `build` is the value the service determines for the service the `source` refers to as first
 `segment`, in the used `mode`. Eventually, the search topic handler will handle these new events, so that eventually the
-dependent search index documents will be brought up to date too. Those search index documents might have embedded
-information from others too, making the process recursive.
+embedding search index documents will be brought up to date too. Those search index documents might be embedded in other
+resource’s search index documents too, making the process recursive.
 
 Consider a second, later event for `Y` in the example:
 
@@ -703,11 +707,11 @@ resource is discovered as referencing, and eventually handled.
 
 When creating recursive processes such as the above, we must make sure the process ends eventually. A good architecture
 and design should not contain dependency cycles, but an extra stop criterion will protect us. This is why the
-`createdAt` property is added to the search index document and the `createdBefore` parameter is used in determining the
-next referencing resources to post events for. When, after this process started, a referencing search index document is
+`createdAt` property is added to the search index document and the `createdBefore` parameter when used in determining
+the next embedding resources to post events for. When, after this process started, an embedding search index document is
 updated before we require it, a new event is not created. If the update that happened in the meantime, whether it was
 triggered by an outside force, or by this process in a bad loop, it has been updated already with the up-to-date
-information about its dependencies.
+embbeded information.
 
 Note that, because the search index is eventually consistent, that a fast handling of a later event might not see an
 earlier update yet. When there is a loop, new events would be created, although they should not be. In extreme cases, we
@@ -766,13 +770,13 @@ In our example, `R` reifies a many-to-many relationship between `X` and `Y`. In 
 type `R` or only identified, both programmatically, as to humans, by the identity or properties of the associated `X`
 and `Y`. In the example, imagine `Y` resources are identified by humans by the `name` property. When the associated `R`
 resources of `X` resource `/some-service/v1/x/123` are shown in its details, the user needs to see the `name` of the `Y`
-resource on which the represented `R` resource depends.
+resource to which the represented `R` resource has a to-one association.
 
 The UI can get the collection of to-many associated resources for given resource by executing a search request, with a
 `mode`, on the search service, with
 
 - `discriminators` set to the discriminator of the resource type of the elements of the collection, and
-- `dependency` set to the canonical URI of the given resource.
+- `toOneAssociation` set to the canonical URI of the given resource.
 
 In the example, to get the collection of associated `R` resources for `/some-service/v1/x/123`, the UI executes the
 search request
@@ -783,7 +787,7 @@ search({
   mode: 'example',
   flowId: '383007df-8b0f-4db3-9d4b-a17227ab7c03',
   discriminators: ['R'],
-  dependency: '/some-service/v1/x/123'
+  toOneAssociation: '/some-service/v1/x/123'
 })
 // returns `/your-service/v1/x/123/y/abc`
 ```
@@ -813,7 +817,7 @@ search({
   mode: 'example',
   flowId: '383007df-8b0f-4db3-9d4b-a17227ab7c03',
   discriminators: ['R'],
-  dependency: '/some-service/v1/x/123',
+  toOneAssociation: '/some-service/v1/x/123',
   exact: '0123456789'
 })
 
@@ -822,7 +826,7 @@ search({
   mode: 'example',
   flowId: '383007df-8b0f-4db3-9d4b-a17227ab7c03',
   discriminators: ['R'],
-  dependency: '/some-service/v1/x/123',
+  toOneAssociation: '/some-service/v1/x/123',
   fuzzy: ['wuzzy', 'woo']
 })
 ```
@@ -831,8 +835,8 @@ search({
 
 Consider the example where the UI displays the details of `Y` resource `/my-service/v1/y/abc`. In the example, imagine
 `X` resources are identified by humans by the `title` property. When the associated `R` resources of `Y` resource
-`/my-service/v1/y/abc` are shown in its details, the user needs to see the `title` of the `X` resource on which the
-represented `R` resource depends.
+`/my-service/v1/y/abc` are shown in its details, the user needs to see the `title` of the `X` resource to which the
+represented `R` resource has a to-one association.
 
 The UI can get the collection of associated `R` resources for `/my-service/v1/y/abc` with search request
 
@@ -842,7 +846,7 @@ search({
   mode: 'example',
   flowId: '383007df-8b0f-4db3-9d4b-a17227ab7c03',
   discriminators: ['R'],
-  dependency: '/my-service/v1/y/abc'
+  toOneAssociation: '/my-service/v1/y/abc'
 })
 ```
 
@@ -905,15 +909,15 @@ powerfull resource. It makes sense to move load from the services to the search 
 
 Strictly speaking, a search index document must only be updated whenever the data that is stored in it changes. In
 practice this means that an update is only needed when data changes that appears in the search document’s `exact`,
-`fuzzy`, or `content` (the data in `dependencies` can never change with immutable relationships).
+`fuzzy`, or `content` (the data in `toOneAssociations` can never change with immutable relationships).
 
 It would be possible to write code in the originating service that only posts events when data used in these search
 document properties changes. In practice this is not done because it would be a lot of (possibly brittle) work for
 little benefit.
 
-### Roles in dependencies
+### Roles in toOneAssociations
 
-Relations in the search index as currently described, do not have the concept of a _role_. If the `dependencies`
+Relations in the search index as currently described, do not have the concept of a _role_. If the `toOneAssociations`
 contains 2 or more canonical URIs, it is not clear what element expresses what role of the relationships. This is not an
 issue when each side of the relationship is a different resource type as the structure of the canonical URI is different
 for each resource type.
@@ -921,11 +925,11 @@ for each resource type.
 When the structure of the canonical URIs are the same, because the resource is the reification of a directed
 relationship between resources of the same type, it is not clear what canonical URI expresses what role.
 
-A solution to this is it to add the canonical URI of a participating resource 2 times in the `dependencies`: once as
-before (just the plain canonical URI) and once with the role as a prefix.
+A solution to this is it to add the canonical URI of a participating resource 2 times in the `toOneAssociations`: once
+as before (just the plain canonical URI) and once with the role as a prefix.
 
 Suppose we want to store the relation `is-parent-of` in a search index document. This relation is between 2 resources of
-the type person. The `dependencies` list would then look as follows:
+the type person. The `toOneAssociations` list would then look as follows:
 
 - `/persons/v1/person/105`
 - `/persons/v1/person/719`
