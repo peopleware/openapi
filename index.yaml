@@ -41,10 +41,14 @@ tags:
     x-traitTag: true
     description:
       $ref: 'resource/paging.md'
-  - name: Relationships and search (obsolete?)
+  - name: Canonical and fully qualified URI
     x-traitTag: true
     description:
-      $ref: 'resource/relationships-and-search.md'
+      $ref: 'resource/canonical-and-fq-uri.md'
+  - name: Determining the build number of service dependencies to interact with
+    x-traitTag: true
+    description:
+      $ref: 'resource/determining-build-number.md'
   - name: Search and to-many associations
     x-traitTag: true
     description:
