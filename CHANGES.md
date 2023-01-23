@@ -1,5 +1,15 @@
 # Changes
 
+## 6
+
+### 6.0
+
+#### 6.0.0
+
+- replace description of search, relationships in search (rename file)
+- add text about canonical URI
+- add first text about determining build number
+
 ## 5
 
 ### 5.0
