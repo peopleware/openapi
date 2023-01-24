@@ -6,6 +6,8 @@ definitions:
   branches:
     - branch: &testAndTag
       - step:
+          runs-on:
+            - 'self.hosted'
           name: Test
           caches:
             - node
