@@ -237,7 +237,8 @@ index documents that embedded content from this search index document to be upda
 
 The search documents a service offer are specializations of a common structure. They have the following properties:
 
-- `structureVersion`: an integer describing the version of this data structure
+- `structureVersion`: an integer describing the version of this data structure, this should be set to a value of 2 or
+  higher
 
 - `href`: The _relative_ canonical URI where the version of the resource this search document represents can be
   retrieved from, with the start-of-transaction of the request for the search document as knowledge time (`at` query
@@ -256,10 +257,10 @@ The search documents a service offer are specializations of a common structure. 
   - `structureVersion`: an integer describing the version of this data structure
   - `discriminator`: the type of represented resource
 
-- `embed`: Dictionary of property names to canonical URIs of other resources. Information from the search index document
-  of the referenced resources will be embedded into this search index document by the search topic handler. When the
-  search index document of which information is embedded is updated, the search index document for the represented
-  resource needs to be updated too.
+- `embedded`: Dictionary of property names to canonical URIs of other resources. Information from the search index
+  document of the referenced resources will be embedded into this search index document by the search topic handler.
+  When the search index document of which information is embedded is updated, the search index document for the
+  represented resource needs to be updated too.
 
 The `content` is, more or less, what will be returned to a client when a search matches. The client uses the `content`
 to show search results quickly, without additional service calls. The `content` contains the `discriminator`, so the
@@ -271,7 +272,7 @@ Below is the example of the search document for a resource of type `Y` and `R`:
 
 ```json
 {
-  "structureVersion": 1,
+  "structureVersion": 2,
   "href": ".?at=2022-12-27T03:14:22.212775Z",
   "exact": ["0123456789"],
   "fuzzy": ["wizzy", "woozy", "wuzzy"],
@@ -286,7 +287,7 @@ Below is the example of the search document for a resource of type `Y` and `R`:
     "class": "wuzzy",
     "since": "2023-01-10"
   },
-  "embed": {}
+  "embedded": {}
 }
 ```
 
@@ -294,7 +295,7 @@ Note that there is no mention of `your-service` in this representation.
 
 ```json
 {
-  "structureVersion": 1,
+  "structureVersion": 2,
   "href": ".?at=2022-12-28T12:48:09.558745Z",
   "exact": ["7457"],
   "fuzzy": [],
@@ -306,7 +307,7 @@ Note that there is no mention of `your-service` in this representation.
     "premium": 7457,
     "x": "/some-service/v1/x/123"
   },
-  "embed": {
+  "embedded": {
     "y": "/my-service/v1/y/abc"
   }
 }

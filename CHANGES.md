@@ -4,6 +4,11 @@
 
 ### 5.0
 
+#### 5.0.2
+
+- Searchdocument DTO should have version 2 because the structure is incompatible
+- Embed in Searchdocument is renamed to embedded to be uniform with SearchIndexDocument
+
 #### 5.0.1
 
 - minor tweaks
