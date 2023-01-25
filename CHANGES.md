@@ -4,6 +4,10 @@
 
 ### 5.0
 
+#### 5.0.3
+
+- Updated search document to structureVersion 2, including properties href, toOneAssociations and embedded
+
 #### 5.0.2
 
 - Searchdocument DTO should have version 2 because the structure is incompatible

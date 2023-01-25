@@ -67,17 +67,14 @@ The order is irrelevant. May be empty if \`exact\` or \`toOneAssociations\` is n
     )
     .example(['find me', 'if you can'])
     .required(),
-  embedded: Joi.array()
-    .items(
-      Joi.object()
-        .pattern(Joi.string(), RelativeURI)
-        .unknown()
-    )
+  embedded: Joi.object()
+    .pattern(Joi.string(), RelativeURI)
+    .unknown()
     .description(
       `array of canonical URIs of the resources this search index document embeds information of; when the search index
       document for the referenced resources is updated, the search index document for the represented resource needs to be updated too`
     )
-    .example([{ x: '/your-service/v1/x/123' }, { y: '/my-service/v1/y/abc' }]),
+    .example({ x: '/your-service/v1/x/123', y: '/my-service/v1/y/abc' }),
   content: SearchResultBase.required()
 }).description(`Wrapper around the search result (which is returned to the client when the resource is found), with
 information for a search index.
@@ -98,7 +95,7 @@ const searchDocumentExamples = structureVersionedExamples.map(svd => ({
   exact: ['0123456789', '9876543210'],
   toOneAssociations: ['/some-service/v1/x/123', '/my-service/v1/y/abc'],
   fuzzy: ['find me', 'if you can', '9876543210'],
-  embedded: [{ x: '/your-service/v1/x/123' }, { y: '/my-service/v1/y/abc' }],
+  embedded: { x: '/your-service/v1/x/123', y: '/my-service/v1/y/abc' },
   content: searchResultBaseExamples[0]
 }))
 

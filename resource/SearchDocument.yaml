@@ -106,14 +106,12 @@ properties:
       array of canonical URIs of the resources this search index document embeds information of; when the search index
       document for the referenced resources is updated, the search index document for the represented resource needs to
       be updated too
-    type: array
-    items:
-      type: object
-      properties: {}
-      additionalProperties: true
+    type: object
+    properties: {}
+    additionalProperties: true
     example:
-      - x: /your-service/v1/x/123
-      - y: /my-service/v1/y/abc
+      x: /your-service/v1/x/123
+      y: /my-service/v1/y/abc
   content:
     required:
       - structureVersion
@@ -173,8 +171,8 @@ example:
     - if you can
     - '9876543210'
   embedded:
-    - x: /your-service/v1/x/123
-    - y: /my-service/v1/y/abc
+    x: /your-service/v1/x/123
+    y: /my-service/v1/y/abc
   content:
     structureVersion: 1
     discriminator: service-name/type-name
