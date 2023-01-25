@@ -14,7 +14,9 @@
 
 required:
   - structureVersion
+  - href
   - exact
+  - toOneAssociations
   - fuzzy
   - content
 description: >-
@@ -24,27 +26,40 @@ description: >-
 
   It contains strings for which the resource this is a search document for can be found by, and the `content` that is to
   be sent to the client. The resource this is a search document for can be found with an exact match on the strings in
-  `exact`, and by a fuzzy search on the strings in `fuzzy`. Some strings might appear in both.
+  `exact` or `toOneAssociations`, and by a fuzzy search on the strings in `fuzzy`. Some strings might appear in both.
 
 
-  `fuzzy` or `exact` may be empty, but not both.
+  `fuzzy`, `toOneAssociations` or `exact` may be empty, but not all of them.
 
 
   Search results can be limited to selected types with an exact match on `content.discriminator`. The found resource can
-  be retrieved in the indexed version at `content.href`.
+  be retrieved in the indexed version at `href`.
 type: object
 properties:
   structureVersion:
-    minimum: 1
+    minimum: 2
     description: Version of the data structure of this resource type
     type: integer
-    example: 1
+    example: 2
+  href:
+    minLength: 1
+    description: >-
+      Relative URI where the found resource's information is located. The `at` parameter _must_ be the same as the value
+      of the `x-date` response header.
+
+
+      Users need to be directed to the version returned by the search index, and not an earlier or more recent version.
+      The search engine updates, eventually, after a few seconds. If a more recent version is available in the meantime,
+      the user interface makes it possible for the user to navigate to that version.
+    format: uri
+    type: string
+    example: ../some/path
   exact:
     uniqueItems: true
     description: |-
       List of strings on which the resource can be found with exact match.
 
-      The order is irrelevant. May be empty if `fuzzy` is not empty.
+      The order is irrelevant. May be empty if `fuzzy` or `toOneAssociations` is not empty.
     type: array
     items:
       minLength: 1
@@ -54,12 +69,28 @@ properties:
     example:
       - '0123456789'
       - '9876543210'
+  toOneAssociations:
+    uniqueItems: true
+    description: |-
+      array of canonical URIs of the resources the represented resource has a to-one association to; used to find the
+      represented resource as element of the to-many association of the referenced resource
+
+      The order is irrelevant. May be empty if `fuzzy` or `exact` is not empty.
+    type: array
+    items:
+      minLength: 1
+      description: canonical URI of the resource the represented resource has a to-one association to
+      type: uri
+      example: '/some-service/v1/x/123'
+    example:
+      - '/some-service/v1/x/123'
+      - '/my-service/v1/y/abc'
   fuzzy:
     uniqueItems: true
     description: |-
       List of strings on which the resource can be found with fuzzy match.
 
-      The order is irrelevant. May be empty if `exact` is not empty.
+      The order is irrelevant. May be empty if `exact` or `toOneAssociations` is not empty.
     type: array
     items:
       minLength: 1
@@ -84,19 +115,6 @@ properties:
         description: Version of the data structure of this resource type
         type: integer
         example: 1
-      href:
-        minLength: 1
-        description: >-
-          Relative URI where the found resource's information is located. The `at` parameter _must_ be the same as the
-          value of the `x-date` response header.
-
-
-          Users need to be directed to the version returned by the search index, and not an earlier or more recent
-          version. The search engine updates, eventually, after a few seconds. If a more recent version is available in
-          the meantime, the user interface makes it possible for the user to navigate to that version.
-        format: uri
-        type: string
-        example: ../some/path
       discriminator:
         minLength: 1
         pattern: ^([-a-z0-9]+)\/([-a-z0-9\/]+)$
@@ -115,10 +133,14 @@ properties:
       href: /service-name/service_version/type-name/type_unique_identifier?at=2021-01-19T17:14:18.482Z
 additionalProperties: true
 example:
-  structureVersion: 1
+  structureVersion: 2
+  href: /service-name/service_version/type-name/type_unique_identifier?at=2021-01-19T17:14:18.482Z
   exact:
     - '0123456789'
     - '9876543210'
+  toOneAssociations:
+    - '/some-service/v1/x/123'
+    - '/my-service/v1/y/abc'
   fuzzy:
     - find me
     - if you can
@@ -126,4 +148,3 @@ example:
   content:
     structureVersion: 1
     discriminator: service-name/type-name
-    href: /service-name/service_version/type-name/type_unique_identifier?at=2021-01-19T17:14:18.482Z
