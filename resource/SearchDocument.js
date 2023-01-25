@@ -69,35 +69,36 @@ The order is irrelevant. May be empty if \`exact\` or \`toOneAssociations\` is n
     .required(),
   embedded: Joi.array()
     .items(
-      Joi.object({
-        Joi.string().required(),
-        RelativeURI.required()
-      })
+      Joi.object()
+        .pattern(Joi.string(), RelativeURI)
+        .unknown()
     )
     .description(
       `array of canonical URIs of the resources this search index document embeds information of; when the search index
       document for the referenced resources is updated, the search index document for the represented resource needs to be updated too`
     )
-    .example([{y: '/my-service/v1/y/abc'}]),
+    .example([{ x: '/your-service/v1/x/123' }, { y: '/my-service/v1/y/abc' }]),
   content: SearchResultBase.required()
 }).description(`Wrapper around the search result (which is returned to the client when the resource is found), with
 information for a search index.
 
 It contains strings for which the resource this is a search document for can be found by, and the \`content\` that is to
 be sent to the client. The resource this is a search document for can be found with an exact match on the strings in
-\`exact\`, and by a fuzzy search on the strings in \`fuzzy\`. Some strings might appear in both.
+\`exact\` or \`toOneAssociations\`, and by a fuzzy search on the strings in \`fuzzy\`. Some strings might appear in both.
 
-\`fuzzy\` or \`exact\` may be empty, but not both.
+\`fuzzy\`, \`toOneAssociations\` or \`exact\` may be empty, but not all of them.
 
 Search results can be limited to selected types with an exact match on \`content.discriminator\`. The found resource
-can be retrieved in the indexed version at \`content.href\`.`)
+can be retrieved in the indexed version at \`href\`.`)
 
 const searchDocumentExamples = structureVersionedExamples.map(svd => ({
   ...svd,
+  structureVersion: 2,
   href: '/service-name/service_version/type-name/type_unique_identifier?at=2021-01-19T17:14:18.482Z',
   exact: ['0123456789', '9876543210'],
   toOneAssociations: ['/some-service/v1/x/123', '/my-service/v1/y/abc'],
   fuzzy: ['find me', 'if you can', '9876543210'],
+  embedded: [{ x: '/your-service/v1/x/123' }, { y: '/my-service/v1/y/abc' }],
   content: searchResultBaseExamples[0]
 }))
 

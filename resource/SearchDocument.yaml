@@ -37,10 +37,10 @@ description: >-
 type: object
 properties:
   structureVersion:
-    minimum: 2
+    minimum: 1
     description: Version of the data structure of this resource type
     type: integer
-    example: 2
+    example: 1
   href:
     minLength: 1
     description: >-
@@ -59,7 +59,7 @@ properties:
     description: |-
       List of strings on which the resource can be found with exact match.
 
-      The order is irrelevant. May be empty if `fuzzy` or `toOneAssociations` is not empty.
+      The order is irrelevant. May be empty if `fuzzy` or `exact` is not empty.
     type: array
     items:
       minLength: 1
@@ -71,20 +71,21 @@ properties:
       - '9876543210'
   toOneAssociations:
     uniqueItems: true
-    description: |-
+    description: >-
       array of canonical URIs of the resources the represented resource has a to-one association to; used to find the
       represented resource as element of the to-many association of the referenced resource
 
-      The order is irrelevant. May be empty if `fuzzy` or `exact` is not empty.
+            The order is irrelevant. May be empty if `fuzzy` or `exact` is not empty.
     type: array
     items:
       minLength: 1
-      description: canonical URI of the resource the represented resource has a to-one association to
-      type: uri
-      example: '/some-service/v1/x/123'
+      description: relative URI
+      format: uri
+      type: string
+      example: ../some/path
     example:
-      - '/some-service/v1/x/123'
-      - '/my-service/v1/y/abc'
+      - /some-service/v1/x/123
+      - /my-service/v1/y/abc
   fuzzy:
     uniqueItems: true
     description: |-
@@ -101,18 +102,18 @@ properties:
       - find me
       - if you can
   embedded:
-    description: |-
+    description: >-
       array of canonical URIs of the resources this search index document embeds information of; when the search index
-      document for the referenced resources is updated, the search index document for the represented resource needs to be updated too
+      document for the referenced resources is updated, the search index document for the represented resource needs to
+      be updated too
     type: array
     items:
-      minLength: 1
-      description: target property name and canonical URI of the resource the represented resource has to embed
       type: object
-      additionalProperties:
-        type: uri
+      properties: {}
+      additionalProperties: true
     example:
-      -y: '/my-service/v1/y/abc'
+      - x: /your-service/v1/x/123
+      - y: /my-service/v1/y/abc
   content:
     required:
       - structureVersion
@@ -165,14 +166,15 @@ example:
     - '0123456789'
     - '9876543210'
   toOneAssociations:
-    - '/some-service/v1/x/123'
-    - '/my-service/v1/y/abc'
+    - /some-service/v1/x/123
+    - /my-service/v1/y/abc
   fuzzy:
     - find me
     - if you can
     - '9876543210'
   embedded:
-    - y: '/my-service/v1/y/abc'
+    - x: /your-service/v1/x/123
+    - y: /my-service/v1/y/abc
   content:
     structureVersion: 1
     discriminator: service-name/type-name
