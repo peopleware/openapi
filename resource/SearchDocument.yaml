@@ -100,6 +100,19 @@ properties:
     example:
       - find me
       - if you can
+  embedded:
+    description: |-
+      array of canonical URIs of the resources this search index document embeds information of; when the search index
+      document for the referenced resources is updated, the search index document for the represented resource needs to be updated too
+    type: array
+    items:
+      minLength: 1
+      description: target property name and canonical URI of the resource the represented resource has to embed
+      type: object
+      additionalProperties:
+        type: uri
+    example:
+      -y: '/my-service/v1/y/abc'
   content:
     required:
       - structureVersion
@@ -115,6 +128,19 @@ properties:
         description: Version of the data structure of this resource type
         type: integer
         example: 1
+      href:
+        minLength: 1
+        description: >-
+          Relative URI where the found resource's information is located. The `at` parameter _must_ be the same as the
+          value of the `x-date` response header.
+
+
+          Users need to be directed to the version returned by the search index, and not an earlier or more recent
+          version. The search engine updates, eventually, after a few seconds. If a more recent version is available in
+          the meantime, the user interface makes it possible for the user to navigate to that version.
+        format: uri
+        type: string
+        example: ../some/path
       discriminator:
         minLength: 1
         pattern: ^([-a-z0-9]+)\/([-a-z0-9\/]+)$
@@ -145,6 +171,9 @@ example:
     - find me
     - if you can
     - '9876543210'
+  embedded:
+    - y: '/my-service/v1/y/abc'
   content:
     structureVersion: 1
     discriminator: service-name/type-name
+    href: /service-name/service_version/type-name/type_unique_identifier?at=2021-01-19T17:14:18.482Z
