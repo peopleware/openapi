@@ -22,6 +22,9 @@
     "LICENSE",
     "README.md",
     "CHANGES.md",
+    "index.yaml",
+    "index.html",
+    "**/*.{js,d.ts,png,svg,yml,yaml,md}",
     "scripts/browser-safe.js"
   ],
   "devDependencies": {
