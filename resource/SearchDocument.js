@@ -56,7 +56,9 @@ be sent to the client. The resource this is a search document for can be found w
 \`fuzzy\` or \`exact\` may be empty, but not both.
 
 Search results can be limited to selected types with an exact match on \`content.discriminator\`. The found resource
-can be retrieved in the indexed version at \`content.href\`.`)
+can be retrieved in the indexed version at \`content.href\`.`
+  )
+  .meta({ deprecated: true })
 
 const searchDocumentExamples = structureVersionedExamples.map(svd => ({
   ...svd,

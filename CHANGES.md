@@ -9,6 +9,7 @@
 - replace description of search, relationships in search (rename file)
 - add text about canonical URI
 - add first text about determining build number
+- `SearchDocument` is deprecated; start switching to `SearchDocument2`
 
 ## 5
 
