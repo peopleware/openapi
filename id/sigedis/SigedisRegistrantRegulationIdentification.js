@@ -2,6 +2,7 @@ const Joi = require('joi')
 const addExamples = require('../../_util/addExamples')
 const { CRN, crnExamples } = require('../legalPerson/be/CRN')
 const { SigedisRegistrantId, sigedisRegistrantIdExamples } = require('./SigedisRegistrantId')
+const { getDescription } = require('../../scripts/browser-safe')
 
 const sigedisRegistrantRegulationIdentificationExamples = [
   { registrant: crnExamples[1], registrantId: sigedisRegistrantIdExamples[0] }
@@ -12,7 +13,7 @@ const SigedisRegistrantRegulationIdentification = addExamples(
     registrant: CRN.description(
       `CRN of the OFP that is responsible for this contract.
 
-${CRN.describe().flags.description}`
+${getDescription(CRN)}`
     ).required(),
     registrantId: SigedisRegistrantId.required()
   })
