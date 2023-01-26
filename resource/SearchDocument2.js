@@ -16,22 +16,18 @@
  */
 
 const Joi = require('joi')
-const { StructureVersioned, structureVersionedExamples } = require('./StructureVersioned')
+const { StructureVersioned } = require('./StructureVersioned')
 const addExamples = require('../_util/addExamples')
-const { SearchResultBase, searchResultBaseExamples } = require('./SearchResultBase')
-const { RelativeURI } = require('../string/RelativeURI')
 const { StructureVersion } = require('./StructureVersion')
-
-const SearchTerm = Joi.string()
-  .trim()
-  .min(1)
-  .description(`free text on which the resource can be found (trimmed, not empty)`)
-
-// MUDO introduce CanonicalURI
+const { SearchTerm } = require('./SearchTerm')
+const { CanonicalURI } = require('../string/CanonicalURI')
+const { SearchDocumentContentBase2, searchDocumentContentBase2Examples } = require('./SearchDocumentContentBase2')
 
 const SearchDocument2 = StructureVersioned.append({
-  structureVersion: StructureVersion.valid(Joi.override, 2).required(),
-  href: RelativeURI.description(`Canonical URI where the found resource's information is located.`).required(),
+  structureVersion: StructureVersion.valid(Joi.override, 2)
+    .example(2, { override: true })
+    .required(),
+  href: CanonicalURI.description(`Canonical URI where the found resource's information is located.`).required(),
   exact: Joi.array()
     .items(SearchTerm.example('0123456789'))
     .unique()
@@ -43,8 +39,7 @@ The order is irrelevant. May be empty if \`fuzzy\` or \`toOneAssociations\` is n
     .example(['0123456789', '9876543210'])
     .required(),
   toOneAssociations: Joi.array()
-    // MUDO canonical URI
-    .items(RelativeURI)
+    .items(CanonicalURI)
     .unique()
     // MUDO depend on 2
     .description(
@@ -68,8 +63,7 @@ The order is irrelevant. May be empty if \`exact\` or \`toOneAssociations\` is n
     .example(['find me', 'if you can'])
     .required(),
   embedded: Joi.object()
-    // MUDO canonical URI
-    .pattern(Joi.string(), RelativeURI)
+    .pattern(Joi.string(), CanonicalURI)
     // MUDO check
     .unknown()
     .required()
@@ -79,7 +73,7 @@ document for the referenced resources is updated, the search index document for 
 updated too.`
     )
     .example({ x: '/your-service/v1/x/123', y: '/my-service/v1/y/abc' }),
-  content: SearchDocumentContent.required()
+  content: SearchDocumentContentBase2.required()
 }).description(`Returned as \`search-document\` by a service for a parent resource. A _search index document_ is created
 in the search index based on this information. The search service retrieves the information from the search index.
 
@@ -93,16 +87,22 @@ appear in both.
 Search results can be limited to selected types with an exact match on \`content.discriminator\`. The found resource
 can be retrieved in the indexed version at \`href\`.`)
 
-const searchDocument2Examples = structureVersionedExamples.map(svd => ({
-  ...svd,
-  structureVersion: 2,
-  href: '/service-name/service_version/type-name/type_unique_identifier',
-  exact: ['0123456789', '9876543210'],
-  toOneAssociations: ['/some-service/v1/x/123', '/my-service/v1/y/abc'],
-  fuzzy: ['find me', 'if you can', '9876543210'],
-  embedded: { x: '/your-service/v1/x/123', y: '/my-service/v1/y/abc' },
-  content: searchResultBaseExamples[0]
-}))
+const searchDocument2Examples = [
+  {
+    structureVersion: 2,
+    href: '/your-service/v1/x/123/y/abc',
+    exact: ['0123456789', '9876543210'],
+    toOneAssociations: ['/some-service/v1/x/123', '/my-service/v1/y/abc'],
+    fuzzy: ['find me', 'if you can', '9876543210'],
+    embedded: { x: '/your-service/v1/x/123' },
+    content: {
+      ...searchDocumentContentBase2Examples[0],
+      extraData: 'extra',
+      moreInfo: { aDetail: 2, anotherDetail: true },
+      aReference: '/my-service/a/canonical/uri'
+    }
+  }
+]
 
 module.exports = {
   searchDocument2Examples,
