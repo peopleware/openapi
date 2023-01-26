@@ -65,14 +65,13 @@ describe(testName(module), function () {
 
   shouldBeSeriousSchema(
     DateTime,
-    stuff
-      .concat(dayDateExamples)
-      .concat([
-        '2020-01-23T15:22:39.212',
-        '2020-01-23T25:22:39.212Z',
-        '2020-01-23T15:72:39.212Z',
-        '2020-01-23T15:22:89.212Z'
-      ])
+    stuff.concat(dayDateExamples).concat([
+      '2020-01-23T15:22:39.212',
+      '2020-01-23T25:22:39.212Z',
+      '2020-01-23T15:72:39.212Z',
+      '2020-01-23T15:22:89.212Z',
+      '2020-01-23T15:22:39.21Z' // insufficient precision
+    ])
   )
 
   describe('weird issues', function () {
