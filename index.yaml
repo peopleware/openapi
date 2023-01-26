@@ -44,7 +44,7 @@ tags:
   - name: Canonical and fully qualified URI
     x-traitTag: true
     description:
-      $ref: 'resource/canonical-and-fq-uri.md'
+      $ref: 'string/canonical-and-fq-uri.md'
   - name: Determining the build number of service dependencies to interact with
     x-traitTag: true
     description:
