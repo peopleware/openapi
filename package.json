@@ -18,6 +18,12 @@
   "engines": {
     "node": ">=15.5.1"
   },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "CHANGES.md",
+    "scripts/browser-safe.js"
+  ],
   "devDependencies": {
     "@redocly/cli": "^1.0.0-beta.120",
     "cartesian": "^1.0.1",
