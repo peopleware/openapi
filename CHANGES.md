@@ -16,9 +16,14 @@
 
 #### 5.0.3
 
+_This version is breaking, and should not be used. A later version will add this functionality with corrections in a
+backward compatible way._
+
 - Updated search document to structureVersion 2, including properties href, toOneAssociations and embedded
 
 #### 5.0.2
+
+_This was never released, and contains only documentation changes._
 
 - Searchdocument DTO should have version 2 because the structure is incompatible
 - Embed in Searchdocument is renamed to embedded to be uniform with SearchIndexDocument
