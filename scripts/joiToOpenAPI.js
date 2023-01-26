@@ -66,7 +66,8 @@ async function exec () {
     transformNodeRecursively(tree),
     transformSchemataIn(join(__dirname, '..', 'resource', 'SearchResultBase')),
     transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocument')),
-    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchResults'))
+    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchResults')),
+    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocument2'))
   ])
 }
 
