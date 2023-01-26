@@ -19,11 +19,7 @@ const Joi = require('joi')
 const { StructureVersioned, structureVersionedExamples } = require('./StructureVersioned')
 const addExamples = require('../_util/addExamples')
 const { SearchResultBase, searchResultBaseExamples } = require('./SearchResultBase')
-
-const SearchTerm = Joi.string()
-  .trim()
-  .min(1)
-  .description(`free text on which the resource can be found (trimmed, not empty)`)
+const { SearchTerm } = require('./SearchTerm')
 
 const SearchDocument = StructureVersioned.append({
   exact: Joi.array()
@@ -37,7 +33,7 @@ The order is irrelevant. May be empty if \`fuzzy\` is not empty.`
     .example(['0123456789', '9876543210'])
     .required(),
   fuzzy: Joi.array()
-    .items(SearchTerm.example('find me'))
+    .items(SearchTerm)
     .unique()
     .when('exact', { not: Joi.array().min(1), then: Joi.array().min(1) })
     .description(
@@ -48,7 +44,9 @@ The order is irrelevant. May be empty if \`exact\` is not empty.`
     .example(['find me', 'if you can'])
     .required(),
   content: SearchResultBase.required()
-}).description(`Wrapper around the search result (which is returned to the client when the resource is found), with
+})
+  .description(
+    `Wrapper around the search result (which is returned to the client when the resource is found), with
 information for a search index.
 
 It contains strings for which the resource this is a search document for can be found by, and the \`content\` that is to
