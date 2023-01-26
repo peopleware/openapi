@@ -4,6 +4,10 @@
 
 ### 5.0
 
+#### 5.0.5
+
+- include `browser-safe.js` script in package files
+
 #### 5.0.4
 
 - add `extendDescription` utility function
