@@ -10,6 +10,7 @@
 - add text about canonical URI
 - add first text about determining build number
 - `SearchDocument` is deprecated; start switching to `SearchDocument2`
+- add `extendDescription` utility function
 
 ## 5
 
