@@ -328,8 +328,10 @@ paths:
           $ref: 'id/UUID.yaml'
     get:
       summary: Demonstration of common specs for `GET` search document
-      description: Document to be indexed by search engine
+      description: >-
+        Document to be indexed by search engine. Deprecated. Please use version 2.
       operationId: demonstrationGetSearchDocument
+      deprecated: true
       responses:
         '200':
           x-summary: The resource exists
@@ -340,6 +342,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/searchDocument'
+        '400':
+          $ref: 'resource/400.yaml'
+        '401':
+          $ref: 'oauth2/401.yaml'
+        '403':
+          $ref: 'oauth2/403.yaml'
+        '404':
+          $ref: 'resource/404NoCache.yaml'
+  /demonstration/{crn}/{label}/{persistenceId}/{id}/2/search-document:
+    parameters:
+      - $ref: 'parameters/forceError.yaml'
+      - $ref: 'parameters/flowId.yaml'
+      - $ref: 'parameters/mode.yaml'
+      - $ref: 'parameters/crn.yaml'
+      - $ref: 'parameters/label.yaml'
+      - $ref: 'parameters/persistenceId.yaml'
+      - $ref: 'oauth2/authorization.yaml'
+      - name: id
+        in: path
+        description: id of the resource
+        schema:
+          $ref: 'id/UUID.yaml'
+    get:
+      summary: Demonstration of common specs for `GET` search document
+      description: Document to be indexed by search engine
+      operationId: demonstrationGetSearchDocument2
+      responses:
+        '200':
+          x-summary: The resource exists
+          description: Versioned.
+          headers:
+            $ref: 'resource/CommonResponseHeaders.yaml#/getNoCache'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/searchDocument2'
         '400':
           $ref: 'resource/400.yaml'
         '401':
@@ -527,6 +565,22 @@ components:
             content:
               allOf:
                 - $ref: 'resource/SearchResultBase.yaml'
+                - type: object
+                  required:
+                    - interestingInfo
+                  properties:
+                    interestingInfo:
+                      type: string
+                      minLength: 1
+                      example: 'look what I‘ve found'
+    searchDocument2:
+      allOf:
+        - $ref: 'resource/SearchDocument2.yaml'
+        - type: object
+          properties:
+            content:
+              allOf:
+                - $ref: 'resource/SearchDocumentContentBase2.yaml'
                 - type: object
                   required:
                     - interestingInfo
