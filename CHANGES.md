@@ -7,6 +7,8 @@
 #### 5.0.4
 
 - add `extendDescription` utility function
+- add `getDescription` utility function
+- avoid use of `describe()` in browser since it is not supported here
 
 #### 5.0.3
 
