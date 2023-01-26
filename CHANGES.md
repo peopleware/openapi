@@ -4,6 +4,18 @@
 
 ### 5.0
 
+#### 5.0.4
+
+- add `extendDescription` utility function
+
+#### 5.0.3
+
+_Breaking. Do not use._
+
+#### 5.0.2
+
+_Never published._
+
 #### 5.0.1
 
 - minor tweaks
