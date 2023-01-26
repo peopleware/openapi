@@ -4,7 +4,31 @@
 
 ### 5.0
 
+#### 5.0.9
+
+- _really_ include `md` files in package files
+
+#### 5.0.8
+
+_Breaking. Do not use._
+
+- also include `md` files in package files
+
+#### 5.0.7
+
+_Breaking. Do not use._
+
+- also include `yaml` files in package files
+
+#### 5.0.6
+
+_Breaking. Do not use._
+
+- include all required files in package files
+
 #### 5.0.5
+
+_Breaking. Do not use._
 
 - include `browser-safe.js` script in package files
 
