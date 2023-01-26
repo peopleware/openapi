@@ -19,7 +19,6 @@ const Joi = require('joi')
 const { StructureVersioned, structureVersionedExamples } = require('./StructureVersioned')
 const addExamples = require('../_util/addExamples')
 const { SearchResultBase, searchResultBaseExamples } = require('./SearchResultBase')
-const { RelativeURI } = require('../string/RelativeURI')
 
 const SearchTerm = Joi.string()
   .trim()
@@ -27,34 +26,15 @@ const SearchTerm = Joi.string()
   .description(`free text on which the resource can be found (trimmed, not empty)`)
 
 const SearchDocument = StructureVersioned.append({
-  href: RelativeURI.description(
-    `Relative URI where the found resource's information is located. The \`at\` parameter _must_ be the
-same as the value of the \`x-date\` response header.
-
-Users need to be directed to the version returned by the search index, and not an earlier or more recent
-version. The search engine updates, eventually, after a few seconds. If a more recent version is available in
-the meantime, the user interface makes it possible for the user to navigate to that version.`
-  ).required(),
   exact: Joi.array()
     .items(SearchTerm.example('0123456789'))
     .unique()
     .description(
       `List of strings on which the resource can be found with exact match.
 
-The order is irrelevant. May be empty if \`fuzzy\` or \`exact\` is not empty.`
+The order is irrelevant. May be empty if \`fuzzy\` is not empty.`
     )
     .example(['0123456789', '9876543210'])
-    .required(),
-  toOneAssociations: Joi.array()
-    .items(RelativeURI)
-    .unique()
-    .description(
-      `array of canonical URIs of the resources the represented resource has a to-one association to; used to find the
-      represented resource as element of the to-many association of the referenced resource
-
-      The order is irrelevant. May be empty if \`fuzzy\` or \`exact\` is not empty.`
-    )
-    .example(['/some-service/v1/x/123', '/my-service/v1/y/abc'])
     .required(),
   fuzzy: Joi.array()
     .items(SearchTerm.example('find me'))
@@ -63,39 +43,27 @@ The order is irrelevant. May be empty if \`fuzzy\` or \`exact\` is not empty.`
     .description(
       `List of strings on which the resource can be found with fuzzy match.
 
-The order is irrelevant. May be empty if \`exact\` or \`toOneAssociations\` is not empty.`
+The order is irrelevant. May be empty if \`exact\` is not empty.`
     )
     .example(['find me', 'if you can'])
     .required(),
-  embedded: Joi.object()
-    .pattern(Joi.string(), RelativeURI)
-    .unknown()
-    .description(
-      `array of canonical URIs of the resources this search index document embeds information of; when the search index
-      document for the referenced resources is updated, the search index document for the represented resource needs to be updated too`
-    )
-    .example({ x: '/your-service/v1/x/123', y: '/my-service/v1/y/abc' }),
   content: SearchResultBase.required()
 }).description(`Wrapper around the search result (which is returned to the client when the resource is found), with
 information for a search index.
 
 It contains strings for which the resource this is a search document for can be found by, and the \`content\` that is to
 be sent to the client. The resource this is a search document for can be found with an exact match on the strings in
-\`exact\` or \`toOneAssociations\`, and by a fuzzy search on the strings in \`fuzzy\`. Some strings might appear in both.
+\`exact\`, and by a fuzzy search on the strings in \`fuzzy\`. Some strings might appear in both.
 
-\`fuzzy\`, \`toOneAssociations\` or \`exact\` may be empty, but not all of them.
+\`fuzzy\` or \`exact\` may be empty, but not both.
 
 Search results can be limited to selected types with an exact match on \`content.discriminator\`. The found resource
-can be retrieved in the indexed version at \`href\`.`)
+can be retrieved in the indexed version at \`content.href\`.`)
 
 const searchDocumentExamples = structureVersionedExamples.map(svd => ({
   ...svd,
-  structureVersion: 2,
-  href: '/service-name/service_version/type-name/type_unique_identifier?at=2021-01-19T17:14:18.482Z',
   exact: ['0123456789', '9876543210'],
-  toOneAssociations: ['/some-service/v1/x/123', '/my-service/v1/y/abc'],
   fuzzy: ['find me', 'if you can', '9876543210'],
-  embedded: { x: '/your-service/v1/x/123', y: '/my-service/v1/y/abc' },
   content: searchResultBaseExamples[0]
 }))
 
