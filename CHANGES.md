@@ -4,6 +4,11 @@
 
 ### 5.0
 
+#### 5.0.10
+
+- move `browser-safe.js` to `_util` folder
+- rename `browser-safe.js` to `getDescription.js`
+
 #### 5.0.9
 
 - _really_ include `md` files in package files
