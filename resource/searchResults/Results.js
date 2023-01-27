@@ -18,6 +18,7 @@
 const Joi = require('joi')
 const addExamples = require('../../_util/addExamples')
 const { SearchResultBase } = require('../SearchResultBase')
+const { SearchResultBase2 } = require('../SearchDocumentContentBase2')
 
 const resultsExamples = [
   [
@@ -32,7 +33,7 @@ const resultsExamples = [
       }
     },
     {
-      structureVersion: 1,
+      structureVersion: 2,
       discriminator: 'persons/person',
       href: '/persons/v1/person/6908390?at=2021-01-19T17:14:18.482Z',
       inss: '96110505648',
@@ -43,23 +44,25 @@ const resultsExamples = [
   []
 ]
 
+const MixedSearchResults = Joi.alternatives().try(SearchResultBase, SearchResultBase2)
+
 const Results = addExamples(
   Joi.array()
-    .items(SearchResultBase)
+    .items(MixedSearchResults)
     .max(100)
     .unique('href')
     .description(
-      `List of items that match the search, ordered by relevance. The list has \`per_page\` or fewer
-items.
+      `List of items that match the search, ordered by relevance. The list has \`per_page\` or fewer items.
 
-Items identify the type of resource they represent (\`discriminator\`), a link to the indexed
-version of the found resource (\`href\`), and information for humans to recognize the found
-resource.
+Items identify the type of resource they represent (\`discriminator\`), a link to the indexed version of the found
+resource (\`href\`), and information for humans to recognize the found resource. The entries can have different
+\`structureVersions\`, even for the same \`discriminator\`. The precise structure of each entry, beyond the base
+properties, is a contract between the service in which the resource resides and clients of the search service. This is
+opaque to the search service, which acts as intermediate.
 
-The list has the requested number of items, except for the first and last page. The \`href.first\`
-page can be empty, or have fewer elements than \`per_page\`. The \`href.last\` page can have fewer
-reference in the response than \`per_page\`, but cannot be empty. Other pages have exactly the
-\`per_page\` as number of items.`
+The list has the requested number of items, except for the first and last page. The \`href.first\` page can be empty,
+or have fewer elements than \`per_page\`. The \`href.last\` page can have fewer reference in the response than
+\`per_page\`, but cannot be empty. Other pages have exactly the \`per_page\` as number of items.`
     ),
   resultsExamples
 )
