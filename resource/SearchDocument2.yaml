@@ -123,7 +123,9 @@ properties:
 
 
       This is a contract between this service and clients of the search service. Specific properties are added for
-      different `discriminators`.
+      different `discriminators`. When returned by the search service, the property `href` is added. This is the
+      canonical URI of the found resource, including an `at` query parameter, that refers to the precise version of the
+      found resource that was indexed.
     type: object
     properties:
       structureVersion:
