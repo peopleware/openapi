@@ -55,3 +55,4 @@ example:
   structureVersion: 1
   discriminator: service-name/type-name
   href: /service-name/service_version/type-name/type_unique_identifier?at=2021-01-19T17:14:18.482Z
+deprecated: true

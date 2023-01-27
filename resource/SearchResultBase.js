@@ -26,6 +26,9 @@ const searchResultBaseExamples = structureVersionedExamples.map(svd => ({
   href: '/service-name/service_version/type-name/type_unique_identifier?at=2021-01-19T17:14:18.482Z'
 }))
 
+/**
+ * @deprecated
+ */
 const SearchResultBase = addExamples(
   StructureVersioned.append({
     href: RelativeURI.description(
@@ -49,9 +52,11 @@ name clashes (slash-separated).`
       )
       .example('service-name/type-name')
       .required()
-  }).description(
-    `The resource's search document with the most up-to-date information, i.e., up-to-date up until, but not including, \`x-date\`.`
-  ),
+  })
+    .meta({ deprecated: true })
+    .description(
+      `The resource's search document with the most up-to-date information, i.e., up-to-date up until, but not including, \`x-date\`.`
+    ),
   searchResultBaseExamples
 )
 
