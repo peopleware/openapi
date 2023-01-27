@@ -44,7 +44,13 @@ const resultsExamples = [
   []
 ]
 
-const MixedSearchResults = Joi.alternatives().try(SearchResultBase, SearchResultBase2)
+/**
+ * Allow both the deprecated `SearchResultBase`, and `SearchResultBase2`, and possible later backward compatible
+ * versions. `SearchResultBase` and `SearchResultBase2` are the same, except for the `structureVersion`.
+ */
+const MixedSearchResults = SearchResultBase2.append({
+  structureVersion: SearchResultBase2.extract(`structureVersion`).valid(Joi.override) // allow all numbers
+})
 
 const Results = addExamples(
   Joi.array()

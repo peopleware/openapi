@@ -44,6 +44,9 @@ const searchResultBaseTailoring = 'searchResult'
  * Included in service search documents as `content`, and used in search results returned by the search service. In the
  * latter case, the property `href` is added, via the tailoring `searchResult`.
  *
+ * Note that, apart from the `structureVersion`, this is compatible with the deprecated `SearchResultBase` /
+ * `SearchDocumentBase`.
+ *
  * @type {Joi.Schema<{structureVersion: number, discriminator: string}>}
  */
 const SearchDocumentContentBase2 = addExamples(
