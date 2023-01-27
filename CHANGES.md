@@ -6,14 +6,23 @@
 
 #### 6.0.0
 
+##### Breaking changes (major)
+
 - replace description of search, relationships in search (rename file to
   [`search-and-to-many-associations.md`](resource/search-and-to-many-associations.md))
+
+##### New features (minor)
+
 - add description of [Canonical and fully qualified URI](string/canonical-and-fq-uri.md)
 - add first text about [determining build number](resource/determining-build-number.md)
 - `SearchDocument` is deprecated; start switching to `SearchDocument2`
 - `searchResults/Results` now also allows `SearchResultBase2` elements
 - add `extendDescription` utility function
 - add `filters` utility functions (for tests)
+
+##### Other changes (patch)
+
+- minor changes in some examples and descriptions
 
 ## 5
 
