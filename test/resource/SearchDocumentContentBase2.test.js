@@ -20,18 +20,35 @@ const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
 const { stuff, stuffWithUndefined } = require('../../_util/_stuff')
 const {
   SearchDocumentContentBase2,
-  searchDocumentContentBase2Examples
+  searchDocumentContentBase2Examples,
+  SearchResultBase2
 } = require('../../resource/SearchDocumentContentBase2')
 
 describe(testName(module), function () {
-  shouldBeSeriousSchema(
-    SearchDocumentContentBase2,
-    stuff
-      .concat(
-        stuffWithUndefined
-          .filter(s => s !== 2)
-          .map(structureVersion => ({ ...searchDocumentContentBase2Examples[0], structureVersion }))
-      )
-      .concat(stuffWithUndefined.map(discriminator => ({ ...searchDocumentContentBase2Examples[0], discriminator })))
-  )
+  describe('SearchDocumentContentBase2', function () {
+    shouldBeSeriousSchema(
+      SearchDocumentContentBase2,
+      stuff
+        .concat(
+          stuffWithUndefined
+            .filter(s => s !== 2)
+            .map(structureVersion => ({ ...searchDocumentContentBase2Examples[0], structureVersion }))
+        )
+        .concat(stuffWithUndefined.map(discriminator => ({ ...searchDocumentContentBase2Examples[0], discriminator })))
+    )
+  })
+  describe('SearchResultBase2', function () {
+    shouldBeSeriousSchema(
+      SearchResultBase2,
+      stuff
+        .concat(
+          stuffWithUndefined
+            .filter(s => s !== 2)
+            .map(structureVersion => ({ ...searchDocumentContentBase2Examples[0], structureVersion }))
+        )
+        .concat(stuffWithUndefined.map(discriminator => ({ ...searchDocumentContentBase2Examples[0], discriminator })))
+        .concat(stuffWithUndefined.map(href => ({ ...searchDocumentContentBase2Examples[0], href })))
+        .concat([{ ...searchDocumentContentBase2Examples[0], href: '/my-service/v6/some-resource/564845' }])
+    )
+  })
 })
