@@ -18,15 +18,6 @@
   "engines": {
     "node": ">=15.5.1"
   },
-  "files": [
-    "LICENSE",
-    "README.md",
-    "CHANGES.md",
-    "index.yaml",
-    "index.html",
-    "**/*.{js,d.ts,png,svg,yml,yaml,md}",
-    "scripts/browser-safe.js"
-  ],
   "devDependencies": {
     "@redocly/cli": "^1.0.0-beta.122",
     "cartesian": "^1.0.1",

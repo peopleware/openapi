@@ -2,7 +2,7 @@ const Joi = require('joi')
 const addExamples = require('../../_util/addExamples')
 const { CRN, crnExamples } = require('../legalPerson/be/CRN')
 const { SigedisRegistrantId, sigedisRegistrantIdExamples } = require('./SigedisRegistrantId')
-const { getDescription } = require('../../scripts/browser-safe')
+const { getDescription } = require('../../_util/getDescription')
 
 const sigedisRegistrantRegulationIdentificationExamples = [
   { registrant: crnExamples[1], registrantId: sigedisRegistrantIdExamples[0] }
