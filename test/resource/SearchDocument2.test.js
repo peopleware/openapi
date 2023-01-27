@@ -19,18 +19,7 @@ const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
 const { stuff, stuffWithUndefined } = require('../../_util/_stuff')
 const { SearchDocument2, searchDocument2Examples } = require('../../resource/SearchDocument2')
-
-function notAnEmptyArray (s) {
-  return !Array.isArray(s) || s.length > 0
-}
-
-function notATrimmedString (s) {
-  return typeof s !== 'string' || s.trim() !== s
-}
-
-function notAnEmptyObject (s) {
-  return typeof s !== 'object' || s === null || Object.keys(s).length > 0
-}
+const { notEmptyArray, notTrimmedString, notEmptyObject } = require('../../_util/filters')
 
 describe(testName(module), function () {
   shouldBeSeriousSchema(
@@ -38,27 +27,25 @@ describe(testName(module), function () {
     stuff
       .concat(
         stuffWithUndefined
-          .filter(notAnEmptyArray)
+          .filter(notEmptyArray)
           .map(structureVersion => ({ ...searchDocument2Examples[0], structureVersion }))
       )
-      .concat(stuffWithUndefined.filter(notAnEmptyArray).map(href => ({ ...searchDocument2Examples[0], href })))
-      .concat(stuffWithUndefined.filter(notAnEmptyArray).map(exact => ({ ...searchDocument2Examples[0], exact })))
-      .concat(stuffWithUndefined.filter(notATrimmedString).map(eg => ({ ...searchDocument2Examples[0], exact: [eg] })))
+      .concat(stuffWithUndefined.filter(notEmptyArray).map(href => ({ ...searchDocument2Examples[0], href })))
+      .concat(stuffWithUndefined.filter(notEmptyArray).map(exact => ({ ...searchDocument2Examples[0], exact })))
+      .concat(stuffWithUndefined.filter(notTrimmedString).map(eg => ({ ...searchDocument2Examples[0], exact: [eg] })))
       .concat(
         stuffWithUndefined
-          .filter(notAnEmptyArray)
+          .filter(notEmptyArray)
           .map(toOneAssociations => ({ ...searchDocument2Examples[0], toOneAssociations }))
       )
       .concat(
         stuffWithUndefined
-          .filter(notATrimmedString)
+          .filter(notTrimmedString)
           .map(eg => ({ ...searchDocument2Examples[0], toOneAssociations: [eg] }))
       )
-      .concat(stuffWithUndefined.filter(notAnEmptyArray).map(fuzzy => ({ ...searchDocument2Examples[0], fuzzy })))
-      .concat(stuffWithUndefined.filter(notATrimmedString).map(eg => ({ ...searchDocument2Examples[0], fuzzy: [eg] })))
-      .concat(
-        stuffWithUndefined.filter(notAnEmptyObject).map(embedded => ({ ...searchDocument2Examples[0], embedded }))
-      )
+      .concat(stuffWithUndefined.filter(notEmptyArray).map(fuzzy => ({ ...searchDocument2Examples[0], fuzzy })))
+      .concat(stuffWithUndefined.filter(notTrimmedString).map(eg => ({ ...searchDocument2Examples[0], fuzzy: [eg] })))
+      .concat(stuffWithUndefined.filter(notEmptyObject).map(embedded => ({ ...searchDocument2Examples[0], embedded })))
       .concat(stuff.map(wrong => ({ ...searchDocument2Examples[0], embedded: { wrong } })))
       .concat(stuffWithUndefined.map(content => ({ ...searchDocument2Examples[0], content })))
       .concat({ ...searchDocument2Examples[0], exact: [], toOneAssociations: [], fuzzy: [] })

@@ -19,23 +19,16 @@ const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
 const { stuff, stuffWithUndefined } = require('../../_util/_stuff')
 const { SearchDocument, searchDocumentExamples } = require('../../resource/SearchDocument')
-
-function notAnEmptyArray (s) {
-  return !Array.isArray(s) || s.length > 0
-}
-
-function notATrimmedString (s) {
-  return typeof s !== 'string' || s.trim() !== s
-}
+const { notTrimmedString, notEmptyArray } = require('../../_util/filters')
 
 describe(testName(module), function () {
   shouldBeSeriousSchema(
     SearchDocument,
     stuff
-      .concat(stuffWithUndefined.filter(notAnEmptyArray).map(exact => ({ ...searchDocumentExamples[0], exact })))
-      .concat(stuffWithUndefined.filter(notATrimmedString).map(eg => ({ ...searchDocumentExamples[0], exact: [eg] })))
-      .concat(stuffWithUndefined.filter(notAnEmptyArray).map(fuzzy => ({ ...searchDocumentExamples[0], fuzzy })))
-      .concat(stuffWithUndefined.filter(notATrimmedString).map(eg => ({ ...searchDocumentExamples[0], fuzzy: [eg] })))
+      .concat(stuffWithUndefined.filter(notEmptyArray).map(exact => ({ ...searchDocumentExamples[0], exact })))
+      .concat(stuffWithUndefined.filter(notTrimmedString).map(eg => ({ ...searchDocumentExamples[0], exact: [eg] })))
+      .concat(stuffWithUndefined.filter(notEmptyArray).map(fuzzy => ({ ...searchDocumentExamples[0], fuzzy })))
+      .concat(stuffWithUndefined.filter(notTrimmedString).map(eg => ({ ...searchDocumentExamples[0], fuzzy: [eg] })))
       .concat(stuffWithUndefined.map(content => ({ ...searchDocumentExamples[0], content })))
       .concat({ ...searchDocumentExamples[0], exact: [], fuzzy: [] })
   )
