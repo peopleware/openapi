@@ -27,20 +27,13 @@ const SearchDocument2 = StructureVersioned.append({
   structureVersion: StructureVersion.valid(Joi.override, 2)
     .example(2, { override: true })
     .required(),
-  exact: Joi.array()
-    .items(SearchTerm.example('0123456789'))
-    .unique()
-    .description(
-      `List of strings on which the resource can be found with exact match.
-
-The order is irrelevant. May be empty if \`fuzzy\` or \`toOneAssociations\` is not empty.`
-    )
-    .example(['0123456789', '9876543210'])
-    .required(),
   toOneAssociations: Joi.array()
     .items(CanonicalURI)
     .unique()
-    // MUDO depend on 2
+    .when({
+      is: Joi.object({ exact: Joi.array().max(0), fuzzy: Joi.array().max(0) }).unknown(),
+      then: Joi.array().min(1)
+    })
     .description(
       `Array of canonical URIs of the resources the represented resource has a to-one association to. Used to find the
 represented resource as element of the to-many association of the referenced resource.
@@ -49,11 +42,27 @@ The order is irrelevant. May be empty if \`fuzzy\` or \`exact\` is not empty.`
     )
     .example(['/some-service/v1/x/123', '/my-service/v1/y/abc'])
     .required(),
+  exact: Joi.array()
+    .items(SearchTerm.example('0123456789'))
+    .unique()
+    .when({
+      is: Joi.object({ toOneAssociations: Joi.array().max(0), fuzzy: Joi.array().max(0) }).unknown(),
+      then: Joi.array().min(1)
+    })
+    .description(
+      `List of strings on which the resource can be found with exact match.
+
+The order is irrelevant. May be empty if \`fuzzy\` or \`toOneAssociations\` is not empty.`
+    )
+    .example(['0123456789', '9876543210'])
+    .required(),
   fuzzy: Joi.array()
     .items(SearchTerm.example('find me'))
     .unique()
-    // MUDO depend on 2
-    .when('exact', { not: Joi.array().min(1), then: Joi.array().min(1) })
+    .when({
+      is: Joi.object({ toOneAssociations: Joi.array().max(0), exact: Joi.array().max(0) }).unknown(),
+      then: Joi.array().min(1)
+    })
     .description(
       `List of strings on which the resource can be found with fuzzy match.
 
