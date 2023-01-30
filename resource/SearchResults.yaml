@@ -71,8 +71,8 @@ properties:
         href:
           minLength: 1
           description: >-
-            Canonical URI where the found resource's information is located. The `at` parameter _must_ be the same as
-            the value of the `x-date` response header.
+            Canonical URI where the found resource's information is located, at the version that was indexed (`at`
+            parameter _must_ be included).
 
 
             Users need to be directed to the version returned by the search index, and not an earlier or more recent
