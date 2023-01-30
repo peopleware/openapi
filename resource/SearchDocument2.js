@@ -27,7 +27,6 @@ const SearchDocument2 = StructureVersioned.append({
   structureVersion: StructureVersion.valid(Joi.override, 2)
     .example(2, { override: true })
     .required(),
-  href: CanonicalURI.description(`Canonical URI where the found resource's information is located.`).required(),
   exact: Joi.array()
     .items(SearchTerm.example('0123456789'))
     .unique()
@@ -90,7 +89,6 @@ can be retrieved in the indexed version at \`href\`.`)
 const searchDocument2Examples = [
   {
     structureVersion: 2,
-    href: '/your-service/v1/x/123/y/abc',
     exact: ['0123456789', '9876543210'],
     toOneAssociations: ['/some-service/v1/x/123', '/my-service/v1/y/abc'],
     fuzzy: ['find me', 'if you can', '9876543210'],

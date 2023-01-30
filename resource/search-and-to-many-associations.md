@@ -198,11 +198,6 @@ The search documents a service offer are specializations of a common structure. 
 - `structureVersion`: an integer describing the version of this data structure, this should be set to a value of 2 or
   higher
 
-- `href`: The _relative_ canonical URI where the version of the resource this search document represents can be
-  retrieved from, with the start-of-transaction of the request for the search document as knowledge time (`at` query
-  parameter). Given the conventions, this is always of the form `.?at=2022-12-27T03:14:22.212775Z`, and has the same
-  value as the `x-date` response header.
-
 - `exact`: array of strings on which the represented resource is to be found with an exact match
 
 - `fuzzy`: array of strings on which the represented resource is to be found with a fuzzy match
@@ -231,7 +226,6 @@ Below is the example of the search document for a resource of type `Y` and `R`:
 ```json
 {
   "structureVersion": 2,
-  "href": ".?at=2022-12-27T03:14:22.212775Z",
   "exact": ["0123456789"],
   "fuzzy": ["wizzy", "woozy", "wuzzy"],
   "toOneAssociations": [],
@@ -254,7 +248,6 @@ Note that there is no mention of `your-service` in this representation.
 ```json
 {
   "structureVersion": 2,
-  "href": ".?at=2022-12-28T12:48:09.558745Z",
   "exact": ["7457"],
   "fuzzy": [],
   "toOneAssociations": ["/some-service/v1/x/123", "/my-service/v1/y/abc"],
@@ -329,10 +322,25 @@ Note that this is similar, but different, from the structure of the search docum
 
 #### Canonical URI and id
 
-The search topic handler creates the canonical URI of the resource, based on the relative `href` in the search document
-and the URI of the search document from the event (it strips of the last `/search-document` segment, and adds the `at`
-query parameter). This is inserted as `href` _without the `at` query parameter_ in the index search document at the top
-level, and as `href` in the search index document `content`, with the `at` query parameter.
+The search topic handler creates the canonical URI of the resource, based on the canonical URI of the search document
+from the event. _By convention_, the canonical URI of the search document of a resource is the canonical URI of the
+resource, with the segment `search-document` added at the end. In reverse, the canonical URI of a resource is the
+canonical URI of the search document of that resource, with the last segment left of. The relative URI of a resource
+with its search document as base is always `.`.
+
+```
+/my-service/v1/y/abc/search-document → /my-service/v1/y/abc
+```
+
+This is inserted as `href` at the top of the search index document.
+
+A `href` property is also added to the search index document’s `content`. This is the canonical URI of the resource with
+an `at` query parameter added. The value of the `at` query parameter is the value of the `x-date` header in the response
+of the search document being handled.
+
+```
+/my-service/v1/y/abc?at=2022-12-27T03:14:22.212775Z
+```
 
 #### Other properties
 

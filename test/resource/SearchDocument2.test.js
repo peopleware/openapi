@@ -30,7 +30,6 @@ describe(testName(module), function () {
           .filter(notEmptyArray)
           .map(structureVersion => ({ ...searchDocument2Examples[0], structureVersion }))
       )
-      .concat(stuffWithUndefined.filter(notEmptyArray).map(href => ({ ...searchDocument2Examples[0], href })))
       .concat(stuffWithUndefined.filter(notEmptyArray).map(exact => ({ ...searchDocument2Examples[0], exact })))
       .concat(stuffWithUndefined.filter(notTrimmedString).map(eg => ({ ...searchDocument2Examples[0], exact: [eg] })))
       .concat(
