@@ -4,6 +4,10 @@
 
 ### 7.0
 
+#### 7.0.1
+
+- fix bug in `SearchDocument2`
+
 #### 7.0.0
 
 - removed top level `href` property from `SearchDocument2`, since it is implicit

@@ -89,16 +89,58 @@ can be retrieved in the indexed version at \`href\`.`)
 const searchDocument2Examples = [
   {
     structureVersion: 2,
-    exact: ['0123456789', '9876543210'],
     toOneAssociations: ['/some-service/v1/x/123', '/my-service/v1/y/abc'],
+    exact: ['0123456789', '9876543210'],
     fuzzy: ['find me', 'if you can', '9876543210'],
-    embedded: { x: '/your-service/v1/x/123' },
     content: {
       ...searchDocumentContentBase2Examples[0],
       extraData: 'extra',
       moreInfo: { aDetail: 2, anotherDetail: true },
       aReference: '/my-service/a/canonical/uri'
-    }
+    },
+    embedded: { x: '/your-service/v1/x/123' }
+  },
+  // only toOneAssociations
+  {
+    structureVersion: 2,
+    toOneAssociations: ['/some-service/v1/x/123'],
+    exact: [],
+    fuzzy: [],
+    content: {
+      ...searchDocumentContentBase2Examples[0],
+      extraData: 'extra',
+      moreInfo: { aDetail: 2, anotherDetail: true },
+      aReference: '/my-service/a/canonical/uri'
+    },
+    embedded: { x: '/your-service/v1/x/123' }
+  },
+  // only exact
+  {
+    structureVersion: 2,
+    toOneAssociations: [],
+    exact: ['0123456789'],
+    fuzzy: [],
+    content: {
+      ...searchDocumentContentBase2Examples[0],
+      extraData: 'extra',
+      moreInfo: { aDetail: 2, anotherDetail: true },
+      aReference: '/my-service/a/canonical/uri'
+    },
+    embedded: { x: '/your-service/v1/x/123' }
+  },
+  // only fuzzy
+  {
+    structureVersion: 2,
+    toOneAssociations: [],
+    exact: [],
+    fuzzy: ['find me'],
+    content: {
+      ...searchDocumentContentBase2Examples[0],
+      extraData: 'extra',
+      moreInfo: { aDetail: 2, anotherDetail: true },
+      aReference: '/my-service/a/canonical/uri'
+    },
+    embedded: { x: '/your-service/v1/x/123' }
   }
 ]
 
