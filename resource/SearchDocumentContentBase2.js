@@ -83,8 +83,8 @@ was indexed.`
       schema.append({
         href: extendDescription(
           CanonicalURIWithKnowledgeTime,
-          `Canonical URI where the found resource's information is located. The \`at\` parameter _must_ be the
-same as the value of the \`x-date\` response header.
+          `Canonical URI where the found resource's information is located, at the version that was indexed (\`at\`
+parameter _must_ be included).
 
 Users need to be directed to the version returned by the search index, and not an earlier or more recent
 version. The search engine updates, eventually, after a few seconds. If a more recent version is available in
