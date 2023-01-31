@@ -54,7 +54,7 @@ const SearchDocumentContentBase2 = addExamples(
       .trim()
       .lowercase()
       .min(1)
-      .pattern(/^([-a-z0-9]+)\/([-a-z0-9\/]+)$/)
+      .pattern(/^([-a-z0-9]+)\/([-a-z0-9/]+)$/)
       .description(
         `Type of the indexed resource.
 

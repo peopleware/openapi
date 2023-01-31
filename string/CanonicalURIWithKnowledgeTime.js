@@ -27,7 +27,7 @@ resource. The value must be a moment in time, expressed as ISO-8601 in UTC ('Z')
     if (ats.length !== 1) {
       return error('string.atQueryParameter')
     }
-    const { _, error: dateTimeError } = DateTime.validate(ats[0], { convert: false })
+    const { error: dateTimeError } = DateTime.validate(ats[0], { convert: false })
     if (dateTimeError) {
       return error('string.atQueryParameterDateTime')
     }

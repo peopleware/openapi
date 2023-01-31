@@ -10,7 +10,7 @@ describe(testName(module), function () {
     SigedisId,
     stuff.concat([
       '1234-5678-9012-3456-7890-1234',
-      123456789012345678901234,
+      123456789012345678901234, // eslint-disable-line no-loss-of-precision
       '12345678901234567890123',
       '1234567890123456789012345'
     ])

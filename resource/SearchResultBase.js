@@ -43,7 +43,7 @@ the meantime, the user interface makes it possible for the user to navigate to t
       .trim()
       .lowercase()
       .min(1)
-      .pattern(/^([-a-z0-9]+)\/([-a-z0-9\/]+)$/)
+      .pattern(/^([-a-z0-9]+)\/([-a-z0-9/]+)$/)
       .description(
         `Type of the indexed resource.
 
