@@ -30,7 +30,7 @@ const SearchDocument2 = StructureVersioned.append({
   toOneAssociations: Joi.array()
     .items(CanonicalURI)
     .unique()
-    .when({
+    .when(Joi.ref('..'), {
       is: Joi.object({ exact: Joi.array().max(0), fuzzy: Joi.array().max(0) }).unknown(),
       then: Joi.array().min(1)
     })
@@ -45,7 +45,7 @@ The order is irrelevant. May be empty if \`fuzzy\` or \`exact\` is not empty.`
   exact: Joi.array()
     .items(SearchTerm.example('0123456789'))
     .unique()
-    .when({
+    .when(Joi.ref('..'), {
       is: Joi.object({ toOneAssociations: Joi.array().max(0), fuzzy: Joi.array().max(0) }).unknown(),
       then: Joi.array().min(1)
     })
@@ -59,7 +59,7 @@ The order is irrelevant. May be empty if \`fuzzy\` or \`toOneAssociations\` is n
   fuzzy: Joi.array()
     .items(SearchTerm.example('find me'))
     .unique()
-    .when({
+    .when(Joi.ref('..'), {
       is: Joi.object({ toOneAssociations: Joi.array().max(0), exact: Joi.array().max(0) }).unknown(),
       then: Joi.array().min(1)
     })
