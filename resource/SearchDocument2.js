@@ -24,9 +24,7 @@ const { CanonicalURI } = require('../string/CanonicalURI')
 const { SearchDocumentContentBase2, searchDocumentContentBase2Examples } = require('./SearchDocumentContentBase2')
 
 const SearchDocument2 = StructureVersioned.append({
-  structureVersion: StructureVersion.valid(Joi.override, 2)
-    .example(2, { override: true })
-    .required(),
+  structureVersion: StructureVersion.valid(Joi.override, 2).example(2, { override: true }).required(),
   toOneAssociations: Joi.array()
     .items(CanonicalURI)
     .unique()

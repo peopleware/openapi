@@ -19,8 +19,6 @@ const Joi = require('joi')
 
 const example = '/openapi/common/v1'
 
-const Prefix = Joi.string()
-  .uri({ relativeOnly: true })
-  .example(example)
+const Prefix = Joi.string().uri({ relativeOnly: true }).example(example)
 
 module.exports = { prefixExamples: [example], Prefix }

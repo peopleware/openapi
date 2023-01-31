@@ -23,7 +23,7 @@ const searchTermExamples = ['Mari', 'Jos', '0123456789']
 const SearchTerm = Joi.string()
   .trim()
   .min(1)
-  .description(`free text on which the resource can be found (trimmed, not empty)`)
+  .description('free text on which the resource can be found (trimmed, not empty)')
 
 module.exports = {
   searchTermExamples,

@@ -69,7 +69,7 @@ The page can never be empty, but it might contain fewer items than requested by 
       .required()
   })
     .unknown(true)
-    .description(`Links to other pages of the search result.`),
+    .description('Links to other pages of the search result.'),
   hrefExamples
 )
 

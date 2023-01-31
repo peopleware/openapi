@@ -35,7 +35,7 @@ describe(testName(module), function () {
     shouldBeSeriousSchema(Status, stuff)
   })
   describe('constants', function () {
-    function isAValidConstant (name, sv) {
+    function isAValidConstant(name, sv) {
       it(`${name} is a valid Status`, function () {
         should(Status.validate(sv).error).not.be.ok()
         statusValues.should.containEql(name)
@@ -60,7 +60,7 @@ describe(testName(module), function () {
   })
   describe('#statusCode', function () {
     it('is an object with numbers', function () {
-      function shouldBeIntegerWithin (candidate, min, max) {
+      function shouldBeIntegerWithin(candidate, min, max) {
         candidate.should.be.a.Number()
         Number.isInteger(candidate).should.be.a.true()
         candidate.should.be.within(min, max)
@@ -90,18 +90,18 @@ describe(testName(module), function () {
       /* prettier-ignore */
       const expected =
               c.status === OK
-              ? c.acc
-              : c.status === WARNING
-                ? c.acc === OK
-                  ? WARNING
-                  : c.acc
-                : c.status === ERROR || c.status === UNREACHABLE
-                  ? c.acc === ERROR
-                    ? ERROR
-                    : c.required
+                ? c.acc
+                : c.status === WARNING
+                  ? c.acc === OK
+                    ? WARNING
+                    : c.acc
+                  : c.status === ERROR || c.status === UNREACHABLE
+                    ? c.acc === ERROR
                       ? ERROR
-                      : WARNING
-                  : undefined
+                      : c.required
+                        ? ERROR
+                        : WARNING
+                    : undefined
       it(`${c.acc} <- ${c.status}, required ${c.required}, returns ${expected}`, function () {
         const result = consolidate(c.acc, c.status, c.required)
         result.should.equal(expected)

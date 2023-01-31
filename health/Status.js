@@ -84,7 +84,7 @@ const consolidate = new Contract({
       return Contract.outcome(arguments) !== constants.UNREACHABLE
     }
   ]
-}).implementation(function consolidate (acc, status, required) {
+}).implementation(function consolidate(acc, status, required) {
   // we can never answer UNREACHABLE, since we are reachable to answer
   switch (acc) {
     case constants.OK:

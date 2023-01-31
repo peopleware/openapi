@@ -15,7 +15,7 @@
  *
  */
 
-function addExamples (schema, examples) {
+function addExamples(schema, examples) {
   return examples.reduce((acc, example, index) => acc.example(example, { override: index === 0 }), schema)
 }
 

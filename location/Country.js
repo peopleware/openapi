@@ -20,7 +20,7 @@ const addExamples = require('../_util/addExamples')
 
 const Country = Joi.string()
   .pattern(/^[A-Z]{2}$/)
-  .description(`[ISO 3166 1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) 2-letter country code`)
+  .description('[ISO 3166 1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) 2-letter country code')
 
 const examples = ['BE']
 

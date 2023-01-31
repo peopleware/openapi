@@ -1,7 +1,7 @@
 const blockQuotePattern = /^\s*> /
 const listItemPattern = /^\s*[-*] /
 
-function cleanDescription (description) {
+function cleanDescription(description) {
   const lines = description.split('\n')
   const cleaned = lines.reduce(
     (cleaned, l) => {
@@ -52,7 +52,7 @@ function cleanDescription (description) {
   return cleaned.join('\n\n')
 }
 
-function clean (model) {
+function clean(model) {
   if (Array.isArray(model)) {
     return model.map(e => clean(e))
   }

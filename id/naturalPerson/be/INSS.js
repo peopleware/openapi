@@ -24,12 +24,12 @@ const INSS = Joi.string()
     const first9 = value.substring(0, 9)
     const rest = 97 - Number.parseInt(value.substring(9))
 
-    function validBefore2000 (identification) {
+    function validBefore2000(identification) {
       const asInt = Number.parseInt(first9)
       return asInt % 97 === rest
     }
 
-    function validAfter2000 (identification) {
+    function validAfter2000(identification) {
       const asInt = Number.parseInt(`2${first9}`)
       return asInt % 97 === rest
     }

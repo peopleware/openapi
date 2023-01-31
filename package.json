@@ -42,7 +42,8 @@
     "endOfLine": "lf",
     "arrowParens": "avoid",
     "semi": false,
-    "singleQuote": true
+    "singleQuote": true,
+    "trailingComma": "none"
   },
   "standard": {
     "ignore": [

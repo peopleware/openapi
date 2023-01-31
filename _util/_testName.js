@@ -10,7 +10,7 @@ const namePattern = /^(.*)\.test$/
  * @param {object} testModule
  * @returns {string}
  */
-function testName (testModule) {
+function testName(testModule) {
   let parts = path.parse(testModule.filename)
   const nameSplit = namePattern.exec(parts.name)
   assert(nameSplit.length === 2)

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-function validateSchema (schema, value, context) {
+function validateSchema(schema, value, context) {
   const { error } = schema.validate(value, { convert: false, context, abortEarly: false })
   if (!error) {
     return true

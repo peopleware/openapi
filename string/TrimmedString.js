@@ -34,10 +34,7 @@
 const Joi = require('joi')
 const addExamples = require('../_util/addExamples')
 
-const TrimmedString = Joi.string()
-  .min(1)
-  .trim()
-  .description(' Not empty. Trimmed.')
+const TrimmedString = Joi.string().min(1).trim().description(' Not empty. Trimmed.')
 
 const examples = ['Anna']
 

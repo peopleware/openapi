@@ -42,7 +42,7 @@ const History = StructureVersioned.append({
     .items(HistoryVersion.required())
     .sort({ order: 'descending', by: 'createdAt' })
     .required()
-    .description(`list of history versions, ordered from most recent to oldest`)
+    .description('list of history versions, ordered from most recent to oldest')
 }).unknown(true)
   .description(`A list of the different times at which the person's information was changed, ordered from most to least
 recent, with links to retrieve that version of the personal information. Changes \`< x-date\` are included.

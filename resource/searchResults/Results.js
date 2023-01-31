@@ -49,7 +49,7 @@ const resultsExamples = [
  * versions. `SearchResultBase` and `SearchResultBase2` are the same, except for the `structureVersion`.
  */
 const MixedSearchResults = SearchResultBase2.append({
-  structureVersion: SearchResultBase2.extract(`structureVersion`).valid(Joi.override) // allow all numbers
+  structureVersion: SearchResultBase2.extract('structureVersion').valid(Joi.override) // allow all numbers
 })
 
 const Results = addExamples(

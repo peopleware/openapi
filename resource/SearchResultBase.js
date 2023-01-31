@@ -55,7 +55,7 @@ name clashes (slash-separated).`
   })
     .meta({ deprecated: true })
     .description(
-      `The resource's search document with the most up-to-date information, i.e., up-to-date up until, but not including, \`x-date\`.`
+      "The resource's search document with the most up-to-date information, i.e., up-to-date up until, but not including, `x-date`."
     ),
   searchResultBaseExamples
 )

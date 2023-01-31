@@ -25,10 +25,6 @@ const example = {
   '/openapi/other/v4/another/path/43/without': 'POST:'
 }
 
-const RAA2 = Joi.object()
-  .pattern(Prefix.required(), RAX.required())
-  .unknown(false)
-  .min(1)
-  .example(example)
+const RAA2 = Joi.object().pattern(Prefix.required(), RAX.required()).unknown(false).min(1).example(example)
 
 module.exports = { raa2Examples: [example], RAA2 }

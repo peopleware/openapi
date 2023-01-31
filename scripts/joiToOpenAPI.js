@@ -26,7 +26,7 @@ const license = `# Copyright 2021 - 2022 PeopleWare n.v.
 
 `
 
-async function writeFileIfDifferent (path, data) {
+async function writeFileIfDifferent(path, data) {
   const existingData = await readFile(path, { encoding: 'utf-8' })
   if (existingData === data) {
     return
@@ -35,7 +35,7 @@ async function writeFileIfDifferent (path, data) {
   return writeFile(path, data)
 }
 
-async function transformSchemataIn (path) {
+async function transformSchemataIn(path) {
   const module = require(path)
   const dirPath = join(path, '..')
   return Promise.all(
@@ -52,7 +52,7 @@ async function transformSchemataIn (path) {
   )
 }
 
-async function transformNodeRecursively (node) {
+async function transformNodeRecursively(node) {
   if (!node.children) {
     return transformSchemataIn(node.path)
   }
@@ -60,7 +60,7 @@ async function transformNodeRecursively (node) {
   return Promise.all(node.children.map(transformNodeRecursively))
 }
 
-async function exec () {
+async function exec() {
   const tree = dirTree(basePath, { extensions: /\.js/ })
   return Promise.all([
     transformNodeRecursively(tree),

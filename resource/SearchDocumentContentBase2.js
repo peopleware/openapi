@@ -51,9 +51,7 @@ const searchResultBaseTailoring = 'searchResult'
  */
 const SearchDocumentContentBase2 = addExamples(
   StructureVersioned.append({
-    structureVersion: StructureVersion.valid(Joi.override, 2)
-      .example(2, { override: true })
-      .required(),
+    structureVersion: StructureVersion.valid(Joi.override, 2).example(2, { override: true }).required(),
     discriminator: Joi.string()
       .trim()
       .lowercase()

@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-function notEmptyArray (s) {
+function notEmptyArray(s) {
   return !Array.isArray(s) || s.length > 0
 }
 
-function notTrimmedString (s) {
+function notTrimmedString(s) {
   return typeof s !== 'string' || s.length <= 0 || s.trim() !== s
 }
 
-function notEmptyObject (s) {
+function notEmptyObject(s) {
   return (typeof s !== 'object' || s === null || Array.isArray(s) || Object.keys(s).length > 0) && !(s instanceof Date)
 }
 

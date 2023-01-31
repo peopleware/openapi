@@ -41,7 +41,7 @@ const should = require('should')
  * @param {object} [context]
  * @return {void}
  */
-function shouldBeSeriousSchema (schema, failures, unknownNotAllowed = false, context) {
+function shouldBeSeriousSchema(schema, failures, unknownNotAllowed = false, context) {
   it('is a Joi schema', function () {
     schema.should.be.ok()
     isSchema(schema).should.be.true()

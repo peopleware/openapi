@@ -8,11 +8,11 @@ const should = require('should')
  * @param {object} [context]
  * @return {void}
  */
-function shouldBeSeriousCRUSchema (schema, readOnlyProperties, failures, context) {
+function shouldBeSeriousCRUSchema(schema, readOnlyProperties, failures, context) {
   /**
    * @param {Joi.ObjectSchema} tailored
    */
-  function shouldBeOptional (tailored) {
+  function shouldBeOptional(tailored) {
     describe('read-only properties', function () {
       readOnlyProperties.forEach(prop => {
         it(`${prop} should be optional`, function () {

@@ -27,7 +27,7 @@
  * @param {string} extraDescription
  * @param {boolean} [addAddEnd]
  */
-function extendDescription (schema, extraDescription, addAddEnd) {
+function extendDescription(schema, extraDescription, addAddEnd) {
   try {
     const originalDescription = schema.describe().flags.description
 

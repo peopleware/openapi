@@ -4,7 +4,7 @@ const { extendDescription } = require('../_util/extendDescription')
 const { CanonicalURI } = require('./CanonicalURI')
 const { DateTime } = require('../time/DateTime')
 
-function getParamsFromURI (uri) {
+function getParamsFromURI(uri) {
   // Get everything after the `?`
   const [, paramString] = uri.split('?')
   return new URLSearchParams(paramString)

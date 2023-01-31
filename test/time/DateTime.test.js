@@ -26,7 +26,7 @@ const Joi = require('joi')
 describe(testName(module), function () {
   const validIsoDateTimes = []
 
-  for (let year of [1900, 1999, 2000, 2020, 2123]) {
+  for (const year of [1900, 1999, 2000, 2020, 2123]) {
     validIsoDateTimes.push(`${year}-01-01T00:00:00.000Z`)
   }
 
