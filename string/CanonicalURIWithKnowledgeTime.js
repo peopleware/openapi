@@ -1,4 +1,3 @@
-const Joi = require('joi')
 const addExamples = require('../_util/addExamples')
 const { extendDescription } = require('../_util/extendDescription')
 const { CanonicalURI } = require('./CanonicalURI')

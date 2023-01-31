@@ -16,11 +16,9 @@
  */
 
 const Joi = require('joi')
-const { StructureVersioned, structureVersionedExamples } = require('./StructureVersioned')
+const { StructureVersioned } = require('./StructureVersioned')
 const addExamples = require('../_util/addExamples')
-const { RelativeURI } = require('../string/RelativeURI')
 const { StructureVersion } = require('./StructureVersion')
-const { CanonicalURI } = require('../string/CanonicalURI')
 const { CanonicalURIWithKnowledgeTime } = require('../string/CanonicalURIWithKnowledgeTime')
 const { extendDescription } = require('../_util/extendDescription')
 

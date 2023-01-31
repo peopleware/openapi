@@ -17,8 +17,7 @@
 /* eslint-env mocha */
 
 const testName = require('../../_util/_testName')
-const Joi = require('joi')
-const { extendDescription, notEmptyArray, notTrimmedString, notEmptyObject } = require('../../_util/filters')
+const { notEmptyArray, notTrimmedString, notEmptyObject } = require('../../_util/filters')
 const { stuffWithUndefined } = require('../../_util/_stuff')
 const { inspect } = require('util')
 

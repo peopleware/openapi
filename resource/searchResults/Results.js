@@ -17,7 +17,6 @@
 
 const Joi = require('joi')
 const addExamples = require('../../_util/addExamples')
-const { SearchResultBase } = require('../SearchResultBase')
 const { SearchResultBase2 } = require('../SearchDocumentContentBase2')
 
 const resultsExamples = [

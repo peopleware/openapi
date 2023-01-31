@@ -15,7 +15,6 @@
  *
  */
 
-const Joi = require('joi')
 const { SearchResultBase, searchResultBaseExamples } = require('./SearchResultBase')
 
 /**

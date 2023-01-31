@@ -15,9 +15,7 @@
  */
 
 const Joi = require('joi')
-const { StructureVersion } = require('../resource/StructureVersion')
 const { Timestamped } = require('./Timestamped')
-const { dateTimeExamples } = require('../time/DateTime')
 const { StructureVersioned, structureVersionedExamples } = require('./StructureVersioned')
 const addExamples = require('../_util/addExamples')
 
