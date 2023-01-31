@@ -30,10 +30,6 @@ const SearchDocument2 = StructureVersioned.append({
   toOneAssociations: Joi.array()
     .items(CanonicalURI)
     .unique()
-    .when(Joi.ref('..'), {
-      is: Joi.object({ exact: Joi.array().max(0), fuzzy: Joi.array().max(0) }).unknown(),
-      then: Joi.array().min(1)
-    })
     .description(
       `Array of canonical URIs of the resources the represented resource has a to-one association to. Used to find the
 represented resource as element of the to-many association of the referenced resource.
@@ -45,10 +41,6 @@ The order is irrelevant. May be empty if \`fuzzy\` or \`exact\` is not empty.`
   exact: Joi.array()
     .items(SearchTerm.example('0123456789'))
     .unique()
-    .when(Joi.ref('..'), {
-      is: Joi.object({ toOneAssociations: Joi.array().max(0), fuzzy: Joi.array().max(0) }).unknown(),
-      then: Joi.array().min(1)
-    })
     .description(
       `List of strings on which the resource can be found with exact match.
 
@@ -59,10 +51,6 @@ The order is irrelevant. May be empty if \`fuzzy\` or \`toOneAssociations\` is n
   fuzzy: Joi.array()
     .items(SearchTerm.example('find me'))
     .unique()
-    .when(Joi.ref('..'), {
-      is: Joi.object({ toOneAssociations: Joi.array().max(0), exact: Joi.array().max(0) }).unknown(),
-      then: Joi.array().min(1)
-    })
     .description(
       `List of strings on which the resource can be found with fuzzy match.
 
@@ -82,7 +70,18 @@ updated too.`
     )
     .example({ x: '/your-service/v1/x/123', y: '/my-service/v1/y/abc' }),
   content: SearchDocumentContentBase2.required()
-}).description(`Returned as \`search-document\` by a service for a parent resource. A _search index document_ is created
+})
+  .messages({
+    'searchDocument.notAllEmpty': '`toOneAssociations`, `exact`, and `fuzzy` may be empty, but not all of them'
+  })
+  .custom((value, { error }) => {
+    if (value.toOneAssociations.length === 0 && value.exact.length === 0 && value.fuzzy.length === 0) {
+      return error('searchDocument.notAllEmpty')
+    }
+
+    return value
+  })
+  .description(`Returned as \`search-document\` by a service for a parent resource. A _search index document_ is created
 in the search index based on this information. The search service retrieves the information from the search index.
 
 It contains strings for which the resource this is a search document for can be found by, and the \`content\` that is to
@@ -90,7 +89,7 @@ be sent to the client (more or less). The resource this is a search document for
 strings in \`exact\` or \`toOneAssociations\`, and by a fuzzy search on the strings in \`fuzzy\`. Some strings might
 appear in both.
 
-\`fuzzy\`, \`toOneAssociations\` or \`exact\` may be empty, but not all of them.
+\`toOneAssociations\`, \`exact\`, and \`fuzzy\` may be empty, but not all of them.
 
 Search results can be limited to selected types with an exact match on \`content.discriminator\`. The found resource
 can be retrieved in the indexed version at \`href\`.`)
