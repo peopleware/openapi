@@ -1,3 +1,5 @@
+/* eslint-env mocha */
+
 const shouldBeSeriousSchema = require('./_shouldBeSeriousSchema')
 const should = require('should')
 

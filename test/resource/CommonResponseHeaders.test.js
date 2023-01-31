@@ -15,6 +15,8 @@
  *
  */
 
+/* eslint-env mocha */
+
 const testName = require('../../_util/_testName')
 const { commonResponseHeadersExamples, CommonResponseHeaders } = require('../../resource/CommonResponseHeaders')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')

@@ -15,6 +15,8 @@
  *
  */
 
+/* eslint-env mocha */
+
 const testName = require('../../_util/_testName')
 const { stuff } = require('../../_util/_stuff')
 const { Accept } = require('../../parameters/Accept')
