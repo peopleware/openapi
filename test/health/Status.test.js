@@ -89,21 +89,20 @@ describe(testName(module), function () {
     })
 
     cases.forEach(c => {
-      /* prettier-ignore */
       const expected =
-              c.status === OK
-                ? c.acc
-                : c.status === WARNING
-                  ? c.acc === OK
-                    ? WARNING
-                    : c.acc
-                  : c.status === ERROR || c.status === UNREACHABLE
-                    ? c.acc === ERROR
-                      ? ERROR
-                      : c.required
-                        ? ERROR
-                        : WARNING
-                    : undefined
+        c.status === OK
+          ? c.acc
+          : c.status === WARNING
+          ? c.acc === OK
+            ? WARNING
+            : c.acc
+          : c.status === ERROR || c.status === UNREACHABLE
+          ? c.acc === ERROR
+            ? ERROR
+            : c.required
+            ? ERROR
+            : WARNING
+          : undefined
       it(`${c.acc} <- ${c.status}, required ${c.required}, returns ${expected}`, function () {
         const result = consolidate(c.acc, c.status, c.required)
         result.should.equal(expected)
