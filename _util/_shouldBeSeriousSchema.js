@@ -20,7 +20,7 @@ const { isSchema } = require('joi')
 const should = require('should')
 
 /**
- * @param {{prototype: History; new(): History}} schema
+ * @param {Joi.Schema} schema
  * @param {Array<any>} failures
  * @param {boolean} [unknownNotAllowed]
  * @param {object} [context]
