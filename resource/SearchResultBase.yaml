@@ -41,7 +41,7 @@ properties:
     example: ../some/path
   discriminator:
     minLength: 1
-    pattern: ^([-a-z0-9]+)\/([-a-z0-9\/]+)$
+    pattern: ^([-a-z0-9]+)\/([-a-z0-9/]+)$
     description: >-
       Type of the indexed resource.
 

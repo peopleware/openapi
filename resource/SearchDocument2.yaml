@@ -14,8 +14,8 @@
 
 required:
   - structureVersion
-  - exact
   - toOneAssociations
+  - exact
   - fuzzy
   - embedded
   - content
@@ -30,7 +30,7 @@ description: >-
   appear in both.
 
 
-  `fuzzy`, `toOneAssociations` or `exact` may be empty, but not all of them.
+  `toOneAssociations`, `exact`, and `fuzzy` may be empty, but not all of them.
 
 
   Search results can be limited to selected types with an exact match on `content.discriminator`. The found resource can
@@ -42,21 +42,6 @@ properties:
     description: Version of the data structure of this resource type
     type: integer
     example: 2
-  exact:
-    uniqueItems: true
-    description: |-
-      List of strings on which the resource can be found with exact match.
-
-      The order is irrelevant. May be empty if `fuzzy` or `toOneAssociations` is not empty.
-    type: array
-    items:
-      minLength: 1
-      description: free text on which the resource can be found (trimmed, not empty)
-      type: string
-      example: Mari
-    example:
-      - '0123456789'
-      - '9876543210'
   toOneAssociations:
     uniqueItems: true
     description: >-
@@ -80,6 +65,21 @@ properties:
     example:
       - /some-service/v1/x/123
       - /my-service/v1/y/abc
+  exact:
+    uniqueItems: true
+    description: |-
+      List of strings on which the resource can be found with exact match.
+
+      The order is irrelevant. May be empty if `fuzzy` or `toOneAssociations` is not empty.
+    type: array
+    items:
+      minLength: 1
+      description: free text on which the resource can be found (trimmed, not empty)
+      type: string
+      example: Mari
+    example:
+      - '0123456789'
+      - '9876543210'
   fuzzy:
     uniqueItems: true
     description: |-
@@ -128,7 +128,7 @@ properties:
         example: 2
       discriminator:
         minLength: 1
-        pattern: ^([-a-z0-9]+)\/([-a-z0-9\/]+)$
+        pattern: ^([-a-z0-9]+)\/([-a-z0-9/]+)$
         description: >-
           Type of the indexed resource.
 
@@ -144,18 +144,16 @@ properties:
 additionalProperties: true
 example:
   structureVersion: 2
-  exact:
-    - '0123456789'
-    - '9876543210'
   toOneAssociations:
     - /some-service/v1/x/123
     - /my-service/v1/y/abc
+  exact:
+    - '0123456789'
+    - '9876543210'
   fuzzy:
     - find me
     - if you can
     - '9876543210'
-  embedded:
-    x: /your-service/v1/x/123
   content:
     structureVersion: 2
     discriminator: my-service/some-resource
@@ -164,3 +162,5 @@ example:
       aDetail: 2
       anotherDetail: true
     aReference: /my-service/a/canonical/uri
+  embedded:
+    x: /your-service/v1/x/123
