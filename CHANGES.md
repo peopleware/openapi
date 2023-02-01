@@ -4,6 +4,10 @@
 
 ### 7.0
 
+#### 7.0.2
+
+- tweak text and spec of `SearchDocument2.embedded`
+
 #### 7.0.1
 
 - fix bug in `SearchDocument2`

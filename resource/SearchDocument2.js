@@ -22,6 +22,7 @@ const { StructureVersion } = require('./StructureVersion')
 const { SearchTerm } = require('./SearchTerm')
 const { CanonicalURI } = require('../string/CanonicalURI')
 const { SearchDocumentContentBase2, searchDocumentContentBase2Examples } = require('./SearchDocumentContentBase2')
+const { CleanedString } = require('../string/CleanedString')
 
 const SearchDocument2 = StructureVersioned.append({
   structureVersion: StructureVersion.valid(Joi.override, 2).example(2, { override: true }).required(),
@@ -57,14 +58,17 @@ The order is irrelevant. May be empty if \`exact\` or \`toOneAssociations\` is n
     .example(['find me', 'if you can'])
     .required(),
   embedded: Joi.object()
-    .pattern(Joi.string(), CanonicalURI)
-    // MUDO check
+    .pattern(CleanedString, CanonicalURI)
     .unknown()
     .required()
     .description(
-      `Array of canonical URIs of the resources this search index document embeds information of. When the search index
+      `Map of canonical URIs of the resources this search index document embeds information of. When the search index
 document for the referenced resources is updated, the search index document for the represented resource needs to be
-updated too.`
+updated too.
+
+The \`content\` of the referenced resources is spliced in the search result \`content\` of the resource this is the
+search document for. The resource this is the search document for can also be found with the \`exact\` and \`fuzzy\`
+entries of the referenced resources.`
     )
     .example({ x: '/your-service/v1/x/123', y: '/my-service/v1/y/abc' }),
   content: SearchDocumentContentBase2.required()

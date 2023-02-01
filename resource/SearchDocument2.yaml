@@ -97,9 +97,14 @@ properties:
       - if you can
   embedded:
     description: >-
-      Array of canonical URIs of the resources this search index document embeds information of. When the search index
+      Map of canonical URIs of the resources this search index document embeds information of. When the search index
       document for the referenced resources is updated, the search index document for the represented resource needs to
       be updated too.
+
+
+      The `content` of the referenced resources is spliced in the search result `content` of the resource this is the
+      search document for. The resource this is the search document for can also be found with the `exact` and `fuzzy`
+      entries of the referenced resources.
     type: object
     properties: {}
     additionalProperties: true
