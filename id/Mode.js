@@ -84,6 +84,7 @@ const composeRegexes = (...regexes) => new RegExp(`^${regexes.map(regex => regex
 
 const modePattern = composeRegexes(
   /production/,
+  /simulation/,
   automatedTestPattern,
   qaPattern,
   acceptancePattern,
@@ -96,6 +97,7 @@ const Mode = Joi.string().pattern(modePattern)
 
 const modeExamples = [
   'production',
+  'simulation',
   'automated-test-701927f0-171e-4199-bff8-bb54e15b8481',
   'qa-4',
   'qa-00004',
