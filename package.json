@@ -22,7 +22,7 @@
     "@redocly/cli": "^1.0.0-beta.123",
     "cartesian": "^1.0.1",
     "directory-tree": "^3.5.1",
-    "eslint": "^8.33.0",
+    "eslint": "^8.35.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.27.5",
@@ -34,7 +34,7 @@
     "npm-check": "^6.0.1",
     "npm-watch": "^0.11.0",
     "nyc": "^15.1.0",
-    "prettier": "^2.8.3",
+    "prettier": "^2.8.4",
     "should": "^13.2.3"
   },
   "prettier": {
@@ -105,6 +105,6 @@
   },
   "dependencies": {
     "@toryt/contracts-v": "^5.0.0",
-    "joi": "^17.7.0"
+    "joi": "^17.8.3"
   }
 }
