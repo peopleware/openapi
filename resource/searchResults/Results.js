@@ -74,5 +74,6 @@ or have fewer elements than \`per_page\`. The \`href.last\` page can have fewer 
 
 module.exports = {
   resultsExamples,
+  MixedSearchResults,
   Results
 }

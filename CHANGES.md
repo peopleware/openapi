@@ -7,6 +7,7 @@
 #### 7.1.0
 
 - add `simulation` `mode`
+- `MixedSearchResults` is now exported
 
 ### 7.0
 
