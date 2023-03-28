@@ -56,6 +56,7 @@ function shouldBeSeriousSchema(schema, failures, unknownNotAllowed = false, cont
   }
   describe('examples', function () {
     it('should have examples', function () {
+      // MUDO for alternatives -> oneOf, there should be (but are allowed to be) no examples for the composite, but the examples of the parts should pass
       const description = schema.describe()
       should(description.examples).be.an.Array()
       description.examples.length.should.be.greaterThanOrEqual(1)
