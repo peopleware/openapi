@@ -512,6 +512,8 @@ components:
             money:
               type: object
               properties:
+                currencyCode:
+                  $ref: 'money/CurrencyCode.yaml'
                 baseMoneyAmount:
                   $ref: 'money/BaseMoneyAmount.yaml'
                 moneyAmount:

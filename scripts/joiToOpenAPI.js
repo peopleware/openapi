@@ -68,7 +68,8 @@ async function exec() {
     transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocument')),
     transformSchemataIn(join(__dirname, '..', 'resource', 'SearchResults')),
     transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocumentContentBase2')),
-    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocument2'))
+    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocument2')),
+    transformSchemataIn(join(__dirname, '..', 'money', 'CurrencyCode'))
   ])
 }
 
