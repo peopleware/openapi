@@ -26,4 +26,8 @@ function notEmptyObject(s) {
   return (typeof s !== 'object' || s === null || Array.isArray(s) || Object.keys(s).length > 0) && !(s instanceof Date)
 }
 
-module.exports = { notEmptyArray, notTrimmedString, notEmptyObject }
+function notInteger(s) {
+  return typeof s !== 'number' || !Number.isInteger(s)
+}
+
+module.exports = { notEmptyArray, notTrimmedString, notEmptyObject, notInteger }
