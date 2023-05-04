@@ -13,6 +13,7 @@
 # limitations under the License.
 
 schema:
+  deprecated: true
   oneOf:
     - $ref: '#/components/schemas/baseMinorUnit0'
     - $ref: '#/components/schemas/baseMinorUnit2'
@@ -194,6 +195,7 @@ components:
     # Token requests bodies listed explicitly here as workaround for https://github.com/Redocly/redoc/issues/862#issuecomment-491631228
     # This has to be repeated in `index.yaml` as a workaround.
     baseMinorUnit0:
+      deprecated: true
       allOf:
         - $ref: '#/components/schemas/base'
         - type: object
@@ -203,6 +205,7 @@ components:
               description: The money amount, no decimals
               example: 523
     baseMinorUnit2:
+      deprecated: true
       allOf:
         - $ref: '#/components/schemas/base'
         - type: object
@@ -214,6 +217,7 @@ components:
               description: The money amount. Maximum 2 decimals.
               example: 523.02
     baseMinorUnit3:
+      deprecated: true
       allOf:
         - $ref: '#/components/schemas/base'
         - type: object
@@ -225,6 +229,7 @@ components:
               description: The money amount. Maximum 3 decimals.
               example: 523.433
     baseMinorUnit4:
+      deprecated: true
       allOf:
         - $ref: '#/components/schemas/base'
         - type: object
