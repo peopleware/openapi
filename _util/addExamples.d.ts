@@ -15,7 +15,9 @@
  *
  */
 
-import * as Joi from 'joi';
+import { Schema } from 'joi'
 
-declare function addExamples<T>(schema: Joi.Schema<T>, examples: Array<T>): Joi.Schema<T>;
-export default addExamples;
+type SchemaFor<S> = S extends Schema<infer T> ? T : never
+
+declare function addExamples<S extends Schema<unknown>>(schema: S, examples: Array<SchemaFor<S>>): S
+export default addExamples
