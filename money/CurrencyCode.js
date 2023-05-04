@@ -200,7 +200,6 @@ const currencyCodes = [
   'ZWL'
 ]
 
-/** @type StringSchema */
 const CurrencyCode = addExamples(Joi.string().valid(...currencyCodes), currencyCodes).description(
   `3-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) alphabetic currency code (3 upper case letters).
 

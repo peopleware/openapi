@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { Schema } from 'joi'
+import { StringSchema } from 'joi'
 
-export type CurrencyCode =
+export type TCurrencyCode =
   | 'XTS'
   | 'AED'
   | 'AFN'
@@ -198,6 +198,6 @@ export type CurrencyCode =
   | 'ZMW'
   | 'ZWL'
 
-export const currencyCodes: CurrencyCode[]
+export const currencyCodes: TCurrencyCode[]
 
-export const CurrencyCode: Schema<CurrencyCode>
+export const CurrencyCode: StringSchema<TCurrencyCode>
