@@ -31,6 +31,9 @@ const MonetaryValue = addExamples(
     decimals: Joi.number()
       .integer()
       .required()
+      .example(2)
+      .example(0)
+      .example(-2)
       .description(
         `The number of decimal places with which \`amount\` must be interpreted. A positive number means moving
 the decimal point to the left. A negative number means adding zeros at the end.`
@@ -38,6 +41,9 @@ the decimal point to the left. A negative number means adding zeros at the end.`
     amount: Joi.number()
       .integer()
       .required()
+      .example(456568)
+      .example(0)
+      .example(-456568)
       .description(
         `The represented amount of money, multiplied by 10<sup>factor</sup>. This can be positive, negative, or
 0. The intepretation of the sign is context dependent.`

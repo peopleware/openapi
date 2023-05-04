@@ -234,11 +234,13 @@ properties:
       The number of decimal places with which `amount` must be interpreted. A positive number means moving the decimal
       point to the left. A negative number means adding zeros at the end.
     type: integer
+    example: 2
   amount:
     description: >-
       The represented amount of money, multiplied by 10<sup>factor</sup>. This can be positive, negative, or 0. The
       intepretation of the sign is context dependent.
     type: integer
+    example: 456568
 additionalProperties: true
 example:
   currency: XTS
