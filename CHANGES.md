@@ -2,6 +2,16 @@
 
 ## 7
 
+### 7.2
+
+#### 7.2.0
+
+- add `money/CurrencyCode` and `money/MonetaryValue`
+  - this includes a first experiment with consistent TS typing
+- `money/MoneyAmount.yaml` is now deprecated
+- `addExamples` typing is tweaked
+- add filter `notInteger`
+
 ### 7.1
 
 #### 7.1.0
