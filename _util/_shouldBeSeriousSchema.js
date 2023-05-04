@@ -18,6 +18,7 @@
 
 const { isSchema } = require('joi')
 const should = require('should')
+const { mochaInIntelliJ } = require('./mochaInIntelliJ')
 
 /**
  * @param {Joi.Schema} schema
@@ -75,8 +76,11 @@ function shouldBeSeriousSchema(schema, failures, unknownNotAllowed = false, cont
   describe('failures', function () {
     failures.forEach((f, i) => {
       it(`${i}: fails for ${JSON.stringify(f)}`, function () {
-        const validation = schema.validate(f, { convert: false, context })
-        should(validation.error).be.ok()
+        const { error } = schema.validate(f, { convert: false, context })
+        should(error).be.ok()
+        if (mochaInIntelliJ()) {
+          console.log(`😀⚡️ ${error.message}`)
+        }
       })
     })
   })
