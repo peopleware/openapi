@@ -4,6 +4,10 @@
 
 ### 7.2
 
+#### 7.2.1
+
+- fix `monetaryValueExamples` type
+
 #### 7.2.0
 
 - add `money/CurrencyCode` and `money/MonetaryValue`

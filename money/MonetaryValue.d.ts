@@ -23,6 +23,6 @@ export interface TMonetaryValue {
   amount: number
 }
 
-export type monetaryValueExamples = Array<TMonetaryValue>
+export const monetaryValueExamples: Array<TMonetaryValue>
 
 export const MonetaryValue: ObjectSchema<TMonetaryValue>
