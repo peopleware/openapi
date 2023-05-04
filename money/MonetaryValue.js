@@ -21,6 +21,7 @@ const addExamples = require('../_util/addExamples')
 const monetaryValueExamples = [
   { currency: currencyCodes[0], decimals: 4, amount: 7475005 },
   { currency: 'EUR', decimals: 2, amount: -84884 },
+  { currency: 'USD', decimals: 4, amount: 0 },
   { currency: 'KRW', decimals: 0, amount: 84884 },
   { currency: 'XAU', decimals: -8, amount: 884 }
 ]

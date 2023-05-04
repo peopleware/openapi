@@ -20,30 +20,40 @@
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
 const { stuff, stuffWithUndefined } = require('../../_util/_stuff')
-const { MonetaryValue, monetaryValueExamples } = require('../../money/MonetaryValue')
 const { notInteger } = require('../../_util/filters')
+const { NegativeMonetaryValue, negativeMonetaryValueExamples } = require('../../money/NegativeMonetaryValue')
 
 describe(testName(module), function () {
   shouldBeSeriousSchema(
-    MonetaryValue,
+    NegativeMonetaryValue,
     stuff
       .concat(
         stuffWithUndefined.map(currency => ({
-          ...monetaryValueExamples[0],
+          ...negativeMonetaryValueExamples[0],
           currency
         }))
       )
       .concat(
         stuffWithUndefined.filter(notInteger).map(decimals => ({
-          ...monetaryValueExamples[0],
+          ...negativeMonetaryValueExamples[0],
           decimals
         }))
       )
       .concat(
         stuffWithUndefined.filter(notInteger).map(amount => ({
-          ...monetaryValueExamples[0],
+          ...negativeMonetaryValueExamples[0],
           amount
         }))
       )
+      .concat([
+        {
+          ...negativeMonetaryValueExamples[0],
+          amount: 0
+        },
+        {
+          ...negativeMonetaryValueExamples[0],
+          amount: 4
+        }
+      ])
   )
 })

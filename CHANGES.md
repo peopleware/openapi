@@ -2,6 +2,16 @@
 
 ## 7
 
+### 7.3
+
+#### 7.3.0
+
+- add
+  - `money/NegativeMonetaryValue`
+  - `money/NonPositiveMonetaryValue`
+  - `money/NonNegativeMonetaryValue`
+  - `money/PositiveMonetaryValue`
+
 ### 7.2
 
 #### 7.2.1

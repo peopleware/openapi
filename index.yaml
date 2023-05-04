@@ -17,7 +17,7 @@ info:
   title: ppwcode openapi demonstration
   description: >-
     Collection of common OpenAPI 3 specs
-  version: 7.2.1
+  version: 7.3.0
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
@@ -516,6 +516,14 @@ components:
                   $ref: 'money/CurrencyCode.yaml'
                 monetaryValue:
                   $ref: 'money/MonetaryValue.yaml'
+                negativeMonetaryValue:
+                  $ref: 'money/NegativeMonetaryValue.yaml'
+                nonPositiveMonetaryValue:
+                  $ref: 'money/NonPositiveMonetaryValue.yaml'
+                nonNegativeMonetaryValue:
+                  $ref: 'money/NonNegativeMonetaryValue.yaml'
+                positiveMonetaryValue:
+                  $ref: 'money/PositiveMonetaryValue.yaml'
                 baseMoneyAmount:
                   $ref: 'money/BaseMoneyAmount.yaml'
                 moneyAmount:
