@@ -89,6 +89,7 @@
     "pretest": "npm-check -i \"\"; npm outdated || exit 0",
     "test": "npm run OpenAPI:lint && npm run schematatests",
     "preversion": "npm test",
+    "version": "replace-in-file \"/  version: (.*)/\" \"  version: $npm_package_version\" index.yaml --isRegex && git add index.yaml",
     "prepack": "npm test"
   },
   "watch": {
