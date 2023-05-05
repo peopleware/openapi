@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 – 2021 PeopleWare
+ * Copyright 2021 – 2023 PeopleWare
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,15 @@
  *
  */
 
-import * as Joi from 'joi';
+import * as Joi from 'joi'
 
-export declare type DateTime = string;
+export type TDateTime = string
 
-export declare const DateTime: Joi.StringSchema;
+/**
+ * @deprecated use TDateTime
+ */
+export type DateTime = TDateTime
 
-export declare const dateTimeExamples: Array<DateTime>;
+export const DateTime: Joi.StringSchema<TDateTime>
+
+export const dateTimeExamples: Array<TDateTime>

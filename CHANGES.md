@@ -4,6 +4,15 @@
 
 ### 7.3
 
+#### 7.3.1
+
+- add TS types `TDateTime` and `TDayDate`, and tweak the TS type of its schemata
+  - deprecate TS types `DateTime` and `DayDate`
+
+Declaring TS types in `.d.ts` files with the same name as the Joi schema for the type should work, but seems to confuse
+the IDE when working in JS. For that reason, in the future, we will prepend a `'T'` to the name of the type. Ugly, I
+know. Waiting for better solutions.
+
 #### 7.3.0
 
 - add

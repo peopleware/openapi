@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 – 2021 PeopleWare
+ * Copyright 2021 – 2023 PeopleWare
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,15 @@
  *
  */
 
-import * as Joi from 'joi';
+import * as Joi from 'joi'
 
-export declare type DayDate = string;
+export type TDayDate = string
 
-export declare const DayDate: Joi.StringSchema;
+/**
+ * @deprecated use TDayDate
+ */
+export type DayDate = TDayDate
 
-export declare const dayDateExamples: Array<DayDate>;
+export const DayDate: Joi.StringSchema<TDayDate>
+
+export const dayDateExamples: Array<TDayDate>
