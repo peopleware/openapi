@@ -4,6 +4,11 @@
 
 ### 7.3
 
+#### 7.3.2
+
+- add npm `version` script, that automatically changes the version in `index.yaml`, so it stays in sync with the npm
+  version
+
 #### 7.3.1
 
 - add `.d.ts` for DayDateInterval
