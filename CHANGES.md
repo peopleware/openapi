@@ -4,6 +4,10 @@
 
 ### 7.3
 
+#### 7.3.3
+
+- add better TS typing for `extendDescription`
+
 #### 7.3.2
 
 - add npm `version` script, that automatically changes the version in `index.yaml`, so it stays in sync with the npm

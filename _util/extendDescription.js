@@ -22,10 +22,6 @@
  *
  * This is not supported in browser environments. There, the description of `schema` is replaced with
  * `extraDescription`.
- *
- * @param {Joi.Schema} schema
- * @param {string} extraDescription
- * @param {boolean} [addAddEnd]
  */
 function extendDescription(schema, extraDescription, addAddEnd) {
   try {
