@@ -6,6 +6,7 @@
 
 #### 7.3.1
 
+- add `.d.ts` for DayDateInterval
 - add TS types `TDateTime` and `TDayDate`, and tweak the TS type of its schemata
   - deprecate TS types `DateTime` and `DayDate`
 
