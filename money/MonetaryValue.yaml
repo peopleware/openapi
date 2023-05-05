@@ -266,7 +266,7 @@ properties:
   amount:
     description: >-
       The represented amount of money, multiplied by 10<sup>decimals</sup>. This can be positive, negative, or 0. The
-      intepretation of the sign is context dependent.
+      interpretation of the sign is context dependent.
     type: integer
     example: 456568
 additionalProperties: true

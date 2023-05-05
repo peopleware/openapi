@@ -47,7 +47,7 @@ the decimal point to the left. A negative number means adding zeros at the end.`
       .example(-456568)
       .description(
         `The represented amount of money, multiplied by 10<sup>decimals</sup>. This can be positive, negative, or
-0. The intepretation of the sign is context dependent.`
+0. The interpretation of the sign is context dependent.`
       )
   }),
   monetaryValueExamples
