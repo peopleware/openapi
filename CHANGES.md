@@ -2,6 +2,15 @@
 
 ## 7
 
+### 7.4
+
+#### 7.4.0
+
+- add
+  - `time/Month`
+  - `time/Quarter`
+  - `time/Year`
+
 ### 7.3
 
 #### 7.3.3
