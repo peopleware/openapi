@@ -22,7 +22,13 @@ const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
 const { DayDate } = require('../../time/DayDate')
 const { stuff } = require('../../_util/_stuff')
 const { dateTimeExamples } = require('../../time/DateTime')
+const { monthExamples } = require('../../time/Month')
+const { quarterExamples } = require('../../time/Quarter')
+const { yearExamples } = require('../../time/Year')
 
 describe(testName(module), function () {
-  shouldBeSeriousSchema(DayDate, stuff.concat(dateTimeExamples))
+  shouldBeSeriousSchema(
+    DayDate,
+    stuff.concat(dateTimeExamples).concat(monthExamples).concat(quarterExamples).concat(yearExamples)
+  )
 })

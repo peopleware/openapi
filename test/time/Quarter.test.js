@@ -19,16 +19,16 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
-const { Month } = require('../../time/Month')
+const { monthExamples } = require('../../time/Month')
 const { stuff } = require('../../_util/_stuff')
 const { dateTimeExamples } = require('../../time/DateTime')
 const { dayDateExamples } = require('../../time/DayDate')
-const { quarterExamples } = require('../../time/Quarter')
+const { Quarter } = require('../../time/Quarter')
 const { yearExamples } = require('../../time/Year')
 
 describe(testName(module), function () {
   shouldBeSeriousSchema(
-    Month,
-    stuff.concat(dateTimeExamples).concat(dayDateExamples).concat(quarterExamples).concat(yearExamples)
+    Quarter,
+    stuff.concat(dateTimeExamples).concat(dayDateExamples).concat(monthExamples).concat(yearExamples)
   )
 })

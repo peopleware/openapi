@@ -555,6 +555,12 @@ components:
                   $ref: 'time/ChangeDateTime.yaml'
                 dayDate:
                   $ref: 'time/DayDate.yaml'
+                month:
+                  $ref: 'time/Month.yaml'
+                quarter:
+                  $ref: 'time/Quarter.yaml'
+                year:
+                  $ref: 'time/Year.yaml'
                 dayDateInterval:
                   $ref: 'time/DayDateInterval.yaml'
             readOnly:
