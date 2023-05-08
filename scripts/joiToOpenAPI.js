@@ -74,7 +74,10 @@ async function exec() {
     transformSchemataIn(join(__dirname, '..', 'money', 'NegativeMonetaryValue')),
     transformSchemataIn(join(__dirname, '..', 'money', 'NonPositiveMonetaryValue')),
     transformSchemataIn(join(__dirname, '..', 'money', 'NonNegativeMonetaryValue')),
-    transformSchemataIn(join(__dirname, '..', 'money', 'PositiveMonetaryValue'))
+    transformSchemataIn(join(__dirname, '..', 'money', 'PositiveMonetaryValue')),
+    transformSchemataIn(join(__dirname, '..', 'time', 'DateTime')),
+    transformSchemataIn(join(__dirname, '..', 'time', 'DayDate')),
+    transformSchemataIn(join(__dirname, '..', 'time', 'DayDateInterval')),
   ])
 }
 

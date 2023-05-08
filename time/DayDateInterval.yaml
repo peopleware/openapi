@@ -1,25 +1,19 @@
-# Copyright 2020 - 2021 PeopleWare n.v.
+# Copyright 2021 - 2023 PeopleWare n.v.
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
+# Licensed under the Apache License, Version 2.0 (the “License”);
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
 #     http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
+# distributed under the License is distributed on an “AS IS” BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-type: object
 required:
   - start
-properties:
-  start:
-    $ref: 'DayDate.yaml'
-  end:
-    $ref: 'DayDate.yaml'
 description: >-
   Half-right-open time interval `[start, end[` of day dates. `start ≤ end`. If there is no `end`, this means the
   interval stretches until the heath death of the universe. Usually this means that interval is believed to be still
@@ -33,10 +27,35 @@ description: >-
 
   This is a fuzzy description of a time interval, given timezones. This is stored, communicated, and visualized as-is,
   and interpreted locally.
+type: object
+properties:
+  start:
+    pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|30|31)$
+    description: >-
+      A day in the history of the world.
+
+
+      This is a fuzzy description of a time interval, given timezones. This is stored, communicated, and visualized
+      as-is, and interpreted locally.
+
+
+      Uses the ISO-8601 representation.
+    type: string
+    example: '2020-01-23'
+  end:
+    pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2]\d|30|31)$
+    description: >-
+      A day in the history of the world.
+
+
+      This is a fuzzy description of a time interval, given timezones. This is stored, communicated, and visualized
+      as-is, and interpreted locally.
+
+
+      Uses the ISO-8601 representation.
+    type: string
+    example: '2020-01-23'
+additionalProperties: false
 example:
-  # NOTE multiple examples do not pass linting for some reason - this seems to be a subject of OpenAPI 3.1
-  #  openEnded:
-  #    start: '2012-09-13'
-  #  closed:
   start: '1996-12-21'
   end: '2011-08-23'
