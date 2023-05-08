@@ -78,6 +78,7 @@ async function exec() {
     transformSchemataIn(join(__dirname, '..', 'time', 'DateTime')),
     transformSchemataIn(join(__dirname, '..', 'time', 'DayDate')),
     transformSchemataIn(join(__dirname, '..', 'time', 'DayDateInterval')),
+    transformSchemataIn(join(__dirname, '..', 'time', 'Month'))
   ])
 }
 
