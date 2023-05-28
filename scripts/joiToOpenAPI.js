@@ -64,24 +64,24 @@ async function exec() {
   const tree = dirTree(basePath, { extensions: /\.js/ })
   return Promise.all([
     transformNodeRecursively(tree),
-    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchResultBase')),
-    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocument')),
-    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchResults')),
-    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocumentContentBase2')),
-    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocument2')),
     transformSchemataIn(join(__dirname, '..', 'money', 'CurrencyCode')),
     transformSchemataIn(join(__dirname, '..', 'money', 'MonetaryValue')),
     transformSchemataIn(join(__dirname, '..', 'money', 'NegativeMonetaryValue')),
     transformSchemataIn(join(__dirname, '..', 'money', 'NonPositiveMonetaryValue')),
     transformSchemataIn(join(__dirname, '..', 'money', 'NonNegativeMonetaryValue')),
     transformSchemataIn(join(__dirname, '..', 'money', 'PositiveMonetaryValue')),
+    transformSchemataIn(join(__dirname, '..', 'number', 'Decimal')),
+    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchResultBase')),
+    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocument')),
+    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchResults')),
+    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocumentContentBase2')),
+    transformSchemataIn(join(__dirname, '..', 'resource', 'SearchDocument2')),
     transformSchemataIn(join(__dirname, '..', 'time', 'DateTime')),
     transformSchemataIn(join(__dirname, '..', 'time', 'DayDate')),
     transformSchemataIn(join(__dirname, '..', 'time', 'DayDateInterval')),
     transformSchemataIn(join(__dirname, '..', 'time', 'Month')),
     transformSchemataIn(join(__dirname, '..', 'time', 'Quarter')),
-    transformSchemataIn(join(__dirname, '..', 'time', 'Year')),
-    transformSchemataIn(join(__dirname, '..', 'number', 'Decimal'))
+    transformSchemataIn(join(__dirname, '..', 'time', 'Year'))
   ])
 }
 
