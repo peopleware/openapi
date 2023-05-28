@@ -26,12 +26,30 @@ const license = `# Copyright 2021 - 2023 PeopleWare n.v.
 
 `
 
+/**
+ * Return the contents of the file at `path`, if it exists. Return `undefined` if that file does not exist.
+ *
+ * @param {string} path
+ * @return {Promise<string>}
+ */
+async function readExistingData(path) {
+  try {
+    return await readFile(path, { encoding: 'utf-8' })
+  } catch (exc) {
+    if (exc.code === 'ENOENT') {
+      return undefined
+    }
+    throw exc
+  }
+}
+
 async function writeFileIfDifferent(path, data) {
-  const existingData = await readFile(path, { encoding: 'utf-8' })
+  const existingData = await readExistingData(path)
   if (existingData === data) {
     return
   }
 
+  console.info(`〽️ ${path}`)
   return writeFile(path, data)
 }
 
