@@ -546,6 +546,11 @@ components:
                   $ref: 'string/TrimmedString.yaml'
                 cleanedString:
                   $ref: 'string/CleanedString.yaml'
+            number:
+              type: object
+              properties:
+                decimal:
+                  $ref: 'number/Decimal.yaml'
             time:
               type: object
               properties:

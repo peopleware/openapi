@@ -9,6 +9,7 @@
 - add `.d.ts` for all string Joi
 - add d.ts for `shouldBeSeriousSchema`
 - deprecate TS types `TrimmedString`, `CleanedString`, and `Language`; replace with `T…` variant
+- add `Decimal`
 
 ### 7.4
 

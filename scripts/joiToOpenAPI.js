@@ -80,7 +80,8 @@ async function exec() {
     transformSchemataIn(join(__dirname, '..', 'time', 'DayDateInterval')),
     transformSchemataIn(join(__dirname, '..', 'time', 'Month')),
     transformSchemataIn(join(__dirname, '..', 'time', 'Quarter')),
-    transformSchemataIn(join(__dirname, '..', 'time', 'Year'))
+    transformSchemataIn(join(__dirname, '..', 'time', 'Year')),
+    transformSchemataIn(join(__dirname, '..', 'number', 'Decimal'))
   ])
 }
 
