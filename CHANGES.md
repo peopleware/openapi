@@ -2,7 +2,12 @@
 
 ## 7
 
-- add `.d.ts` for all string Joi schemata
+### 7.5
+
+#### 7.5.0
+
+- add `.d.ts` for all string Joi
+- add d.ts for `shouldBeSeriousSchema`
 - deprecate TS types `TrimmedString`, `CleanedString`, and `Language`; replace with `T…` variant
 
 ### 7.4
