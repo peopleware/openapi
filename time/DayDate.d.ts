@@ -20,7 +20,7 @@ import * as Joi from 'joi'
 export type TDayDate = string
 
 /**
- * @deprecated use TDayDate
+ * @deprecated Use TDayDate as type. This type definition conflicts with the Joi schema in WebStorm.
  */
 export type DayDate = TDayDate
 
