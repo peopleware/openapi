@@ -11,6 +11,7 @@
 - deprecate TS types `TrimmedString`, `CleanedString`, and `Language`; replace with `T…` variant
 - add `Decimal`
 - add YAML files for all `string` types
+- add `CreatedInError` resource schema
 
 ### 7.4
 
