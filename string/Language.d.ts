@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 – 2021 PeopleWare
+ * Copyright 2022 – 2021 PeopleWare
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,15 @@
  *
  */
 
-import * as Joi from 'joi';
+import { StringSchema } from 'joi'
 
-export declare type Language = string;
+export declare type TLanguage = string
 
-export declare const Language: Joi.StringSchema;
+/**
+ * @deprecated Use TLanguage as type. This type definition conflicts with the Joi schema in WebStorm.
+ */
+export type Language = TLanguage
 
-export declare const languageExamples: Array<Language>;
+export const Language: StringSchema<TLanguage>
+
+export const languageExamples: Array<TLanguage>

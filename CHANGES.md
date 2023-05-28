@@ -2,6 +2,9 @@
 
 ## 7
 
+- add `.d.ts` for all string Joi schemata
+- deprecate TS types `TrimmedString`, `CleanedString`, and `Language`; replace with `T…` variant
+
 ### 7.4
 
 #### 7.4.0

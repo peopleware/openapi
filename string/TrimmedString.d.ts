@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 – 2021 PeopleWare
+ * Copyright 2022 – 2023 PeopleWare
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,15 @@
  *
  */
 
-import * as Joi from 'joi';
+import { StringSchema } from 'joi'
 
-export declare type TrimmedString = string;
+export type TTrimmedString = string
 
-export declare const TrimmedString: Joi.StringSchema;
+/**
+ * @deprecated Use TTrimmedString as type. This type definition conflicts with the Joi schema in WebStorm.
+ */
+export type TrimmedString = TTrimmedString
 
-export declare const trimmedStringExamples: Array<string>;
+export const TrimmedString: StringSchema<TTrimmedString>
+
+export const trimmedStringExamples: Array<TTrimmedString>

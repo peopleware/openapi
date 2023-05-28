@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 – 2023 PeopleWare
+ * Copyright 2023 – 2023 PeopleWare
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,8 @@
 
 import { StringSchema } from 'joi'
 
-export type TCleanedString = string
+export type TCanonicalURI = string
 
-/**
- * @deprecated Use TCleanedString as type. This type definition conflicts with the Joi schema in WebStorm.
- */
-export type CleanedString = TCleanedString
+export const CanonicalURI: StringSchema<TCanonicalURI>
 
-export const CleanedString: StringSchema<TCleanedString>
-
-export const CleanedStringExamples: Array<TCleanedString>
+export const canonicalURIExamples: Array<TCanonicalURI>
