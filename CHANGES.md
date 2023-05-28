@@ -10,6 +10,7 @@
 - add d.ts for `shouldBeSeriousSchema`
 - deprecate TS types `TrimmedString`, `CleanedString`, and `Language`; replace with `T…` variant
 - add `Decimal`
+- add YAML files for all `string` types
 
 ### 7.4
 

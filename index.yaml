@@ -538,14 +538,20 @@ components:
             string:
               type: object
               properties:
+                canonicalURI:
+                  $ref: 'string/CanonicalURI.yaml'
+                canonicalURIWithKnowledgeTime:
+                  $ref: 'string/CanonicalURIWithKnowledgeTime.yaml'
+                cleanedString:
+                  $ref: 'string/CleanedString.yaml'
                 language:
                   $ref: 'string/Language.yaml'
+                relativeURI:
+                  $ref: 'string/RelativeURI.yaml'
                 telephoneNumber:
                   $ref: 'string/TelephoneNumber.yaml'
                 trimmedString:
                   $ref: 'string/TrimmedString.yaml'
-                cleanedString:
-                  $ref: 'string/CleanedString.yaml'
             number:
               type: object
               properties:
