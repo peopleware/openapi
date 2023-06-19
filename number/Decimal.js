@@ -77,7 +77,7 @@ The largest \`value\` that can be represented is
 \`Number.MIN_SAFE_INTEGER\` = -9&nbsp;007&nbsp;199&nbsp;254&nbsp;740&nbsp;991 (~&nbsp;±9∙10<sup>15</sup>). With 4
 decimals, this could represent 900&nbsp;719&nbsp;925&nbsp;474,0991 ~ 900&nbsp;billion.
 
-Note that, for addition, all terms must be converted to a representation with the largest \`decimal\` value of all
+Note that, for addition, all terms must be converted to a representation with the smallest \`decimal\` value of all
 terms:
 
 <pre>
@@ -86,11 +86,11 @@ terms:
 
     {"decimals": 2, "value": 89418456}
 
-= {"decimals": 4, "value": 88584439} +
+= {"decimals": 2, "value": 885844} +
 
-    {"decimals": 4, "value": 8941845600}
+    {"decimals": 2, "value": 89418456}
 
-= {"decimals": 4, "value": 9030430039}
+= {"decimals": 2, "value": 90304300}
 
 </pre>`
   )
