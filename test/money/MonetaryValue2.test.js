@@ -20,7 +20,7 @@
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
 const { stuff, stuffWithUndefined } = require('../../_util/_stuff')
-const { MonetaryValue2, monetaryValue2Examples } = require('../../money/MonetaryValue2')
+const { MonetaryValue2, monetaryValue2Examples, monetaryValue2ToString} = require('../../money/MonetaryValue2')
 const { notInteger } = require('../../_util/filters')
 
 describe(testName(module), function () {
@@ -46,4 +46,24 @@ describe(testName(module), function () {
         }))
       )
   )
+
+  const moneyCases = [
+    { subject: { currency: "EUR", decimals: 4, value: 7475005 }, expected: 'EUR 747,500 5' },
+    { subject: { currency: "EUR", decimals: 2, value: -84884 }, expected: 'EUR -848,84' },
+    { subject: { currency: "EUR", decimals: 4, value: 0 }, expected: 'EUR 0,000 0' },
+    { subject: { currency: "EUR", decimals: 0, value: 84884 }, expected: 'EUR 84 884' },
+    { subject: { currency: "EUR", decimals: -8, value: 884 }, expected: 'EUR 88 400 000 000' },
+    { subject: { currency: "EUR", decimals: 4, value: -1 }, expected: 'EUR -0,000 1' },
+    { subject: { currency: "EUR", decimals: -4, value: 0 }, expected: 'EUR 0' }
+  ]
+
+  describe('monetaryValue2ToString', function () {
+    moneyCases.forEach(c => {
+      it(`works for ${JSON.stringify(c.subject)}`, function () {
+        const result = monetaryValue2ToString(c.subject)
+        result.should.be.a.String()
+        result.should.equal(c.expected)
+      })
+    })
+  })
 })

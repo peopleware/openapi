@@ -17,7 +17,7 @@
 const Joi = require('joi')
 const { CurrencyCode, currencyCodes } = require('./CurrencyCode')
 const addExamples = require('../_util/addExamples')
-const {Decimal} = require("../number/Decimal");
+const {Decimal, decimalToString} = require("../number/Decimal");
 
 const monetaryValue2Examples = [
   { currency: currencyCodes[0], decimals: 4, value: 7475005 },
@@ -59,4 +59,10 @@ terms:
 </pre>`
   )
 
-module.exports = { monetaryValue2Examples, MonetaryValue2 }
+
+function monetaryValue2ToString({ currency, decimals, value }) {
+  return `${currency} ${decimalToString({decimals, value})}`
+}
+
+
+module.exports = { monetaryValue2Examples, MonetaryValue2, monetaryValue2ToString }
