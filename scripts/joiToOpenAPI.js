@@ -104,6 +104,7 @@ async function exec() {
     transformSchemataIn(join(__dirname, '..', 'money', 'NonPositiveMonetaryValue')),
     transformSchemataIn(join(__dirname, '..', 'money', 'NonNegativeMonetaryValue')),
     transformSchemataIn(join(__dirname, '..', 'money', 'PositiveMonetaryValue')),
+    transformSchemataIn(join(__dirname, '..', 'money', 'MonetaryValue2')),
     transformSchemataIn(join(__dirname, '..', 'number', 'Decimal')),
     transformSchemataIn(join(__dirname, '..', 'resource', 'CreatedInError')),
     transformSchemataIn(join(__dirname, '..', 'resource', 'SearchResultBase')),

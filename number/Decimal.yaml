@@ -43,7 +43,7 @@ description: >-
   900&nbsp;719&nbsp;925&nbsp;474,0991 ~ 900&nbsp;billion.
 
 
-  Note that, for addition, all terms must be converted to a representation with the largest `decimal` value of all
+  Note that, for addition, all terms must be converted to a representation with the smallest `decimal` value of all
   terms:
 
 
@@ -54,11 +54,11 @@ description: >-
 
       {"decimals": 2, "value": 89418456}
 
-  = {"decimals": 4, "value": 88584439} +
+  = {"decimals": 2, "value": 885844} +
 
-      {"decimals": 4, "value": 8941845600}
+      {"decimals": 2, "value": 89418456}
 
-  = {"decimals": 4, "value": 9030430039}
+  = {"decimals": 2, "value": 90304300}
 
 
   </pre>

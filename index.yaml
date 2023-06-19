@@ -528,6 +528,8 @@ components:
                   $ref: 'money/BaseMoneyAmount.yaml'
                 moneyAmount:
                   $ref: 'money/MoneyAmount.yaml#/schema'
+                monetaryValue2:
+                  $ref: 'money/MonetaryValue2.yaml'
             oauth2:
               type: object
               properties:
