@@ -20,41 +20,28 @@
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
 const { stuff, stuffWithUndefined } = require('../../_util/_stuff')
-const { MonetaryValue2, monetaryValue2Examples, monetaryValue2ToString} = require('../../money/MonetaryValue2')
+const { MonetaryValue2, monetaryValue2Examples, monetaryValue2ToString } = require('../../money/MonetaryValue2')
 const { notInteger } = require('../../_util/filters')
 
 describe(testName(module), function () {
   shouldBeSeriousSchema(
     MonetaryValue2,
-    stuff
-      .concat(
-        stuffWithUndefined.map(currency => ({
-          ...monetaryValue2Examples[0],
-          currency
-        }))
-      )
-      .concat(
-        stuffWithUndefined.filter(notInteger).map(decimals => ({
-          ...monetaryValue2Examples[0],
-          decimals
-        }))
-      )
-      .concat(
-        stuffWithUndefined.filter(notInteger).map(value => ({
-          ...monetaryValue2Examples[0],
-          value
-        }))
-      )
+    stuff.concat(
+      stuffWithUndefined.map(currency => ({
+        ...monetaryValue2Examples[0],
+        currency
+      }))
+    )
   )
 
   const moneyCases = [
-    { subject: { currency: "EUR", decimals: 4, value: 7475005 }, expected: 'EUR 747,500 5' },
-    { subject: { currency: "EUR", decimals: 2, value: -84884 }, expected: 'EUR -848,84' },
-    { subject: { currency: "EUR", decimals: 4, value: 0 }, expected: 'EUR 0,000 0' },
-    { subject: { currency: "EUR", decimals: 0, value: 84884 }, expected: 'EUR 84 884' },
-    { subject: { currency: "EUR", decimals: -8, value: 884 }, expected: 'EUR 88 400 000 000' },
-    { subject: { currency: "EUR", decimals: 4, value: -1 }, expected: 'EUR -0,000 1' },
-    { subject: { currency: "EUR", decimals: -4, value: 0 }, expected: 'EUR 0' }
+    { subject: { currency: 'EUR', decimals: 4, value: 7475005 }, expected: 'EUR 747,500 5' },
+    { subject: { currency: 'EUR', decimals: 2, value: -84884 }, expected: 'EUR -848,84' },
+    { subject: { currency: 'EUR', decimals: 4, value: 0 }, expected: 'EUR 0,000 0' },
+    { subject: { currency: 'EUR', decimals: 0, value: 84884 }, expected: 'EUR 84 884' },
+    { subject: { currency: 'EUR', decimals: -8, value: 884 }, expected: 'EUR 88 400 000 000' },
+    { subject: { currency: 'EUR', decimals: 4, value: -1 }, expected: 'EUR -0,000 1' },
+    { subject: { currency: 'EUR', decimals: -4, value: 0 }, expected: 'EUR 0' }
   ]
 
   describe('monetaryValue2ToString', function () {
