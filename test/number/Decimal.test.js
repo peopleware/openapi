@@ -53,7 +53,10 @@ describe(testName(module), function () {
     { decimals: 2, min: -100, max: 0 },
     { decimals: -2, min: -900, max: 100 },
     { decimals: -4, min: 0, max: 20000 },
-    { decimals: -2, min: -100, max: 0 }
+    { decimals: -2, min: -100, max: 0 },
+    { decimals: 4, min: -3 },
+    { decimals: 2, max: 4 },
+    { decimals: 2 }
   ]
 
   describe('constrainedDecimal', function () {
