@@ -17,7 +17,8 @@
 const Joi = require('joi')
 const { CurrencyCode, currencyCodes } = require('./CurrencyCode')
 const addExamples = require('../_util/addExamples')
-const {Decimal, decimalToString} = require("../number/Decimal");
+const { Decimal, decimalToString } = require('../number/Decimal')
+const { extendDescription } = require('../_util/extendDescription')
 
 const monetaryValue2Examples = [
   { currency: currencyCodes[0], decimals: 4, value: 7475005 },
@@ -28,41 +29,19 @@ const monetaryValue2Examples = [
 ]
 
 const MonetaryValue2 = addExamples(
-  Decimal.append({
-    currency: CurrencyCode.required()
-  }),
+  extendDescription(
+    Decimal.append({
+      currency: CurrencyCode.required()
+    }),
+    `Representation of an amount of money, in the given \`currency\`, with the given \`decimals\`.
+
+E.g., \`{"currency": "EUR", "decimals": 4, "value": 88584439}\` represents €&nbsp;8&nbsp;858,443&nbsp;9.`
+  ),
   monetaryValue2Examples
 )
-  .unknown(true)
-  .description(
-    `Representation of an \`amount\` of money, in the given \`currency\`, with the given \`decimals\`.
-
-The \`amount\` of money is always expressed as an integer. The monetary value it represents is
-<code>value.10<sup>&#8239;‑decimals</sup></code> of the given \`currency\`. E.g.,
-\`{"currency": "EUR", "decimals": 4, "value": 88584439}\` represents €&nbsp;8&nbsp;858,4439.
-
-Note that, for addition, all terms must be converted to a representation with the smallest \`decimal\` value of all
-terms:
-
-<pre>
-
-{"currency": "EUR", "decimals": 4, "value": 88584439} +
-
-    {"currency": "EUR", "decimals": 2, "value": 89418456}
-
-= {"currency": "EUR", "decimals": 2, "value": 885844} +
-
-    {"currency": "EUR", "decimals": 2, "value": 89418456}
-
-= {"currency": "EUR", "decimals": 2, "value": 90304300}
-
-</pre>`
-  )
-
 
 function monetaryValue2ToString({ currency, decimals, value }) {
-  return `${currency} ${decimalToString({decimals, value})}`
+  return `${currency} ${decimalToString({ decimals, value })}`
 }
-
 
 module.exports = { monetaryValue2Examples, MonetaryValue2, monetaryValue2ToString }
