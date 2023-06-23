@@ -18,7 +18,7 @@ import { ObjectSchema } from 'joi'
 
 export interface TDecimal {
   decimals: number
-  amount: number
+  value: number
 }
 
 export const decimalExamples: Array<TDecimal>
@@ -27,9 +27,9 @@ export const Decimal: ObjectSchema<TDecimal>
 
 export function decimalToString(decimal: TDecimal): string
 
-export function constrained(
+export function constrainedDecimal(
   DecimalSchema: ObjectSchema<TDecimal>,
   decimals: number,
-  min: number,
-  max: number
+  min: number | undefined,
+  max: number | undefined
 ): ObjectSchema<TDecimal>
