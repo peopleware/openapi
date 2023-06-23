@@ -139,7 +139,7 @@ function decimalToString({ decimals, value }) {
  * * `min < max`
  */
 function constrainedDecimal(DecimalSchema, decimals, min, max) {
-  assert(min < max)
+  assert(min === undefined || max === undefined || min < max)
   const decimalsSchema = Decimal.extract('decimals')
     .valid(decimals)
     .example(decimals, { override: true })
