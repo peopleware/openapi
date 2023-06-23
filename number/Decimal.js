@@ -144,11 +144,13 @@ function constrainedDecimal(DecimalSchema, decimals, min, max) {
     .valid(decimals)
     .example(decimals, { override: true })
     .description(`The number of decimal places with which \`value\` must be interpreted. Must equal ${decimals}.`)
-  const valueExamples = [Math.round((max + min) / 3), Math.round((max + min) / 2), min, max]
+  const trueMin = min ?? Number.MIN_SAFE_INTEGER
+  const trueMax = max ?? Number.MAX_SAFE_INTEGER
+  const valueExamples = [Math.round((trueMin + trueMax) / 3), Math.round((trueMin + trueMax) / 2), trueMin, trueMax]
   const valueSchema = addExamples(
     Decimal.extract('value')
-      .min(min)
-      .max(max)
+      .min(trueMin)
+      .max(trueMax)
       .description(
         `The represented decimal number, multiplied by 10<sup>decimals</sup>. Must be in the interval [${min}; ${max}],`
       ),
@@ -159,7 +161,7 @@ function constrainedDecimal(DecimalSchema, decimals, min, max) {
     extendDescription(
       DecimalSchema.append({ decimals: decimalsSchema, value: valueSchema }),
       `The value has ${decimals} decimals, and must be in the interval
-    [${decimalToString({ value: min, decimals })}; ${decimalToString({ value: max, decimals })}]`
+    [${decimalToString({ value: trueMin, decimals })}; ${decimalToString({ value: trueMax, decimals })}]`
     ),
     adaptedExamples
   )
