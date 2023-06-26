@@ -62,6 +62,15 @@ function shouldBeSeriousSchema(schema, failures, unknownNotAllowed = false, cont
       should(description.examples).be.an.Array()
       description.examples.length.should.be.greaterThanOrEqual(1)
     })
+    it('should not have duplicate examples', function () {
+      const description = schema.describe()
+      const examples = description.examples
+      for (let i = 0; i < examples.length; i++) {
+        const without = examples.slice()
+        const eg = without.splice(i, 1)
+        without.should.not.containEql(eg)
+      }
+    })
     if (schema.describe().examples) {
       schema.describe().examples.forEach((ex, index) => {
         it(`${index}: example ${JSON.stringify(ex)} passes the schema`, function () {
