@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-const Joi = require('joi')
 const { CurrencyCode, currencyCodes } = require('./CurrencyCode')
 const addExamples = require('../_util/addExamples')
-const { Decimal, decimalToString } = require('../number/Decimal')
+const { Decimal, decimalToString, decimalEqual } = require('../number/Decimal')
 const { extendDescription } = require('../_util/extendDescription')
 
 const monetaryValue2Examples = [
@@ -44,4 +43,10 @@ function monetaryValue2ToString({ currency, decimals, value }) {
   return `${currency} ${decimalToString({ decimals, value })}`
 }
 
-module.exports = { monetaryValue2Examples, MonetaryValue2, monetaryValue2ToString }
+function monetaryValueEqual(m1, m2) {
+  return decimalEqual(m1, m2) && m1.currency === m2.currency
+}
+
+function constrainedMonetaryValue2(MonetaryValue2Schema, currency, decimals) {}
+
+module.exports = { monetaryValue2Examples, MonetaryValue2, monetaryValue2ToString, monetaryValueEqual }

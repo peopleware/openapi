@@ -20,8 +20,12 @@
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
 const { stuff, stuffWithUndefined } = require('../../_util/_stuff')
-const { MonetaryValue2, monetaryValue2Examples, monetaryValue2ToString } = require('../../money/MonetaryValue2')
-const { notInteger } = require('../../_util/filters')
+const {
+  MonetaryValue2,
+  monetaryValue2Examples,
+  monetaryValue2ToString,
+  monetaryValueEqual
+} = require('../../money/MonetaryValue2')
 
 describe(testName(module), function () {
   shouldBeSeriousSchema(
@@ -52,5 +56,17 @@ describe(testName(module), function () {
         result.should.equal(c.expected)
       })
     })
+  })
+
+  describe('monetaryValueEqual', function () {
+    monetaryValue2Examples.forEach(m1 =>
+      monetaryValue2Examples.forEach(m2 => {
+        const expected = m1.decimals === m2.decimals && m1.value === m2.value && m1.currency === m2.currency
+        it(`return ${expected} for ${monetaryValue2ToString(m1)} = ${monetaryValue2ToString(m2)}`, function () {
+          const result = monetaryValueEqual(m1, m2)
+          result.should.equal(expected)
+        })
+      })
+    )
   })
 })

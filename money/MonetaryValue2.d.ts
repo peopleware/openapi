@@ -15,8 +15,8 @@
  */
 
 import { TCurrencyCode } from './CurrencyCode'
-import {extend, ObjectSchema} from 'joi'
-import {TDecimal} from "../number/Decimal";
+import { ObjectSchema } from 'joi'
+import { TDecimal } from '../number/Decimal'
 
 export interface TMonetaryValue2 extends TDecimal {
   currency: TCurrencyCode
@@ -25,3 +25,7 @@ export interface TMonetaryValue2 extends TDecimal {
 export const monetaryValue2Examples: Array<TMonetaryValue2>
 
 export const MonetaryValue2: ObjectSchema<TMonetaryValue2>
+
+export function monetaryValue2ToString(m: TMonetaryValue2): string
+
+export function monetaryValueEqual(m1: TMonetaryValue2, m2: TMonetaryValue2): boolean
