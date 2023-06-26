@@ -1,17 +1,23 @@
 # Changes
 
-## 7
+#### 8
 
-### 7.5
+#### 8.0
 
-#### 7.5.0
+#### 8.0.0
 
 - add `.d.ts` for all string Joi
 - add d.ts for `shouldBeSeriousSchema`
+- now also rejects when schema has duplicate examples (BREAKING)
 - deprecate TS types `TrimmedString`, `CleanedString`, and `Language`; replace with `T…` variant
 - add `Decimal`
 - add YAML files for all `string` types
 - add `CreatedInError` resource schema
+-
+
+## 7
+
+### 7.5
 
 ### 7.4
 
