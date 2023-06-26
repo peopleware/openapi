@@ -47,6 +47,14 @@ function monetaryValueEqual(m1, m2) {
   return decimalEqual(m1, m2) && m1.currency === m2.currency
 }
 
-function constrainedMonetaryValue2(MonetaryValue2Schema, currency, decimals) {}
+function constrainedMonetaryValue2(MonetaryValue2Schema, currency, decimals, limits) {
+  return MonetaryValue2Schema
+}
 
-module.exports = { monetaryValue2Examples, MonetaryValue2, monetaryValue2ToString, monetaryValueEqual }
+module.exports = {
+  monetaryValue2Examples,
+  MonetaryValue2,
+  monetaryValue2ToString,
+  monetaryValueEqual,
+  constrainedMonetaryValue2
+}

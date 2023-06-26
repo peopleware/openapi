@@ -16,7 +16,7 @@
 
 import { TCurrencyCode } from './CurrencyCode'
 import { ObjectSchema } from 'joi'
-import { TDecimal } from '../number/Decimal'
+import { TDecimal, TDecimalValueLimits } from '../number/Decimal'
 
 export interface TMonetaryValue2 extends TDecimal {
   currency: TCurrencyCode
@@ -29,3 +29,14 @@ export const MonetaryValue2: ObjectSchema<TMonetaryValue2>
 export function monetaryValue2ToString(m: TMonetaryValue2): string
 
 export function monetaryValueEqual(m1: TMonetaryValue2, m2: TMonetaryValue2): boolean
+
+export function constrainedMonetaryValue2<
+  D extends number,
+  MIN extends number | undefined,
+  MAX extends number | undefined
+>(
+  MonetaryValue2Schema: ObjectSchema<TMonetaryValue2>,
+  currency: TCurrencyCode,
+  decimals: D,
+  limits?: TDecimalValueLimits<MIN, MAX>
+): ObjectSchema<TMonetaryValue2>

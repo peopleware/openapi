@@ -24,8 +24,10 @@ const {
   MonetaryValue2,
   monetaryValue2Examples,
   monetaryValue2ToString,
-  monetaryValueEqual
+  monetaryValueEqual,
+  constrainedMonetaryValue2
 } = require('../../money/MonetaryValue2')
+const { decimalValueLimits } = require('../../number/Decimal')
 
 describe(testName(module), function () {
   shouldBeSeriousSchema(
@@ -68,5 +70,41 @@ describe(testName(module), function () {
         })
       })
     )
+  })
+
+  const constrainedMonetaryValue2Cases = [
+    { currency: 'EUR', decimals: 4, limits: { min: -10000, max: 10000 } },
+    { currency: 'EUR', decimals: 2, limits: { min: -100, max: 100 } },
+    { currency: 'EUR', decimals: 4, limits: { min: 0, max: 20000 } },
+    { currency: 'EUR', decimals: 2, limits: { min: -100, max: 0 } },
+    { currency: 'GBP', decimals: -2, limits: { min: -900, max: 100 } },
+    { currency: 'USD', decimals: -4, limits: { min: 0, max: 20000 } },
+    { currency: 'EUR', decimals: -2, limits: { min: -100, max: 0 } },
+    { currency: 'EUR', decimals: 4, limits: { min: -3 } },
+    { currency: 'EUR', decimals: 2, limits: { max: 4 } },
+    { currency: 'EUR', decimals: 2, limits: {} },
+    { currency: 'EUR', decimals: 2 },
+    { currency: 'BEF', decimals: 2, limits: decimalValueLimits.nonPositive },
+    { currency: 'EUR', decimals: 2, limits: decimalValueLimits.negative },
+    { currency: 'EUR', decimals: 2, limits: decimalValueLimits.positive },
+    { currency: 'EUR', decimals: 2, limits: decimalValueLimits.nonNegative }
+  ]
+
+  describe('constrainedMonetaryValue2', function () {
+    constrainedMonetaryValue2Cases.forEach(c => {
+      describe(`should generate a serious schema for ${JSON.stringify(c)}`, function () {
+        const result = constrainedMonetaryValue2(MonetaryValue2, c.currency, c.decimals, c.limits)
+        shouldBeSeriousSchema(
+          result,
+          stuff
+            .concat([
+              { currency: 'CHF', decimals: c.decimals, value: c.limits?.min ? c.limits?.min : 0 },
+              { currency: c.currency, decimals: c.decimals + 1, value: c.limits?.min ? c.limits?.min : 0 }
+            ])
+            .concat(c.limits?.min ? [{ currency: c.currency, decimals: c.decimals, value: c.limits.min - 1 }] : [])
+            .concat(c.limits?.max ? [{ currency: c.currency, decimals: c.decimals, value: c.limits.max + 1 }] : [])
+        )
+      })
+    })
   })
 })
