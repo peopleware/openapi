@@ -89,11 +89,10 @@ describe(testName(module), function () {
         const result = constrainedDecimal(Decimal, c.decimals, c.limits)
         shouldBeSeriousSchema(
           result,
-          stuff.concat([
-            { decimals: c.decimals + 1, value: c.min },
-            { decimals: c.decimals, value: c.min - 1 },
-            { decimals: c.decimals, value: c.max + 1 }
-          ])
+          stuff
+            .concat([{ decimals: c.decimals + 1, value: c.limits?.min ? c.limits?.min : 0 }])
+            .concat(c.limits?.min ? [{ decimals: c.decimals, value: c.limits.min - 1 }] : [])
+            .concat(c.limits?.max ? [{ decimals: c.decimals, value: c.limits.max + 1 }] : [])
         )
       })
     })
