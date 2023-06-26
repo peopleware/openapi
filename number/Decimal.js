@@ -142,7 +142,9 @@ function decimalEqual(d1, d2) {
  *
  * * `min < max`
  */
-function constrainedDecimal(DecimalSchema, decimals, min, max) {
+function constrainedDecimal(DecimalSchema, decimals, limits) {
+  const min = limits?.min
+  const max = limits?.max
   assert(min === undefined || max === undefined || min < max)
   const decimalsSchema = Decimal.extract('decimals')
     .valid(decimals)
@@ -175,4 +177,11 @@ function constrainedDecimal(DecimalSchema, decimals, min, max) {
   )
 }
 
-module.exports = { decimalExamples, Decimal, decimalToString, decimalEqual, constrainedDecimal }
+const decimalValueLimits = {
+  nonPositive: { max: -1 },
+  negative: { max: 0 },
+  positive: { min: 0 },
+  nonNegative: { min: 1 }
+}
+
+module.exports = { decimalExamples, Decimal, decimalToString, decimalEqual, constrainedDecimal, decimalValueLimits }

@@ -29,9 +29,20 @@ export function decimalToString(decimal: TDecimal): string
 
 export function decimalEqual(d1: TDecimal, d2: TDecimal): boolean
 
-export function constrainedDecimal(
+export interface TDecimalValueLimits<MIN extends number | undefined, MAX extends number | undefined> {
+  min: MIN
+  max: MAX
+}
+
+export const decimalValueLimits: {
+  nonPositive: TDecimalValueLimits<-9007199254740991, -1>
+  negative: TDecimalValueLimits<-9007199254740991, 0>
+  positive: TDecimalValueLimits<0, 9007199254740991>
+  nonNegative: TDecimalValueLimits<1, 9007199254740991>
+}
+
+export function constrainedDecimal<D extends number, MIN extends number | undefined, MAX extends number | undefined>(
   DecimalSchema: ObjectSchema<TDecimal>,
-  decimals: number,
-  min: number | undefined,
-  max: number | undefined
+  decimals: D,
+  limits?: TDecimalValueLimits<MIN, MAX>
 ): ObjectSchema<TDecimal>

@@ -2,7 +2,14 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
-const { Decimal, decimalExamples, decimalToString, constrainedDecimal, decimalEqual } = require('../../number/Decimal')
+const {
+  Decimal,
+  decimalExamples,
+  decimalToString,
+  constrainedDecimal,
+  decimalEqual,
+  decimalValueLimits
+} = require('../../number/Decimal')
 const { stuff, stuffWithUndefined } = require('../../_util/_stuff')
 const { notInteger } = require('../../_util/filters')
 
@@ -59,22 +66,27 @@ describe(testName(module), function () {
   })
 
   const constrainedDecimalCases = [
-    { decimals: 4, min: -10000, max: 10000 },
-    { decimals: 2, min: -100, max: 100 },
-    { decimals: 4, min: 0, max: 20000 },
-    { decimals: 2, min: -100, max: 0 },
-    { decimals: -2, min: -900, max: 100 },
-    { decimals: -4, min: 0, max: 20000 },
-    { decimals: -2, min: -100, max: 0 },
-    { decimals: 4, min: -3 },
-    { decimals: 2, max: 4 },
-    { decimals: 2 }
+    { decimals: 4, limits: { min: -10000, max: 10000 } },
+    { decimals: 2, limits: { min: -100, max: 100 } },
+    { decimals: 4, limits: { min: 0, max: 20000 } },
+    { decimals: 2, limits: { min: -100, max: 0 } },
+    { decimals: -2, limits: { min: -900, max: 100 } },
+    { decimals: -4, limits: { min: 0, max: 20000 } },
+    { decimals: -2, limits: { min: -100, max: 0 } },
+    { decimals: 4, limits: { min: -3 } },
+    { decimals: 2, limits: { max: 4 } },
+    { decimals: 2, limits: {} },
+    { decimals: 2 },
+    { decimals: 2, limits: decimalValueLimits.nonPositive },
+    { decimals: 2, limits: decimalValueLimits.negative },
+    { decimals: 2, limits: decimalValueLimits.positive },
+    { decimals: 2, limits: decimalValueLimits.nonNegative }
   ]
 
   describe('constrainedDecimal', function () {
     constrainedDecimalCases.forEach(c => {
       describe(`should generate a serious schema for ${JSON.stringify(c)}`, function () {
-        const result = constrainedDecimal(Decimal, c.decimals, c.min, c.max)
+        const result = constrainedDecimal(Decimal, c.decimals, c.limits)
         shouldBeSeriousSchema(
           result,
           stuff.concat([
