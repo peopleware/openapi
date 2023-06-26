@@ -55,7 +55,7 @@ function monetaryValueEqual(m1, m2) {
 function getExamples(MonetaryValue2Schema) {
   try {
     return MonetaryValue2Schema.describe().examples
-  } catch (_) {
+  } catch (_) /* istanbul ignore next */ {
     return []
   }
 }
