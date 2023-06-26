@@ -6,18 +6,18 @@
 
 #### 8.0.0
 
-- add `.d.ts` for all string Joi
+- add `.d.ts` for all string Joi schemata
 - add d.ts for `shouldBeSeriousSchema`
-- now also rejects when schema has duplicate examples (BREAKING)
+- `shouldBeSeriousSchema` now also rejects when schema has duplicate examples (BREAKING)
 - deprecate TS types `TrimmedString`, `CleanedString`, and `Language`; replace with `T…` variant
 - add `Decimal`
+- add function to constrain `Decimal`
 - add YAML files for all `string` types
 - add `CreatedInError` resource schema
-- add `MonetaryValue2` and deprecate `MonetaryValue`
+- add `MonetaryValue2` as extended `Decimal` and deprecate `MonetaryValue`
+- add function to constrain `MonetaryValue2`
 
 ## 7
-
-### 7.5
 
 ### 7.4
 
