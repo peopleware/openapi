@@ -16,8 +16,9 @@
 
 const { CurrencyCode, currencyCodes } = require('./CurrencyCode')
 const addExamples = require('../_util/addExamples')
-const { Decimal, decimalToString, decimalEqual } = require('../number/Decimal')
+const { Decimal, decimalToString, decimalEqual, constrainedDecimal } = require('../number/Decimal')
 const { extendDescription } = require('../_util/extendDescription')
+const Joi = require('joi')
 
 const monetaryValue2Examples = [
   { currency: currencyCodes[0], decimals: 4, value: 7475005 },
@@ -47,8 +48,38 @@ function monetaryValueEqual(m1, m2) {
   return decimalEqual(m1, m2) && m1.currency === m2.currency
 }
 
+/**
+ * Get examples in a way that is safe in the browser too (describe() is not supported there). In the browser, no
+ * examples are returned.
+ */
+function getExamples(MonetaryValue2Schema) {
+  try {
+    return MonetaryValue2Schema.describe().examples
+  } catch (_) {
+    return []
+  }
+}
+
 function constrainedMonetaryValue2(MonetaryValue2Schema, currency, decimals, limits) {
-  return MonetaryValue2Schema
+  const currencySchema = extendDescription(
+    MonetaryValue2Schema.extract('currency'),
+    `In this case, this is fixed to ${currency}.`,
+    true
+  )
+    .valid(Joi.override, currency)
+    .example(currency, { override: true })
+  const constrainedSchema = constrainedDecimal(
+    extendDescription(
+      MonetaryValue2Schema.append({
+        currency: currencySchema
+      }),
+      `The currency is ${currency}.`
+    ),
+    decimals,
+    limits
+  )
+  const examples = getExamples(constrainedSchema).map(eg => ({ currency, ...eg }))
+  return addExamples(constrainedSchema, examples)
 }
 
 module.exports = {

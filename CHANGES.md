@@ -13,7 +13,7 @@
 - add `Decimal`
 - add YAML files for all `string` types
 - add `CreatedInError` resource schema
--
+- add `MonetaryValue2` and deprecate `MonetaryValue`
 
 ## 7
 
