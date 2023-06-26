@@ -17,8 +17,15 @@
 import { ObjectSchema } from 'joi'
 import { TMonetaryValue } from './MonetaryValue'
 
+/**
+ * @deprecated Use TMonetaryValue2 (amount is renamed to value, so it extends Decimal)
+ */
 export type TNonPositiveMonetaryValue = TMonetaryValue
 
 export const nonPositiveMonetaryValueExamples: Array<TNonPositiveMonetaryValue>
 
+/**
+ * @deprecated Use MonetaryValue2 (amount is renamed to value, so it extends Decimal), constrained with
+ *             `decimalValueLimits.nonPositive`
+ */
 export const NonPositiveMonetaryValue: ObjectSchema<TNonPositiveMonetaryValue>

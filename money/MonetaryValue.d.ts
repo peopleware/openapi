@@ -17,6 +17,9 @@
 import { TCurrencyCode } from './CurrencyCode'
 import { ObjectSchema } from 'joi'
 
+/**
+ * @deprecated Use TMonetaryValue2 (amount is renamed to value, so it extends Decimal)
+ */
 export interface TMonetaryValue {
   currency: TCurrencyCode
   decimals: number
@@ -25,4 +28,7 @@ export interface TMonetaryValue {
 
 export const monetaryValueExamples: Array<TMonetaryValue>
 
+/**
+ * @deprecated Use MonetaryValue2 (amount is renamed to value, so it extends Decimal)
+ */
 export const MonetaryValue: ObjectSchema<TMonetaryValue>
