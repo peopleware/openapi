@@ -27,6 +27,8 @@ export const Decimal: ObjectSchema<TDecimal>
 
 export function decimalToString(decimal: TDecimal): string
 
+export function decimalEqual(d1: TDecimal, d2: TDecimal): boolean
+
 export function constrainedDecimal(
   DecimalSchema: ObjectSchema<TDecimal>,
   decimals: number,

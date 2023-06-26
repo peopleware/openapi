@@ -131,6 +131,10 @@ function decimalToString({ decimals, value }) {
   return isNegative ? `-${absResult}` : absResult
 }
 
+function decimalEqual(d1, d2) {
+  return d1.decimals === d2.decimals && d1.value === d2.value
+}
+
 /**
  * Fix the `decimals` property to the given value, and `value` between the given `min` and `max`.
  *
@@ -167,4 +171,4 @@ function constrainedDecimal(DecimalSchema, decimals, min, max) {
   )
 }
 
-module.exports = { decimalExamples, Decimal, decimalToString, constrainedDecimal }
+module.exports = { decimalExamples, Decimal, decimalToString, decimalEqual, constrainedDecimal }

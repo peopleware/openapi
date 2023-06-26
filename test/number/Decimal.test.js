@@ -2,7 +2,7 @@
 
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
-const { Decimal, decimalExamples, decimalToString, constrainedDecimal } = require('../../number/Decimal')
+const { Decimal, decimalExamples, decimalToString, constrainedDecimal, decimalEqual } = require('../../number/Decimal')
 const { stuff, stuffWithUndefined } = require('../../_util/_stuff')
 const { notInteger } = require('../../_util/filters')
 
@@ -44,6 +44,18 @@ describe(testName(module), function () {
         result.should.equal(c.expected)
       })
     })
+  })
+
+  describe('decimalEqual', function () {
+    decimalExamples.forEach(d1 =>
+      decimalExamples.forEach(d2 => {
+        const expected = d1.decimals === d2.decimals && d1.value === d2.value
+        it(`return ${expected} for ${decimalToString(d1)} = ${decimalToString(d2)}`, function () {
+          const result = decimalEqual(d1, d2)
+          result.should.equal(expected)
+        })
+      })
+    )
   })
 
   const constrainedDecimalCases = [
