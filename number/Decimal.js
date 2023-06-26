@@ -150,7 +150,11 @@ function constrainedDecimal(DecimalSchema, decimals, min, max) {
     .description(`The number of decimal places with which \`value\` must be interpreted. Must equal ${decimals}.`)
   const trueMin = min ?? Number.MIN_SAFE_INTEGER
   const trueMax = max ?? Number.MAX_SAFE_INTEGER
-  const valueExamples = [Math.round((trueMin + trueMax) / 3), Math.round((trueMin + trueMax) / 2), trueMin, trueMax]
+  const valueExamplesBase = [Math.round((trueMin + trueMax) / 3), Math.round((trueMin + trueMax) / 2), trueMin, trueMax]
+  const valueExamples = valueExamplesBase.reduce(
+    (acc, d) => (acc.find(ad => decimalEqual(ad, d)) ? acc : acc.concat([d])),
+    []
+  )
   const valueSchema = addExamples(
     Decimal.extract('value')
       .min(trueMin)
