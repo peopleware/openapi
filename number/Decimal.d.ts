@@ -30,8 +30,8 @@ export function decimalToString(decimal: TDecimal): string
 export function decimalEqual(d1: TDecimal, d2: TDecimal): boolean
 
 export interface TDecimalValueLimits<MIN extends number | undefined, MAX extends number | undefined> {
-  min: MIN
-  max: MAX
+  min?: MIN
+  max?: MAX
 }
 
 export const decimalValueLimits: {
