@@ -9,6 +9,8 @@
 - moved repository from `https://bitbucket.org/peopleware/openapi` to `https://bitbucket.org/peopleware/openapi` due to
   licensing change at Bitbucket
 - upgrade dependencies
+- add `_util/assert`
+- removed dependency on `node:assert`, which gave difficulties in browsers since Angular 17
 
 `joi-to-json` is limited to version `3.1.2` for now, due to [#49](https://github.com/kenspirit/joi-to-json/issues/49). A
 fix exists in `4.2.0` (“Adds 'open-api-3.1' format support.”), but introduces other errors. This needs some diagnosis

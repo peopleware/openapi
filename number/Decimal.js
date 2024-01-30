@@ -15,7 +15,7 @@
  */
 
 const Joi = require('joi')
-const assert = require('assert')
+const { assert } = require('../_util/assert')
 const addExamples = require('../_util/addExamples')
 const { extendDescription } = require('../_util/extendDescription')
 
@@ -145,7 +145,7 @@ function decimalEqual(d1, d2) {
 function constrainedDecimal(DecimalSchema, decimals, limits) {
   const min = limits?.min
   const max = limits?.max
-  assert(min === undefined || max === undefined || min < max)
+  assert(() => min === undefined || max === undefined || min < max)
   const decimalsSchema = Decimal.extract('decimals')
     .valid(decimals)
     .example(decimals, { override: true })
