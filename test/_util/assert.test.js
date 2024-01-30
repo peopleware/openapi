@@ -18,6 +18,7 @@
 
 const testName = require('../../_util/_testName')
 const { stuff } = require('../../_util/_stuff')
+const { assert } = require('../../_util/assert')
 
 const falsyValues = [false, 0, '', null, undefined, Number.NaN]
 
@@ -37,6 +38,13 @@ describe(testName(module), function () {
   })
 
   describe('throws', function () {
-    it(`throws when the assertion throws`)
+    it(`throws when the assertion throws`, function () {
+      const error = new Error()
+      assert
+        .bind(undefined, () => {
+          throw error
+        })
+        .should.throw(error)
+    })
   })
 })
