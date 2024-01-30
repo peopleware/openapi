@@ -25,3 +25,6 @@ rules:
   spec-strict-refs: off
   # Disabled because joi-to-json does not want to add a minLength for enums or strings with a pattern
   required-string-property-missing-min-length: off
+  # Disabled because conflicting name "schema" could not be resolved
+  # It should be possible to only disable this for schemas, but that doesn't seem to work
+  component-name-unique: off
