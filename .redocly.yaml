@@ -23,3 +23,5 @@ rules:
   operation-4xx-problem-details-rfc7807: off
   tags-alphabetical: off
   spec-strict-refs: off
+  # Disabled because joi-to-json does not want to add a minLength for enums or strings with a pattern
+  required-string-property-missing-min-length: off
