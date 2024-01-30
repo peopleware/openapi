@@ -6,13 +6,13 @@
     "name": "Jan Dockx",
     "email": "Jan_Dockx@peopleware.be"
   },
-  "homepage": "https://bitbucket.org/ppwcode/openapi",
+  "homepage": "https://bitbucket.org/peopleware/openapi",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/ppwcode/openapi.git"
+    "url": "https://bitbucket.org/peopleware/openapi.git"
   },
   "bugs": {
-    "url": "https://bitbucket.org/ppwcode/openapi/issues"
+    "url": "https://bitbucket.org/peopleware/openapi/issues"
   },
   "license": "Apache-2.0",
   "engines": {
