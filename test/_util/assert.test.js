@@ -17,7 +17,7 @@
 /* eslint-env mocha */
 
 const testName = require('../../_util/_testName')
-const { stuff } = require('../../_util/_stuff')
+const { stuff, stuffWithUndefined } = require('../../_util/_stuff')
 const { assert } = require('../../_util/assert')
 const should = require('should')
 
@@ -59,5 +59,20 @@ describe(testName(module), function () {
         })
         .should.throw(error)
     })
+
+    stuffWithUndefined
+      .filter(s => typeof s !== 'function')
+      .forEach(s => {
+        it(`throws when the assertion is not a function but ${String(s)}`, function () {
+          try {
+            assert(s)
+            should.fail(undefined, 'an error', 'should have thrown')
+          } catch (err) {
+            err.should.be.an.Error()
+            err.assertion.should.equal(s)
+            console.log(err.message)
+          }
+        })
+      })
   })
 })
