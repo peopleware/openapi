@@ -22,6 +22,13 @@
  * Introduced because `node:assert` cannot be used in a browser without a polyfill.
  */
 function assert(assertion) {
+  const assertionType = typeof assertion
+  if (assertionType !== 'function') {
+    const err = new Error(`assertion must be a function, but is of type '${assertionType}'`)
+    err.assertion = assertion
+    throw err
+  }
+
   const outcome = assertion.call(undefined)
   if (!outcome) {
     const assertionStr = assertion.toString()

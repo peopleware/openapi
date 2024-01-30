@@ -65,11 +65,12 @@ describe(testName(module), function () {
       .forEach(s => {
         it(`throws when the assertion is not a function but ${String(s)}`, function () {
           try {
+            //noinspection JSCheckFunctionSignatures
             assert(s)
             should.fail(undefined, 'an error', 'should have thrown')
           } catch (err) {
             err.should.be.an.Error()
-            err.assertion.should.equal(s)
+            should(err.assertion).equal(s)
             console.log(err.message)
           }
         })
