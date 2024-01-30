@@ -18,9 +18,17 @@
  * Evaluates the assertion, and throws if it returns a falsy value, or throws itself.
  *
  * If the assertion returns nominally with a truthy value, the function returns nominally.
+ *
+ * Introduced because `node:assert` cannot be used in a browser without a polyfill.
  */
 function assert(assertion) {
-  assertion.call(undefined)
+  const outcome = assertion.call(undefined)
+  if (!outcome) {
+    const assertionStr = assertion.toString()
+    const err = new Error(`assertion failed: ${assertionStr}`)
+    err.assertion = assertion
+    throw err
+  }
 }
 
 module.exports = { assert }

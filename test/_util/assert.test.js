@@ -19,6 +19,7 @@
 const testName = require('../../_util/_testName')
 const { stuff } = require('../../_util/_stuff')
 const { assert } = require('../../_util/assert')
+const should = require('should')
 
 const falsyValues = [false, 0, '', null, undefined, Number.NaN]
 
@@ -26,7 +27,15 @@ describe(testName(module), function () {
   describe('falsy', function () {
     falsyValues.forEach(v => {
       it(`throws when the assertion returns ${v}`, function () {
-        assert.bind(undefined, () => v).should.throw()
+        const assertion = () => v
+        try {
+          assert(assertion)
+          should.fail(undefined, 'an error', 'should have thrown')
+        } catch (err) {
+          err.should.be.an.Error()
+          err.assertion.should.equal(assertion)
+          console.log(err.message)
+        }
       })
     })
   })
