@@ -33,7 +33,9 @@ describe(testName(module), function () {
     stuff
       .filter(s => !falsyValues.includes(s))
       .forEach(v => {
-        it(`ends nominally when the assertion returns ${String(v)}`)
+        it(`ends nominally when the assertion returns ${String(v)}`, function () {
+          assert.bind(undefined, () => v).should.not.throw()
+        })
       })
   })
 
