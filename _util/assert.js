@@ -29,7 +29,7 @@ function assert(assertion) {
     throw err
   }
 
-  const outcome = assertion.call(undefined)
+  const outcome = assertion()
   if (!outcome) {
     const assertionStr = assertion.toString()
     const err = new Error(`assertion failed: ${assertionStr}`)
