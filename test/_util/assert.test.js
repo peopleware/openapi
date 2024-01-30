@@ -25,7 +25,9 @@ const falsyValues = [false, 0, '', null, undefined, Number.NaN]
 describe(testName(module), function () {
   describe('falsy', function () {
     falsyValues.forEach(v => {
-      it(`throws when the assertion returns ${v}`)
+      it(`throws when the assertion returns ${v}`, function () {
+        assert.bind(undefined, () => v).should.throw()
+      })
     })
   })
 
