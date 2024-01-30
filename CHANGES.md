@@ -2,6 +2,13 @@
 
 #### 8
 
+#### 8.1
+
+#### 8.1.0
+
+- moved repository from `https://bitbucket.org/peopleware/openapi` to `https://bitbucket.org/peopleware/openapi` due to
+  licensing change at Bitbucket
+
 #### 8.0
 
 #### 8.0.0
