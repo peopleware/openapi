@@ -10,6 +10,14 @@
   licensing change at Bitbucket
 - upgrade dependencies
 
+`joi-to-json` is limited to version `3.1.2` for now, due to [#49](https://github.com/kenspirit/joi-to-json/issues/49). A
+fix exists in `4.2.0` (“Adds 'open-api-3.1' format support.”), but introduces other errors. This needs some diagnosis
+and work.
+
+`@redocly/cli` is fixed to `1.0.0-beta.128`, and should be upgrade asap, but is not in this release. A new install
+upgraded to @redocly/cli 1.8.1 automatically, which has some issues. It reports errors that take some work to
+investigate and fix, and currently another release is more pressing.
+
 #### 8.0
 
 #### 8.0.0
