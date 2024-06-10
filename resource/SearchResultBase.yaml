@@ -12,22 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-required:
-  - structureVersion
-  - href
-  - discriminator
+type: object
+examples:
+  - structureVersion: 1
+    discriminator: service-name/type-name
+    href: /service-name/service_version/type-name/type_unique_identifier?at=2021-01-19T17:14:18.482Z
 description: >-
   The resource's search document with the most up-to-date information, i.e., up-to-date up until, but not including,
   `x-date`.
-type: object
 properties:
   structureVersion:
-    minimum: 1
-    description: Version of the data structure of this resource type
     type: integer
-    example: 1
+    examples:
+      - 1
+    description: Version of the data structure of this resource type
+    minimum: 1
   href:
-    minLength: 1
+    type: string
+    examples:
+      - ../some/path
+      - some/other/path
+      - ./meaningless/dot
     description: >-
       Relative URI where the found resource's information is located. The `at` parameter _must_ be the same as the value
       of the `x-date` response header.
@@ -37,22 +42,22 @@ properties:
       The search engine updates, eventually, after a few seconds. If a more recent version is available in the meantime,
       the user interface makes it possible for the user to navigate to that version.
     format: uri
-    type: string
-    example: ../some/path
-  discriminator:
     minLength: 1
-    pattern: ^([-a-z0-9]+)\/([-a-z0-9/]+)$
+  discriminator:
+    type: string
+    examples:
+      - service-name/type-name
     description: >-
       Type of the indexed resource.
 
 
       This enables users to search only on particular resource type. The type is qualified with the service name, to
       avoid name clashes (slash-separated).
-    type: string
-    example: service-name/type-name
+    minLength: 1
+    pattern: ^([-a-z0-9]+)\/([-a-z0-9/]+)$
+required:
+  - structureVersion
+  - href
+  - discriminator
 additionalProperties: true
-example:
-  structureVersion: 1
-  discriminator: service-name/type-name
-  href: /service-name/service_version/type-name/type_unique_identifier?at=2021-01-19T17:14:18.482Z
 deprecated: true

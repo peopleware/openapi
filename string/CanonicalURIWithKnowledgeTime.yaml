@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-minLength: 1
+type: string
+examples:
+  - /my-service/v1/y/abc?at=2020-01-23T15:22:39.254888Z
 description: >-
   A _canonical URI_ is the URI where are resource can be interacted with, without the scheme and authority (see [RFC
   3986 Uniform Resource Identifier (URI): Generic Syntax ;3. Syntax
@@ -25,5 +27,4 @@ description: >-
   The value must be a moment in time, expressed as ISO-8601 in UTC ('Z'), to ms precision or more precise (should be μs
   precision).
 format: uri
-type: string
-example: /my-service/v1/y/abc?at=2020-01-23T15:22:39.254888Z
+minLength: 1

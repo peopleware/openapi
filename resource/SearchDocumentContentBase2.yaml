@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-required:
-  - structureVersion
-  - discriminator
+type: object
+examples:
+  - structureVersion: 2
+    discriminator: my-service/some-resource
 description: >-
   The resource's search document with the most up-to-date information, i.e., up-to-date up until, but not including,
   `x-date`.
@@ -24,25 +25,26 @@ description: >-
   `discriminators`. When returned by the search service, the property `href` is added. This is the canonical URI of the
   found resource, including an `at` query parameter, that refers to the precise version of the found resource that was
   indexed.
-type: object
 properties:
   structureVersion:
-    minimum: 1
+    examples:
+      - 2
     description: Version of the data structure of this resource type
-    type: integer
-    example: 2
+    minimum: 1
+    const: 2
   discriminator:
-    minLength: 1
-    pattern: ^([-a-z0-9]+)\/([-a-z0-9/]+)$
+    type: string
+    examples:
+      - my-service/some-resource
     description: >-
       Type of the indexed resource.
 
 
       This enables users to search only on particular resource type. The type is qualified with the service name, to
       avoid name clashes (slash-separated).
-    type: string
-    example: my-service/some-resource
+    minLength: 1
+    pattern: ^([-a-z0-9]+)\/([-a-z0-9/]+)$
+required:
+  - structureVersion
+  - discriminator
 additionalProperties: true
-example:
-  structureVersion: 2
-  discriminator: my-service/some-resource

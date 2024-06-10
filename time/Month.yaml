@@ -12,7 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-pattern: ^\d{4}-(0[1-9]|1[0-2])$
+type: string
+examples:
+  - 2020-01
+  - 1999-01
 description: >-
   A month in the history of the universe.
 
@@ -22,5 +25,4 @@ description: >-
 
 
   Uses the ISO-8601 representation.
-type: string
-example: 2020-01
+pattern: ^\d{4}-(0[1-9]|1[0-2])$

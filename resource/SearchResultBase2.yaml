@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-required:
-  - structureVersion
-  - discriminator
-  - href
+type: object
+examples:
+  - structureVersion: 2
+    discriminator: my-service/some-resource
+    href: /my-service/v6/some-resource/564845?at=2021-01-19T17:14:18.482558Z
 description: >-
   The resource's search document with the most up-to-date information, i.e., up-to-date up until, but not including,
   `x-date`.
@@ -25,26 +26,29 @@ description: >-
   `discriminators`. When returned by the search service, the property `href` is added. This is the canonical URI of the
   found resource, including an `at` query parameter, that refers to the precise version of the found resource that was
   indexed.
-type: object
 properties:
   structureVersion:
-    minimum: 1
+    examples:
+      - 2
     description: Version of the data structure of this resource type
-    type: integer
-    example: 2
+    minimum: 1
+    const: 2
   discriminator:
-    minLength: 1
-    pattern: ^([-a-z0-9]+)\/([-a-z0-9/]+)$
+    type: string
+    examples:
+      - my-service/some-resource
     description: >-
       Type of the indexed resource.
 
 
       This enables users to search only on particular resource type. The type is qualified with the service name, to
       avoid name clashes (slash-separated).
-    type: string
-    example: my-service/some-resource
-  href:
     minLength: 1
+    pattern: ^([-a-z0-9]+)\/([-a-z0-9/]+)$
+  href:
+    type: string
+    examples:
+      - /my-service/v1/y/abc?at=2020-01-23T15:22:39.254888Z
     description: >-
       Canonical URI where the found resource's information is located, at the version that was indexed (`at` parameter
       _must_ be included).
@@ -66,10 +70,9 @@ properties:
       resource. The value must be a moment in time, expressed as ISO-8601 in UTC ('Z'), to ms precision or more precise
       (should be μs precision).
     format: uri
-    type: string
-    example: /my-service/v1/y/abc?at=2020-01-23T15:22:39.254888Z
+    minLength: 1
+required:
+  - structureVersion
+  - discriminator
+  - href
 additionalProperties: true
-example:
-  structureVersion: 2
-  discriminator: my-service/some-resource
-  href: /my-service/v6/some-resource/564845?at=2021-01-19T17:14:18.482558Z

@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+type: string
+examples:
+  - Anna
+description: Trimmed, not empty, cannot start with a digit, and only contain letters, `'$'`, or underscore.
 minLength: 1
 pattern: ^[a-zA-Z$_][a-zA-Z0-9$_]*$
-description: Trimmed, not empty, cannot start with a digit, and only contain letters, `'$'`, or underscore.
-type: string
-example: Anna

@@ -12,7 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-pattern: ^\d{4}-(2[1-4])$
+type: string
+examples:
+  - 2020-21
+  - 1999-22
+  - 2023-23
+  - 2022-24
 description: >-
   A quarter in the history of the universe.
 
@@ -35,5 +40,4 @@ description: >-
 
 
   - `24`: Q4
-type: string
-example: 2020-21
+pattern: ^\d{4}-(2[1-4])$

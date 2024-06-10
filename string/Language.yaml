@@ -12,11 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-pattern: ^[a-z]{2}(-[A-Z]{2})?$
+type: string
+examples:
+  - fr-BE
+  - nl
 description: >-
   Language to be used in communication with the subject. The value is expressed according to [BCP
   47](https://tools.ietf.org/html/bcp47), using an [ISO 639-1 alpha-2](https://en.wikipedia.org/wiki/ISO_639-1) language
   code, optionally localised with the [ISO 3166 1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) 2-letter
   country code. See [Language localisation](https://en.wikipedia.org/wiki/Language_localisation).
-type: string
-example: fr-BE
+pattern: ^[a-z]{2}(-[A-Z]{2})?$

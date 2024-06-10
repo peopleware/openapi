@@ -12,8 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-minLength: 1
+type: string
+examples:
+  - ../some/path
+  - some/other/path
+  - ./meaningless/dot
 description: relative URI
 format: uri
-type: string
-example: ../some/path
+minLength: 1

@@ -12,7 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-pattern: ^\d{4}$
+type: string
+examples:
+  - '2020'
+  - '1999'
 description: >-
   A year in the history of the universe.
 
@@ -22,5 +25,4 @@ description: >-
 
 
   Uses the ISO-8601 representation.
-type: string
-example: '2020'
+pattern: ^\d{4}$

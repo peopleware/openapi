@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-minLength: 1
+type: string
+examples:
+  - /my-service/v1/y/abc
 description: >-
   A _canonical URI_ is the URI where are resource can be interacted with, without the scheme and authority (see [RFC
   3986 Uniform Resource Identifier (URI): Generic Syntax ;3. Syntax
@@ -20,5 +22,4 @@ description: >-
   canonical URI’s first segment is the name of the service in which the URI resides, followed by the relative URI of the
   resource in the API of that service.
 format: uri
-type: string
-example: /my-service/v1/y/abc
+minLength: 1

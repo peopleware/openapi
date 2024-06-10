@@ -12,10 +12,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-required:
-  - decimals
-  - value
-  - currency
+type: object
+examples:
+  - currency: XTS
+    decimals: 4
+    value: 7475005
+  - currency: EUR
+    decimals: 2
+    value: -84884
+  - currency: USD
+    decimals: 4
+    value: 0
+  - currency: KRW
+    decimals: 0
+    value: 84884
+  - currency: XAU
+    decimals: -8
+    value: 884
 description: >-
   Representation of an amount of money, in the given `currency`, with the given `decimals`.
 
@@ -76,22 +89,28 @@ description: >-
 
 
   The advised approach is to never add decimals that have different decimals.
-type: object
 properties:
   decimals:
+    type: integer
+    examples:
+      - 2
+      - 0
+      - -2
     description: >-
       The number of decimal places with which `value` must be interpreted. A positive number means moving the decimal
       point to the left. A negative number means adding zeros at the end.
-    type: integer
-    example: 2
   value:
+    type: integer
+    examples:
+      - 456568
+      - 0
+      - -456568
     description: >-
       The represented decimal number, multiplied by 10<sup>decimals</sup>. This can be positive, negative, or 0. The
       interpretation of the sign is context dependent.
-    type: integer
-    example: 456568
   currency:
-    enum:
+    type: string
+    examples:
       - XTS
       - AED
       - AFN
@@ -276,10 +295,189 @@ properties:
       3-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) alphabetic currency code (3 upper case letters).
 
       Note that `XTS` is explicitly intended for testing purposes.
-    type: string
-    example: XTS
+    enum:
+      - XTS
+      - AED
+      - AFN
+      - ALL
+      - AMD
+      - ANG
+      - AOA
+      - ARS
+      - AUD
+      - AWG
+      - AZN
+      - BAM
+      - BBD
+      - BDT
+      - BGN
+      - BHD
+      - BIF
+      - BMD
+      - BND
+      - BOB
+      - BOV
+      - BRL
+      - BSD
+      - BTN
+      - BWP
+      - BYN
+      - BZD
+      - CAD
+      - CDF
+      - CHE
+      - CHF
+      - CHW
+      - CLF
+      - CLP
+      - COP
+      - COU
+      - CRC
+      - CUC
+      - CUP
+      - CVE
+      - CZK
+      - DJF
+      - DKK
+      - DOP
+      - DZD
+      - EGP
+      - ERN
+      - ETB
+      - EUR
+      - FJD
+      - FKP
+      - GBP
+      - GEL
+      - GHS
+      - GIP
+      - GMD
+      - GNF
+      - GTQ
+      - GYD
+      - HKD
+      - HNL
+      - HTG
+      - HUF
+      - IDR
+      - ILS
+      - INR
+      - IQD
+      - IRR
+      - ISK
+      - JMD
+      - JOD
+      - JPY
+      - KES
+      - KGS
+      - KHR
+      - KMF
+      - KPW
+      - KRW
+      - KWD
+      - KYD
+      - KZT
+      - LAK
+      - LBP
+      - LKR
+      - LRD
+      - LSL
+      - LYD
+      - MAD
+      - MDL
+      - MGA
+      - MKD
+      - MMK
+      - MNT
+      - MOP
+      - MRU
+      - MUR
+      - MVR
+      - MWK
+      - MXN
+      - MXV
+      - MYR
+      - MZN
+      - NAD
+      - NGN
+      - NIO
+      - NOK
+      - NPR
+      - NZD
+      - OMR
+      - PAB
+      - PEN
+      - PGK
+      - PHP
+      - PKR
+      - PLN
+      - PYG
+      - QAR
+      - RON
+      - RSD
+      - CNY
+      - RUB
+      - RWF
+      - SAR
+      - SBD
+      - SCR
+      - SDG
+      - SEK
+      - SGD
+      - SHP
+      - SLE
+      - SLL
+      - SOS
+      - SRD
+      - SSP
+      - STN
+      - SVC
+      - SYP
+      - SZL
+      - THB
+      - TJS
+      - TMT
+      - TND
+      - TOP
+      - TRY
+      - TTD
+      - TWD
+      - TZS
+      - UAH
+      - UGX
+      - USD
+      - USN
+      - UYI
+      - UYU
+      - UYW
+      - UZS
+      - VED
+      - VES
+      - VND
+      - VUV
+      - WST
+      - XAF
+      - XAG
+      - XAU
+      - XBA
+      - XBB
+      - XBC
+      - XBD
+      - XCD
+      - XDR
+      - XOF
+      - XPD
+      - XPF
+      - XPT
+      - XSU
+      - XUA
+      - XXX
+      - YER
+      - ZAR
+      - ZMW
+      - ZWL
+required:
+  - decimals
+  - value
+  - currency
 additionalProperties: true
-example:
-  currency: XTS
-  decimals: 4
-  value: 7475005

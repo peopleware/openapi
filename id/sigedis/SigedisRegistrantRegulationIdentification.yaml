@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-required:
-  - registrant
-  - registrantId
+type: object
+examples:
+  - registrant: '1453834119'
+    registrantId: cunning-plan/covenant
 description: >-
   Unchangeable internal identification of a _regulation_ for communication with Sigedis.
 
@@ -36,10 +37,13 @@ description: >-
   organization that manages the regulation can define it freely when the regulation is created. Once the Sigedis id is
   attributed, it can be used as identification in communication with Sigedis, but this value will continue to function
   in that role as well.
-type: object
 properties:
   registrant:
-    pattern: ^[01]\d{9}$
+    type: string
+    examples:
+      - '0453834195'
+      - '1453834119'
+      - '1234567401'
     description: >-
       CRN of the OFP that is responsible for this contract.
 
@@ -78,19 +82,19 @@ properties:
 
       A company registration number starts with `0` or `1` and consists of 8 numbers, followed by a modulo 97 checksum
       (10 numbers in total).
-    type: string
-    example: '0453834195'
+    pattern: ^[01]\d{9}$
   registrantId:
-    maxLength: 60
-    minLength: 1
-    pattern: ^[-A-Za-z0-9./]{1,60}$
+    type: string
+    examples:
+      - cunning-plan/covenant
     description: |-
       Unchangeable identification of a retirement regulation for communication with Sigedis, unique for an OFP.
 
       See `db2p_v3.11.8/Declaration/db2pBaseComponents_v3.xsd#FreeIdentificator`.
-    type: string
-    example: cunning-plan/covenant
+    minLength: 1
+    maxLength: 60
+    pattern: ^[-A-Za-z0-9./]{1,60}$
+required:
+  - registrant
+  - registrantId
 additionalProperties: true
-example:
-  registrant: '1453834119'
-  registrantId: cunning-plan/covenant

@@ -12,32 +12,37 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-required:
-  - structureVersion
-  - createdAt
-  - createdBy
-  - createdInError
-description: The resource was created in error. There are no properties, except for the audit properties.
 type: object
+examples:
+  - structureVersion: 1
+    createdAt: '2022-08-18T14:57:39.732Z'
+    createdBy: klkuij39035
+    createdInError: true
+description: The resource was created in error. There are no properties, except for the audit properties.
 properties:
   structureVersion:
-    minimum: 1
-    description: Version of the data structure of this resource type
     type: integer
-    example: 1
+    examples:
+      - 1
+    description: Version of the data structure of this resource type
+    minimum: 1
   createdAt:
-    pattern: ^\d{4}-(0[1-9]|1[0-2])-((0[1-9]|[1-2]\d)|30|31)T(0\d|1\d|2[0-3]):([0-5]\d):([0-5]\d)\.\d{3,}Z$
+    type: string
+    examples:
+      - '2020-01-23T15:22:39.212Z'
+      - '2020-01-23T15:22:39.21254888Z'
     description: >-
       SoT of the resource action that `put`ed or `post`ed this item version, as ISO-8601 expressed in UTC ('Z'), to ms
       precision.
 
 
       Sent by the server in read. Ignored in create and update.
-    type: string
-    example: '2020-01-23T15:22:39.212Z'
+    pattern: ^\d{4}-(0[1-9]|1[0-2])-((0[1-9]|[1-2]\d)|30|31)T(0\d|1\d|2[0-3]):([0-5]\d):([0-5]\d)\.\d{3,}Z$
     readOnly: true
   createdBy:
-    pattern: ^[-\w.~%!$&'()*+,;=]+$
+    type: string
+    examples:
+      - y7_56b.953WP9
     description: >-
       Opaque id of the account that executed the resource action that `put`ed or `post`ed this item version.
 
@@ -46,18 +51,16 @@ properties:
       able to know from the value of this field as precise as possible to which organisation that natural person
       belongs. When we automatically proces data input files, we need to make sure that we use a different account per
       data source, and not one general account representing the overal import process.
-    type: string
-    example: y7_56b.953WP9
+    pattern: ^[-\w.~%!$&'()*+,;=]+$
     readOnly: true
   createdInError:
-    description: Marks the resource as created in error
-    type: boolean
-    example: true
-    enum:
+    examples:
       - true
+    description: Marks the resource as created in error
+    const: true
+required:
+  - structureVersion
+  - createdAt
+  - createdBy
+  - createdInError
 additionalProperties: true
-example:
-  structureVersion: 1
-  createdAt: '2022-08-18T14:57:39.732Z'
-  createdBy: klkuij39035
-  createdInError: true

@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-pattern: ^\d{24}$
+type: string
+examples:
+  - '123456789012345678901234'
 description: >-
   Belgian identification number of retirement _regulations_, attributed by Sigedis ([nl](https://sigedis.be/nl),
   [fr](https://sigedis.be/fr)).
@@ -33,5 +35,4 @@ description: >-
 
 
   Sigedis ids are unique. Sigedis ids do not change over the life of a regulation.
-type: string
-example: '123456789012345678901234'
+pattern: ^\d{24}$
