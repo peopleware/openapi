@@ -1,5 +1,15 @@
 # Changes
 
+#### 9
+
+#### 9.0
+
+#### 9.0.0
+
+- upgrade to openapi 3.1.0
+- upgrade dependencies
+- add `@ppwcode/mocha-ssst`
+
 #### 8
 
 #### 8.1
