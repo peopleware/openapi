@@ -28,6 +28,8 @@ content:
     schema:
       allOf:
         - type: object
+          required:
+            - error
           properties:
             error:
               type: string

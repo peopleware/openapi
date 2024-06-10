@@ -14,7 +14,8 @@
 
 type: object
 required:
-  - error
+  - error_description
+  - error_uri
 properties:
   error_description:
     type: string
