@@ -75,7 +75,7 @@ async function transformSchemataIn(path) {
   return Promise.all(
     Object.keys(module).reduce((acc, name) => {
       if (isSchema(module[name])) {
-        const result = parse(module[name], 'open-api')
+        const result = parse(module[name], 'open-api-3.1')
         const cleaned = clean(result)
         const yaml = dump(cleaned, { lineWidth: 120, noCompatMode: true })
         const yamlWithLicense = license + yaml
