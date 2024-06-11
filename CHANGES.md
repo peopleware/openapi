@@ -6,8 +6,8 @@
 
 #### 9.0.0
 
-- upgrade to openapi 3.1.0
 - upgrade dependencies
+- upgrade to [`OpenAPI@3.1.0`](https://spec.openapis.org/oas/v3.1.0)
 - add `@ppwcode/mocha-ssst`
 
 #### 8

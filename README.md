@@ -114,8 +114,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific
 language governing permissions and limitations under the License.
 
-[openapi 3]: http://spec.openapis.org/oas/v3.0.3
-[yaml format]: http://spec.openapis.org/oas/v3.0.3#format
+[openapi 3]: http://spec.openapis.org/oas/v3.1.0
+[yaml format]: http://spec.openapis.org/oas/v3.1.0#format
 [`index.yaml`]: index.yaml
 [`index.html`]: index.html
 [semantic versioning]: https://semver.org/
