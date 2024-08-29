@@ -98,6 +98,7 @@ async function exec() {
   const tree = dirTree(basePath, { extensions: /\.js/ })
   return Promise.all([
     transformNodeRecursively(tree),
+    transformSchemataIn(join(__dirname, '..', 'money', 'ConstrainedMonetaryValue')),
     transformSchemataIn(join(__dirname, '..', 'money', 'CurrencyCode')),
     transformSchemataIn(join(__dirname, '..', 'money', 'MonetaryValue')),
     transformSchemataIn(join(__dirname, '..', 'money', 'NegativeMonetaryValue')),
