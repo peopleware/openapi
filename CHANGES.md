@@ -2,6 +2,12 @@
 
 #### 9
 
+#### 9.1
+
+#### 9.1.0
+
+- add `ConstrainedMonetaryValue` resource schema
+
 #### 9.0
 
 #### 9.0.0
