@@ -1,5 +1,14 @@
 # Changes
 
+#### 10
+
+#### 10.0
+
+#### 10.0.0
+
+- Fix high vulnerabilities
+- Upgrade dependencies
+
 #### 9
 
 #### 9.1
