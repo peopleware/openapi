@@ -4,6 +4,10 @@
 
 #### 10.0
 
+#### 10.0.1
+
+- Downgrade dependency `joi` to `17.13.1` to avoid [breaking changes in version `17.13.2`](https://github.com/hapijs/joi/pull/3037).
+
 #### 10.0.0
 
 - Fix high vulnerabilities

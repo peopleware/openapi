@@ -111,6 +111,6 @@
   },
   "dependencies": {
     "@toryt/contracts-v": "^5.0.0",
-    "joi": "^17.13.3"
+    "joi": "17.13.1"
   }
 }
