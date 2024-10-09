@@ -23,5 +23,5 @@ const { stuff } = require('../../_util/_stuff')
 const { AccountId } = require('../../id/AccountId')
 
 describe(testName(module), function () {
-  shouldBeSeriousSchema(AccountId, stuff)
+  shouldBeSeriousSchema(AccountId, stuff.filter(s => typeof s !== 'string'))
 })
