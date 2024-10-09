@@ -51,7 +51,6 @@ properties:
       able to know from the value of this field as precise as possible to which organisation that natural person
       belongs. When we automatically proces data input files, we need to make sure that we use a different account per
       data source, and not one general account representing the overal import process.
-    pattern: ^[-\w.~%!$&'()*+,;=]+$
     readOnly: true
   createdInError:
     examples:
