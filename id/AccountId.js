@@ -18,7 +18,7 @@
 const Joi = require('joi')
 const addExamples = require('../_util/addExamples')
 
-const AccountId = Joi.string().pattern(/^[-\w.~%!$&'()*+,;=]+$/).description(`Opaque id of an account.
+const AccountId = Joi.string().description(`Opaque id of an account.
 
 
 For manual interactions, the account refers to one specific natural person. The above implies that we have to be able
