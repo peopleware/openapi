@@ -1,5 +1,13 @@
 # Changes
 
+#### 11
+
+#### 11.0
+
+#### 11.0.0
+
+- Remove regex constraint from `AccountId` (used by the `CreatedBy` property on the `Audited` schema)
+
 #### 10
 
 #### 10.0
