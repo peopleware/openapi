@@ -6,6 +6,7 @@ const stylistic = neostandard.plugins['@stylistic']
 const depend = require('eslint-plugin-depend')
 const json = require('eslint-plugin-json')
 const noSecrets = require('eslint-plugin-no-secrets')
+const sonarjs = require('eslint-plugin-sonarjs')
 
 module.exports = neostandard({}).concat([
   {
@@ -44,5 +45,6 @@ module.exports = neostandard({}).concat([
     rules: {
       'no-secrets/no-secrets': 'error'
     }
-  }
+  },
+  sonarjs.configs.recommended
 ])
