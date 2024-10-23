@@ -9,7 +9,7 @@ const acceptExamples = ['text/html, application/xhtml+xml, application/xml;q=0.9
  * @type {Joi.StringSchema}
  */
 const Accept = Joi.string()
-  .pattern(/([^-;]*)(?:-([^;]*))?(?:;q=([0-9].[0-9]))?/)
+  .pattern(/([^-;]*)(?:-([^;]*))?(?:;q=(\d.\d))?/)
   .allow('')
   .description(
     'request header that says what mime-types the client wants to be returned, where `q` expresses the preferences'
