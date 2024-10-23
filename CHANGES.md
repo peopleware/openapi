@@ -1,35 +1,36 @@
 # Changes
 
-#### 11
+## 11
 
-#### 11.0
+### 11.0
 
 #### 11.0.0
 
 - Remove regex constraint from `AccountId` (used by the `CreatedBy` property on the `Audited` schema)
 
-#### 10
+## 10
 
-#### 10.0
+### 10.0
 
 #### 10.0.1
 
-- Downgrade dependency `joi` to `17.13.1` to avoid [breaking changes in version `17.13.2`](https://github.com/hapijs/joi/pull/3037).
+- Downgrade dependency `joi` to `17.13.1` to avoid
+  [breaking changes in version `17.13.2`](https://github.com/hapijs/joi/pull/3037).
 
 #### 10.0.0
 
 - Fix high vulnerabilities
 - Upgrade dependencies
 
-#### 9
+## 9
 
-#### 9.1
+### 9.1
 
 #### 9.1.0
 
 - add `ConstrainedMonetaryValue` resource schema
 
-#### 9.0
+### 9.0
 
 #### 9.0.0
 
@@ -37,9 +38,9 @@
 - upgrade to [`OpenAPI@3.1.0`](https://spec.openapis.org/oas/v3.1.0)
 - add `@ppwcode/mocha-ssst`
 
-#### 8
+## 8
 
-#### 8.1
+### 8.1
 
 #### 8.1.0
 
@@ -57,7 +58,7 @@ and work.
 upgraded to @redocly/cli 1.8.1 automatically, which has some issues. It reports errors that take some work to
 investigate and fix, and currently another release is more pressing.
 
-#### 8.0
+### 8.0
 
 #### 8.0.0
 
