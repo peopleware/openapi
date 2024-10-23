@@ -15,14 +15,14 @@
  *
  */
 
-import * as Joi from 'joi';
-import { StructureVersioned } from './StructureVersioned';
+import * as Joi from 'joi'
+import { StructureVersioned } from './StructureVersioned'
 
 export declare interface SearchResultBase extends StructureVersioned {
-    href: string;
-    discriminator: string;
+  href: string
+  discriminator: string
 }
 
-export declare const SearchResultBase: Joi.ObjectSchema<SearchResultBase>;
+export declare const SearchResultBase: Joi.ObjectSchema<SearchResultBase>
 
-export declare const searchResultBaseExamples: Array<SearchResultBase>;
+export declare const searchResultBaseExamples: Array<SearchResultBase>

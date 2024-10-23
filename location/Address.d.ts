@@ -15,18 +15,18 @@
  *
  */
 
-import * as Joi from 'joi';
-import { TrimmedString } from '../string/TrimmedString';
-import { Country } from './Country';
+import * as Joi from 'joi'
+import { TrimmedString } from '../string/TrimmedString'
+import { Country } from './Country'
 
 export declare type Address = {
-    line1: TrimmedString;
-    line2?: TrimmedString;
-    postalCode: TrimmedString;
-    municipality: TrimmedString;
-    country: Country;
-};
+  line1: TrimmedString
+  line2?: TrimmedString
+  postalCode: TrimmedString
+  municipality: TrimmedString
+  country: Country
+}
 
-export declare const Address: Joi.ObjectSchema<Address>;
+export declare const Address: Joi.ObjectSchema<Address>
 
-export declare const addressExamples: Array<Address>;
+export declare const addressExamples: Array<Address>

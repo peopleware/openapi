@@ -15,13 +15,13 @@
  *
  */
 
-import { DateTime } from '../time/DateTime';
-import * as Joi from 'joi';
+import { DateTime } from '../time/DateTime'
+import * as Joi from 'joi'
 
 export declare interface Timestamped extends Record<string, unknown> {
-    createdAt: DateTime;
+  createdAt: DateTime
 }
 
-export declare const Timestamped: Joi.ObjectSchema<Timestamped>;
+export declare const Timestamped: Joi.ObjectSchema<Timestamped>
 
-export declare const timestampedExamples: Array<Timestamped>;
+export declare const timestampedExamples: Array<Timestamped>

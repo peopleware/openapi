@@ -15,10 +15,10 @@
  *
  */
 
-import * as Joi from 'joi';
+import * as Joi from 'joi'
 
-export declare type INSS = string;
+export declare type INSS = string
 
-export declare const INSS: Joi.StringSchema;
+export declare const INSS: Joi.StringSchema
 
-export declare const inssExamples: Array<string>;
+export declare const inssExamples: Array<string>

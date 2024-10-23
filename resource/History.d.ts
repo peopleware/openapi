@@ -15,18 +15,18 @@
  *
  */
 
-import * as Joi from 'joi';
-import { Timestamped } from './Timestamped';
-import { StructureVersioned } from './StructureVersioned';
+import * as Joi from 'joi'
+import { Timestamped } from './Timestamped'
+import { StructureVersioned } from './StructureVersioned'
 
 export declare interface HistoryVersion extends Timestamped {
-    href: string;
+  href: string
 }
 
 export declare interface History extends StructureVersioned {
-    versions: Array<HistoryVersion>;
+  versions: Array<HistoryVersion>
 }
 
-export declare const History: Joi.ObjectSchema<History>;
+export declare const History: Joi.ObjectSchema<History>
 
-export declare const historyExamples: Array<History>;
+export declare const historyExamples: Array<History>

@@ -103,7 +103,8 @@ properties:
     type: integer
     examples:
       - 3002399751580331
-    description: The represented decimal number, multiplied by 10<sup>decimals</sup>. Must be in the interval [1; undefined],
+    description:
+      The represented decimal number, multiplied by 10<sup>decimals</sup>. Must be in the interval [1; undefined],
     minimum: 1
     maximum: 9007199254740991
 required:

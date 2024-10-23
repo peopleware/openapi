@@ -15,12 +15,12 @@
  *
  */
 
-import * as Joi from 'joi';
+import * as Joi from 'joi'
 
 export declare type _readOnlyAlteration = {
-    read: (schema: Joi.Schema) => Joi.Schema;
-    create: (schema: Joi.Schema) => Joi.Schema;
-    update: (schema: Joi.Schema) => Joi.Schema;
-};
+  read: (schema: Joi.Schema) => Joi.Schema
+  create: (schema: Joi.Schema) => Joi.Schema
+  update: (schema: Joi.Schema) => Joi.Schema
+}
 
-export declare const readOnlyAlteration: _readOnlyAlteration;
+export declare const readOnlyAlteration: _readOnlyAlteration

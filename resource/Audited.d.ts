@@ -15,14 +15,14 @@
  *
  */
 
-import * as Joi from 'joi';
-import { AccountId } from '../id/AccountId';
-import { Timestamped } from './Timestamped';
+import * as Joi from 'joi'
+import { AccountId } from '../id/AccountId'
+import { Timestamped } from './Timestamped'
 
 export declare interface Audited extends Timestamped {
-    createdBy: AccountId;
+  createdBy: AccountId
 }
 
-export declare const Audited: Joi.ObjectSchema<Audited>;
+export declare const Audited: Joi.ObjectSchema<Audited>
 
-export declare const auditedExamples: Array<Audited>;
+export declare const auditedExamples: Array<Audited>

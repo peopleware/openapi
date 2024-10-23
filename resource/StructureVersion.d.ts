@@ -15,10 +15,10 @@
  *
  */
 
-import * as Joi from 'joi';
+import * as Joi from 'joi'
 
-export declare type StructureVersion = number;
+export declare type StructureVersion = number
 
-export declare const StructureVersion: Joi.NumberSchema;
+export declare const StructureVersion: Joi.NumberSchema
 
-export declare const structureVersionExamples: Array<StructureVersion>;
+export declare const structureVersionExamples: Array<StructureVersion>

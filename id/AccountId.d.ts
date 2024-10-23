@@ -15,10 +15,10 @@
  *
  */
 
-import * as Joi from 'joi';
+import * as Joi from 'joi'
 
-export declare type AccountId = string;
+export declare type AccountId = string
 
-export declare const AccountId: Joi.StringSchema;
+export declare const AccountId: Joi.StringSchema
 
-export declare const accountIdExamples: Array<string>;
+export declare const accountIdExamples: Array<string>

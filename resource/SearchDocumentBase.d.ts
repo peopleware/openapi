@@ -15,5 +15,5 @@
  *
  */
 
-export {SearchResultBase as SearchDocumentBase }from './SearchResultBase'
-export {searchResultBaseExamples as searchDocumentBaseExamples }from './SearchResultBase'
+export { SearchResultBase as SearchDocumentBase } from './SearchResultBase'
+export { searchResultBaseExamples as searchDocumentBaseExamples } from './SearchResultBase'

@@ -12,8 +12,8 @@ possible to validate the common specs.
 The purpose of each spec is described in the [OpenAPI 3] `description` field of each spec, or in markdown files close to
 the spec.
 
-Although [OpenAPI 3] is a standard, support for some features differs between tools. We use [ReDoc] as the main target
-for our [OpenAPI 3] spec. [ReDoc] formats and stylizes the specification in-browser.
+Although [OpenAPI 3] is a standard, support for some features differs between tools. We use [ReDoc] as the main target for
+our [OpenAPI 3] spec. [ReDoc] formats and stylizes the specification in-browser.
 
 The [ReDoc] site of the `HEAD` of the `master` branch is hosted at
 
@@ -61,8 +61,8 @@ to install development tools.
 
 ### Formatting
 
-This repository is set up for use in IntelliJ IDEAs. [file watchers] will format YAML and Markdown files when saved
-using [Prettier].
+This repository is set up for use in IntelliJ IDEAs. [file watchers] will format YAML and Markdown files when saved using
+[Prettier].
 
 ### Continuous developer feedback
 

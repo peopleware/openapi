@@ -15,13 +15,13 @@
  *
  */
 
-import * as Joi from 'joi';
-import { StructureVersion } from './StructureVersion';
+import * as Joi from 'joi'
+import { StructureVersion } from './StructureVersion'
 
 export declare interface StructureVersioned extends Record<string, unknown> {
-    structureVersion: StructureVersion;
+  structureVersion: StructureVersion
 }
 
-export declare const StructureVersioned: Joi.ObjectSchema<StructureVersioned>;
+export declare const StructureVersioned: Joi.ObjectSchema<StructureVersioned>
 
-export declare const structureVersionedExamples: Array<StructureVersioned>;
+export declare const structureVersionedExamples: Array<StructureVersioned>

@@ -11,7 +11,9 @@ const MonetaryValueEUR2 = constrainedMonetaryValue2(MonetaryValue2, 'EUR', 2)
 
 const zeroMonetaryValueEUR2Examples = [{ currency: 'EUR', decimals: 2, value: 0 }]
 
-const ZeroMonetaryValueEUR2 = addExamples(MonetaryValueEUR2, zeroMonetaryValueEUR2Examples).valid(zeroMonetaryValueEUR2Examples[0])
+const ZeroMonetaryValueEUR2 = addExamples(MonetaryValueEUR2, zeroMonetaryValueEUR2Examples).valid(
+  zeroMonetaryValueEUR2Examples[0]
+)
 
 const nonNegativeMonetaryValueEUR2Examples = [{ currency: 'EUR', decimals: 2, value: 0 }]
 

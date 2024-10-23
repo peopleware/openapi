@@ -5,18 +5,18 @@ definitions:
     npm18: ~/.npm
   branches:
     - branch: &testAndTag
-      - step:
-          runs-on:
-            - 'self.hosted'
-          name: Test
-          caches:
-            - node
-            - npm18
-          script:
-            - git submodule update --init
-            - scripts/common/npm/testCi.sh
-            - scripts/common/git/tagBitbucket.sh
-            - scripts/common/git/pushToRemote.sh https://${GITHUB_CREDENTIALS}@github.com/peopleware/openapi.git
+        - step:
+            runs-on:
+              - 'self.hosted'
+            name: Test
+            caches:
+              - node
+              - npm18
+            script:
+              - git submodule update --init
+              - scripts/common/npm/testCi.sh
+              - scripts/common/git/tagBitbucket.sh
+              - scripts/common/git/pushToRemote.sh https://${GITHUB_CREDENTIALS}@github.com/peopleware/openapi.git
 pipelines:
   branches:
     master: *testAndTag

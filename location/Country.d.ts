@@ -15,10 +15,10 @@
  *
  */
 
-import * as Joi from 'joi';
+import * as Joi from 'joi'
 
-export declare type Country = string;
+export declare type Country = string
 
-export declare const Country: Joi.StringSchema;
+export declare const Country: Joi.StringSchema
 
-export declare const countryExamples: Array<string>;
+export declare const countryExamples: Array<string>

@@ -15,10 +15,10 @@
  *
  */
 
-import * as Joi from 'joi';
+import * as Joi from 'joi'
 
-export declare type Gender = 'F' | 'M' | 'X';
+export declare type Gender = 'F' | 'M' | 'X'
 
-export declare const Gender: Joi.StringSchema;
+export declare const Gender: Joi.StringSchema
 
-export declare const genderExamples: Array<Gender>;
+export declare const genderExamples: Array<Gender>
