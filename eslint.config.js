@@ -3,6 +3,7 @@
 const neostandard = require('neostandard')
 const { mocha } = require('globals')
 const stylistic = neostandard.plugins['@stylistic']
+const depend = require('eslint-plugin-depend')
 
 module.exports = neostandard({}).concat([
   {
@@ -27,5 +28,6 @@ module.exports = neostandard({}).concat([
         ...mocha
       }
     }
-  }
+  },
+  depend.configs['flat/recommended']
 ])
