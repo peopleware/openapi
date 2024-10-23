@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@ppwcode/mocha-ssst": "^1.0.0",
-    "@redocly/cli": "^1.22.1",
+    "@redocly/cli": "^1.25.8",
     "cartesian": "^1.0.1",
     "directory-tree": "^3.5.2",
     "eslint": "^8.56.0",
