@@ -24,7 +24,7 @@ module.exports = neostandard({}).concat([
   },
   {
     name: 'mocha-globals',
-    files: ['test/{*,**/*}.test.js'],
+    files: ['test/{*,**/*}.test.js', '_util/_shouldBeSeriousCRUSchema.js', '_util/_shouldBeSeriousSchema.js'],
     languageOptions: {
       globals: {
         ...mocha
