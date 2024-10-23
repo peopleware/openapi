@@ -1,5 +1,3 @@
-/* eslint-env mocha */
-
 const testName = require('../../_util/_testName')
 const shouldBeSeriousSchema = require('../../_util/_shouldBeSeriousSchema')
 const { HREFHistory, hrefHistoryExamples } = require('../../resource/HREFHistory')

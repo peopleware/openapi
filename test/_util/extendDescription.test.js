@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-/* eslint-env mocha */
-
 const testName = require('../../_util/_testName')
 const Joi = require('joi')
 const { extendDescription } = require('../../_util/extendDescription')

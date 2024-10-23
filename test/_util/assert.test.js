@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-/* eslint-env mocha */
-
 const testName = require('../../_util/_testName')
 const { stuff, stuffWithUndefined } = require('../../_util/_stuff')
 const { assert } = require('../../_util/assert')

@@ -3,8 +3,6 @@ const shouldBeSeriousSchema = require('../../../_util/_shouldBeSeriousSchema')
 const { SigedisId } = require('../../../id/sigedis/SigedisId')
 const { stuff } = require('../../../_util/_stuff')
 
-/* eslint-env mocha */
-
 describe(testName(module), function () {
   shouldBeSeriousSchema(
     SigedisId,

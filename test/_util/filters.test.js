@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-/* eslint-env mocha */
-
 const testName = require('../../_util/_testName')
 const { notEmptyArray, notTrimmedString, notEmptyObject } = require('../../_util/filters')
 const { stuffWithUndefined } = require('../../_util/_stuff')

@@ -15,8 +15,6 @@
  *
  */
 
-/* eslint-env mocha */
-
 const testName = require('../../_util/_testName')
 const shouldBeSeriousCRUSchema = require('../../_util/_shouldBeSeriousCRUSchema')
 const { Timestamped } = require('../../resource/Timestamped')

@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-/* eslint-env mocha */
-
 const { isSchema } = require('joi')
 const should = require('should')
 const { mochaInIntelliJ } = require('./mochaInIntelliJ')
