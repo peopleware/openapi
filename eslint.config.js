@@ -4,6 +4,7 @@ const neostandard = require('neostandard')
 const { mocha } = require('globals')
 const stylistic = neostandard.plugins['@stylistic']
 const depend = require('eslint-plugin-depend')
+const json = require('eslint-plugin-json')
 
 module.exports = neostandard({}).concat([
   {
@@ -29,5 +30,9 @@ module.exports = neostandard({}).concat([
       }
     }
   },
-  depend.configs['flat/recommended']
+  depend.configs['flat/recommended'],
+  {
+    files: ['**/*.json'],
+    ...json.configs['recommended']
+  }
 ])
