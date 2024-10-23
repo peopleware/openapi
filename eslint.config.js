@@ -5,6 +5,7 @@ const { mocha } = require('globals')
 const stylistic = neostandard.plugins['@stylistic']
 const depend = require('eslint-plugin-depend')
 const json = require('eslint-plugin-json')
+const noSecrets = require('eslint-plugin-no-secrets')
 
 module.exports = neostandard({}).concat([
   {
@@ -34,5 +35,14 @@ module.exports = neostandard({}).concat([
   {
     files: ['**/*.json'],
     ...json.configs['recommended']
+  },
+  {
+    files: ['**/*.js'],
+    plugins: {
+      'no-secrets': noSecrets
+    },
+    rules: {
+      'no-secrets/no-secrets': 'error'
+    }
   }
 ])
