@@ -49,7 +49,7 @@ describe(testName(module), function () {
   })
 
   describe('throws', function () {
-    it(`throws when the assertion throws`, function () {
+    it('throws when the assertion throws', function () {
       const error = new Error()
       assert
         .bind(undefined, () => {

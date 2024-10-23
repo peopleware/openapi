@@ -23,7 +23,7 @@ const amount = MonetaryValue.extract('amount')
   .min(0)
   .example(456568, { override: true })
   .example(0)
-  .description(`The represented amount of money, multiplied by 10<sup>decimals</sup>. This can be positive or 0.`)
+  .description('The represented amount of money, multiplied by 10<sup>decimals</sup>. This can be positive or 0.')
 
 const NonNegativeMonetaryValue = addExamples(MonetaryValue.append({ amount }), nonNegativeMonetaryValueExamples)
 

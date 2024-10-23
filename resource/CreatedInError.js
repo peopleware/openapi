@@ -37,7 +37,7 @@ const CreatedInError = addExamples(
         .description('Marks the resource as created in error')
         .required()
     })
-    .description(`The resource was created in error. There are no properties, except for the audit properties.`),
+    .description('The resource was created in error. There are no properties, except for the audit properties.'),
   createdInErrorExamples
 )
 
