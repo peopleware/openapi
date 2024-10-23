@@ -85,7 +85,7 @@
     "OpenAPI:lint": "npm run generateResources && redocly lint",
     "OpenAPI:watch": "npm-watch OpenAPI:lint",
     "OpenAPI:serve": "redocly preview-docs index.yaml --port=8084",
-    "lint": "eslint \"{!(.*|coverage|node_modules|scripts)/**,scripts}/*.js\"",
+    "lint": "eslint \"{!(.*|coverage|node_modules|scripts)/**,scripts}/*\"",
     "schematatests": "npm run lint && nyc mocha \"test/{*,**/*}.test.js\"",
     "pretest": "npm-check -i \"\"; npm outdated || exit 0",
     "test": "npm run OpenAPI:lint && npm run schematatests",
